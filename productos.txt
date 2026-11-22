@@ -227,6 +227,7 @@ opción: #002 · 500 piezas (10/50) | 394.66 pesos
 opción: #007 · 500 piezas (10/50) | 546.25 pesos
 opción: 9H blanca · 200 piezas | 518.81 pesos
 opción: 9H negra · 200 piezas | 585.45 pesos
+opción: #835 · 500 piezas (10/50) | 269.2 pesos
 
 Platos de unicel
 id: dp5
@@ -500,6 +501,14 @@ descripción: Tapa para bowl café. Escoge el tamaño de tu bowl.
 opción: 32 oz · 600 piezas | 1642.42 pesos
 opción: 44 oz · 300 piezas | 968.13 pesos
 
+Bowl para ensalada Inix 24 oz
+id: lb48
+presentación: Caja con 200 piezas
+dibujo: bowl
+descripción: Bowl de plástico para ensaladas de 24 oz. La tapa se vende aparte, también en caja de 200.
+opción: Bowl 24 oz · 200 piezas | 821.74 pesos
+opción: Tapa para bowl de ensalada · 200 piezas | 697.24 pesos
+
 Envase Primo 4 oz
 id: e3
 precio: 596 pesos
@@ -550,6 +559,8 @@ descripción: Polipapel grado alimenticio para envolver tortas, tacos y burritos
 opción: 30 x 30 cm | 399.95 pesos
 opción: 30 x 40 cm | 399.95 pesos
 opción: 25 x 35 cm | 399.95 pesos
+opción: 30 x 30 cm Povasa | 411.64 pesos
+opción: 30 x 40 cm Povasa | 411.64 pesos
 
 Vitafilm emplaye 18"
 id: s3
