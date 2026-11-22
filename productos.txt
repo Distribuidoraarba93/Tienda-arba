@@ -1765,8 +1765,8 @@ presentación: Bulto 10/25 piezas
 foto: donitas-totis
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Sal y limón | 533.75 pesos
-opción: Con chile | 533.75 pesos
+opción: Sal y limón | 533.75 pesos | foto donitas-totis
+opción: Con chile | 533.75 pesos | foto donitas-chile
 
 Donitas Totis 55 g
 id: lb11
@@ -1774,8 +1774,8 @@ presentación: Caja con 40 bolsas de 55 g
 foto: donitas-totis
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Sal y limón | 506.47 pesos
-opción: Chile | 506.47 pesos
+opción: Sal y limón | 506.47 pesos | foto donitas-totis
+opción: Chile | 506.47 pesos | foto donitas-chile
 
 Top Tops Totis 40 g (8 tiras)
 id: lb12
