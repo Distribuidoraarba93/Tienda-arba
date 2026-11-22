@@ -677,7 +677,7 @@ descripción: Garrafa de 1.9 litros de salsa inglesa Crosse & Blackwell, ideal p
 Margarina Country Crock 1.9 kg
 id: a34
 precio: 136.5 pesos
-presentación: Pieza
+presentación: Bote de 1.91 kg
 foto: margarina-country-crock
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
