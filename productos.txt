@@ -212,6 +212,7 @@ opción: #965 · 200 piezas (2/100) | 317.56 pesos
 Charola #855
 id: dp3
 presentación: Caja con 500 piezas (10/50)
+foto: charola-855
 dibujo: charola
 descripción: Charola de unicel #855.
 opción: Blanca | 211.7 pesos | foto charola-blanca
@@ -405,6 +406,7 @@ opción: #7 Solo Cup · 20/50 piezas | 2500.43 pesos
 Vasitos de plástico para salsa (soufflé)
 id: dp13
 presentación: Caja
+foto: souffle
 dibujo: vaso
 descripción: Vasitos chicos para salsa, aderezos y muestras.
 opción: #0 · 2,000 piezas (20/100) | 477.78 pesos
@@ -416,6 +418,7 @@ opción: 2 oz negro · 1,200 piezas (12/100) | 463.11 pesos
 Tapa para vasito de salsa
 id: dp14
 presentación: Caja
+foto: souffle
 dibujo: tapa
 descripción: Tapas para vasitos de salsa.
 opción: Para vasito #0 · 2,000 piezas (40/50) | 330.35 pesos
@@ -1314,6 +1317,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Salsa Valentina por caja
 id: lb29
 presentación: Caja
+foto: valentina-1l
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Sobres · caja con 900 | 517.83 pesos
@@ -1323,6 +1327,7 @@ opción: 1 litro · caja con 12 | 517.83 pesos
 Salsa Costa Brava por caja
 id: lb30
 presentación: Caja
+foto: costa-brava
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: 1.5 litros · caja con 12 | 571.64 pesos
@@ -1331,6 +1336,7 @@ opción: Galón · caja con 3 | 390.06 pesos
 Salsa La Botanera por caja
 id: lb31
 presentación: Caja
+foto: botanera
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: 1 litro · caja con 12 | 458.48 pesos
@@ -1339,6 +1345,7 @@ opción: Galón · caja con 6 | 679.25 pesos
 Chamoy Mega por caja
 id: lb32
 presentación: Caja
+foto: chamoy-mega
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: 1 litro · caja con 12 | 463.07 pesos
@@ -1405,6 +1412,7 @@ opción: Rodarroz · 15 kg | 1013.9 pesos
 Pasta La Moderna por caja
 id: lb41
 presentación: Caja con 20 paquetes
+foto: moderna-surtida
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Spaghetti 200 g | 162.72 pesos
@@ -1418,6 +1426,7 @@ opción: Estrella 200 g | 162.72 pesos
 Pasta La Perla por caja
 id: lb42
 presentación: Caja con 20 paquetes de 200 g
+foto: la-perla
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Spaghetti | 150.85 pesos
