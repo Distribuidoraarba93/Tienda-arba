@@ -707,5 +707,28 @@ renderCats();renderGrid();renderCart();
 })();
 </script>
 <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+<div id="instBar" style="display:none;position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;background:#0b1a3a;border:2px solid #3f9b2f;border-radius:16px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5);font-family:inherit;color:#fff">
+<div style="display:flex;align-items:center;gap:12px"><img src="icon-192.png" alt="" style="width:48px;height:48px;border-radius:12px">
+<div style="flex:1"><b style="font-size:16px">Instala la app de Distribuidora ARBA</b><div id="instTxt" style="font-size:13px;opacity:.85;margin-top:2px">Pide más rápido desde tu celular</div></div>
+<button id="instX" style="background:none;border:0;color:#fff;font-size:22px;padding:4px 6px">×</button></div>
+<button id="instBtn" style="margin-top:12px;width:100%;background:#f2c230;color:#111;border:0;border-radius:12px;padding:12px;font-size:16px;font-weight:700">📲 Instalar app</button></div>
+<script>
+(function(){
+ var bar=document.getElementById('instBar'),btn=document.getElementById('instBtn'),txt=document.getElementById('instTxt'),dp=null;
+ var standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+ if(standalone)return;
+ var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ var pedido=/[?&]app\b/.test(location.search);
+ function show(){bar.style.display='block'}
+ document.getElementById('instX').onclick=function(){bar.style.display='none'};
+ addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;show()});
+ btn.onclick=function(){
+  if(dp){dp.prompt();dp.userChoice.then(function(){bar.style.display='none';dp=null});}
+  else if(ios){txt.innerHTML='En iPhone: toca <b>Compartir</b> (el cuadrito con flecha ↑) y luego <b>“Agregar a inicio”</b>.';btn.style.display='none';}
+  else{txt.innerHTML='Toca los <b>tres puntitos ⋮</b> de Chrome y luego <b>“Instalar app”</b> o <b>“Agregar a pantalla principal”</b>.';btn.style.display='none';}
+ };
+ if(ios||pedido)setTimeout(show,1200);
+})();
+</script>
 </body>
 </html>
