@@ -250,7 +250,7 @@ opción: Para envase Primo #3 y #4 · 1,200 piezas | 427 pesos | foto envase-pri
 Bowl café
 id: e1
 presentación: Caja
-foto: bowl
+foto: bowl-cafe
 dibujo: bowl
 descripción: Bowl café para sopas, ensaladas y comida para llevar.
 opción: 26 oz con tapa · 600 piezas | 3135.5 pesos
@@ -260,7 +260,7 @@ opción: 44 oz · 300 piezas | 1729 pesos
 Tapa para bowl
 id: e2
 presentación: Caja
-foto: bowl
+foto: bowl-cafe
 dibujo: tapa
 descripción: Tapa para bowl café. Escoge el tamaño de tu bowl.
 opción: 32 oz · 600 piezas | 1574 pesos
