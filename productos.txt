@@ -311,6 +311,7 @@ opción: #20 · caja 10/10 | 1799.08 pesos
 Aluminio para pay y tartaleta
 id: dp11
 presentación: Caja
+foto: aluminio-pay
 dibujo: charola
 descripción: Platos y moldes de aluminio desechables.
 opción: Plato para pay 9" · 300 piezas | 2775.95 pesos
@@ -793,6 +794,7 @@ Película estirable para emplayar 18"
 id: dp30
 precio: 645.15 pesos
 presentación: Caja con 4 rollos (18" x 1200)
+foto: emplaye
 dibujo: rollo
 descripción: Película estirable calibre 50 para emplayar cajas y tarimas.
 
@@ -888,6 +890,7 @@ Cuchara-tenedor (spork)
 id: lb46
 precio: 293.28 pesos
 presentación: Caja con 1,000 piezas (40/25)
+foto: spork
 dibujo: palillo
 descripción: Cuchara y tenedor en una sola pieza, de plástico desechable.
 
