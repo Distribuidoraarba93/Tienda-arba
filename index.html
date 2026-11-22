@@ -724,10 +724,23 @@ renderCats();renderGrid();renderCart();
  addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;show()});
  btn.onclick=function(){
   if(dp){dp.prompt();dp.userChoice.then(function(){bar.style.display='none';dp=null});}
-  else if(ios){txt.innerHTML='En iPhone: toca <b>Compartir</b> (el cuadrito con flecha ↑) y luego <b>“Agregar a inicio”</b>.';btn.style.display='none';}
+  else if(ios){iosPasos();}
   else{txt.innerHTML='Toca los <b>tres puntitos ⋮</b> de Chrome y luego <b>“Instalar app”</b> o <b>“Agregar a pantalla principal”</b>.';btn.style.display='none';}
  };
- if(ios||pedido)setTimeout(show,1200);
+ function iosPasos(){
+  var ua=navigator.userAgent,li='style="margin:4px 0"',pasos;
+  if(/FBAN|FBAV|Instagram|Line\//i.test(ua)){
+   pasos='<li '+li+'>Toca los <b>tres puntitos</b> de arriba y elige <b>“Abrir en Safari”</b>.</li><li '+li+'>Ya en Safari, vuelve a abrir este aviso y sigue los pasos.</li>';
+  }else if(/CriOS/i.test(ua)){
+   pasos='<li '+li+'>Arriba a la derecha toca <b>Compartir</b> (el cuadrito con flecha ⬆️).</li><li '+li+'>Baja en la lista y toca <b>“Agregar a pantalla de inicio”</b>.</li><li '+li+'>Toca <b>“Agregar”</b>. ¡Listo! 🎉</li>';
+  }else{
+   pasos='<li '+li+'>Abajo, junto a la dirección de la página, toca las <b>tres rayitas ☰</b> o los <b>tres puntitos •••</b>.<br><span style="opacity:.75">(Si ves el cuadrito con flecha ⬆️ directo, tócalo y brinca al paso 3.)</span></li><li '+li+'>En el menú toca <b>Compartir</b> (el cuadrito con flecha ⬆️).</li><li '+li+'>Baja en la lista y toca <b>“Agregar a inicio”</b> o <b>“Agregar a pantalla de inicio”</b>.</li><li '+li+'>Toca <b>“Agregar”</b>. ¡Listo! El logo de ARBA queda en tu pantalla 🎉</li>';
+  }
+  txt.innerHTML='<div style="margin-top:4px">Sigue estos pasos:</div><ol style="margin:6px 0 0;padding-left:20px;line-height:1.35">'+pasos+'</ol><div style="margin-top:6px;opacity:.75">No es el botón de los dos cuadritos (ese es de pestañas).</div>';
+  txt.style.opacity='1';btn.style.display='none';
+ }
+ if(ios){iosPasos();setTimeout(show,1200);}
+ else if(pedido)setTimeout(show,1200);
 })();
 </script>
 </body>
