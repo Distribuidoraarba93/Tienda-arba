@@ -1283,6 +1283,149 @@ foto: frijol-saltillo
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
+Salsa Valentina por caja
+id: lb29
+presentación: Caja
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Sobres · caja con 900 | 517.83 pesos
+opción: 370 ml · caja con 24 | 517.83 pesos
+opción: 1 litro · caja con 12 | 517.83 pesos
+
+Salsa Costa Brava por caja
+id: lb30
+presentación: Caja
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: 1.5 litros · caja con 12 | 571.64 pesos
+opción: Galón · caja con 3 | 390.06 pesos
+
+Salsa La Botanera por caja
+id: lb31
+presentación: Caja
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: 1 litro · caja con 12 | 458.48 pesos
+opción: Galón · caja con 6 | 679.25 pesos
+
+Chamoy Mega por caja
+id: lb32
+presentación: Caja
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: 1 litro · caja con 12 | 463.07 pesos
+opción: Galón · caja con 6 | 755.43 pesos
+
+Salsa de soya Sazonando
+id: lb33
+precio: 737.08 pesos
+presentación: Galón
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Jugo sazonador 1 litro
+id: lb34
+precio: 1355.79 pesos
+presentación: 1 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salsa de soya 1 litro
+id: lb35
+precio: 624.09 pesos
+presentación: 1 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Concentrado de limón 1 litro
+id: lb36
+precio: 710.17 pesos
+presentación: 1 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Aceite para freír 20 litros
+id: lb37
+precio: 860.82 pesos
+presentación: Bote de 20 litros
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Maíz palomero 20 kg
+id: lb38
+precio: 504.39 pesos
+presentación: Bulto de 20 kg
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile botanero Chiligrin 25 kg
+id: lb39
+precio: 1753.52 pesos
+presentación: Bulto de 25 kg
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Cereal a granel Sun Cereal
+id: lb40
+presentación: Bulto a granel
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Aritos · 7 kg | 439.79 pesos
+opción: Zucarines · 15 kg | 949.37 pesos
+opción: Rodarroz · 15 kg | 1013.9 pesos
+
+Pasta La Moderna por caja
+id: lb41
+presentación: Caja con 20 paquetes
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Spaghetti 200 g | 162.72 pesos
+opción: Pluma 200 g | 162.72 pesos
+opción: Fideo 0 220 g | 162.72 pesos
+opción: Lengua 220 g | 162.72 pesos
+opción: Letra 220 g | 162.72 pesos
+opción: Codo 2 220 g | 162.72 pesos
+opción: Estrella 200 g | 162.72 pesos
+
+Pasta La Perla por caja
+id: lb42
+presentación: Caja con 20 paquetes de 200 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Spaghetti | 150.85 pesos
+opción: Fideo mediano | 150.85 pesos
+opción: Fideo cambray | 150.85 pesos
+opción: Codo mediano | 150.85 pesos
+opción: Concha | 150.85 pesos
+opción: Semilla de melón | 150.85 pesos
+opción: Alfabeto grande | 150.85 pesos
+opción: Pluma | 150.85 pesos
+opción: Ojo de perdiz | 150.85 pesos
+opción: Estrella | 150.85 pesos
+opción: Macarrón | 152.27 pesos
+opción: Tornillo | 152.27 pesos
+opción: Tallarín | 152.12 pesos
+
+Sopa en sobre por caja
+id: lb43
+presentación: Caja con 12 paquetes
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Fideo | 154.44 pesos
+opción: Letra | 154.44 pesos
+opción: Estrellita | 154.44 pesos
+opción: Codito | 154.44 pesos
+opción: Fideos con chile 82 g | 156.32 pesos
+opción: Coditos con chile 82 g | 156.32 pesos
+
+Arroz preparado 160 g por caja
+id: lb44
+presentación: Caja con 12 piezas de 160 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Primavera | 296.73 pesos
+opción: Mexicana | 296.73 pesos
+
 
 ==================== Bebidas ====================
 
@@ -1506,6 +1649,246 @@ foto: paketines
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
+Fritura de harina 800 g
+id: lb1
+presentación: Bolsa de 800 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Minicuadro | 54.52 pesos
+opción: Rotini | 54.52 pesos
+opción: Anillo | 54.52 pesos
+opción: Minirueda | 54.52 pesos
+opción: Parrilla | 54.52 pesos
+opción: Minicuadro enchilado | 54.52 pesos
+opción: Rotini enchilado | 54.52 pesos
+opción: Anillo enchilado | 54.52 pesos
+opción: Minirueda enchilada | 54.52 pesos
+opción: Mix de frituras | 64.46 pesos
+
+Fritura de harina 2.5 kg
+id: lb2
+presentación: Bolsa de 2.5 kg
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Minicuadro | 160.09 pesos
+opción: Rotini | 160.09 pesos
+opción: Anillo | 160.09 pesos
+opción: Minirueda | 160.09 pesos
+opción: Minicuadro enchilado | 160.09 pesos
+opción: Rotini enchilado | 160.09 pesos
+opción: Anillo enchilado | 160.09 pesos
+opción: Minirueda enchilada | 160.09 pesos
+opción: Mix de frituras | 191.14 pesos
+
+Fritura 10 x 10
+id: lb3
+precio: 51.54 pesos
+presentación: Paquete con 18 piezas
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Fritura de harina Balón
+id: lb4
+precio: 28.44 pesos
+presentación: Bolsa de 350 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Hojuela de papa 600 g
+id: lb5
+precio: 105.44 pesos
+presentación: Bolsa de 600 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Palomitas 600 g
+id: lb6
+precio: 40.37 pesos
+presentación: Bolsa de 600 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chetos 700 g
+id: lb7
+presentación: Bolsa de 700 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Natural | 73.15 pesos
+opción: Enchilado | 73.15 pesos
+
+Chetos Totis 3 kg
+id: lb8
+presentación: Bolsa de 3 kg
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Chetotis | 251.98 pesos
+opción: Cheto Hot Explosion | 251.98 pesos
+
+Chetos Totis 400 g
+id: lb9
+precio: 446.82 pesos
+presentación: Caja con 10 bolsas de 400 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Donitas Totis (bulto)
+id: lb10
+presentación: Bulto 10/25 piezas
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Sal y limón | 533.75 pesos
+opción: Con chile | 533.75 pesos
+
+Donitas Totis 55 g
+id: lb11
+presentación: Caja con 40 bolsas de 55 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Sal y limón | 506.47 pesos
+opción: Chile | 506.47 pesos
+
+Top Tops Totis 40 g (8 tiras)
+id: lb12
+presentación: 8 tiras de 10 bolsas de 40 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Salsa negra | 546.58 pesos
+opción: Hot chili | 546.58 pesos
+opción: Nacho | 546.58 pesos
+
+Top Tops Totis 40 g (caja de 30)
+id: lb13
+presentación: Caja con 30 bolsas de 40 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Hot chili | 208.3 pesos
+opción: Nacho | 208.3 pesos
+opción: Salsa negra | 208.3 pesos
+
+Totis Papitas 90 g
+id: lb14
+presentación: Caja con 40 bolsas de 90 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Sal | 736.02 pesos
+opción: Hot | 736.02 pesos
+opción: Adobo | 736.02 pesos
+opción: Salsa picante | 736.02 pesos
+opción: Sabor elote | 736.02 pesos
+
+Totis Totopos 1 kg
+id: lb15
+precio: 220.11 pesos
+presentación: Caja con 3 bolsas de 1 kg
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Totis Totopos 120 g
+id: lb16
+presentación: Caja con 40 bolsas de 120 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Hot chili | 545.79 pesos
+opción: Nacho | 545.79 pesos
+opción: Salsa negra | 545.79 pesos
+
+Totis Twisters queso y chile 100 g
+id: lb17
+precio: 545.79 pesos
+presentación: Caja con 40 bolsas de 100 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Totis Bolings queso y chile 80 g
+id: lb18
+precio: 506.48 pesos
+presentación: Caja con 40 bolsas de 80 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Totis Tubix chile 37 g
+id: lb19
+precio: 555.9 pesos
+presentación: 5 tiras de 25 bolsas de 37 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Cacahuate japonés Nipon (tiras)
+id: lb20
+precio: 1258.27 pesos
+presentación: 12 tiras de 20 piezas
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Kiubo-re Mix Gonac 42 g
+id: lb21
+presentación: 8 tiras de 10 bolsas de 42 g
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Mix | 448.75 pesos
+opción: Queso | 448.75 pesos
+opción: Explosión | 448.75 pesos
+
+Galletas Marianitas
+id: lb22
+presentación: Caja con 20 piezas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Nuez | 270.53 pesos
+opción: Chocolate | 270.53 pesos
+opción: Coco | 270.53 pesos
+opción: Naranja | 270.53 pesos
+opción: Vainilla | 270.53 pesos
+opción: Caramel | 270.53 pesos
+
+Galletas 70 g
+id: lb23
+presentación: Caja con 20 paquetes de 70 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Avellana | 268.31 pesos
+opción: Choco vainilla | 268.31 pesos
+opción: Mantequilla | 268.31 pesos
+opción: Coco | 268.31 pesos
+
+Barra rellena de fresa Nutret 200 g
+id: lb24
+precio: 531.39 pesos
+presentación: Caja con 12 piezas de 200 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Waffer Natta 62 g
+id: lb25
+precio: 288.44 pesos
+presentación: Caja con 16 piezas de 62 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chicharrón de harina para freír (La Moderna)
+id: lb26
+presentación: Bulto a granel
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Chicharrón #100 · 15 kg | 681.87 pesos
+opción: Chicharrón #25 · 20 kg | 777.34 pesos
+opción: Chicharrín · 20 kg | 777.34 pesos
+opción: Anillo · 20 kg | 777.34 pesos
+opción: Ruedita · 20 kg | 777.34 pesos
+opción: Tornillo · 15 kg | 583.26 pesos
+
+Pasta para fritura Palmex (para freír)
+id: lb27
+presentación: Bulto a granel
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+opción: Hojuela de papa · 6 kg | 1034.85 pesos
+opción: Parrilla · 15 kg | 793.88 pesos
+opción: Mini rueda · 15 kg | 793.88 pesos
+opción: Zarape · 20 kg | 1058.49 pesos
+opción: Rotini · 20 kg | 1058.49 pesos
+opción: Anillo · 20 kg | 1058.49 pesos
+
 
 ==================== Dulces ====================
 
@@ -1530,6 +1913,13 @@ id: b12
 precio: 123.05 pesos
 presentación: Bolsa de Bubulubu Mini
 foto: bubulubu-mini
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chechi Fresco Gonac 140 ml
+id: lb28
+precio: 111.64 pesos
+presentación: Caja con 24 piezas de 140 ml
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
