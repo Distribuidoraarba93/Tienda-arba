@@ -1400,6 +1400,7 @@ Maíz palomero 20 kg
 id: lb38
 precio: 504.39 pesos
 presentación: Bulto de 20 kg
+foto: maiz-palomero
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1413,10 +1414,11 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Cereal a granel Sun Cereal
 id: lb40
 presentación: Bulto a granel
+foto: zucarines
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Aritos · 7 kg | 439.79 pesos
-opción: Zucarines · 15 kg | 949.37 pesos
+opción: Zucarines · 15 kg | 949.37 pesos | foto zucarines
 opción: Rodarroz · 15 kg | 1013.9 pesos
 
 Pasta La Moderna por caja
@@ -1915,6 +1917,7 @@ Barra rellena de fresa Nutret 200 g
 id: lb24
 precio: 531.39 pesos
 presentación: Caja con 12 piezas de 200 g
+foto: nutret
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
