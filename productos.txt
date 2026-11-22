@@ -1,0 +1,1075 @@
+# =====================================================================
+#  PRODUCTOS DE DISTRIBUIDORA ARBA
+# =====================================================================
+#  Aquí cambias precios y productos de tu tienda. Al guardar (Commit
+#  changes) la tienda se actualiza sola en unos minutos.
+#
+#  CÓMO SE ESCRIBE UN PRODUCTO (cada producto separado por una línea vacía):
+#
+#    Nombre del producto            <- primera línea: el nombre
+#    precio: 25 pesos               <- escribe "cotizar" si no tiene precio
+#    presentación: Paquete de 10 piezas
+#    mayoreo: desde 5 paquetes, 22 pesos      (opcional)
+#    etiqueta: Nuevo                           (opcional, sale en la foto)
+#    foto: tortilla-harina           (nombre de la foto en la carpeta img, sin .webp)
+#    descripción: Texto que ve el cliente al abrir el producto.
+#    opción: Chica | 20 pesos        (si el producto tiene tamaños o tipos;
+#    opción: Grande | 28 pesos        cada opción con su precio)
+#
+#  En una opción también puedes poner mayoreo y foto, separados con | :
+#    opción: Paquete de 10 piezas | 25 pesos | mayoreo desde 5, 22 pesos | foto tortilla-harina
+#
+#  - Las líneas que empiezan con # son notas y no salen en la tienda.
+#  - "id:" y "dibujo:" son internos: no los cambies.
+#  - Para QUITAR un producto, borra todo su bloque.
+#  - Para AGREGAR uno, copia un bloque parecido, pégalo y cámbialo.
+#  - La categoría la da el título ==== Nombre ==== de arriba del producto.
+# =====================================================================
+
+
+==================== Combos ====================
+
+Combo Burrero
+id: k1
+precio: 639 pesos
+presentación: 10 paquetes de tortilla para burrito + polipapel 30x30 (caja de 5 kg) + bolsa camiseta mediana (1 kg)
+etiqueta: Ahorras 31 pesos
+foto: tortilla-burrito
+dibujo: tortilla
+descripción: Todo lo que necesita tu burrería o lonchera: 10 paquetes de tortillas de harina para burrito Los 2 Carnales (todas del mismo tamaño), una caja de polipapel grado alimenticio 30x30 de 5 kg y 1 kg de bolsa camiseta mediana. Por separado cuesta 670 pesos con 27 centavos; en combo pagas 639 pesos.
+
+Combo Navideño 🎄
+id: k2
+presentación: 2 paquetes de tortilla para buñuelo grande + 1 frijol cocido 800 g + 1 paquete de tortillas de harina (normales o sabor mantequilla)
+etiqueta: Ahorras hasta 17 pesos
+foto: tortilla-bunuelo
+dibujo: tortilla
+descripción: Todo para la cena navideña: 2 paquetes de 10 tortillas para buñuelo grande (24 a 25 cm), una bolsa de frijol cocido de 800 g y un paquete de 10 tortillas de harina. Escoge si quieres las tortillas normales o sabor mantequilla. Por separado cuesta 106 pesos (107 con mantequilla); en combo pagas solo 90 pesos. Tortillería Los 2 Carnales.
+opción: Con tortillas normales | 90 pesos
+opción: Con tortillas sabor mantequilla | 90 pesos
+
+
+==================== Tortillas ====================
+
+Tortillas de harina
+id: t1
+presentación: Tamaño variado
+foto: tortilla-harina
+dibujo: tortilla
+descripción: Tortillas de harina de la Tortillería Los 2 Carnales, hechas a diario en Chihuahua. El tamaño puede variar un poco entre tortilla y tortilla. Precio de mayoreo desde 5 paquetes.
+opción: Paquete de 10 piezas | 25 pesos | mayoreo desde 5, 22 pesos
+opción: Paquete de 6 piezas | 15 pesos | mayoreo desde 5, 12 pesos
+
+Tortillas de harina para burrito
+id: t6
+precio: 23 pesos
+presentación: Paquete de 10 piezas · todas del mismo tamaño
+foto: tortilla-burrito
+dibujo: tortilla
+descripción: Tortillas de harina parejitas, todas del mismo tamaño, ideales para burritos. Tortillería Los 2 Carnales.
+
+Tortillas de harina sabor mantequilla
+id: t2
+precio: 26 pesos
+presentación: Paquete de 10 piezas
+mayoreo: desde 5, 23 pesos
+etiqueta: Nuevo
+foto: tortilla-mantequilla
+dibujo: mantequilla
+descripción: Nuestra nueva línea: la misma tortilla de harina con sabor a mantequilla.
+
+Tortillas para buñuelo
+id: t3
+presentación: Paquete de 10 piezas
+foto: tortilla-bunuelo
+dibujo: tortilla
+descripción: Tortillas de harina delgaditas, listas para freír y hacer buñuelos. Chica de 15 a 16 cm aprox. y grande de 24 a 25 cm aprox. Tortillería Los 2 Carnales.
+opción: Chica · 15 a 16 cm | 20 pesos
+opción: Grande · 24 a 25 cm | 28 pesos
+
+Tortillas de harina para taco chico
+id: t4
+presentación: 11 a 12 cm aprox. · 1.50 pesos la pieza
+foto: tortilla-taco
+dibujo: tortilla
+descripción: Tortillas de harina chicas para tacos, de 11 a 12 cm aprox. A 1 peso con 50 centavos la pieza. Escoge el paquete de 10, 20 o 50 piezas. Tortillería Los 2 Carnales.
+opción: Paquete de 10 piezas | 15 pesos
+opción: Paquete de 20 piezas | 30 pesos
+opción: Paquete de 50 piezas | 75 pesos
+
+Tortillas de harina para montado
+id: t5
+presentación: Paquete de 10 piezas
+foto: tortilla-montado
+dibujo: tortilla
+descripción: Tortillas de harina grandes para montados. Jumbo de 35 a 38 cm (6 pesos la pieza), chica de 28 a 30 cm (4 pesos con 50 centavos la pieza) y jumbo chica de 28 a 30 cm, más gruesa (6 pesos la pieza). Tortillería Los 2 Carnales.
+opción: Jumbo · 35 a 38 cm | 60 pesos
+opción: Chica · 28 a 30 cm | 45 pesos
+opción: Jumbo chica · 28 a 30 cm, más gruesa | 60 pesos
+
+
+==================== Contenedores ====================
+
+Contenedor blanco
+id: c1
+presentación: Liso o con división · 200 piezas
+foto: cont-blanco
+dibujo: contenedor
+descripción: Contenedor blanco con bisagra para comida para llevar. Pídelo liso o con división.
+opción: 7x7 | 334 pesos
+opción: 8x8 | 495.96 pesos
+opción: 9x9 | 562.95 pesos
+
+Contenedor negro
+id: c2
+presentación: Liso o con división · 200 piezas
+foto: cont-negro
+dibujo: contenedorN
+descripción: Contenedor negro con bisagra, se ve elegante para tus platillos.
+opción: 8x8 | 562.96 pesos
+opción: 9x9 | 602.85 pesos
+
+Contenedor para hamburguesa
+id: c3
+presentación: Caja
+foto: ham-beige
+dibujo: contenedor
+descripción: Contenedor para hamburguesa en tres colores.
+opción: Bio beige | 398.57 pesos | foto ham-beige
+opción: Negro (500 piezas) | 525.96 pesos | foto ham-negro
+opción: Blanco (500 piezas) | 476.95 pesos | foto ham-blanco
+
+Charola #066
+id: c4
+presentación: 500 piezas
+foto: charola-beige
+dibujo: charola
+descripción: Charola para comida en color bio beige o blanca.
+opción: Bio beige | 187.78 pesos | foto charola-beige
+opción: Blanca | 167.68 pesos | foto charola-blanca
+
+Charola León 835
+id: c5
+precio: 278.43 pesos
+presentación: Caja con 10 paquetes de 50 piezas
+foto: charola-835
+dibujo: charola
+descripción: Charola de unicel para comida.
+
+Bisagra NTR 22x14
+id: x1
+precio: 1019 pesos
+presentación: Caja con 250 piezas
+foto: bisagra-ntr
+dibujo: contenedor
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Botanero base y domo 31 cm
+id: x2
+precio: 1171 pesos
+presentación: Caja con 50 piezas (base con domo)
+foto: botanero
+dibujo: contenedor
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Charola térmica 9D con división Reyma
+id: x3
+precio: 575.5 pesos
+presentación: Caja 20/25 (20 paquetes de 25 piezas)
+foto: charola-9d
+dibujo: charola
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pavera de aluminio chica
+id: x4
+precio: 9 pesos
+presentación: 1 pieza · 38.8 x 27 x 6 cm (medidas internas)
+foto: pavera-chica
+dibujo: charola
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Vasos ====================
+
+Vaso térmico
+id: v1
+presentación: Caja
+foto: vaso-termico
+dibujo: vaso
+descripción: Vaso térmico para café y bebidas calientes. Escoge el número.
+opción: #4 · 40/25 piezas | 458.86 pesos
+opción: #6 · 40/25 piezas | 474.67 pesos
+opción: #8 · 40/25 piezas | 536.86 pesos
+opción: #10 · 40/25 piezas | 589.95 pesos
+opción: #12 · 40/25 piezas | 598.75 pesos
+opción: #14 · 20/25 piezas | 458.86 pesos
+opción: #16 · 25/20 piezas | 516.89 pesos
+
+Tapa para vaso térmico #8
+id: v2
+precio: 360 pesos
+presentación: Caja completa
+dibujo: tapa
+descripción: Tapa para vaso térmico #8.
+
+Vaso EU
+id: v3
+presentación: Caja
+foto: vaso-eu
+dibujo: vasoEU
+descripción: Vaso desechable EU en varios tamaños.
+opción: #10EU · 20/50 piezas | 1181.86 pesos
+opción: #12EU · 20/50 piezas | 1183.67 pesos
+opción: #14EU · 20/50 piezas | 1200 pesos
+opción: #16EU · 20/50 piezas | 1312.09 pesos
+opción: #32EU · 20/25 piezas | 1025.24 pesos
+opción: #16EU rojo · 20/25 piezas | 752.75 pesos | foto vaso-eu-rojo
+
+Vaso PL #8
+id: x5
+precio: 469 pesos
+presentación: 20/50 · 1,000 piezas
+foto: vaso-pl8
+dibujo: vasoEU
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Vaso tipo cristal
+id: x6
+precio: 1538.5 pesos
+presentación: Caja 40/25
+dibujo: vasoEU
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Tapa para vaso PL 4A/8 lisa Reyma
+id: x7
+precio: 373.5 pesos
+presentación: Caja con 1,000 piezas (20 bolsas de 50)
+foto: tapa-4a8
+dibujo: tapa
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Tapa PL #7, 8, 10 y 12
+id: x8
+precio: 537 pesos
+presentación: Caja 20/50
+dibujo: tapa
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Bowls y envases ====================
+
+Bowl café
+id: e1
+presentación: Caja
+foto: bowl
+dibujo: bowl
+descripción: Bowl café para sopas, ensaladas y comida para llevar.
+opción: 26 oz con tapa · 600 piezas | 3135.5 pesos
+opción: 32 oz · 600 piezas | 2398 pesos
+opción: 44 oz · 300 piezas | 1729 pesos
+
+Tapa para bowl
+id: e2
+presentación: Caja
+foto: bowl
+dibujo: tapa
+descripción: Tapa para bowl café.
+opción: 32 oz · 600 piezas | 1574 pesos
+opción: 44 oz · 300 piezas | 946 pesos
+
+Envase Primo 4 oz
+id: e3
+precio: 596 pesos
+presentación: Caja con 1,200 piezas
+foto: envase-primo
+dibujo: envase
+descripción: Envase de 4 onzas para salsas, aderezos y porciones.
+
+Tapa para envase Primo #3 y #4
+id: e4
+precio: 427 pesos
+presentación: Caja con 1,200 piezas
+foto: envase-primo
+dibujo: tapa
+descripción: Tapa que le queda al envase Primo #3 y #4.
+
+Envase térmico 1 litro Reyma
+id: x9
+precio: 524.5 pesos
+presentación: Caja 20/15
+dibujo: envase
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Envase térmico 1/2 litro Reyma
+id: x10
+precio: 480 pesos
+presentación: Caja 20/25
+dibujo: envase
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Tapa para envase térmico Reyma
+id: x11
+precio: 350 pesos
+presentación: Caja 20/25
+dibujo: tapa
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Servilletas y empaque ====================
+
+Servilletas
+id: s1
+presentación: Caja
+foto: serv-colibri
+dibujo: servilleta
+descripción: Servilletas en tres marcas.
+opción: Marli · 12/450 piezas | 396.62 pesos | foto serv-marli
+opción: Colibrí · 12/500 piezas | 397.97 pesos | foto serv-colibri
+opción: Yofi · 12/500 piezas | 490.67 pesos | foto serv-yofi
+
+Polipapel grado alimenticio
+id: s2
+presentación: Caja con 5 kg
+foto: polipapel
+dibujo: papel
+descripción: Polipapel grado alimenticio para envolver tortas, tacos y burritos.
+opción: 30 x 30 cm | 385.27 pesos
+opción: 30 x 40 cm | 385.27 pesos
+
+Vitafilm emplaye 18"
+id: s3
+precio: 344 pesos
+presentación: Rollo de 45 cm
+foto: vitafilm
+dibujo: rollo
+descripción: Película plástica Vitafilm de 18 pulgadas para emplayar.
+
+Bolsas de plástico sueltas
+id: bs
+presentación: Por kilo · escoge la medida
+dibujo: bolsa
+descripción: Bolsas de plástico sueltas, se venden por kilo. Escoge la medida que necesitas.
+opción: Camiseta mediana | 55 pesos
+opción: 15x25 | 88 pesos
+opción: 70x90 | 76.5 pesos
+
+Bolsas de plástico en rollo
+id: br
+presentación: Por kilo · escoge la medida
+dibujo: rollo
+descripción: Bolsas de plástico en rollo, se venden por kilo. Escoge la medida que necesitas.
+opción: 15x25 chica alta densidad | 69 pesos
+opción: 25x35 baja densidad | 79 pesos
+opción: 30x40 | 90 pesos
+opción: 30x40 poliseda | 84 pesos
+
+Aluminio grueso 45 cm
+id: x12
+precio: 441.5 pesos
+presentación: Pieza
+dibujo: rollo
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Papel aluminio precortado
+id: x13
+precio: 201.5 pesos
+presentación: 500 piezas
+dibujo: papel
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Papel menú deli
+id: x14
+precio: 203 pesos
+presentación: 1,000 piezas
+dibujo: papel
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Servilleta Dalia interdoblada blanca
+id: x22
+precio: 414 pesos
+presentación: 12/250 piezas
+dibujo: servilleta
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Toalla interdoblada blanca Dalia
+id: x23
+precio: 414 pesos
+presentación: 12/250
+dibujo: servilleta
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Toalla en rollo café Dalia
+id: x24
+precio: 60.5 pesos
+presentación: Rollo
+dibujo: rollo
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Higiene y varios ====================
+
+Plastinudo
+id: h1
+precio: 89.28 pesos
+presentación: 2,000 piezas
+foto: plastinudo
+dibujo: bolsa
+descripción: Cintillo plastinudo rojo para cerrar bolsas, 2,000 piezas.
+
+Palillo estuchado
+id: h2
+precio: 86.27 pesos
+presentación: Caja con 1,000 piezas
+foto: palillo
+dibujo: palillo
+descripción: Palillo en estuche individual, 1,000 piezas.
+
+Guante de nitrilo negro
+id: h3
+precio: 107.08 pesos
+presentación: Caja con 100 piezas
+foto: guante
+dibujo: guante
+descripción: Guante de nitrilo negro para cocina y manejo de alimentos.
+
+Gorro plisado (cofia negra)
+id: h4
+precio: 44 pesos
+presentación: 100 piezas
+foto: cofia
+dibujo: cofia
+descripción: Cofia negra plisada para cocina, paquete de 100 piezas.
+
+Cubrebocas tricapa negro
+id: x25
+precio: 53.5 pesos
+presentación: Caja con 50 piezas
+foto: cubrebocas-negro
+dibujo: guante
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Cuchara sopera americana
+id: x26
+precio: 167 pesos
+presentación: Caja con 1,000 piezas
+foto: cuchara
+dibujo: palillo
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Tenedor plástico blanco
+id: x27
+precio: 167 pesos
+presentación: Caja con 1,000 piezas
+foto: tenedor
+dibujo: palillo
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Abarrotes ====================
+
+Frijol cocido
+id: f1
+precio: 25 pesos
+presentación: Bolsa de 800 g
+mayoreo: desde 5 bolsas, 20 pesos
+foto: frijol-cocido
+dibujo: caja
+descripción: Frijol cocido listo para calentar y servir, en bolsa de 800 g.
+
+Aceite vegetal Kartamus
+id: a1
+precio: 443.5 pesos
+presentación: Caja con 12 botellas de 900 ml
+foto: aceite-kartamus
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Aderezo de mayonesa Bachi
+id: a2
+precio: 131.5 pesos
+presentación: Bote de 3.7 litros
+foto: mayonesa-bachi
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Ajo molido
+id: a3
+precio: 94.5 pesos
+presentación: 1 kg
+foto: ajo-molido
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Ajo picado en agua
+id: a4
+precio: 131 pesos
+presentación: Bote de 1.27 kg (885 g drenado)
+foto: ajo-picado
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Arroz Verde Valle Súper Extra
+id: a7
+precio: 88 pesos
+presentación: Bolsa de 2 kg
+foto: arroz-verde-valle
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Atún en agua El Dorado
+id: a8
+precio: 217.5 pesos
+presentación: Lata de 1.880 kg (1.350 kg drenado)
+foto: atun-dorado
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Café de Chiapas molido
+id: a12
+precio: 333.5 pesos
+presentación: Bolsa de 900 g
+foto: cafe-chiapas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Caldo de pollo Knorr
+id: a13
+precio: 211 pesos
+presentación: Bote de 1.5 kg
+foto: caldo-knorr
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Catsup Heinz en sobre
+id: a14
+precio: 131 pesos
+presentación: Caja con 200 sobres de 8 g
+foto: catsup-heinz
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Champiñones rebanados Herdez
+id: a15
+precio: 222.5 pesos
+presentación: Lata de 2.8 kg (1.51 kg drenado)
+foto: champinones-herdez
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile cascabel seco
+id: a17
+precio: 278 pesos
+presentación: 1 kg
+foto: chile-cascabel
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile colorín seco
+id: a18
+precio: 170.5 pesos
+presentación: 1 kg
+foto: chile-colorin2
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile de árbol seco
+id: a19
+precio: 148 pesos
+presentación: 1 kg
+foto: chile-arbol
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile en polvo Tajín
+id: a20
+precio: 67.5 pesos
+presentación: 1 kg
+foto: tajin
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chiles jalapeños en rodajas Menú
+id: a21
+precio: 99.5 pesos
+presentación: Bolsa de 3 kg (1.65 kg drenado)
+foto: chile-rodajas-menu
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chile morita
+id: a22
+precio: 148 pesos
+presentación: 1 kg
+foto: chile-colorin
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chiles jalapeños en rajas en escabeche Menú
+id: a23
+precio: 102.5 pesos
+presentación: Bolsa de 3 kg (1.65 kg drenado)
+foto: chile-rajas-menu
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Chiles chipotles enteros adobados Menú
+id: a24
+precio: 211.5 pesos
+presentación: Lata de 2.8 kg (1.54 kg drenado)
+foto: chipotle-menu
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Crema ácida Lala
+id: a25
+precio: 279 pesos
+presentación: Cubeta de 4 litros (3.92 kg)
+foto: crema-lala
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Elote dorado Del Monte 6 pack
+id: a26
+precio: 79 pesos
+presentación: 6 latas de 225 g
+foto: elote-delmonte-6
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Elote dorado en granos Del Monte
+id: a27
+precio: 141 pesos
+presentación: Lata de 2.9 kg (1.6 kg drenado)
+foto: elote-delmonte-29
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Empanizador Cuétara (galleta salada molida)
+id: a28
+precio: 386 pesos
+presentación: Bolsa de 5 kg
+foto: empanizador
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Jamón lunchero Bafar 800 g (40 rebanadas aprox.)
+id: a32
+precio: 72 pesos
+presentación: Pieza
+foto: jamon-bafar
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Jugo Maggi
+id: a33
+precio: 302 pesos
+presentación: Frasco 800 ml
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Margarina Country Crock 1.9 kg
+id: a34
+precio: 136.5 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Mayonesa Heinz en sobre
+id: a35
+precio: 157.5 pesos
+presentación: Caja con 200 sobres de 8 g
+foto: mayonesa-heinz
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Mole almendrado
+id: a36
+precio: 114 pesos
+presentación: 1/2 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Mostaza Heinz en sobre
+id: a37
+precio: 139 pesos
+presentación: Caja con 200 sobres de 5 g
+foto: mostaza-heinz
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pasta codo mediano
+id: a39
+precio: 97 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pasta para spaghetti Menú
+id: a40
+precio: 103.5 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pasta de tomate Menú
+id: a41
+precio: 161.5 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pasta para lasaña La Moderna
+id: a42
+precio: 457.5 pesos
+presentación: Caja con 12 paquetes de 500 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pimienta negra molida McCormick
+id: a43
+precio: 148.5 pesos
+presentación: 510 g
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Queso para nachos Economy
+id: a44
+precio: 224 pesos
+presentación: 3 kg
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Sal con ajo
+id: a45
+precio: 54.5 pesos
+presentación: 1 kg
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Sal individual de mar en sobres
+id: a46
+precio: 282.5 pesos
+presentación: 3,000 piezas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Sal La Fina
+id: a47
+precio: 430 pesos
+presentación: Bulto de 25 kg (bolsas de 1 kg)
+foto: sal-la-fina
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salchicha de pavo Frankfurt
+id: a48
+precio: 161.5 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salsa botanera
+id: a49
+precio: 123 pesos
+presentación: Galón
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salsa chamoy Guacamaya
+id: a50
+precio: 37 pesos
+presentación: 1 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salsa de soya Garden
+id: a51
+precio: 142.5 pesos
+presentación: 1 galón
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Salsa Valentina
+id: a52
+precio: 43 pesos
+presentación: 1 litro
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Sopa Maruchan
+id: a53
+precio: 226.5 pesos
+presentación: Caja con 12 piezas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Spaghetti Fiordi
+id: a54
+precio: 145 pesos
+presentación: 20 piezas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Sustituto de crema para café
+id: a55
+precio: 109.5 pesos
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Vinagre blanco La Costeña
+id: a56
+precio: 46.5 pesos
+presentación: 1 galón
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Vinagre Menú
+id: a57
+precio: 79.5 pesos
+presentación: 6 litros
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Frijol Saltillo
+id: a58
+precio: 625 pesos
+presentación: Costal de 25 kg
+foto: frijol-saltillo
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Bebidas ====================
+
+Bebida Arizona lata 460 ml varios sabores
+id: d1
+precio: 413.54 pesos
+presentación: Paquete de 24 latas
+foto: arizona
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Fuze Tea 600 ml (durazno, limón y frutos rojos)
+id: d2
+precio: 310.88 pesos
+presentación: Paquete de 12 piezas
+foto: fuze-tea
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Gatorade 600 ml
+id: d5
+precio: 143.84 pesos
+presentación: Paquete de 6 piezas · sabor surtido
+foto: gatorade
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Jugo Jumex en lata 355 ml
+id: d6
+precio: 342.2 pesos
+presentación: Paquete de 24 latas · mix de sabores
+foto: jumex
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Refresco Coca-Cola regular en lata
+id: d7
+precio: 572.46 pesos
+presentación: Paquete de 24 latas
+foto: coca-lata
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Refresco Coca-Cola regular 600 ml
+id: d8
+precio: 547.52 pesos
+presentación: Paquete de 24 piezas
+foto: coca-600
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Refresco Coca-Cola sin azúcar (Zero)
+id: d9
+precio: 330.6 pesos
+presentación: Paquete de 12 piezas
+foto: coca-zero
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Limpieza ====================
+
+Escoba abanico larga
+id: l2
+precio: 51 pesos
+presentación: Pieza · color surtido
+foto: escoba
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Fibra negra 3M
+id: l3
+precio: 26.5 pesos
+presentación: Pieza
+foto: fibra-negra
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Fibra verde 3M
+id: l4
+precio: 20 pesos
+presentación: Pieza
+foto: fibra-verde
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Fibra verde con esponja
+id: l5
+precio: 15 pesos
+presentación: Pieza
+foto: fibra-esponja
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Jabón líquido para trastes
+id: l6
+precio: 415.5 pesos
+presentación: Porrón de 20 litros
+foto: jabon-trastes-arba
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Microdyn para verduras
+id: l7
+precio: 161 pesos
+presentación: Botella de 500 ml
+foto: microdyn
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Pastilla para WC Wiese
+id: l8
+precio: 16 pesos
+presentación: Pieza · aroma surtido
+mayoreo: desde 5 piezas, 13.5 pesos
+foto: wiese-pastillas
+dibujo: caja
+descripción: Pastilla aromatizante para WC. El aroma es surtido y se entrega el que haya disponible; no se puede elegir.
+
+Porrón de cloro Génesis
+id: l9
+precio: 208.5 pesos
+presentación: Pieza
+foto: cloro-arba
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Porrón de desengrasante rojo
+id: l10
+precio: 355 pesos
+presentación: Pieza
+foto: desengrasante-rojo-arba
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Porrón de lavanda Génesis
+id: l11
+precio: 246.5 pesos
+presentación: Pieza
+foto: lavanda-multiusos
+dibujo: botella
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Shampoo Herbal Essences
+id: l12
+precio: 158.79 pesos
+presentación: Botella de 1 litro · aroma surtido
+foto: shampoo-herbal
+dibujo: botella
+descripción: Shampoo Herbal Essences de 1 litro. El aroma es surtido y se entrega el que haya disponible; no se puede elegir.
+
+Tela multiusos Magitel
+id: l13
+precio: 38 pesos
+presentación: Pieza
+foto: magitel
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Botanas ====================
+
+Botana Sabrisurtido
+id: b2
+precio: 482.34 pesos
+presentación: Caja con 35 piezas surtidas · 1.46 kg
+foto: sabrisurtido
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Cacahuate japonés
+id: b3
+precio: 106.5 pesos
+presentación: Bolsa de 1 kg
+foto: cacahuate-japones
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Arándano deshidratado
+id: b4
+precio: 170.5 pesos
+presentación: Bolsa de 1 kg
+foto: arandano
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Papa natural 500 g
+id: b5
+precio: 102.5 pesos
+presentación: Bolsa de 500 g
+foto: papa-natural
+dibujo: papas
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Barra Soft energética
+id: b6
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Galletas Canelitas
+id: b7
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Galletas Polvorones
+id: b8
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Galletas surtidas
+id: b9
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Repostería ====================
+
+Pay de manzana
+id: r1
+presentación: Hecho en casa · recién horneado
+etiqueta: Nuevo
+foto: pay-manzana
+dibujo: tortilla
+descripción: Pay de manzana hecho en casa y recién horneado. El individual es para 1 persona; el grande rinde 8 personas, ideal para compartir.
+opción: Individual · para 1 persona | 40 pesos
+opción: Grande · rinde 8 personas | 180 pesos
