@@ -1716,7 +1716,7 @@ dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Hojuela de papa para freír
-id: lb4
+id: lb49
 precio: cotizar
 presentación: Bolsa
 foto: hojuela-papa
