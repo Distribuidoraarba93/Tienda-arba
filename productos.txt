@@ -678,6 +678,7 @@ Margarina Country Crock 1.9 kg
 id: a34
 precio: 136.5 pesos
 presentación: Pieza
+foto: margarina-country-crock
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1074,14 +1075,16 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Paleta de chile Rockaleta
 id: b10
 precio: 148.35 pesos
-presentación: Bolsa con 25 paletas
+presentación: Bolsa con 25 paletas de 24 g
+foto: rockaleta
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Paletas surtidas Mix Fuego
+Paletas surtidas Vero Mix Banda Fuego
 id: b11
 precio: 142.6 pesos
-presentación: Bolsa de paletas surtidas
+presentación: Bolsa con 65 piezas · 940 g
+foto: mix-fuego
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1089,6 +1092,7 @@ Bubulubu Mini Ricolino
 id: b12
 precio: 123.05 pesos
 presentación: Bolsa de Bubulubu Mini
+foto: bubulubu-mini
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
