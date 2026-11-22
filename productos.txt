@@ -720,6 +720,7 @@ Pimienta negra molida McCormick
 id: a43
 precio: 148.5 pesos
 presentación: 510 g
+foto: pimienta-mccormick
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -815,6 +816,7 @@ Vinagre blanco La Costeña
 id: a56
 precio: 46.5 pesos
 presentación: 1 galón
+foto: vinagre-costena
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
