@@ -486,9 +486,10 @@ presentación: Caja
 foto: bowl-cafe
 dibujo: bowl
 descripción: Bowl café para sopas, ensaladas y comida para llevar.
-opción: 26 oz con tapa · 600 piezas | 3135.5 pesos
-opción: 32 oz · 600 piezas | 2398 pesos
-opción: 44 oz · 300 piezas | 1729 pesos
+opción: 26 oz con tapa · 600 piezas | 3231.62 pesos
+opción: 32 oz · 600 piezas | 2512.29 pesos
+opción: 44 oz · 300 piezas | 1773.36 pesos
+opción: 26 oz con tapa · 300 piezas | 1615.81 pesos
 
 Tapa para bowl
 id: e2
@@ -496,8 +497,8 @@ presentación: Caja
 foto: bowl-cafe
 dibujo: tapa
 descripción: Tapa para bowl café. Escoge el tamaño de tu bowl.
-opción: 32 oz · 600 piezas | 1574 pesos
-opción: 44 oz · 300 piezas | 946 pesos
+opción: 32 oz · 600 piezas | 1642.42 pesos
+opción: 44 oz · 300 piezas | 968.13 pesos
 
 Envase Primo 4 oz
 id: e3
@@ -605,7 +606,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Papel aluminio precortado
 id: x13
-precio: 201.5 pesos
+precio: 211.21 pesos
 presentación: 500 piezas
 dibujo: papel
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
@@ -805,11 +806,12 @@ descripción: Palillo en estuche individual, 1,000 piezas.
 
 Guante de nitrilo negro
 id: h3
-precio: 107.08 pesos
 presentación: Caja con 100 piezas
 foto: guante
 dibujo: guante
-descripción: Guante de nitrilo negro para cocina y manejo de alimentos.
+descripción: Guante de nitrilo negro para cocina y manejo de alimentos. Escoge la talla.
+opción: Grande · 100 piezas | 137.32 pesos
+opción: Mediano Skintex · 100 piezas | 176.89 pesos
 
 Gorro plisado (cofia negra)
 id: h4
