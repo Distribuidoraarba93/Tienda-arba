@@ -1065,7 +1065,8 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Galletas surtidas Paketines
 id: b9
 precio: 206.88 pesos
-presentación: Paquete de galletas surtidas
+presentación: Caja con 14 paketines · 1 kg
+foto: paketines
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
