@@ -1467,14 +1467,6 @@ opción: Codito | 154.44 pesos
 opción: Fideos con chile 82 g | 156.32 pesos
 opción: Coditos con chile 82 g | 156.32 pesos
 
-Arroz preparado 160 g por caja
-id: lb44
-presentación: Caja con 12 piezas de 160 g
-dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Primavera | 296.73 pesos
-opción: Mexicana | 296.73 pesos
-
 
 ==================== Bebidas ====================
 
