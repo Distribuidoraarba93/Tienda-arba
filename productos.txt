@@ -663,16 +663,16 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Jugo sazonador Maggi
 id: a59
 precio: 534.75 pesos
-presentación: Caja con 4 garrafas de 1.9 litros
+presentación: Garrafa de 1.9 litros
 dibujo: botella
-descripción: Caja con 4 garrafas de 1.9 litros de jugo sazonador Maggi, ideal para restaurantes, taquerías y cocinas. Pídelo y te confirmamos disponibilidad por WhatsApp.
+descripción: Garrafa de 1.9 litros de jugo sazonador Maggi, ideal para restaurantes, taquerías y cocinas. Pídelo y te confirmamos disponibilidad por WhatsApp.
 
 Salsa inglesa Crosse & Blackwell
 id: a60
 precio: 350.75 pesos
-presentación: Caja con 4 garrafas de 1.9 litros
+presentación: Garrafa de 1.9 litros
 dibujo: botella
-descripción: Caja con 4 garrafas de 1.9 litros de salsa inglesa Crosse & Blackwell, ideal para restaurantes, marisquerías y cocinas. Pídelo y te confirmamos disponibilidad por WhatsApp.
+descripción: Garrafa de 1.9 litros de salsa inglesa Crosse & Blackwell, ideal para restaurantes, marisquerías y cocinas. Pídelo y te confirmamos disponibilidad por WhatsApp.
 
 Margarina Country Crock 1.9 kg
 id: a34
