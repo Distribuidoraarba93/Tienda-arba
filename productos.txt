@@ -293,19 +293,13 @@ foto: envase-primo
 dibujo: tapa
 descripción: Tapa que le queda al envase Primo #3 y #4.
 
-Envase térmico 1 litro Reyma
+Envase térmico Reyma
 id: x9
-precio: 524.5 pesos
-presentación: Caja 20/15
+presentación: Caja · escoge 1/2 litro o 1 litro
 dibujo: envase
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Envase térmico 1/2 litro Reyma
-id: x10
-precio: 480 pesos
-presentación: Caja 20/25
-dibujo: envase
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Envase térmico Reyma para sopas, caldos, menudo y bebidas calientes. Escoge el tamaño: 1/2 litro o 1 litro. Pídelo y te confirmamos disponibilidad por WhatsApp.
+opción: 1/2 litro · caja 20/25 | 480 pesos
+opción: 1 litro · caja 20/15 | 524.5 pesos
 
 Tapa para envase térmico Reyma
 id: x11
