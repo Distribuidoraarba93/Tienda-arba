@@ -205,13 +205,6 @@ opción: #12 · 40/25 piezas | 598.75 pesos
 opción: #14 · 20/25 piezas | 458.86 pesos
 opción: #16 · 25/20 piezas | 516.89 pesos
 
-Tapa para vaso térmico #8
-id: v2
-precio: 360 pesos
-presentación: Caja completa
-dibujo: tapa
-descripción: Tapa para vaso térmico #8.
-
 Vaso EU
 id: v3
 presentación: Caja
@@ -240,21 +233,6 @@ presentación: Caja 40/25
 dibujo: vasoEU
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Tapa para vaso PL 4A/8 lisa Reyma
-id: x7
-precio: 373.5 pesos
-presentación: Caja con 1,000 piezas (20 bolsas de 50)
-foto: tapa-4a8
-dibujo: tapa
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Tapa PL #7, 8, 10 y 12
-id: x8
-precio: 537 pesos
-presentación: Caja 20/50
-dibujo: tapa
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
 
 ==================== Bowls y envases ====================
 
@@ -268,15 +246,6 @@ opción: 26 oz con tapa · 600 piezas | 3135.5 pesos
 opción: 32 oz · 600 piezas | 2398 pesos
 opción: 44 oz · 300 piezas | 1729 pesos
 
-Tapa para bowl
-id: e2
-presentación: Caja
-foto: bowl
-dibujo: tapa
-descripción: Tapa para bowl café.
-opción: 32 oz · 600 piezas | 1574 pesos
-opción: 44 oz · 300 piezas | 946 pesos
-
 Envase Primo 4 oz
 id: e3
 precio: 596 pesos
@@ -284,14 +253,6 @@ presentación: Caja con 1,200 piezas
 foto: envase-primo
 dibujo: envase
 descripción: Envase de 4 onzas para salsas, aderezos y porciones.
-
-Tapa para envase Primo #3 y #4
-id: e4
-precio: 427 pesos
-presentación: Caja con 1,200 piezas
-foto: envase-primo
-dibujo: tapa
-descripción: Tapa que le queda al envase Primo #3 y #4.
 
 Envase térmico Reyma
 id: x9
@@ -302,13 +263,19 @@ descripción: Envase térmico Reyma para sopas, caldos, menudo y bebidas calient
 opción: 1/2 litro · caja 20/25 | 480 pesos
 opción: 1 litro · caja 20/15 | 524.5 pesos
 
-Tapa para envase térmico Reyma
+Tapas
 id: x11
-precio: 350 pesos
-presentación: Caja 20/25
+presentación: Escoge la tapa que necesitas
 foto: tapa-reyma
 dibujo: tapa
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Todas nuestras tapas en un solo lugar. Al escoger la opción ves si es tapa térmica (unicel) o tapa plástica y para qué vaso o envase es. Pídelo y te confirmamos disponibilidad por WhatsApp.
+opción: Térmica · para envase térmico Reyma 1/2 y 1 litro · caja 20/25 | 350 pesos | foto tapa-reyma
+opción: Plástica · para vaso térmico #8 · caja completa | 360 pesos | foto tapa-4a8
+opción: Plástica · lisa Reyma para vaso PL 4A/8 · caja 1,000 piezas | 373.5 pesos | foto tapa-4a8
+opción: Plástica · para vaso PL #7, 8, 10 y 12 · caja 20/50 | 537 pesos | foto tapa-4a8
+opción: Plástica · para bowl 32 oz · 600 piezas | 1574 pesos | foto bowl
+opción: Plástica · para bowl 44 oz · 300 piezas | 946 pesos | foto bowl
+opción: Plástica · para envase Primo #3 y #4 · 1,200 piezas | 427 pesos | foto envase-primo
 
 
 ==================== Servilletas y empaque ====================
