@@ -1914,7 +1914,7 @@ opción: Tornillo · 15 kg | 583.26 pesos
 Pasta para fritura Palmex (para freír)
 id: lb27
 presentación: Bulto a granel
-foto: hojuela-papa
+foto: palmex-surtido
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Hojuela de papa · 6 kg | 1034.85 pesos | foto hojuela-papa
