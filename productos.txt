@@ -296,6 +296,7 @@ descripción: Tapa que le queda al envase Primo #3 y #4.
 Envase térmico Reyma
 id: x9
 presentación: Caja · escoge 1/2 litro o 1 litro
+foto: envase-reyma
 dibujo: envase
 descripción: Envase térmico Reyma para sopas, caldos, menudo y bebidas calientes. Escoge el tamaño: 1/2 litro o 1 litro. Pídelo y te confirmamos disponibilidad por WhatsApp.
 opción: 1/2 litro · caja 20/25 | 480 pesos
@@ -305,6 +306,7 @@ Tapa para envase térmico Reyma
 id: x11
 precio: 350 pesos
 presentación: Caja 20/25
+foto: tapa-reyma
 dibujo: tapa
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -382,6 +384,7 @@ Servilleta Dalia interdoblada blanca
 id: x22
 precio: 414 pesos
 presentación: 12/250 piezas
+foto: servilleta-dalia
 dibujo: servilleta
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -389,6 +392,7 @@ Toalla interdoblada blanca Dalia
 id: x23
 precio: 414 pesos
 presentación: 12/250
+foto: toalla-interdoblada
 dibujo: servilleta
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -396,6 +400,7 @@ Toalla en rollo café Dalia
 id: x24
 precio: 60.5 pesos
 presentación: Rollo
+foto: toalla-rollo-cafe
 dibujo: rollo
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
