@@ -1918,7 +1918,7 @@ foto: palmex-surtido
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Hojuela de papa · 6 kg | 1034.85 pesos | foto hojuela-papa
-opción: Parrilla · 15 kg | 793.88 pesos
+opción: Parrilla · 15 kg | 793.88 pesos | foto parrilla
 opción: Mini rueda · 15 kg | 793.88 pesos | foto minirueda
 opción: Zarape · 20 kg | 1058.49 pesos | foto zarape
 opción: Rotini · 20 kg | 1058.49 pesos | foto rotini
