@@ -1747,9 +1747,10 @@ opción: Enchilado | 73.15 pesos
 Chetos Totis 3 kg
 id: lb8
 presentación: Bolsa de 3 kg
+foto: chetotis-3kg
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Chetotis | 251.98 pesos
+opción: Chetotis | 251.98 pesos | foto chetotis-3kg
 opción: Cheto Hot Explosion | 251.98 pesos
 
 Chetos Totis 400 g
@@ -1813,12 +1814,14 @@ Totis Totopos 1 kg
 id: lb15
 precio: 220.11 pesos
 presentación: Caja con 3 bolsas de 1 kg
+foto: totopos-1kg
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Totis Totopos 120 g
 id: lb16
 presentación: Caja con 40 bolsas de 120 g
+foto: totopos-120
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Hot chili | 545.79 pesos
@@ -1829,6 +1832,7 @@ Totis Twisters queso y chile 100 g
 id: lb17
 precio: 545.79 pesos
 presentación: Caja con 40 bolsas de 100 g
+foto: twisters
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1836,6 +1840,7 @@ Totis Bolings queso y chile 80 g
 id: lb18
 precio: 506.48 pesos
 presentación: Caja con 40 bolsas de 80 g
+foto: bolings
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1843,6 +1848,7 @@ Totis Tubix chile 37 g
 id: lb19
 precio: 555.9 pesos
 presentación: 5 tiras de 25 bolsas de 37 g
+foto: tubix
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1850,6 +1856,7 @@ Cacahuate japonés Nipon (tiras)
 id: lb20
 precio: 1258.27 pesos
 presentación: 12 tiras de 20 piezas
+foto: nipon
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1896,6 +1903,7 @@ Waffer Natta 62 g
 id: lb25
 precio: 288.44 pesos
 presentación: Caja con 16 piezas de 62 g
+foto: waffer-natta
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
@@ -1955,6 +1963,7 @@ Chechi Fresco Gonac 140 ml
 id: lb28
 precio: 111.64 pesos
 presentación: Caja con 24 piezas de 140 ml
+foto: chechi-fresco
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
