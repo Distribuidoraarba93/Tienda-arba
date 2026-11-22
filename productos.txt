@@ -842,14 +842,6 @@ foto: cuchara
 dibujo: palillo
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Tenedor plástico blanco
-id: x27
-precio: 167 pesos
-presentación: Caja con 1,000 piezas
-foto: tenedor
-dibujo: palillo
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
 Cucharas desechables
 id: dp19
 presentación: Caja
