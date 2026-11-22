@@ -221,6 +221,7 @@ opción: Bio beige | 261.36 pesos | foto charola-beige
 Charolas de unicel Reyma
 id: dp4
 presentación: Caja
+foto: charola-9d
 dibujo: charola
 descripción: Charolas de unicel Reyma. Escoge el modelo.
 opción: La Taquera · 500 piezas (10/50) | 196.02 pesos
@@ -250,6 +251,7 @@ opción: #8 hondo biodegradable | 616.81 pesos
 Domos y bases de plástico transparente
 id: dp6
 presentación: Caja
+foto: domo-pastel
 dibujo: contenedorN
 descripción: Domos de plástico transparente Reyma para pasteles, postres, ensaladas y comida para llevar. Escoge el modelo.
 opción: RB-100 · 250 piezas | 537.11 pesos
@@ -268,6 +270,7 @@ opción: R-550 · 50 piezas | 1051.99 pesos
 Bisagras de plástico transparente
 id: dp7
 presentación: Caja
+foto: bisagra
 dibujo: contenedorN
 descripción: Contenedores de plástico transparente con tapa (bisagra) para comida, postres y fruta.
 opción: 1110-41 tapa baja · 250 piezas | 514.13 pesos
@@ -660,6 +663,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Bolsa camiseta por caja
 id: dp24
 presentación: Caja · escoge tipo, medida y caja
+foto: bolsa-camiseta
 dibujo: bolsa
 descripción: Bolsa tipo camiseta por caja cerrada. Escoge tipo, medida y tamaño de caja.
 opción: Poliseda chica · caja 25 kg | 2128.48 pesos
@@ -738,6 +742,7 @@ opción: 14 a la 90 · caja 10 kg | 799.77 pesos
 Bolsa para basura
 id: dp26
 presentación: Escoge medida y presentación
+foto: bolsa-basura
 dibujo: bolsa
 descripción: Bolsa negra para basura, por caja o en rollo.
 opción: 50x70 · caja 25 kg | 1299.3 pesos
@@ -760,6 +765,7 @@ opción: Rollo económico 90x120 · 20 piezas | 742.7 pesos
 Rollo de bolsa camiseta biodegradable
 id: dp27
 presentación: Pieza (rollo)
+foto: bolsa-camiseta
 dibujo: rollo
 descripción: Rollo de bolsa camiseta poliseda biodegradable, por pieza.
 opción: Mini | 197.6 pesos
