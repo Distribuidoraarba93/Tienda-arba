@@ -1718,7 +1718,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Hojuela de papa para freír
 id: lb49
 precio: cotizar
-presentación: Bolsa
+presentación: Bolsa de 6 kg
 foto: hojuela-papa
 dibujo: papas
 descripción: Hojuela de papa natural lista para freír. Pídela y te confirmamos precio y disponibilidad por WhatsApp.
