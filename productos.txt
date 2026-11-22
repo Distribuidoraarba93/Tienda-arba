@@ -1945,10 +1945,10 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Bubulubu Mini Ricolino
 id: b12
 precio: 123.05 pesos
-presentación: Bolsa de Bubulubu Mini
+presentación: Bolsa con 25 piezas
 foto: bubulubu-mini
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Bolsa de Bubulubu Mini de Ricolino con 25 piezas.
 
 Chechi Fresco Gonac 140 ml
 id: lb28
