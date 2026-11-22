@@ -1715,14 +1715,6 @@ presentación: Paquete con 18 piezas
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Hojuela de papa para freír
-id: lb49
-precio: cotizar
-presentación: Bolsa de 6 kg
-foto: hojuela-papa
-dibujo: papas
-descripción: Hojuela de papa natural lista para freír. Pídela y te confirmamos precio y disponibilidad por WhatsApp.
-
 Fritura de harina Balón
 id: lb4
 precio: 28.44 pesos
@@ -1924,9 +1916,9 @@ id: lb27
 presentación: Bulto a granel
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Hojuela de papa · 6 kg | 1034.85 pesos
+opción: Hojuela de papa · 6 kg | 1034.85 pesos | foto hojuela-papa
 opción: Parrilla · 15 kg | 793.88 pesos
-opción: Mini rueda · 15 kg | 793.88 pesos
+opción: Mini rueda · 15 kg | 793.88 pesos | foto minirueda
 opción: Zarape · 20 kg | 1058.49 pesos
 opción: Rotini · 20 kg | 1058.49 pesos
 opción: Anillo · 20 kg | 1058.49 pesos
