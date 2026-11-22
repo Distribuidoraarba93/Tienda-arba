@@ -470,6 +470,13 @@ opción: #10 plástico · 20/50 piezas | 899.09 pesos
 opción: #16L plástico · 40/25 piezas | 1552.5 pesos
 opción: #32 EU · 20/25 piezas | 1463.64 pesos
 
+Vaso Primo #0
+id: lb47
+precio: 430 pesos
+presentación: Caja con 2,000 piezas (20/100)
+dibujo: vaso
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
 
 ==================== Bowls y envases ====================
 
@@ -812,6 +819,13 @@ foto: cofia
 dibujo: cofia
 descripción: Cofia negra plisada para cocina, paquete de 100 piezas.
 
+Mandil blanco de polietileno
+id: lb45
+precio: 121.66 pesos
+presentación: Caja con 100 piezas
+dibujo: bolsa
+descripción: Mandil desechable de plástico blanco para cocina y manejo de alimentos.
+
 Cubrebocas tricapa negro
 id: x25
 precio: 53.5 pesos
@@ -852,6 +866,14 @@ opción: Sopera blanca económica · 1,000 piezas | 555.77 pesos
 opción: Chica biodegradable · 3,000 piezas | 880.74 pesos
 opción: Mediana biodegradable · 1,000 piezas | 553.31 pesos
 opción: Sopera biodegradable · 1,000 piezas | 685.19 pesos
+opción: Grande Reynbow · 1,000 piezas (40/25) | 467.07 pesos
+
+Cuchara-tenedor (spork)
+id: lb46
+precio: 293.28 pesos
+presentación: Caja con 1,000 piezas (40/25)
+dibujo: palillo
+descripción: Cuchara y tenedor en una sola pieza, de plástico desechable.
 
 Tenedores desechables
 id: dp20
