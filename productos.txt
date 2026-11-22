@@ -438,10 +438,11 @@ opción: 1 litro | 1417.89 pesos
 Vaso y envase térmico Dart
 id: dp16
 presentación: Caja
+foto: vaso-dart
 dibujo: vaso
 descripción: Vasos y envases de unicel marca Dart.
 opción: Vaso 6J6 · 40/25 piezas | 482.92 pesos
-opción: Vaso 10J10 · 40/25 piezas | 668.7 pesos
+opción: Vaso 10J10 · 40/25 piezas | 668.7 pesos | foto vaso-dart
 opción: Vaso 16J16 · 25/20 piezas | 566.79 pesos
 opción: Envase 16MJ32 · 20/25 piezas | 549.31 pesos
 opción: Envase 32J32 · 20/15 piezas | 642.16 pesos
@@ -1761,6 +1762,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Donitas Totis (bulto)
 id: lb10
 presentación: Bulto 10/25 piezas
+foto: donitas-totis
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Sal y limón | 533.75 pesos
@@ -1769,6 +1771,7 @@ opción: Con chile | 533.75 pesos
 Donitas Totis 55 g
 id: lb11
 presentación: Caja con 40 bolsas de 55 g
+foto: donitas-totis
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Sal y limón | 506.47 pesos
@@ -1777,31 +1780,34 @@ opción: Chile | 506.47 pesos
 Top Tops Totis 40 g (8 tiras)
 id: lb12
 presentación: 8 tiras de 10 bolsas de 40 g
+foto: toptops-salsanegra
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Salsa negra | 546.58 pesos
+opción: Salsa negra | 546.58 pesos | foto toptops-salsanegra
 opción: Hot chili | 546.58 pesos
-opción: Nacho | 546.58 pesos
+opción: Nacho | 546.58 pesos | foto toptops-nacho
 
 Top Tops Totis 40 g (caja de 30)
 id: lb13
 presentación: Caja con 30 bolsas de 40 g
+foto: toptops-nacho
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Hot chili | 208.3 pesos
-opción: Nacho | 208.3 pesos
-opción: Salsa negra | 208.3 pesos
+opción: Nacho | 208.3 pesos | foto toptops-nacho
+opción: Salsa negra | 208.3 pesos | foto toptops-salsanegra
 
 Totis Papitas 90 g
 id: lb14
 presentación: Caja con 40 bolsas de 90 g
+foto: papitas-sal
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-opción: Sal | 736.02 pesos
-opción: Hot | 736.02 pesos
+opción: Sal | 736.02 pesos | foto papitas-sal
+opción: Hot | 736.02 pesos | foto papitas-hot
 opción: Adobo | 736.02 pesos
 opción: Salsa picante | 736.02 pesos
-opción: Sabor elote | 736.02 pesos
+opción: Sabor elote | 736.02 pesos | foto papitas-elote
 
 Totis Totopos 1 kg
 id: lb15
@@ -1850,10 +1856,11 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Kiubo-re Mix Gonac 42 g
 id: lb21
 presentación: 8 tiras de 10 bolsas de 42 g
+foto: kiubo-remix
 dibujo: papas
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 opción: Mix | 448.75 pesos
-opción: Queso | 448.75 pesos
+opción: Queso | 448.75 pesos | foto kiubo-remix
 opción: Explosión | 448.75 pesos
 
 Galletas Marianitas
