@@ -1922,7 +1922,7 @@ opción: Parrilla · 15 kg | 793.88 pesos | foto parrilla
 opción: Mini rueda · 15 kg | 793.88 pesos | foto minirueda
 opción: Zarape · 20 kg | 1058.49 pesos | foto zarape
 opción: Rotini · 20 kg | 1058.49 pesos | foto rotini
-opción: Anillo · 20 kg | 1058.49 pesos
+opción: Anillo · 20 kg | 1058.49 pesos | foto anillo
 
 
 ==================== Dulces ====================
