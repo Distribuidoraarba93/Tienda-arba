@@ -33,10 +33,10 @@ Combo Burrero
 id: k1
 precio: 639 pesos
 presentación: 10 paquetes de tortilla para burrito + polipapel 30x30 (caja de 5 kg) + bolsa camiseta mediana (1 kg)
-etiqueta: Ahorras 31 pesos
+etiqueta: Ahorras 45 pesos
 foto: tortilla-burrito
 dibujo: tortilla
-descripción: Todo lo que necesita tu burrería o lonchera: 10 paquetes de tortillas de harina para burrito Los 2 Carnales (todas del mismo tamaño), una caja de polipapel grado alimenticio 30x30 de 5 kg y 1 kg de bolsa camiseta mediana. Por separado cuesta 670 pesos con 27 centavos; en combo pagas 639 pesos.
+descripción: Todo lo que necesita tu burrería o lonchera: 10 paquetes de tortillas de harina para burrito Los 2 Carnales (todas del mismo tamaño), una caja de polipapel grado alimenticio 30x30 de 5 kg y 1 kg de bolsa camiseta mediana. Por separado cuesta 684 pesos con 95 centavos; en combo pagas 639 pesos.
 
 Combo Navideño 🎄
 id: k2
@@ -116,9 +116,9 @@ presentación: Liso o con división · 200 piezas
 foto: cont-blanco
 dibujo: contenedor
 descripción: Contenedor blanco con bisagra para comida para llevar. Pídelo liso o con división.
-opción: 7x7 | 334 pesos
-opción: 8x8 | 495.96 pesos
-opción: 9x9 | 562.95 pesos
+opción: 7x7 | 394.66 pesos
+opción: 8x8 | 500.51 pesos
+opción: 9x9 | 555.39 pesos
 
 Contenedor negro
 id: c2
@@ -126,8 +126,8 @@ presentación: Liso o con división · 200 piezas
 foto: cont-negro
 dibujo: contenedorN
 descripción: Contenedor negro con bisagra, se ve elegante para tus platillos.
-opción: 8x8 | 562.96 pesos
-opción: 9x9 | 602.85 pesos
+opción: 8x8 | 565.86 pesos
+opción: 9x9 | 627.27 pesos
 
 Contenedor para hamburguesa
 id: c3
@@ -136,8 +136,8 @@ foto: ham-beige
 dibujo: contenedor
 descripción: Contenedor para hamburguesa en tres colores.
 opción: Bio beige | 398.57 pesos | foto ham-beige
-opción: Negro (500 piezas) | 525.96 pesos | foto ham-negro
-opción: Blanco (500 piezas) | 476.95 pesos | foto ham-blanco
+opción: Negro (500 piezas) | 567.16 pesos | foto ham-negro
+opción: Blanco (500 piezas) | 501.81 pesos | foto ham-blanco
 
 Charola #066
 id: c4
@@ -145,8 +145,8 @@ presentación: 500 piezas
 foto: charola-beige
 dibujo: charola
 descripción: Charola para comida en color bio beige o blanca.
-opción: Bio beige | 187.78 pesos | foto charola-beige
-opción: Blanca | 167.68 pesos | foto charola-blanca
+opción: Bio beige | 194.72 pesos | foto charola-beige
+opción: Blanca | 155.51 pesos | foto charola-blanca
 
 Charola León 835
 id: c5
@@ -166,7 +166,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Botanero base y domo 31 cm
 id: x2
-precio: 1171 pesos
+precio: 1271.51 pesos
 presentación: Caja con 50 piezas (base con domo)
 foto: botanero
 dibujo: contenedor
@@ -188,6 +188,129 @@ foto: pavera-chica
 dibujo: charola
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
+Contenedor biodegradable
+id: dp1
+presentación: Caja con 200 piezas (4/50)
+foto: ham-beige
+dibujo: contenedor
+descripción: Contenedores de unicel biodegradable, color beige. Escoge medida; liso o con división.
+opción: 7x7 con división | 480.91 pesos
+opción: 8x8 liso | 608.98 pesos
+opción: 8x8 con división | 608.98 pesos
+opción: 9x9 liso | 674.31 pesos
+opción: 9x9 con división | 674.31 pesos
+
+Contenedor para hot dog y sándwich
+id: dp2
+presentación: Caja
+dibujo: contenedor
+descripción: Contenedores de unicel para hot dog, hoagie (sándwich largo) y #965.
+opción: Hot dog · 500 piezas (4/125) | 444.31 pesos
+opción: Hoagie · 200 piezas (2/100) | 296.64 pesos
+opción: #965 · 200 piezas (2/100) | 317.56 pesos
+
+Charola #855
+id: dp3
+presentación: Caja con 500 piezas (10/50)
+dibujo: charola
+descripción: Charola de unicel #855.
+opción: Blanca | 211.7 pesos | foto charola-blanca
+opción: Bio beige | 261.36 pesos | foto charola-beige
+
+Charolas de unicel Reyma
+id: dp4
+presentación: Caja
+dibujo: charola
+descripción: Charolas de unicel Reyma. Escoge el modelo.
+opción: La Taquera · 500 piezas (10/50) | 196.02 pesos
+opción: #002 · 500 piezas (10/50) | 394.66 pesos
+opción: #007 · 500 piezas (10/50) | 546.25 pesos
+opción: 9H blanca · 200 piezas | 518.81 pesos
+opción: 9H negra · 200 piezas | 585.45 pesos
+
+Platos de unicel
+id: dp5
+presentación: Caja con 500 piezas
+dibujo: charola
+descripción: Platos de unicel Reyma. Escoge medida y tipo (liso, hondo o con división).
+opción: #4 hondo | 185.56 pesos
+opción: #6 liso | 279.66 pesos
+opción: #6 hondo | 294.03 pesos
+opción: #8 liso | 538.41 pesos
+opción: #8 hondo | 507.05 pesos
+opción: #8 con división | 538.41 pesos
+opción: #9 con división | 527.95 pesos
+opción: #10 liso | 606.36 pesos
+opción: #10 hondo | 556.7 pesos
+opción: #10 con división | 606.36 pesos
+opción: #8 hondo biodegradable | 616.81 pesos
+
+Domos y bases de plástico transparente
+id: dp6
+presentación: Caja
+dibujo: contenedorN
+descripción: Domos de plástico transparente Reyma para pasteles, postres, ensaladas y comida para llevar. Escoge el modelo.
+opción: RB-100 · 250 piezas | 537.11 pesos
+opción: RB-110 · 250 piezas | 1144.77 pesos
+opción: RB-120 · 250 piezas | 1369.55 pesos
+opción: RB-130 · 250 piezas | 1391.76 pesos
+opción: RB-140 · 250 piezas | 1380 pesos
+opción: RB-170 · 250 piezas | 1380 pesos
+opción: RB-180 · 250 piezas | 734.44 pesos
+opción: R-10 · 100 piezas (4/25) | 581.53 pesos
+opción: R-500 con base negra · 100 piezas (2/50) | 1063.75 pesos
+opción: R-520 con base negra · 100 piezas (2/50) | 1204.89 pesos
+opción: R-530 con base negra · 50 piezas | 1031.08 pesos
+opción: R-550 · 50 piezas | 1051.99 pesos
+
+Bisagras de plástico transparente
+id: dp7
+presentación: Caja
+dibujo: contenedorN
+descripción: Contenedores de plástico transparente con tapa (bisagra) para comida, postres y fruta.
+opción: 1110-41 tapa baja · 250 piezas | 514.13 pesos
+opción: 1110-43 tapa baja · 250 piezas | 514.1 pesos
+opción: 0909-42 · 250 piezas | 494.26 pesos
+opción: 1312-44 · 250 piezas | 538.68 pesos
+opción: 1414-A para hamburguesa · 500 piezas | 1611.51 pesos
+opción: 1414-B · 500 piezas | 1514.07 pesos
+opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
+
+Domo para ensalada 17x6 con tapa
+id: dp8
+precio: 1149.89 pesos
+presentación: Caja con 150 piezas
+dibujo: contenedorN
+descripción: Domo de plástico transparente para ensalada, 17 x 6 cm, con tapa.
+
+Charola botanera transparente
+id: dp9
+precio: 2158.27 pesos
+presentación: Caja con 100 piezas
+dibujo: charola
+descripción: Charola de plástico transparente para botanas.
+
+Charola redonda de plástico Primo
+id: dp10
+presentación: Escoge paquete o caja
+dibujo: charola
+descripción: Charolas redondas de plástico para pasteles, carnes frías y botanas.
+opción: #12 · paquete de 10 | 71.42 pesos
+opción: #14 · paquete de 10 | 95.09 pesos
+opción: #20 · paquete de 10 | 179.91 pesos
+opción: #12 · caja 30/10 | 2142.37 pesos
+opción: #14 · caja 25/10 | 2377.18 pesos
+opción: #20 · caja 10/10 | 1799.08 pesos
+
+Aluminio para pay y tartaleta
+id: dp11
+presentación: Caja
+dibujo: charola
+descripción: Platos y moldes de aluminio desechables.
+opción: Plato para pay 9" · 300 piezas | 2775.95 pesos
+opción: Domo para plato de pay 9" · 300 piezas | 1043.29 pesos
+opción: Molde para tartaleta AL-09 · 1,000 piezas | 1402.49 pesos
+
 
 ==================== Vasos ====================
 
@@ -197,13 +320,14 @@ presentación: Caja
 foto: vaso-termico
 dibujo: vaso
 descripción: Vaso térmico para café y bebidas calientes. Escoge el número.
-opción: #4 · 40/25 piezas | 458.86 pesos
-opción: #6 · 40/25 piezas | 474.67 pesos
-opción: #8 · 40/25 piezas | 536.86 pesos
-opción: #10 · 40/25 piezas | 589.95 pesos
-opción: #12 · 40/25 piezas | 598.75 pesos
-opción: #14 · 20/25 piezas | 458.86 pesos
-opción: #16 · 25/20 piezas | 516.89 pesos
+opción: #4 · 40/25 piezas | 458.69 pesos
+opción: #6 · 40/25 piezas | 476.99 pesos
+opción: #8 · 40/25 piezas | 544.94 pesos
+opción: #10 · 40/25 piezas | 632.5 pesos
+opción: #12 · 40/25 piezas | 640.34 pesos
+opción: #14 · 20/25 piezas | 457.39 pesos
+opción: #16 · 25/20 piezas | 525.34 pesos
+opción: #12A · 40/25 piezas | 683.47 pesos
 
 Vaso EU
 id: v3
@@ -211,16 +335,16 @@ presentación: Caja
 foto: vaso-eu
 dibujo: vasoEU
 descripción: Vaso desechable EU en varios tamaños.
-opción: #10EU · 20/50 piezas | 1181.86 pesos
-opción: #12EU · 20/50 piezas | 1183.67 pesos
-opción: #14EU · 20/50 piezas | 1200 pesos
-opción: #16EU · 20/50 piezas | 1312.09 pesos
-opción: #32EU · 20/25 piezas | 1025.24 pesos
-opción: #16EU rojo · 20/25 piezas | 752.75 pesos | foto vaso-eu-rojo
+opción: #10EU · 20/50 piezas | 1381.31 pesos
+opción: #12EU · 20/50 piezas | 1380 pesos
+opción: #14EU · 20/50 piezas | 1380 pesos
+opción: #16EU · 20/50 piezas | 1539.44 pesos
+opción: #32EU · 20/25 piezas | 1193.13 pesos
+opción: #16EU rojo · 20/25 piezas | 795.86 pesos | foto vaso-eu-rojo
 
 Vaso PL #8
 id: x5
-precio: 469 pesos
+precio: 577.61 pesos
 presentación: 20/50 · 1,000 piezas
 foto: vaso-pl8
 dibujo: vasoEU
@@ -228,7 +352,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Vaso tipo cristal
 id: x6
-precio: 1538.5 pesos
+precio: 1668.66 pesos
 presentación: Caja 40/25
 dibujo: vasoEU
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
@@ -239,10 +363,112 @@ presentación: Escoge para qué vaso o envase
 foto: tapa-4a8
 dibujo: tapa
 descripción: Tapas plásticas para vasos y envases. Escoge la opción según el vaso o envase que usas. Pídelo y te confirmamos disponibilidad por WhatsApp.
-opción: Para vaso térmico #8 · caja completa | 360 pesos
-opción: Lisa Reyma para vaso PL 4A/8 · caja 1,000 piezas | 373.5 pesos
-opción: Para vaso PL #7, 8, 10 y 12 · caja 20/50 | 537 pesos
+opción: Para vaso térmico #8 · caja completa | 452.16 pesos
+opción: Lisa Reyma para vaso PL 4A/8 · caja 1,000 piezas | 475.69 pesos
+opción: Para vaso PL #7, 8, 10 y 12 · caja 20/50 | 571.54 pesos
 opción: Para envase Primo #3 y #4 · 1,200 piezas | 427 pesos | foto envase-primo
+opción: Lisa para vaso PL 5.5 y 4CH · caja 20/50 | 416.88 pesos
+opción: Lisa para vaso PL #10 · caja 20/50 | 524.03 pesos
+opción: Lisa para vaso PL #12 y #14 · caja 20/50 | 629.89 pesos
+opción: Con ranura para vaso PL #16 · caja 20/50 | 683.47 pesos
+opción: Lisa para envase plástico 1/4, 1/2 y 1 litro · caja 20/25 | 656.02 pesos
+opción: Lisa para vaso térmico 4CH y #6 · caja 20/50 | 386.81 pesos
+opción: Lisa para vaso térmico 4A y #12 · caja 20/50 | 507.05 pesos
+opción: Lisa para vaso térmico #10 · caja 20/50 | 492.67 pesos
+opción: Con ranura para vaso térmico #14, 16 y 20 · caja 20/50 | 534.49 pesos
+opción: Lisa para envase térmico 1 y 1/2 litro · caja 20/25 | 450.86 pesos
+opción: Domo con ranura para vaso EU · caja 20/50 | 737.05 pesos
+opción: Plana con ranura para vaso EU · caja 20/50 | 690 pesos
+opción: Con ranura para vaso 32 EU · caja 20/25 | 508.36 pesos
+
+Vaso plástico desechable
+id: dp12
+presentación: Caja
+foto: vaso-pl8
+dibujo: vaso
+descripción: Vasos de plástico desechable. Escoge el número (onzas aproximadas).
+opción: 4A · 20/50 piezas | 496.59 pesos
+opción: 4CH · 20/50 piezas | 435.17 pesos
+opción: 5 1/2 · 20/50 piezas | 418.19 pesos
+opción: 5A · 20/50 piezas | 567.16 pesos
+opción: #6 · 20/50 piezas | 505.74 pesos
+opción: #7 · 20/50 piezas | 505.74 pesos
+opción: #10 · 20/50 piezas | 722.67 pesos
+opción: #10 ligero · 20/50 piezas | 464.2 pesos
+opción: #12 · 20/50 piezas | 786.7 pesos
+opción: #14 · 20/50 piezas | 798.47 pesos
+opción: #16 · 40/25 piezas | 1233.64 pesos
+opción: #16L · 40/25 piezas | 1267.61 pesos
+opción: #7 Solo Cup · 20/50 piezas | 2500.43 pesos
+
+Vasitos de plástico para salsa (soufflé)
+id: dp13
+presentación: Caja
+dibujo: vaso
+descripción: Vasitos chicos para salsa, aderezos y muestras.
+opción: #0 · 2,000 piezas (20/100) | 477.78 pesos
+opción: 1 oz · 1,800 piezas (18/100) | 568.68 pesos
+opción: 2 oz · 1,000 piezas | 515.19 pesos
+opción: 2 oz · 1,200 piezas (12/100) | 397.79 pesos
+opción: 2 oz negro · 1,200 piezas (12/100) | 463.11 pesos
+
+Tapa para vasito de salsa
+id: dp14
+presentación: Caja
+dibujo: tapa
+descripción: Tapas para vasitos de salsa.
+opción: Para vasito #0 · 2,000 piezas (40/50) | 330.35 pesos
+opción: Para vasito 1 oz · 1,800 piezas | 373.27 pesos
+opción: Para vasito 2 oz · 1,000 piezas | 403.33 pesos
+opción: Para vasito 2 oz · 1,200 piezas (12/100) | 430.88 pesos
+opción: Para vasito 2 oz PET · 1,200 piezas | 243.44 pesos
+opción: Para vasito 2 oz · 2,500 piezas (20/125) | 619.24 pesos
+
+Envase de plástico Reyma
+id: dp15
+presentación: Caja 20/25 (500 piezas)
+foto: envase-reyma
+dibujo: envase
+descripción: Envases de plástico para sopa, frijoles, salsas y postres. La tapa se vende aparte (Tapas plásticas).
+opción: 1/4 litro | 789.31 pesos
+opción: 1/2 litro | 1012.78 pesos
+opción: 1 litro | 1417.89 pesos
+
+Vaso y envase térmico Dart
+id: dp16
+presentación: Caja
+dibujo: vaso
+descripción: Vasos y envases de unicel marca Dart.
+opción: Vaso 6J6 · 40/25 piezas | 482.92 pesos
+opción: Vaso 10J10 · 40/25 piezas | 668.7 pesos
+opción: Vaso 16J16 · 25/20 piezas | 566.79 pesos
+opción: Envase 16MJ32 · 20/25 piezas | 549.31 pesos
+opción: Envase 32J32 · 20/15 piezas | 642.16 pesos
+opción: Envase 60 oz · 30/10 piezas | 940.39 pesos
+
+Tapas Dart
+id: dp17
+presentación: Caja
+dibujo: tapa
+descripción: Tapas de plástico para vasos y envases térmicos Dart.
+opción: PL4N · 20/125 piezas | 1365.27 pesos
+opción: 6JL · 10/100 piezas | 364.75 pesos
+opción: 8JL · 10/100 piezas | 437.1 pesos
+opción: 10SL · 10/100 piezas | 481.13 pesos
+opción: 12SL · 10/100 piezas | 495.32 pesos
+opción: 16SL · 10/100 piezas | 526.78 pesos
+opción: 32SLR · 10/100 piezas | 871.04 pesos
+opción: 32JLR · 10/100 piezas | 871.04 pesos
+opción: Térmica 60 oz · 30/10 piezas | 1104.68 pesos
+
+Vaso biodegradable
+id: dp18
+presentación: Caja
+dibujo: vasoEU
+descripción: Vasos biodegradables Reyma.
+opción: #10 plástico · 20/50 piezas | 899.09 pesos
+opción: #16L plástico · 40/25 piezas | 1552.5 pesos
+opción: #32 EU · 20/25 piezas | 1463.64 pesos
 
 
 ==================== Bowls y envases ====================
@@ -280,12 +506,13 @@ presentación: Caja · escoge 1/2 litro o 1 litro
 foto: envase-reyma
 dibujo: envase
 descripción: Envase térmico Reyma para sopas, caldos, menudo y bebidas calientes. Escoge el tamaño: 1/2 litro o 1 litro. Pídelo y te confirmamos disponibilidad por WhatsApp.
-opción: 1/2 litro · caja 20/25 | 480 pesos
-opción: 1 litro · caja 20/15 | 524.5 pesos
+opción: 1/2 litro · caja 20/25 | 550.17 pesos
+opción: 1 litro · caja 20/15 | 597.22 pesos
+opción: 60 oz · caja 30/10 | 760.56 pesos
 
 Tapa térmica Reyma
 id: x11
-precio: 350 pesos
+precio: 450.86 pesos
 presentación: Caja 20/25
 foto: tapa-reyma
 dibujo: tapa
@@ -300,9 +527,11 @@ presentación: Caja
 foto: serv-colibri
 dibujo: servilleta
 descripción: Servilletas en tres marcas.
-opción: Marli · 12/450 piezas | 396.62 pesos | foto serv-marli
-opción: Colibrí · 12/500 piezas | 397.97 pesos | foto serv-colibri
-opción: Yofi · 12/500 piezas | 490.67 pesos | foto serv-yofi
+opción: Marli · 12/450 piezas | 397.92 pesos | foto serv-marli
+opción: Colibrí · 12/500 piezas | 388.11 pesos | foto serv-colibri
+opción: Yofi · 12/500 piezas | 507.12 pesos | foto serv-yofi
+opción: Yofi · 24/250 piezas | 523.76 pesos | foto serv-yofi
+opción: Yofi · 48/125 piezas | 545.47 pesos | foto serv-yofi
 
 Polipapel grado alimenticio
 id: s2
@@ -310,8 +539,9 @@ presentación: Caja con 5 kg
 foto: polipapel
 dibujo: papel
 descripción: Polipapel grado alimenticio para envolver tortas, tacos y burritos.
-opción: 30 x 30 cm | 385.27 pesos
-opción: 30 x 40 cm | 385.27 pesos
+opción: 30 x 30 cm | 399.95 pesos
+opción: 30 x 40 cm | 399.95 pesos
+opción: 25 x 35 cm | 399.95 pesos
 
 Vitafilm emplaye 18"
 id: s3
@@ -335,10 +565,29 @@ id: br
 presentación: Por kilo · escoge la medida
 dibujo: rollo
 descripción: Bolsas de plástico en rollo, se venden por kilo. Escoge la medida que necesitas.
-opción: 15x25 chica alta densidad | 69 pesos
-opción: 25x35 baja densidad | 79 pesos
-opción: 30x40 | 90 pesos
-opción: 30x40 poliseda | 84 pesos
+opción: 15x25 alta densidad | 76.73 pesos
+opción: 18x26 alta densidad | 76.73 pesos
+opción: 20x30 alta densidad | 76.73 pesos
+opción: 25x35 alta densidad | 76.73 pesos
+opción: 30x40 alta densidad | 76.73 pesos
+opción: 15x25 baja densidad | 78.88 pesos
+opción: 18x26 baja densidad | 78.88 pesos
+opción: 20x30 baja densidad | 78.88 pesos
+opción: 25x35 baja densidad | 78.88 pesos
+opción: 30x40 baja densidad | 78.88 pesos
+opción: 40x60 baja densidad | 78.88 pesos
+opción: 50x70 baja densidad | 78.88 pesos
+opción: 15x25 poliseda | 83.84 pesos
+opción: 20x30 poliseda | 83.84 pesos
+opción: 25x35 poliseda | 83.84 pesos
+opción: 30x40 poliseda | 83.84 pesos
+opción: 15x25 poliseda biodegradable | 87.76 pesos
+opción: 20x30 poliseda biodegradable | 87.76 pesos
+opción: 25x35 poliseda biodegradable | 87.76 pesos
+opción: 30x40 poliseda biodegradable | 87.76 pesos
+opción: Camiseta chica poliseda biodegradable | 102.91 pesos
+opción: Camiseta mediana poliseda biodegradable | 102.91 pesos
+opción: Camiseta grande poliseda biodegradable | 102.91 pesos
 
 Aluminio grueso 45 cm
 id: x12
@@ -385,6 +634,149 @@ foto: toalla-rollo-cafe
 dibujo: rollo
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
+Bolsa camiseta por caja
+id: dp24
+presentación: Caja · escoge tipo, medida y caja
+dibujo: bolsa
+descripción: Bolsa tipo camiseta por caja cerrada. Escoge tipo, medida y tamaño de caja.
+opción: Poliseda chica · caja 25 kg | 2128.48 pesos
+opción: Poliseda mediana · caja 25 kg | 2128.48 pesos
+opción: Poliseda grande · caja 25 kg | 2128.48 pesos
+opción: Poliseda chica · caja 10 kg | 884.58 pesos
+opción: Poliseda mediana · caja 10 kg | 884.58 pesos
+opción: Poliseda grande · caja 10 kg | 884.58 pesos
+opción: Poliseda gruesa chica · caja 25 kg | 2678.98 pesos
+opción: Poliseda gruesa mediana · caja 25 kg | 2678.98 pesos
+opción: Poliseda gruesa grande · caja 25 kg | 2678.98 pesos
+opción: Poliseda gruesa chica · caja 10 kg | 1112.56 pesos
+opción: Poliseda gruesa mediana · caja 10 kg | 1112.56 pesos
+opción: Poliseda gruesa grande · caja 10 kg | 1112.56 pesos
+opción: Biodegradable mini · caja 25 kg | 1712.58 pesos
+opción: Biodegradable mini · caja 10 kg | 712.36 pesos
+opción: Biodegradable chica · caja 25 kg | 1614.58 pesos
+opción: Biodegradable mediana · caja 25 kg | 1614.58 pesos
+opción: Biodegradable grande · caja 25 kg | 1614.58 pesos
+opción: Biodegradable chica · caja 10 kg | 671.76 pesos
+opción: Biodegradable mediana · caja 10 kg | 671.76 pesos
+opción: Biodegradable grande · caja 10 kg | 671.76 pesos
+opción: Jumbo #4 · caja 25 kg | 1581.91 pesos
+opción: Jumbo #6 · caja 25 kg | 1581.91 pesos
+opción: Jumbo #4 · caja 10 kg | 658.24 pesos
+opción: Jumbo #6 · caja 10 kg | 658.24 pesos
+opción: Polipapel bio chica · caja 20 kg | 1360.16 pesos
+opción: Polipapel bio mediana · caja 20 kg | 1360.16 pesos
+opción: Polipapel bio grande · caja 20 kg | 1360.16 pesos
+opción: Polipapel bio chica · caja 10 kg | 707.23 pesos
+opción: Polipapel bio mediana · caja 10 kg | 707.23 pesos
+opción: Polipapel bio grande · caja 10 kg | 707.23 pesos
+opción: Negra bio chica · caja 20 kg | 1136.94 pesos
+opción: Negra bio mediana · caja 20 kg | 1136.94 pesos
+opción: Negra bio grande · caja 20 kg | 1136.94 pesos
+opción: Negra bio chica · caja 10 kg | 591.66 pesos
+opción: Negra bio mediana · caja 10 kg | 591.66 pesos
+opción: Negra bio grande · caja 10 kg | 591.66 pesos
+
+Bolsa transparente por caja
+id: dp25
+presentación: Caja · baja densidad · escoge medida
+dibujo: bolsa
+descripción: Bolsa transparente de baja densidad por caja cerrada. Escoge medida y tamaño de caja.
+opción: 15x25 · caja 25 kg | 1988.33 pesos
+opción: 18x26 · caja 25 kg | 1988.33 pesos
+opción: 20x30 · caja 25 kg | 1988.33 pesos
+opción: 25x35 · caja 25 kg | 1988.33 pesos
+opción: 25x40 · caja 25 kg | 1988.33 pesos
+opción: 30x40 · caja 25 kg | 1988.33 pesos
+opción: 30x50 · caja 25 kg | 1988.33 pesos
+opción: 40x60 · caja 25 kg | 1988.33 pesos
+opción: 50x70 · caja 25 kg | 1988.33 pesos
+opción: 60x90 · caja 25 kg | 1988.33 pesos
+opción: 70x90 · caja 25 kg | 1988.33 pesos
+opción: 90x120 · caja 25 kg | 1988.33 pesos
+opción: 15x25 · caja 10 kg | 826.54 pesos
+opción: 18x26 · caja 10 kg | 826.54 pesos
+opción: 20x30 · caja 10 kg | 826.54 pesos
+opción: 25x35 · caja 10 kg | 826.54 pesos
+opción: 25x40 · caja 10 kg | 826.54 pesos
+opción: 30x40 · caja 10 kg | 826.54 pesos
+opción: 30x50 · caja 10 kg | 826.54 pesos
+opción: 40x60 · caja 10 kg | 826.54 pesos
+opción: 50x70 · caja 10 kg | 826.54 pesos
+opción: 60x90 · caja 10 kg | 826.54 pesos
+opción: 70x90 · caja 10 kg | 826.54 pesos
+opción: 90x120 · caja 10 kg | 826.54 pesos
+opción: 8 a la 10 · caja 25 kg | 2082.86 pesos
+opción: 10 a la 12 · caja 25 kg | 2019.19 pesos
+opción: 14 a la 90 · caja 25 kg | 1923.69 pesos
+opción: 8 a la 10 · caja 10 kg | 865.69 pesos
+opción: 10 a la 12 · caja 10 kg | 839.32 pesos
+opción: 14 a la 90 · caja 10 kg | 799.77 pesos
+
+Bolsa para basura
+id: dp26
+presentación: Escoge medida y presentación
+dibujo: bolsa
+descripción: Bolsa negra para basura, por caja o en rollo.
+opción: 50x70 · caja 25 kg | 1299.3 pesos
+opción: 60x90 · caja 25 kg | 1299.3 pesos
+opción: 70x90 · caja 25 kg | 1299.3 pesos
+opción: 90x120 · caja 25 kg | 1299.3 pesos
+opción: 90x120 económica · caja 25 kg | 952.02 pesos
+opción: 50x70 · caja 10 kg | 541.2 pesos
+opción: 60x90 · caja 10 kg | 541.2 pesos
+opción: 70x90 · caja 10 kg | 541.2 pesos
+opción: 90x120 · caja 10 kg | 541.2 pesos
+opción: 90x120 económica · caja 10 kg | 397.38 pesos
+opción: Rollo 60x90 · 20 piezas | 1025.33 pesos
+opción: Rollo 70x90 · 20 piezas | 1025.33 pesos
+opción: Rollo 90x120 · 20 piezas | 1025.33 pesos
+opción: Rollo económico 60x90 · 20 piezas | 742.7 pesos
+opción: Rollo económico 70x90 · 20 piezas | 742.7 pesos
+opción: Rollo económico 90x120 · 20 piezas | 742.7 pesos
+
+Rollo de bolsa camiseta biodegradable
+id: dp27
+presentación: Pieza (rollo)
+dibujo: rollo
+descripción: Rollo de bolsa camiseta poliseda biodegradable, por pieza.
+opción: Mini | 197.6 pesos
+opción: Chica | 178.32 pesos
+opción: Mediana | 180.91 pesos
+opción: Grande | 175.89 pesos
+
+Papel aluminio Modelo 7
+id: dp28
+precio: 364.61 pesos
+presentación: Caja con 24 piezas
+dibujo: papel
+descripción: Rollo de papel aluminio, caja con 24 piezas.
+
+Película plástica (clingfilm) 45 cm
+id: dp29
+precio: 340.87 pesos
+presentación: Rollo de 45 cm x 600 m
+foto: vitafilm
+dibujo: rollo
+descripción: Película plástica para envolver alimentos, uso industrial, calibre 12.
+
+Película estirable para emplayar 18"
+id: dp30
+precio: 645.15 pesos
+presentación: Caja con 4 rollos (18" x 1200)
+dibujo: rollo
+descripción: Película estirable calibre 50 para emplayar cajas y tarimas.
+
+Toallas y papel higiénico
+id: dp31
+presentación: Caja
+dibujo: papel
+descripción: Toallas de papel y papel higiénico por caja.
+opción: Toalla interdoblada café · 8/250 | 272.86 pesos | foto toalla-interdoblada
+opción: Toalla en rollo café 180 m · 6 rollos | 356.24 pesos | foto toalla-rollo-cafe
+opción: Toalla de cocina 168 hojas · 4/6 rollos | 518.81 pesos
+opción: Toalla secamanos 180 m · 6 rollos | 522.73 pesos
+opción: Papel higiénico 300 hojas · 24/4 rollos | 623.36 pesos
+
 
 ==================== Higiene y varios ====================
 
@@ -414,7 +806,7 @@ descripción: Guante de nitrilo negro para cocina y manejo de alimentos.
 
 Gorro plisado (cofia negra)
 id: h4
-precio: 44 pesos
+precio: 50.21 pesos
 presentación: 100 piezas
 foto: cofia
 dibujo: cofia
@@ -443,6 +835,62 @@ presentación: Caja con 1,000 piezas
 foto: tenedor
 dibujo: palillo
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Cucharas desechables
+id: dp19
+presentación: Caja
+foto: cuchara
+dibujo: palillo
+descripción: Cucharas de plástico desechables. Escoge tipo y tamaño.
+opción: Nevera · 3,000 piezas (6/500) | 442.65 pesos
+opción: Chica · 3,000 piezas (60/50) | 736.74 pesos
+opción: Mediana · 1,000 piezas (40/25) | 465.38 pesos
+opción: Sopera · 1,000 piezas (40/25) | 574.53 pesos
+opción: Frapé larga · 1,000 piezas (40/25) | 635.75 pesos
+opción: Mediana blanca económica · 1,000 piezas | 356.53 pesos
+opción: Sopera blanca económica · 1,000 piezas | 555.77 pesos
+opción: Chica biodegradable · 3,000 piezas | 880.74 pesos
+opción: Mediana biodegradable · 1,000 piezas | 553.31 pesos
+opción: Sopera biodegradable · 1,000 piezas | 685.19 pesos
+
+Tenedores desechables
+id: dp20
+presentación: Caja
+foto: tenedor
+dibujo: palillo
+descripción: Tenedores de plástico desechables. Escoge tipo y tamaño.
+opción: Chico · 3,000 piezas (60/50) | 736.74 pesos
+opción: Mediano · 1,000 piezas (40/25) | 472.96 pesos
+opción: Mediano negro a granel · 1,000 piezas | 264.27 pesos
+opción: Chico económico · 3,000 piezas | 589.44 pesos
+opción: Mediano blanco económico · 1,000 piezas | 356.55 pesos
+opción: Mediano biodegradable · 1,000 piezas | 562.41 pesos
+
+Popotes
+id: dp21
+presentación: Caja
+dibujo: palillo
+descripción: Popotes desechables.
+opción: Biodegradable estuchado 21 cm · 2,000 piezas (4/500) | 422.11 pesos
+opción: Biodegradable estuchado 26 cm · 2,000 piezas (4/500) | 469.14 pesos
+opción: Biodegradable estuchado 26 cm a granel · 2,000 piezas | 418.19 pesos
+opción: Biodegradable neón 21 cm a granel · 5 kg | 816.76 pesos
+opción: 26 cm a granel · 5 kg | 417.23 pesos
+
+Guante de polietileno
+id: dp22
+precio: 154.89 pesos
+presentación: Paquete con 100 piezas
+foto: guante
+dibujo: guante
+descripción: Guante desechable transparente de polietileno.
+
+Hielera de unicel 20 litros
+id: dp23
+precio: 539.9 pesos
+presentación: Paquete con 5 piezas
+dibujo: caja
+descripción: Hielera de unicel con capacidad de 20 litros.
 
 
 ==================== Abarrotes ====================
