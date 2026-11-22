@@ -478,7 +478,7 @@ descripción: Frijol cocido listo para calentar y servir, en bolsa de 800 g.
 
 Aceite vegetal Kartamus
 id: a1
-precio: 443.5 pesos
+precio: 458.85 pesos
 presentación: Caja con 12 botellas de 900 ml
 foto: aceite-kartamus
 dibujo: botella
@@ -762,7 +762,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Sal La Fina
 id: a47
-precio: 430 pesos
+precio: 477.25 pesos
 presentación: Bulto de 25 kg (bolsas de 1 kg)
 foto: sal-la-fina
 dibujo: caja
@@ -891,7 +891,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Refresco Coca-Cola regular 600 ml
 id: d8
-precio: 547.52 pesos
+precio: 531.3 pesos
 presentación: Paquete de 24 piezas
 foto: coca-600
 dibujo: botella
@@ -1061,10 +1061,34 @@ presentación: Pieza
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Galletas surtidas
+Galletas surtidas Paketines
 id: b9
-precio: cotizar
-presentación: Pieza
+precio: 206.88 pesos
+presentación: Paquete de galletas surtidas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+
+==================== Dulces ====================
+
+Paleta de chile Rockaleta
+id: b10
+precio: 148.35 pesos
+presentación: Bolsa con 25 paletas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Paletas surtidas Mix Fuego
+id: b11
+precio: 142.6 pesos
+presentación: Bolsa de paletas surtidas
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Bubulubu Mini Ricolino
+id: b12
+precio: 123.05 pesos
+presentación: Bolsa de Bubulubu Mini
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 

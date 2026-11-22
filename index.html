@@ -282,7 +282,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
 // Número de WhatsApp del negocio (52 + 10 dígitos)
 const WHATS = "526141077999";
 
-const CATS = ["Todos","Combos","Tortillas","Contenedores","Vasos","Bowls y envases","Servilletas y empaque","Higiene y varios","Abarrotes","Bebidas","Limpieza","Botanas","Repostería"];
+const CATS = ["Todos","Combos","Tortillas","Contenedores","Vasos","Bowls y envases","Servilletas y empaque","Higiene y varios","Abarrotes","Bebidas","Limpieza","Botanas","Dulces","Repostería"];
 const v=(n,pr,img,my)=>({n,pr,img,my});
 const pic=(p,vi)=>{const im=(p.v&&vi!=null&&p.v[vi]&&p.v[vi].img)||p.img;return im?`<img src="${'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp')}" alt="${p.n}" loading="lazy">`:ART[p.art]()};
 const P = [
