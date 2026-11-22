@@ -248,6 +248,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
   <button class="x" data-closep aria-label="Cerrar">×</button>
   <div class="tx">
     <h3>Panel del negocio</h3>
+    <div id="pQuick" hidden style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 6px"><div id="pResumen" class="note" style="grid-column:1/-1;font-weight:600;color:var(--ink)"></div><button class="go" data-st="ok" style="background:#2e8b2e;font-size:17px;padding:16px 8px">✅ Aceptar pedido</button><button class="sec" data-st="cancel" style="background:#b3261e;color:#fff;border-color:#b3261e;font-size:17px;padding:16px 8px">❌ Cancelar pedido</button></div>
     <p class="note">Contesta a tus clientes con un toque. Se abre WhatsApp con el mensaje listo para enviar.</p>
     <label>Pega aquí el mensaje del pedido<textarea id="pMsg" placeholder="Copia el mensaje del pedido que te llegó por WhatsApp y pégalo aquí: se llenan los datos solos"></textarea></label>
     <p class="note" id="pChk" style="font-weight:600;color:var(--ink)"></p>
@@ -269,6 +270,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
       <button class="sec" data-st="pago">Pago recibido</button>
       <button class="sec" data-st="factura">Factura enviada</button>
       <button class="sec" data-st="no">No tenemos algo</button>
+      <button class="sec" data-st="cancel">Cancelar pedido</button>
       <button class="sec" data-reset style="grid-column:1/-1">Limpiar para otro pedido</button>
     </div>
     <label>Tus datos bancarios (solo tú los ves, no salen en la tienda)<textarea id="pBanco" placeholder="Banco: …&#10;CLABE: …&#10;A nombre de: …"></textarea></label>
@@ -485,7 +487,7 @@ function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clea
 function add(k,n=1){cart[k]=(cart[k]||0)+n;if(cart[k]<=0)delete cart[k];save();renderCart()}
 function openDrawer(){closeModal();$('#drawer').classList.add('on');$('#veil').classList.add('on')}
 function closeModal(){$('#modal').classList.remove('on')}
-function closeAll(){$('#drawer').classList.remove('on');closeModal();$('#panel')&&$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash==='#panel-arba')history.replaceState(null,'',location.pathname+location.search)}
+function closeAll(){$('#drawer').classList.remove('on');closeModal();$('#panel')&&$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}
 function openModal(id){
   const p=P.find(x=>x.id===id);let c=1,vi=0;
   const draw=()=>{const m=myOf(p,p.v?vi:null),pr=m&&c>=m[0]?m[1]:(p.v?p.v[vi].pr:p.pr);
@@ -517,7 +519,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.st)aviso(t.dataset.st);
   else if('reset' in t.dataset){['pMsg','pPed','pTel','pNom','pLink','pTiempo'].forEach(id=>$('#'+id).value='');$('#pChk').textContent='';pp='';pe='';pT='';pA='';document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('on'));toast('Listo para otro pedido')}
   else if(t.dataset.t){$('#pTiempo').value=t.dataset.t;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t))}
-  else if('closep' in t.dataset){$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash==='#panel-arba')history.replaceState(null,'',location.pathname)}
+  else if('closep' in t.dataset){$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname)}
 });
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal'){closeModal();$('#veil').classList.remove('on')}});
 $('#veil').onclick=closeAll;
@@ -528,6 +530,7 @@ $('#next').onclick=()=>{const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').re
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
+const panelLink=o=>location.origin+location.pathname+'#panel-arba?'+Object.keys(o).filter(k=>o[k]).map(k=>k+'='+encodeURIComponent(o[k])).join('&');
 const openWA=(num,msg)=>{const a=document.createElement('a');a.href=`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()};
 $('#form').addEventListener('submit',e=>{
   e.preventDefault();
@@ -536,7 +539,7 @@ $('#form').addEventListener('submit',e=>{
   const d=new Date(),ped=`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;
   const tel=digits($('#tel').value),nom=$('#nom').value.trim();
   const fac=$('#fac').checked?['',`🧾 FACTURA`,`RFC: ${$('#rfc').value.trim().toUpperCase()}`,`Razón social: ${$('#rs').value.trim()}`,`C.P. fiscal: ${$('#cp').value.trim()}`,`Régimen: ${$('#reg').value}`,`Uso CFDI: ${$('#uso').value}`,`Correo: ${$('#mail').value.trim()}`]:[];
-  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
+  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`,``,`🔧 Solo para el negocio (aceptar o cancelar):`,panelLink({p:ped,n:nom,t:tel,g:pago==='Tarjeta'?'Tarjeta ('+tar+')':pago,T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega})].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
   openWA(WHATS,msg);
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
@@ -579,6 +582,7 @@ const MSG={
   pago:(n,p)=>`Hola${n}, recibimos tu pago del pedido${p} ✅. ¡Gracias!`,
   factura:(n,p)=>`Hola${n}, ya te enviamos la factura de tu pedido${p} a tu correo 🧾. Cualquier cosa aquí estamos.`,
   verif:(n,p)=>`Hola${n}, recibimos tu pedido${p}${pT?' por '+pT:''} en Distribuidora ARBA. ¿Nos confirmas que es correcto para empezar a prepararlo? 🙏`,
+  cancel:(n,p)=>`Hola${n}, lo sentimos 🙏, tu pedido${p} de Distribuidora ARBA fue CANCELADO. Por el momento no podemos surtirlo. Si quieres, escríbenos y te ayudamos con otra opción. ¡Gracias por tu preferencia!`,
   no:(n,p)=>`Hola${n}, sobre tu pedido${p}: por el momento no tenemos (escribe el producto). ¿Te lo cambiamos por otro o lo quitamos del pedido?`
 };
 let pp='',pe='',pT='',pA='';
@@ -598,7 +602,7 @@ $('#pMsg').addEventListener('input',e=>{const t=e.target.value,g=r=>((t.match(r)
 function aviso(st){const tel=digits($('#pTel').value);if(tel.length<10){toast('Escribe el WhatsApp del cliente');return}
   const n=$('#pNom').value.trim(),p=$('#pPed').value.trim(),l=$('#pLink').value.trim();if(st==='link'&&!/^https?:\/\//.test(l)){toast('Pega primero el link de pago');$('#pLink').focus();return}
   if((st==='trans'||(st==='ok'&&(/Transferencia/.test(pp)||(pA&&!/Link/.test(pp)))))&&!banco()){toast('Primero escribe tus datos bancarios abajo');$('#pBanco').focus();return}openWA('52'+tel,MSG[st](n?' '+n:'',p?' '+p:'',l))}
-function route(){if(location.hash==='#panel-arba'){closeAll();history.replaceState(null,'',location.pathname+location.search+'#panel-arba');$('#panel').classList.add('on');$('#veil').classList.add('on');initBanco()}}
+function route(){if(location.hash.indexOf('#panel-arba')===0){const qs=new URLSearchParams(location.hash.split('?')[1]||'');closeAll();history.replaceState(null,'',location.pathname+location.search+'#panel-arba');if(qs.get('p')){$('#pPed').value=qs.get('p');$('#pNom').value=qs.get('n')||'';$('#pTel').value=qs.get('t')||'';pp=qs.get('g')||'';pT=qs.get('T')||'';pA=qs.get('a')||'';pe=qs.get('e')||'';$('#pTiempo').value='';$('#pLink').value='';document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('on'));$('#pResumen').textContent='Pedido '+qs.get('p')+(qs.get('n')?' · '+qs.get('n'):'')+(pT?' · '+pT:'')+(pp?' · '+pp:'');$('#pQuick').hidden=false;$('#pQuick').style.display='grid'}else{$('#pQuick').hidden=true;$('#pQuick').style.display='none'}$('#panel').classList.add('on');$('#veil').classList.add('on');initBanco()}}
 window.addEventListener('hashchange',route);route();
 renderCats();renderGrid();renderCart();
 }
