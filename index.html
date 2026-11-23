@@ -224,6 +224,10 @@ main{padding-top:14px}
 }
 
 .entr{margin:0;padding:10px 12px;border-radius:10px;background:#7ed95718;border:1px solid #7ed95755;font-size:13.5px;line-height:1.4}.entr.ant{background:#f4b40018;border-color:#f4b40077}
+.gracias{padding:28px max(3vw,14px) 34px}.gracias>div{max-width:760px;margin:auto;text-align:center;padding:26px 22px;border-radius:18px;background:linear-gradient(135deg,#14301d,#0b1525);border:1px solid #f4b40066;color:#e6eef8}
+.gracias img{width:86px;height:86px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px #7ed957}
+.gracias h2{font:clamp(24px,6vw,34px)/1.1 Anton,Impact,sans-serif;text-transform:uppercase;color:#f4b400;margin:14px 0 10px}
+.gracias p{margin:0 0 10px;font-size:15px;line-height:1.55}.gracias .fin{font-weight:700;color:#7ed957;margin:6px 0 0}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
@@ -289,6 +293,15 @@ main{padding-top:14px}
   <p><b>Si cancelas antes de que preparemos tu pedido,</b> te devolvemos todo tu anticipo.</p>
   <p><b>Si cancelas cuando tu pedido ya está preparado o al momento de la entrega,</b> el anticipo no se devuelve.</p>
   <p class="note">Pedidos menores a 500 pesos no necesitan anticipo.</p>
+</div></section>
+
+<section class="gracias"><div>
+  <img src="img/logo-2c.webp" alt="Los 2 Carnales">
+  <h2>¡Gracias por confiar en nosotros! 💛</h2>
+  <p>Detrás de cada paquete de tortillas, cada pay y cada pedido hay una familia y un equipo que se levanta temprano para darte lo mejor.</p>
+  <p>Distribuidora ARBA y Tortillería Los 2 Carnales nacieron con mucho esfuerzo, y hoy son posibles gracias a ti, que nos eliges, nos recomiendas y vuelves.</p>
+  <p>Hicimos esta tienda pensando en hacerte la vida más fácil: pides desde tu celular, a cualquier hora, y nosotros nos encargamos del resto.</p>
+  <p class="fin">Gracias por ser parte de esta historia. ¡Aquí siempre tendrás a tu gente! 🌾</p>
 </div></section>
 
 <footer>Distribuidora ARBA · Tortillería Los 2 Carnales · Chihuahua, Chihuahua · Precios en pesos mexicanos, IVA incluido</footer>
@@ -714,7 +727,7 @@ const MSG={
   camino:(n,p)=>`Hola${n}, tu pedido${p} de Distribuidora ARBA ya va EN CAMINO 🚚.${$('#pTiempo').value.trim()?' Llega en: '+$('#pTiempo').value.trim()+'.':''}`,
   listo:(n,p)=>`Hola${n}, tu pedido${p} ya está LISTO PARA RECOGER 📦 en Distribuidora ARBA.`,
   pago:(n,p)=>`Hola${n}, recibimos tu pago del pedido${p} ✅. ¡Gracias!`,
-  entregado:(n,p)=>`Hola${n}, tu pedido${p} de Distribuidora ARBA fue ENTREGADO 📦✅. ¡Gracias por tu compra!`,
+  entregado:(n,p)=>`Hola${n}, tu pedido${p} de Distribuidora ARBA fue ENTREGADO 📦✅. ¡Gracias por tu compra! Cada pedido tuyo hace crecer a una familia chihuahuense 💛`,
   factura:(n,p)=>`Hola${n}, ya te enviamos la factura de tu pedido${p} a tu correo 🧾. Cualquier cosa aquí estamos.`,
   verif:(n,p)=>`Hola${n}, recibimos tu pedido${p}${pT?' por '+pT:''} en Distribuidora ARBA. ¿Nos confirmas que es correcto para empezar a prepararlo? 🙏`,
   cancel:(n,p)=>`Hola${n}, lo sentimos 🙏, tu pedido${p} de Distribuidora ARBA fue CANCELADO. Por el momento no podemos surtirlo. Si quieres, escríbenos y te ayudamos con otra opción. ¡Gracias por tu preferencia!`,
