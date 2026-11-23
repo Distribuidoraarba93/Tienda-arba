@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solo la cuenta del negocio puede ver la lista y cambiar estatus
+    function esAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'arturo.arba93@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // Estatus público de cada pedido: el cliente solo lo ve si tiene su link (número + clave)
+    match /pedidos/{id} {
+      allow get: if true;
+      allow list: if esAdmin();
+      allow create: if id.size() < 60
+        && request.resource.data.keys().hasOnly(['p', 's', 'e', 'f', 'c'])
+        && request.resource.data.s == 'recibido'
+        && request.resource.data.p is string && request.resource.data.p.size() < 30
+        && request.resource.data.e in ['', 'r', 'd']
+        && request.resource.data.f == request.time
+        && request.resource.data.c == request.time;
+      allow update, delete: if esAdmin();
+    }
+
+    // Datos privados del pedido (nombre, WhatsApp, productos): solo los ves tú
+    match /pedidos_priv/{id} {
+      allow create: if exists(/databases/$(database)/documents/pedidos/$(id))
+        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c'])
+        && request.resource.data.n.size() <= 80
+        && request.resource.data.tel.size() <= 15
+        && request.resource.data.i.size() <= 1500
+        && request.resource.data.c == request.time;
+      allow read, update, delete: if esAdmin();
+    }
+
+    // Todo lo demás cerrado
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
