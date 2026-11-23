@@ -575,7 +575,7 @@ const SELLO_2C=["Tortillas","Combos","Repostería"];
 const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁'};
 function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}"><span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
 function renderGrid(){
-  const list=[...P].sort((a,b)=>(b.cat==="Tortillas")-(a.cat==="Tortillas")).filter(p=>(cat==="Todos"||p.cat===cat)&&(!q||norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' ')).includes(norm(q))));
+  const list=[...P].sort((a,b)=>{const r=x=>{const i=["Combos","Tortillas","Repostería"].indexOf(x.cat);return i<0?9:i};return r(a)-r(b)}).filter(p=>(cat==="Todos"||p.cat===cat)&&(!q||norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' ')).includes(norm(q))));
   $('#title').textContent=q?`Resultados para “${q}”`:(cat==="Todos"?"Todos los productos":cat);
   $('#banner').hidden=!(cat==="Tortillas"&&!q);$('#tortHead').hidden=!(cat==="Tortillas"&&!q);
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
