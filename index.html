@@ -813,6 +813,7 @@ window.addEventListener('hashchange',estRuta);estBoton();estRuta();
   l.addEventListener('mousedown',st);l.addEventListener('mouseup',sp);l.addEventListener('mouseleave',sp);l.addEventListener('contextmenu',e=>e.preventDefault())})();
 window.addEventListener('hashchange',route);route();
 renderCats();renderGrid();renderCart();
+window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir};
 }
 </script>
 <script>
@@ -1002,6 +1003,98 @@ window.dispatchEvent(new Event('arba-fb'));
     else if(k==='pedido'){let n=0;try{n=Object.keys(JSON.parse(localStorage.getItem('arba-pedidos')||'{}')).length}catch(er){}
       if(n)document.getElementById('misPed').click();else{const t=document.getElementById('toast');t.textContent='Todavía no tienes pedidos. Arma tu carrito y mándalo por WhatsApp.';t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600)}}});
   document.addEventListener('click',e=>{const c=e.target.closest('.cats [data-cat]');if(c)setTimeout(()=>document.getElementById('title').scrollIntoView({behavior:'smooth',block:'start'}),50)});
+})();
+</script>
+<!-- ASISTENTE ARBA -->
+<style>
+.ab-btn{position:fixed;right:16px;bottom:20px;z-index:35;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:8px 16px 8px 8px;background:#f4b400;color:#152016;font:700 15px Poppins,system-ui,sans-serif;box-shadow:0 6px 18px #0008;cursor:pointer}
+.ab-btn img{width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #7ed957}
+.ab-btn .dot{position:absolute;top:4px;left:38px;width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #f4b400}
+.ab-btn span.tm{display:none}
+@media(max-width:760px){.ab-btn{bottom:calc(80px + env(safe-area-inset-bottom));right:12px;padding:5px 14px 5px 5px;font-size:14px;border:2px solid #fff}.ab-btn img{width:34px;height:34px}.ab-btn .dot{left:31px;top:3px}.ab-btn span.t{display:none}.ab-btn span.tm{display:inline}}
+.ab{position:fixed;right:16px;bottom:20px;z-index:65;width:min(400px,calc(100% - 24px));height:min(620px,calc(100% - 40px));display:flex;flex-direction:column;background:#0f1b2d;color:#fff;border-radius:18px;overflow:hidden;box-shadow:0 18px 50px #000a;border:1px solid #7ed95755;transform:translateY(20px) scale(.97);opacity:0;pointer-events:none;transition:.2s;font-family:Poppins,system-ui,sans-serif}
+.ab.on{transform:none;opacity:1;pointer-events:auto}
+@media(max-width:760px){.ab{right:0;left:0;bottom:0;width:100%;height:100%;border-radius:0}}
+.ab-h{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(135deg,#14301d,#0b1525);border-bottom:2px solid #7ed957}
+.ab-h img{width:42px;height:42px;border-radius:50%;background:#fff}
+.ab-h b{display:block;font-size:16px}.ab-h small{color:#7ed957;font-size:12px}
+.ab-h button{margin-left:auto;background:#ffffff1a;border:0;color:#fff;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}
+.ab-m{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.ab-b{max-width:88%;padding:10px 12px;border-radius:14px;font-size:14.5px;line-height:1.4;white-space:pre-line}
+.ab-b.bot{background:#1c2b42;border-top-left-radius:4px;align-self:flex-start}
+.ab-b.yo{background:#f4b400;color:#152016;border-top-right-radius:4px;align-self:flex-end;font-weight:600}
+.ab-b a{color:#7ed957;font-weight:700}
+.ab-ps{display:flex;flex-direction:column;gap:8px;align-self:stretch}
+.ab-p{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:10px;align-items:center;background:#fff;color:#152016;border-radius:12px;padding:8px}
+.ab-p .th{width:56px;height:56px;border-radius:8px;overflow:hidden;background:#f3f5f0}.ab-p .th img,.ab-p .th svg{width:100%;height:100%;object-fit:cover}
+.ab-p b{display:block;font-size:13.5px;line-height:1.2}.ab-p span{font-size:12.5px;color:#0b6b35;font-weight:700}
+.ab-p button{border:0;border-radius:999px;background:#0b6b35;color:#fff;font:700 13px Poppins,sans-serif;padding:8px 12px;cursor:pointer}
+.ab-q{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;border-top:1px solid #ffffff14;scrollbar-width:none}
+.ab-q button{flex:0 0 auto;border:1px solid #7ed957;background:transparent;color:#7ed957;border-radius:999px;padding:6px 12px;font:600 13px Poppins,sans-serif;cursor:pointer}
+.ab-f{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#0b1525}
+.ab-f input{flex:1;min-width:0;border:0;border-radius:999px;padding:12px 16px;font:15px Poppins,sans-serif}
+.ab-f button{border:0;border-radius:50%;width:46px;height:46px;background:#f4b400;font-size:19px;cursor:pointer}
+.ab-b.esc{opacity:.7;font-style:italic}
+</style>
+<button class="ab-btn" id="abBtn" aria-label="Abrir asistente"><img src="img/logo-2c.webp" alt=""><i class="dot"></i><span class="t">¿Tienes dudas?</span><span class="tm">💬 ¿Dudas?</span></button>
+<section class="ab" id="ab" aria-label="Asistente de la tienda" aria-hidden="true">
+  <div class="ab-h"><img src="img/logo-2c.webp" alt=""><div><b>Asistente ARBA</b><small>● En línea · te contesta al momento</small></div><button id="abX" aria-label="Cerrar">✕</button></div>
+  <div class="ab-m" id="abM"></div>
+  <div class="ab-q" id="abQ"></div>
+  <form class="ab-f" id="abF"><input id="abI" placeholder="Escribe tu pregunta…" autocomplete="off" enterkeyhint="send"><button aria-label="Enviar">➤</button></form>
+</section>
+<script>
+(()=>{
+const {$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir}=window.ARBA_T;
+const M=$('#abM'),Q=$('#abQ'),I=$('#abI'),AB=$('#ab');
+const WA=t=>`<a href="https://wa.me/${WHATS}?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">Escríbenos por WhatsApp 💬</a>`;
+const RAPIDAS=['🫓 Tortillas','💰 Mayoreo','🚚 Entregas','💳 Formas de pago','🛒 ¿Cómo pido?','📍 Mi pedido','👤 Hablar con alguien'];
+const esc2=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function burbuja(html,cl='bot'){const d=document.createElement('div');d.className='ab-b '+cl;d.innerHTML=html;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
+function rapidas(l){Q.innerHTML=(l||RAPIDAS).map(t=>`<button type="button" data-abq="${esc2(t)}">${esc2(t)}</button>`).join('')}
+const precio=p=>{const m=minPr(p);return m==null?'Precio por cotizar':(p.v?'Desde ':'')+fmt(m)};
+function tarjetas(ps){const w=document.createElement('div');w.className='ab-ps';
+  w.innerHTML=ps.map(p=>`<div class="ab-p"><div class="th">${pic(p)}</div><div><b>${esc2(p.n)}</b><span>${precio(p)}</span>${(m=>m?`<span style="display:block;color:#555;font-weight:600">Mayoreo ${fmt(m[1])} desde ${m[0]} ${p.myu||'paquetes'}</span>`:'')(p.my)}</div>${p.v?`<button data-abver="${p.id}">Ver</button>`:`<button data-abadd="${p.id}">+ Agregar</button>`}</div>`).join('');
+  M.appendChild(w);M.scrollTop=M.scrollHeight}
+const STOP=new Set('que hay tienen tiene tienes venden vende cuanto cuesta cuestan precio precios del de la las los el un una unos unas para por con sin me quiero queria quisiera busco ocupo necesito hola buenas buenos dias tardes noches favor porfa y o a en es son sus su mi mis te tu algo alguna algun como cual cuales donde esta estan si no ya mas muy le les lo al venta vendes'.split(' '));
+const raiz=w=>w.replace(/(es|s)$/,'');
+function buscar(t){const ws=norm(t).replace(/[^a-z0-9ñ ]/g,' ').split(/\s+/).filter(w=>(w.length>2||/\d/.test(w))&&!STOP.has(w)).map(raiz);if(!ws.length)return [];
+  const r=P.map(p=>{const h=norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' '));const hn=norm(p.n);let s=0;ws.forEach(w=>{if(hn.includes(w))s+=3;else if(h.includes(w))s+=1});return [s,p]}).filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]);
+  if(!r.length)return [];const top=r[0][0];return r.filter(x=>x[0]>=Math.max(top-1,top*0.6)).slice(0,5).map(x=>x[1])}
+const tiene=(t,...ps)=>ps.some(p=>p.test(t));
+function responde(raw){const t=norm(raw);let l=null;
+  if(tiene(t,/^(hola|buen[oa]s?|que tal|hey|saludos)\b/)&&t.length<25){burbuja('¡Hola! 👋 ¿En qué te ayudo? Pregúntame por un producto, precios, mayoreo o entregas.');}
+  else if(tiene(t,/gracias|grax|thank/)){burbuja('¡Con gusto! 😊 Si necesitas algo más, aquí estoy.');}
+  else if(tiene(t,/mi pedido|estatus|status|donde (va|viene|esta) mi|ya (salio|viene)|seguimiento|rastre/)){burbuja('Para ver cómo va tu pedido, toca el botón de abajo. Ahí ves si ya fue aceptado, si va en camino o si está listo para recoger.');const b=burbuja('<button type="button" data-abest style="border:0;border-radius:999px;background:#f4b400;color:#152016;font:700 14px Poppins,sans-serif;padding:10px 16px;cursor:pointer">📍 Ver mi pedido</button>');}
+  else if(tiene(t,/mayoreo|por mayor|cantidad|volumen|descuento/)){burbuja('💰 <b>Mayoreo en tortillas Los 2 Carnales</b>, desde 5 paquetes:\n• Tortilla de harina normal: 25 pesos → <b>22 pesos</b>\n• Sabor mantequilla: 26 pesos → <b>23 pesos</b>\n\nEn otros productos, el precio de mayoreo sale en cada tarjeta cuando aplica, y el carrito lo aplica solo al llegar a la cantidad. 😉');}
+  else if(tiene(t,/tortill|buñuelo|bunuelo|montado|burrito|harina|mantequilla/)&&!tiene(t,/harina de|harina para|hot ?cake|maseca/)){burbuja('🫓 <b>Tortillería Los 2 Carnales</b>: tortillas de harina recién hechas aquí en Chihuahua. Estas son:');tarjetas(P.filter(p=>p.cat==='Tortillas'));l=['💰 Mayoreo','🎁 Combos','🚚 Entregas','🛒 ¿Cómo pido?'];}
+  else if(tiene(t,/combo|paquete navide|navidad|cena/)){burbuja('🎁 Estos son nuestros combos:');tarjetas(P.filter(p=>p.cat==='Combos'));}
+  else if(tiene(t,/\bpay\b|pastel|postre|reposteri/)){burbuja('🥧 Repostería casera de Los 2 Carnales:');tarjetas(P.filter(p=>p.cat==='Repostería'));}
+  else if(tiene(t,/anticipo|cancel|devol|reembols/)){burbuja('📋 <b>Anticipo y cancelaciones</b>\n• Pedidos de <b>500 pesos o más</b>: pedimos 35% de anticipo (transferencia o link de pago) para empezar a prepararlo. El resto lo pagas al recibir.\n• Pedidos menores a 500 pesos no necesitan anticipo.\n• Si cancelas <b>antes</b> de que lo preparemos, te devolvemos todo el anticipo.\n• Si cancelas cuando ya está preparado o al momento de la entrega, el anticipo no se devuelve.');}
+  else if(tiene(t,/pago|pagar|tarjeta|efectivo|transfer|deposit|credito|debito|terminal/)){burbuja('💳 <b>Formas de pago</b>\n• Efectivo\n• Transferencia\n• Tarjeta: con terminal al entregar o con link de pago\n\nEn pedidos de 500 pesos o más se pide 35% de anticipo.');l=['📋 Anticipo','🚚 Entregas','🛒 ¿Cómo pido?'];}
+  else if(tiene(t,/entreg|envio|envia|mandan|domicilio|llevan|reparto|recoger|flete|a casa/)){burbuja('🚚 <b>Entregas</b>\n• Entregamos a domicilio en Chihuahua, o si prefieres pasas a recoger.\n• Lo escoges al hacer tu pedido en el carrito.\n• El tiempo de entrega te lo confirmamos por WhatsApp cuando aceptamos tu pedido.\n\n¿Dudas del costo o de tu zona? '+WA('Hola, ¿entregan en mi zona? Mi colonia es: '));}
+  else if(tiene(t,/como (pido|compro|hago|ordeno)|hacer (un )?pedido|comprar|ordenar/)){burbuja('🛒 <b>Así de fácil:</b>\n1. Toca <b>+</b> o <b>Agregar al carrito</b> en lo que quieras.\n2. Abre el <b>Carrito</b>.\n3. Pon tu nombre, teléfono, si es a domicilio o pasas a recoger, y cómo pagas.\n4. Toca <b>Enviar pedido</b>: se abre WhatsApp con tu pedido listo.\n5. Te confirmamos y puedes seguirlo en <b>Mi pedido</b>. 📍');}
+  else if(tiene(t,/horario|hora|abren|cierran|abierto|domingo|sabado/)){burbuja('🕒 Para confirmarte el horario de hoy, '+WA('Hola, ¿cuál es su horario?'));}
+  else if(tiene(t,/donde estan|ubicacion|direccion|domicilio de ustedes|local|sucursal/)){burbuja('📍 Estamos en Chihuahua, Chihuahua. Para la ubicación exacta, '+WA('Hola, ¿me pasan su ubicación?'));}
+  else if(tiene(t,/factura|rfc|cfdi/)){burbuja('🧾 Para dudas de factura, '+WA('Hola, necesito factura de mi pedido.'));}
+  else if(tiene(t,/humano|persona|alguien|asesor|encargado|dueno|llamar|telefono|whats/)){burbuja('Claro 🙌 Te atiende una persona del equipo: '+WA('Hola, tengo una duda: ')+'\nO llama al 614 107 7999.');}
+  else if(tiene(t,/iva|factura/)){burbuja('✅ Todos los precios ya incluyen IVA.');}
+  else{const r=buscar(raw);
+    if(r.length){burbuja(r.length===1?'Esto es lo que encontré:':'Encontré esto 👇');tarjetas(r);burbuja('¿Es lo que buscabas? Si no, dime la marca o la medida, o '+WA('Hola, busco: '+raw));}
+    else burbuja('No lo encontré en el catálogo 🤔, pero <b>te lo conseguimos</b>. '+WA('Hola, busco: '+raw));}
+  rapidas(l)}
+function enviar(t){t=t.trim();if(!t)return;burbuja(esc2(t),'yo');I.value='';const e=burbuja('Escribiendo…','bot esc');setTimeout(()=>{e.remove();responde(t)},450)}
+let ini=false;
+function abrir(){AB.classList.add('on');AB.setAttribute('aria-hidden','false');if(!ini){ini=true;burbuja('¡Hola! 👋 Soy el asistente de <b>Distribuidora ARBA</b> y <b>Tortillería Los 2 Carnales</b>.\n\nPregúntame por cualquier producto (ej. "vasos de 16 oz", "papas") o toca una opción de abajo.');rapidas()}setTimeout(()=>I.focus(),250)}
+function cerrar(){AB.classList.remove('on');AB.setAttribute('aria-hidden','true')}
+$('#abBtn').addEventListener('click',abrir);$('#abX').addEventListener('click',cerrar);
+$('#abF').addEventListener('submit',e=>{e.preventDefault();enviar(I.value)});
+const MAPQ={'🫓 Tortillas':'tortillas','💰 Mayoreo':'mayoreo','🚚 Entregas':'entregas','💳 Formas de pago':'formas de pago','🛒 ¿Cómo pido?':'como pido','📍 Mi pedido':'mi pedido','👤 Hablar con alguien':'hablar con alguien','🎁 Combos':'combos','📋 Anticipo':'anticipo'};
+AB.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.abq){burbuja(esc2(b.dataset.abq),'yo');const e2=burbuja('Escribiendo…','bot esc');setTimeout(()=>{e2.remove();responde(MAPQ[b.dataset.abq]||b.dataset.abq)},400)}
+  else if(b.dataset.abadd){add(b.dataset.abadd);toast('Agregado al carrito ✅');b.textContent='✓ Listo'}
+  else if(b.dataset.abver){cerrar();openModal(b.dataset.abver)}
+  else if('abest' in b.dataset){cerrar();estAbrir('*')}});
 })();
 </script>
 </body>
