@@ -399,7 +399,6 @@ descripción: Tapas plásticas para vasos y envases. Escoge la opción según el
 opción: Para vaso térmico #8 · caja completa | 452.16 pesos
 opción: Lisa Reyma para vaso PL 4A/8 · caja 1,000 piezas | 475.69 pesos
 opción: Para vaso PL #7, 8, 10 y 12 · caja 20/50 | 571.54 pesos
-opción: Para envase Primo #3 y #4 · 1,200 piezas | 427 pesos | foto envase-primo
 opción: Lisa para vaso PL 5.5 y 4CH · caja 20/50 | 416.88 pesos
 opción: Lisa para vaso PL #10 · caja 20/50 | 524.03 pesos
 opción: Lisa para vaso PL #12 y #14 · caja 20/50 | 629.89 pesos
@@ -543,13 +542,14 @@ descripción: Bowl de plástico para ensaladas de 24 oz. La tapa se vende aparte
 opción: Bowl 24 oz · 200 piezas | 821.74 pesos
 opción: Tapa para bowl de ensalada · 200 piezas | 697.24 pesos
 
-Envase Primo 4 oz
+Envase y tapa Primo 4 oz
 id: e3
-precio: 596 pesos
-presentación: Caja con 1,200 piezas
+presentación: Escoge envase o tapa · se venden por separado
 foto: envase-primo
 dibujo: envase
-descripción: Envase de 4 onzas para salsas, aderezos y porciones.
+descripción: Envase de 4 onzas para salsas, aderezos y porciones, con su tapa. Nota: el envase y la tapa se venden por separado. Escoge cuál quieres o agrega los dos al carrito.
+opción: Envase 4 oz · caja con 1,200 piezas | 596 pesos
+opción: Tapa para envase Primo #3 y #4 · 1,200 piezas | 427 pesos
 
 Envase térmico Reyma
 id: x9
