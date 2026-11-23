@@ -314,6 +314,26 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
  body.v3 .tag{font-size:10px;padding:2px 5px;top:5px;left:5px}
  body.v3 .nfot{font-size:9.5px;padding:2px 5px;top:5px;right:5px}
 }
+/* Clips */
+.hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
+.hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.hist .hring{width:70px;height:70px;flex:0 0 auto;box-sizing:border-box;border-radius:50%;padding:3px;background:conic-gradient(#f4b400,#e53935,#7ed957,#f4b400);display:grid;place-items:center}
+.hist .hring{overflow:hidden}.hist .hring img{width:64px!important;height:64px!important;max-width:none;display:block;border-radius:50%;object-fit:cover;border:3px solid #0d1828}
+.hist .hv .hring{background:#14233a;border:2px dashed #f4b400}.hist .hv b{font-size:28px}
+.clv{position:fixed;inset:0;z-index:80;background:#000;opacity:0;pointer-events:none;transition:opacity .2s}.clv.on{opacity:1;pointer-events:auto}
+.clv-top{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:linear-gradient(#000a,#0000);color:#fff;font:800 18px Poppins,sans-serif}
+.clv-top button{width:40px;height:40px;border-radius:50%;border:0;background:#0b1525;color:#f4b400;font-size:20px;box-shadow:0 0 0 2px #f4b400;cursor:pointer}
+.clv-list{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;scrollbar-width:none}.clv-list::-webkit-scrollbar{display:none}
+.clv-it{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:grid;place-items:center;background:#000}
+.clv-it video{width:100%;height:100%;object-fit:cover;max-width:560px}
+.clv-bar{position:absolute;top:calc(64px + env(safe-area-inset-top));left:16px;right:16px;height:3px;background:#ffffff40;border-radius:2px;z-index:2}.clv-bar i{display:block;height:100%;width:0;background:#f4b400;border-radius:2px}
+.clv-info{position:absolute;left:0;right:0;bottom:0;padding:60px 18px calc(22px + env(safe-area-inset-bottom));background:linear-gradient(#0000,#000d 45%);color:#fff;font-family:Poppins,sans-serif;max-width:560px;margin:auto}
+.clv-br{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}.clv-br img{width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #7ed957}
+.clv-info h3{margin:8px 0 4px;font:28px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;color:#f4b400}
+.clv-info p{margin:0 0 12px;font-size:14.5px;line-height:1.4;color:#e6eef8}
+.clv-p{display:flex;align-items:center;gap:12px}.clv-p span{font-weight:800;font-size:18px}
+.clv-p button{margin-left:auto;border:0;border-radius:999px;background:#f4b400;color:#152016;font:800 15px Poppins,sans-serif;padding:12px 20px;cursor:pointer}
+@media(max-width:760px){.bnav{grid-template-columns:repeat(6,1fr)!important}.bnav>*{font-size:10.5px!important}}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
@@ -360,6 +380,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
   </div>
   <div class="dots" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
 </section>
+<div class="hist" id="hist" aria-label="Clips"></div>
 <nav class="cats" aria-label="Categorías"><div id="cats"></div></nav>
 <div class="trust"><span>🕒 Atención 24 horas</span><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span></div>
 <section class="promise"><div><p><b>¿No lo ves en el catálogo?</b> Pregunta por él y te lo conseguimos.</p><p><b>Precios con IVA incluido.</b> Entregamos en Chihuahua o pasas a recoger.</p><p><b>Pedidos desde 500 pesos:</b> 35% de anticipo. <a href="#condiciones" style="color:#fff">Ver condiciones</a></p><a class="wa" href="https://wa.me/526141077999" target="_blank" rel="noopener">Contáctanos por WhatsApp · 614 107 7999</a></div></section>
@@ -440,6 +461,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
 <nav class="bnav" aria-label="Menú">
   <button class="on" data-bn="inicio"><span class="bi">🏠</span>Inicio</button>
+  <button data-bn="clips"><span class="bi">🎬</span>Clips</button>
   <button data-bn="cats"><span class="bi">🗂️</span>Categorías</button>
   <button data-bn="carrito" id="bnCart"><span class="bi">🛒</span>Carrito<b id="bnCount">0</b></button>
   <button data-bn="pedido"><span class="bi">📍</span>Mi pedido</button>
@@ -1347,6 +1369,40 @@ C.addEventListener('click',e=>{if(e.target===C||e.target.closest('[data-calcx]')
   const n=e.target.closest('[data-cn]');if(n){const inp=n.dataset.cn==='per'?$('#cPer'):$('#cXp');const mn=n.dataset.cn==='per'?1:0.5;inp.value=Math.max(mn,(+inp.value||0)+ +n.dataset.d);calcula()}});
 $('#cPer').addEventListener('input',calcula);$('#cXp').addEventListener('input',calcula);
 $('#cGo').addEventListener('click',()=>{plan.forEach(([k,c])=>add(k,c));cerrar();openDrawer();toast('Tortillas agregadas al carrito 🎉')});
+})();
+</script>
+<!-- CLIPS -->
+<section class="clv" id="clv" aria-hidden="true">
+  <div class="clv-top"><b>🎬 Clips</b><button id="clvX" aria-label="Cerrar">✕</button></div>
+  <div class="clv-list" id="clvL"></div>
+</section>
+<script>
+(()=>{
+const T=window.ARBA_T,{$,P,fmt,add,openModal}=T;
+const CLIPS=[
+ {v:'clips/integrales.mp4',img:'clips/integrales.jpg',t:'Tortillas integrales',d:'De la masa a tu mesa. Hechas con amor por Los 2 Carnales 💛',p:'t7',n:'Integrales'}
+];
+const L=$('#clvL'),V=$('#clv');
+const prod=c=>P.find(x=>x.id===c.p);
+L.innerHTML=CLIPS.map((c,i)=>{const p=prod(c),m=p&&T.minPr(p);return `<article class="clv-it" data-ci="${i}">
+  <video src="${c.v}" poster="${c.img}" muted playsinline loop preload="none"></video>
+  <div class="clv-bar"><i></i></div>
+  <div class="clv-info"><div class="clv-br"><img src="img/logo-2c.webp" alt=""><span>Los 2 Carnales</span></div><h3>${c.t}</h3><p>${c.d}</p>
+  ${p?`<div class="clv-p"><span>${m==null?'':(p.v?'desde ':'')+fmt(m)}</span>${p.v?`<button data-clver="${p.id}">Ver opciones</button>`:`<button data-cladd="${p.id}">+ Agregar</button>`}</div>`:''}</div></article>`}).join('');
+const vids=[...L.querySelectorAll('video')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&V.classList.contains('on')){v.preload='auto';v.play().catch(()=>{})}else v.pause()}),{root:L,threshold:.6});
+vids.forEach(v=>{io.observe(v);v.addEventListener('timeupdate',()=>{const b=v.parentNode.querySelector('.clv-bar i');if(v.duration)b.style.width=(v.currentTime/v.duration*100)+'%'});v.addEventListener('click',()=>v.paused?v.play():v.pause())});
+function abrir(i=0){V.classList.add('on');V.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';const it=L.children[i];L.scrollTop=it?it.offsetTop:0;setTimeout(()=>{const v=vids[i];if(v){v.preload='auto';v.play().catch(()=>{})}},120)}
+function cerrar(){V.classList.remove('on');V.setAttribute('aria-hidden','true');document.body.style.overflow='';vids.forEach(v=>v.pause())}
+T.clipsAbrir=abrir;
+$('#clvX').onclick=cerrar;
+L.addEventListener('click',e=>{const a=e.target.closest('[data-cladd]'),o=e.target.closest('[data-clver]');
+  if(a){add(a.dataset.cladd);a.textContent='✓ Agregado';setTimeout(()=>a.textContent='+ Agregar',1800)}
+  if(o){cerrar();openModal(o.dataset.clver)}});
+// fila de historias
+const H=document.getElementById('hist');
+if(H)H.innerHTML=CLIPS.map((c,i)=>`<button data-hist="${i}"><span class="hring"><img src="${c.img}" alt=""></span>${c.n}</button>`).join('')+`<button data-hist="0" class="hv"><span class="hring"><b>🎬</b></span>Ver clips</button>`;
+document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if(h)abrir(+h.dataset.hist);const b=e.target.closest('[data-bn="clips"]');if(b)abrir(0)});
 })();
 </script>
 </body>
