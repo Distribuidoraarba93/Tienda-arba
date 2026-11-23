@@ -309,6 +309,7 @@ main{padding-top:14px}
     <span class="lbl">Entrega</span>
     <div class="seg" role="group" aria-label="Entrega"><button type="button" class="on" data-e="Entrega a domicilio">A domicilio</button><button type="button" data-e="Paso a recoger">Paso a recoger</button></div>
     <label id="dirL">Dirección<input id="dir" required autocomplete="street-address"></label>
+    <p class="note" id="envNote" style="margin:-4px 0 4px;padding:8px 10px;border-radius:8px;background:#7ed95718;border:1px solid #7ed95755">📍 Revisamos tu pedido y ubicación antes de confirmar el envío. Si no te queda en ruta, te ofrecemos pasar a recoger.</p>
     <span class="lbl">¿Cómo vas a pagar?</span>
     <div class="seg seg3" role="group" aria-label="Forma de pago"><button type="button" class="on" data-pay="Efectivo">Efectivo</button><button type="button" data-pay="Transferencia">Transferencia</button><button type="button" data-pay="Tarjeta">Tarjeta</button></div>
     <div class="seg" id="tarBox" role="group" aria-label="Tipo de pago con tarjeta" hidden><button type="button" class="on" data-tar="Terminal al entregar">Terminal al entregar</button><button type="button" data-tar="Link de pago">Link de pago</button></div>
@@ -642,7 +643,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.rm){delete cart[t.dataset.rm];save();renderCart();toast('Producto quitado')}
   else if('clear' in t.dataset){cart={};save();renderCart();toast('Carrito vacío')}
   else if('close' in t.dataset)closeAll();
-  else if(t.dataset.e){entrega=t.dataset.e;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));$('#dirL').hidden=entrega!=="Entrega a domicilio";$('#dir').required=entrega==="Entrega a domicilio"}
+  else if(t.dataset.e){entrega=t.dataset.e;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));$('#dirL').hidden=entrega!=="Entrega a domicilio";$('#envNote').hidden=entrega!=="Entrega a domicilio";$('#dir').required=entrega==="Entrega a domicilio"}
   else if(t.dataset.pay){pago=t.dataset.pay;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));$('#tarBox').hidden=pago!=='Tarjeta'}
   else if(t.dataset.tar){tar=t.dataset.tar;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t))}
   else if(t.dataset.st)aviso(t.dataset.st);
