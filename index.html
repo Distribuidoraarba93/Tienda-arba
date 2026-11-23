@@ -165,6 +165,62 @@ header{background:#0b1525;border-bottom:3px solid #7ed957}
 .antbox{background:#2a2410;border-color:#f4b400}
 .pol>div{border-left-color:#f4b400}
 footer{background:#0b1525;border-top:3px solid #7ed957}
+
+/* ===== DISEÑO NUEVO (estilo app): banner deslizable, categorías con íconos, tarjetas con botón +, barra de abajo ===== */
+header{border-bottom:2px solid #7ed957}
+.bar{padding:8px max(3vw,12px);gap:10px}
+.hero{display:none}
+.promo{max-width:1240px;margin:12px auto 0;padding:0 max(3vw,12px);position:relative}
+.slides{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:none;border-radius:18px}
+.slides::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;border-radius:18px;overflow:hidden;position:relative;min-height:170px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);align-items:center;gap:8px;padding:18px 16px 18px 20px;color:#fff;text-align:left;border:0;cursor:pointer;font:inherit}
+.slide h2{font:clamp(24px,6.5vw,44px)/1 Anton,Impact,sans-serif;text-transform:uppercase;margin:0 0 6px;letter-spacing:.3px}
+.slide h2 span{color:#f4b400}
+.slide p{margin:0 0 10px;font-size:14px;color:#e6eef8;line-height:1.35}
+.slide .pill{display:inline-flex;align-items:center;gap:6px;background:#f4b400;color:#152016;font-weight:700;font-size:14px;border-radius:999px;padding:7px 14px}
+.slide .chip{display:inline-block;background:#ef4444;color:#fff;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;margin-bottom:6px}
+.slide img{width:100%;max-height:150px;object-fit:contain;filter:drop-shadow(0 10px 18px #0008)}
+.slide .round{border-radius:50%;background:#fff;aspect-ratio:1;max-width:140px;justify-self:center;box-shadow:0 0 0 6px #7ed957}
+.s1{background:radial-gradient(circle at 85% 50%,#0b6b35 0,#0b6b3500 55%),linear-gradient(135deg,#0b1525,#13284a)}
+.s2{background:radial-gradient(circle at 85% 50%,#b3261e88 0,#b3261e00 55%),linear-gradient(135deg,#0b1525,#2a1a12)}
+.s3{background:radial-gradient(circle at 85% 50%,#f4b40055 0,#f4b40000 55%),linear-gradient(135deg,#0b1525,#2a2410)}
+.dots{display:flex;justify-content:center;gap:6px;margin:8px 0 0}
+.dots i{width:7px;height:7px;border-radius:9px;background:#24385a;transition:width .2s,background .2s}
+.dots i.on{width:20px;background:#f4b400}
+.cats{background:none;margin-top:6px}
+.cats div{gap:4px;padding:8px max(3vw,12px) 4px;scrollbar-width:none}
+.cats div::-webkit-scrollbar{display:none}
+.cats button{display:grid;justify-items:center;align-content:start;gap:5px;border:0;background:none!important;min-width:76px;max-width:84px;padding:0 2px;font-size:12px;font-weight:600;line-height:1.15;color:#cfd9e8;white-space:normal;text-align:center;min-height:0}
+.cats .ic{width:58px;height:58px;border-radius:50%;background:#14233a;border:2px solid #24385a;display:grid;place-items:center;font-size:27px;transition:transform .15s}
+.cats button.on{color:#f4b400}
+.cats button.on .ic{border-color:#f4b400;background:#2a2410;transform:scale(1.06)}
+.promise div{padding:10px max(3vw,12px);font-size:13px;gap:6px 20px}
+main{padding-top:14px}
+.head,#grid,.cats{scroll-margin-top:150px}
+.p{border-top:0;border-radius:14px}
+.p .info{position:relative;padding-top:14px}
+.p .add{display:none}
+.plus{position:absolute;right:10px;top:-24px;width:46px;height:46px;border-radius:50%;border:3px solid var(--card);background:#f4b400;color:#152016;font:700 28px/1 Poppins,sans-serif;display:grid;place-items:center;box-shadow:0 6px 14px #0007;z-index:1;padding:0}
+.plus.ver{background:#0b6b35;color:#fff;font-size:15px;width:auto;padding:0 12px;border-radius:999px;height:40px;top:-21px}
+.plus:active{transform:scale(.92)}
+.p h3{padding-right:4px}
+.bnav{display:none}
+.trust{display:none;gap:10px;overflow-x:auto;scrollbar-width:none;margin:8px max(3vw,12px) 0;padding:10px 12px;border-radius:12px;background:linear-gradient(90deg,#0b6b35,#4a7a1e);font-size:12.5px;font-weight:600;color:#fff;white-space:nowrap}
+.trust::-webkit-scrollbar{display:none}
+.trust span{flex:none}
+@media(max-width:760px){
+  .cartbtn,.mispbtn{display:none!important}
+  .logo{font-size:19px}.logo img{width:40px;height:40px}
+  .bnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:#0b1525;border-top:2px solid #7ed957;padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+  .bnav button,.bnav a{display:grid;justify-items:center;gap:1px;background:none;border:0;color:#cfd9e8;font-size:11px;font-weight:600;text-decoration:none;padding:6px 0;position:relative;min-height:52px}
+  .bnav .bi{font-size:22px;line-height:1.1}
+  .bnav .on{color:#f4b400}
+  .bnav b{position:absolute;top:2px;left:calc(50% + 6px);background:#ef4444;color:#fff;border-radius:99px;min-width:18px;height:18px;font-size:11px;display:grid;place-items:center;padding:0 5px}
+  .promise{display:none}
+  .trust{display:flex}
+  body{padding-bottom:72px}
+  .toast{bottom:84px}
+}
 </style>
 </head>
 <body>
@@ -175,7 +231,6 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
     <button class="cartbtn" id="openCart" aria-label="Abrir carrito">Carrito <b id="count">0</b></button>
     <button class="mispbtn" id="misPed" hidden aria-label="Ver estatus de mis pedidos">📍<span> Mi pedido</span></button>
   </div>
-  <nav class="cats"><div id="cats"></div></nav>
 </header>
 
 <section class="hero"><div>
@@ -187,6 +242,16 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
   </div>
   <div class="hlogo"><img src="img/logo.webp" alt="Distribuidora ARBA, desechables y más"></div>
 </div></section>
+<section class="promo" aria-label="Promociones">
+  <div class="slides" id="slides">
+    <button class="slide s1" data-go="grid"><div><h2>Si no te lo mejoramos,<br><span>te lo igualamos</span></h2><p>¿Tienes un mejor precio? Enséñanoslo con confianza.</p><span class="pill">Ver catálogo →</span></div><img class="round" src="img/logo.webp" alt=""></button>
+    <button class="slide s2" data-open="k2"><div><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div><img src="img/tortilla-bunuelo.webp" alt=""></button>
+    <button class="slide s3" data-cat="Tortillas"><div><h2>Sabor<br><span>mantequilla</span></h2><p>Tortillas de harina Los 2 Carnales, hechas hoy.</p><span class="pill">Ver tortillas →</span></div><img src="img/tortilla-mantequilla.webp" alt=""></button>
+  </div>
+  <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+</section>
+<nav class="cats" aria-label="Categorías"><div id="cats"></div></nav>
+<div class="trust"><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span></div>
 <section class="promise"><div><p><b>¿No lo ves en el catálogo?</b> Pregunta por él y te lo conseguimos.</p><p><b>Precios con IVA incluido.</b> Entregamos en Chihuahua o pasas a recoger.</p><p><b>Pedidos desde 500 pesos:</b> 35% de anticipo. <a href="#condiciones" style="color:#fff">Ver condiciones</a></p><a class="wa" href="https://wa.me/526141077999" target="_blank" rel="noopener">Contáctanos por WhatsApp · 614 107 7999</a></div></section>
 
 <main>
@@ -245,6 +310,13 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
 </aside>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
+<nav class="bnav" aria-label="Menú">
+  <button class="on" data-bn="inicio"><span class="bi">🏠</span>Inicio</button>
+  <button data-bn="cats"><span class="bi">🗂️</span>Categorías</button>
+  <button data-bn="carrito"><span class="bi">🛒</span>Carrito<b id="bnCount">0</b></button>
+  <button data-bn="pedido"><span class="bi">📍</span>Mi pedido</button>
+  <a href="https://wa.me/526141077999" target="_blank" rel="noopener"><span class="bi">💬</span>WhatsApp</a>
+</nav>
 <div class="toast" id="toast"></div>
 <div class="modal" id="panel" role="dialog" aria-modal="true"><div class="box pbox">
   <button class="x" data-closep aria-label="Cerrar">×</button>
@@ -487,7 +559,8 @@ const priceHTML=p=>{const m=minPr(p);if(m==null)return `<div class="quote">Pide 
   const [e,c]=m.toFixed(2).split('.');return `<div class="price">${p.v&&p.v.length>1&&p.v.some(x=>x.pr!==m)?'<small>desde </small>':''}${(+e).toLocaleString('es-MX')}${c!=='00'?`<sup>${c}</sup>`:''} <small>pesos</small></div>`};
 
 
-function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}">${c}</button>`).join('')}
+const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁'};
+function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}"><span class="ic">${CAT_IC[c]||'📦'}</span>${c}</button>`).join('')}
 function renderGrid(){
   const list=[...P].sort((a,b)=>(b.cat==="Tortillas")-(a.cat==="Tortillas")).filter(p=>(cat==="Todos"||p.cat===cat)&&(!q||norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' ')).includes(norm(q))));
   $('#title').textContent=q?`Resultados para “${q}”`:(cat==="Todos"?"Todos los productos":cat);
@@ -495,7 +568,7 @@ function renderGrid(){
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p">
     <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${pic(p)}</button>
-    <div class="info">${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.cat==="Tortillas"?'<span class="free">Tortillería Los 2 Carnales · Hechas hoy</span>':''}
+    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.cat==="Tortillas"?'<span class="free">Tortillería Los 2 Carnales · Hechas hoy</span>':''}
     ${p.v?`<button class="add" data-open="${p.id}">Ver opciones</button>`:`<button class="add" data-add="${p.id}">${p.pr==null?'Agregar para cotizar':'Agregar al carrito'}</button>`}</div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
@@ -895,6 +968,27 @@ au.onAuthStateChanged(auth,()=>window.dispatchEvent(new Event('arba-auth')));
 au.getRedirectResult(auth).catch(()=>{});
 window.dispatchEvent(new Event('arba-fb'));
 }catch(e){console.warn('Firebase no cargó',e)}
+</script>
+<script>
+/* ===== DISEÑO NUEVO: carrusel, barra de abajo ===== */
+(function(){
+  const sl=document.getElementById('slides'),dots=[...document.querySelectorAll('#dots i')];let i=0,tm;
+  const marca=()=>{const n=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach((d,k)=>d.classList.toggle('on',k===n));i=n};
+  sl.addEventListener('scroll',()=>{clearTimeout(sl._t);sl._t=setTimeout(marca,80)},{passive:true});
+  const auto=()=>{clearInterval(tm);tm=setInterval(()=>{if(document.hidden)return;i=(i+1)%dots.length;sl.scrollTo({left:i*sl.clientWidth,behavior:'smooth'})},5000)};
+  sl.addEventListener('touchstart',auto,{passive:true});auto();
+  document.querySelectorAll('[data-go=grid]').forEach(b=>b.addEventListener('click',()=>document.getElementById('grid').scrollIntoView({behavior:'smooth'})));
+  document.querySelectorAll('.slide[data-cat]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>document.getElementById('title').scrollIntoView({behavior:'smooth',block:'start'}),50)));
+  const cnt=document.getElementById('count'),bc=document.getElementById('bnCount');
+  const sync=()=>{bc.textContent=cnt.textContent;bc.hidden=cnt.textContent==='0'};sync();new MutationObserver(sync).observe(cnt,{childList:true,characterData:true,subtree:true});
+  document.querySelector('.bnav').addEventListener('click',e=>{const b=e.target.closest('[data-bn]');if(!b)return;const k=b.dataset.bn;
+    if(k==='inicio')window.scrollTo({top:0,behavior:'smooth'});
+    else if(k==='cats')document.querySelector('.cats').scrollIntoView({behavior:'smooth',block:'center'});
+    else if(k==='carrito')document.getElementById('openCart').click();
+    else if(k==='pedido'){let n=0;try{n=Object.keys(JSON.parse(localStorage.getItem('arba-pedidos')||'{}')).length}catch(er){}
+      if(n)document.getElementById('misPed').click();else{const t=document.getElementById('toast');t.textContent='Todavía no tienes pedidos. Arma tu carrito y mándalo por WhatsApp.';t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600)}}});
+  document.addEventListener('click',e=>{const c=e.target.closest('.cats [data-cat]');if(c)setTimeout(()=>document.getElementById('title').scrollIntoView({behavior:'smooth',block:'start'}),50)});
+})();
 </script>
 </body>
 </html>
