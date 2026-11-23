@@ -719,6 +719,11 @@ $('#misPed').onclick=()=>estAbrir('');
 $('#estado').addEventListener('click',e=>{if(e.target.id==='estado')estCerrar()});
 $('#veil').addEventListener('click',()=>$('#estado').classList.remove('on'));
 window.addEventListener('hashchange',estRuta);estBoton();estRuta();
+/* Atajo escondido: mantener presionado el logo 3 segundos abre el panel (pide entrar con Google). */
+(function(){const l=document.querySelector('.logo');if(!l)return;let t=0;const go=()=>{t=0;location.hash='#panel-arba'};
+  const st=()=>{clearTimeout(t);t=setTimeout(go,3000)},sp=()=>clearTimeout(t);
+  l.addEventListener('touchstart',st,{passive:true});l.addEventListener('touchend',sp);l.addEventListener('touchmove',sp,{passive:true});
+  l.addEventListener('mousedown',st);l.addEventListener('mouseup',sp);l.addEventListener('mouseleave',sp);l.addEventListener('contextmenu',e=>e.preventDefault())})();
 window.addEventListener('hashchange',route);route();
 renderCats();renderGrid();renderCart();
 }
