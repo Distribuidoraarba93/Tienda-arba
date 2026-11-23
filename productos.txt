@@ -72,7 +72,7 @@ precio: 26 pesos
 presentación: Paquete de 10 piezas
 mayoreo: desde 5, 23 pesos
 etiqueta: Nuevo
-foto: tortilla-mantequilla
+foto: tortilla-mantequilla-etiqueta
 dibujo: mantequilla
 descripción: Nuestra nueva línea: la misma tortilla de harina con sabor a mantequilla.
 
