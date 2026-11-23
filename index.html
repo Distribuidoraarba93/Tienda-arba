@@ -660,13 +660,13 @@ function renderGrid(){
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
 /* Clientes también llevan */
-const REL={t6:['s2','x13','f1','a52'],t8:['s2','x13','f1','a52'],t3:['f1','r1','t1','t2'],t4:['dp13','dp14','a52','s1'],t9:['dp13','dp14','c1','s1'],t10:['f1','c1','s2','a52'],t5:['f1','x13','a52','s2'],
- r1:['r2','t3','dp11','k2'],r2:['r1','k2','t3','t2'],k1:['t6','f1','s2','x13'],k2:['r2','t3','f1','r1'],f1:['t1','t2','t6','a52'],
+const REL={t6:['s2','x13','f1','s1'],t8:['s2','x13','f1','s1'],t3:['f1','r1','t1','t2'],t4:['dp13','dp14','s1','x14'],t9:['dp13','dp14','c1','s1'],t10:['f1','c1','s2','s1'],t5:['f1','x13','s2','s1'],
+ r1:['r2','t3','dp11','k2'],r2:['r1','k2','t3','t2'],k1:['t6','f1','s2','x13'],k2:['r2','t3','f1','r1'],f1:['t1','t2','t6','t4'],
  dp13:['dp14','a52','lb32'],dp14:['dp13','a52'],e1:['e2','lb46','s1'],e2:['e1','lb46'],x9:['x11','dp19','dp24'],x11:['x9'],lb48:['lb46','dp24','s1'],e3:['dp13','lb46','s1'],
  dp16:['dp17','dp21','s1'],x5:['x8','dp21'],dp12:['x8','dp21'],v1:['x8','dp21'],v3:['x8','dp21'],x6:['x8','dp21'],dp18:['x8','dp21'],lb47:['x8','dp21'],
  dp11:['r1','s3','x13'],a52:['b5','lb15','lb32','a50'],lb29:['lb15','b5','lb32','dp13'],a50:['a52','b5','lb15'],lb32:['lb29','b5','lb15'],lb27:['lb37','a52','lb32','dp24'],lb26:['lb37','a52','lb32'],lb38:['lb37','a47','dp24'],
  l4:['l14','l6','l13','l9'],l14:['l4','l6','l13'],l9:['l11','l10','l4','l13'],l2:['l15','l9','l11'],l15:['l2','l9','dp26'],l6:['l4','l14','l13']};
-const REL_CAT={Tortillas:['f1','s2','a52','x13'],Contenedores:['dp24','lb46','s1','dp19'],Vasos:['x8','dp21','s1','dp24'],'Bowls y envases':['lb46','dp19','s1','dp24'],'Servilletas y empaque':['s1','x23','dp24','dp26'],'Higiene y varios':['h3','h4','x25','lb45'],Abarrotes:['a52','f1','a47','a1'],Bebidas:['b5','lb14','lb16','dp24'],Limpieza:['l4','l9','l6','l13'],Botanas:['a52','lb32','a50','dp24'],Dulces:['b10','b11','b12','lb28'],Combos:['f1','s2','t2','a52'],'Repostería':['r1','r2','t3','dp11']};
+const REL_CAT={Tortillas:['f1','s2','s1','x13'],Contenedores:['dp24','lb46','s1','dp19'],Vasos:['x8','dp21','s1','dp24'],'Bowls y envases':['lb46','dp19','s1','dp24'],'Servilletas y empaque':['s1','x23','dp24','dp26'],'Higiene y varios':['h3','h4','x25','lb45'],Abarrotes:['f1','a47','a1','a59'],Bebidas:['b5','lb14','lb16','dp24'],Limpieza:['l4','l9','l6','l13'],Botanas:['a52','lb32','a50','dp24'],Dulces:['b10','b11','b12','lb28'],Combos:['f1','s2','t2','s1'],'Repostería':['r1','r2','t3','dp11']};
 function relDe(ids,n=4){const ya=new Set(ids),out=[],ok=q=>q&&!ya.has(q.id)&&!out.includes(q);
   const ps=ids.map(id=>P.find(x=>x.id===id)).filter(Boolean),pon=r=>{const q=P.find(x=>x.id===r);if(ok(q))out.push(q)};
   ps.forEach(p=>(REL[p.id]||[]).forEach(pon));ps.forEach(p=>(REL_CAT[p.cat]||[]).forEach(pon));
