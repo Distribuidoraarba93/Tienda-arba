@@ -660,7 +660,7 @@ function openDrawer(){closeModal();$('#drawer').classList.add('on');$('#veil').c
 function closeModal(){$('#modal').classList.remove('on')}
 function closeAll(){$('#drawer').classList.remove('on');closeModal();$('#panel')&&$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}
 function openModal(id){
-  const p=P.find(x=>x.id===id);let c=1,vi=0;
+  const p=P.find(x=>x.id===id);let c=(p&&p.min)||1,vi=0;
   const draw=()=>{const m=myOf(p,p.v?vi:null),pr=m&&c>=m[0]?m[1]:(p.v?p.v[vi].pr:p.pr);
   $('#box').innerHTML=`<button class="x" data-close aria-label="Cerrar">×</button><div class="img">${pic(p,p.v?vi:null)}</div>
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
@@ -668,7 +668,7 @@ function openModal(id){
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}" data-vi="${i}">${o.n}<small>${fmt(o.pr)}</small></button>`).join('')}</div>`:''}
   <div style="display:flex;gap:10px;align-items:center"><span>Cantidad</span><div class="qty"><button data-m="-1" aria-label="Menos">−</button><span>${c}</span><button data-m="1" aria-label="Más">+</button></div></div>
   <button class="add" id="madd">${pr==null?'Agregar para cotizar':'Agregar al carrito'}${pr!=null&&c>1?' · '+fmt(Math.round(pr*c*100)/100):''}</button></div>`;
-  $('#box').querySelectorAll('[data-m]').forEach(b=>b.onclick=e=>{e.stopPropagation();c=Math.max(1,c+ +b.dataset.m);draw()});
+  $('#box').querySelectorAll('[data-m]').forEach(b=>b.onclick=e=>{e.stopPropagation();c=Math.max(p.min||1,c+ +b.dataset.m);draw()});
   $('#box').querySelectorAll('[data-vi]').forEach(b=>b.onclick=e=>{e.stopPropagation();vi=+b.dataset.vi;draw()});
   $('#madd').onclick=e=>{e.stopPropagation();add(p.v?id+':'+vi:id,c);closeModal();$('#veil').classList.remove('on');toast('Agregado al carrito')}};
   draw();$('#modal').classList.add('on');$('#veil').classList.add('on');
