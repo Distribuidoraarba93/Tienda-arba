@@ -63,10 +63,10 @@ opción: Paquete de 6 piezas | 15 pesos | mayoreo desde 5, 12 pesos
 Tortillas de harina para burrito
 id: t6
 precio: 23 pesos
-presentación: Paquete de 10 piezas · todas del mismo tamaño
+presentación: Paquete de 10 piezas · 25 a 26 cm aprox. · todas del mismo tamaño
 foto: tortilla-burrito
 dibujo: tortilla
-descripción: Tortillas de harina parejitas, todas del mismo tamaño, ideales para burritos. Tortillería Los 2 Carnales.
+descripción: Tortillas de harina parejitas, todas del mismo tamaño, de 25 a 26 cm aprox., ideales para burritos. Tortillería Los 2 Carnales.
 
 Tortillas de harina sabor mantequilla
 id: t2
@@ -83,9 +83,9 @@ id: t3
 presentación: Paquete de 10 piezas
 foto: tortilla-bunuelo
 dibujo: tortilla
-descripción: Tortillas de harina delgaditas, listas para freír y hacer buñuelos. Chica de 15 a 16 cm aprox. y grande de 24 a 25 cm aprox. Tortillería Los 2 Carnales.
-opción: Chica · 15 a 16 cm | 20 pesos
-opción: Grande · 24 a 25 cm | 28 pesos
+descripción: Tortillas de harina delgaditas, listas para freír y hacer buñuelos. Chica de 14 a 15 cm aprox. y grande de 25 cm aprox. Tortillería Los 2 Carnales.
+opción: Chica · 14 a 15 cm | 20 pesos
+opción: Grande · 25 cm | 28 pesos
 
 Tortillas de harina para taco chico
 id: t4
@@ -106,6 +106,36 @@ descripción: Tortillas de harina grandes para montados. Jumbo de 35 a 38 cm (6 
 opción: Jumbo · 35 a 38 cm | 60 pesos
 opción: Chica · 28 a 30 cm | 45 pesos
 opción: Jumbo chica · 28 a 30 cm, más gruesa | 60 pesos
+
+Tortillas de harina integrales
+id: t7
+presentación: 24 cm aprox.
+etiqueta: Nuevo
+dibujo: tortilla
+descripción: Tortillas de harina integral de 24 cm aprox., hechas al momento por la Tortillería Los 2 Carnales. Mismo precio que la tortilla de tienda, con precio de mayoreo desde 5 paquetes.
+opción: Paquete de 10 piezas | 25 pesos | mayoreo desde 5, 22 pesos
+opción: Paquete de 6 piezas | 15 pesos | mayoreo desde 5, 12 pesos
+
+Tortillas para burro jumbo
+id: t8
+precio: 35 pesos
+presentación: Paquete de 10 piezas · 28 cm aprox.
+dibujo: tortilla
+descripción: Tortillas de harina grandes de 28 cm aprox., para burros jumbo bien servidos. Tortillería Los 2 Carnales.
+
+Tortillas para quesibirrias
+id: t9
+precio: 20 pesos
+presentación: Paquete de 10 piezas · 15 a 16 cm aprox.
+dibujo: tortilla
+descripción: Tortillas de harina de 15 a 16 cm aprox., del tamaño ideal para quesibirrias. Tortillería Los 2 Carnales.
+
+Tortillas para gorditas
+id: t10
+precio: 25 pesos
+presentación: Paquete de 10 piezas · 12 a 14 cm aprox.
+dibujo: tortilla
+descripción: Tortillas de harina para gorditas de 12 a 14 cm aprox. Importante: no van cocidas al 100%; hay que terminar de cocerlas en el comal para que se puedan abrir. Tortillería Los 2 Carnales.
 
 
 ==================== Contenedores ====================
