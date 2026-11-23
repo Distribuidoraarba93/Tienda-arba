@@ -183,8 +183,9 @@ header{border-bottom:2px solid #7ed957}
 .slide img{width:100%;max-height:150px;object-fit:contain;filter:drop-shadow(0 10px 18px #0008)}
 .slide .round{border-radius:50%;background:#fff;aspect-ratio:1;max-width:140px;justify-self:center;box-shadow:0 0 0 6px #7ed957}
 .s1{background:radial-gradient(circle at 85% 50%,#0b6b35 0,#0b6b3500 55%),linear-gradient(135deg,#0b1525,#13284a)}
-.s2{background:radial-gradient(circle at 85% 50%,#b3261e88 0,#b3261e00 55%),linear-gradient(135deg,#0b1525,#2a1a12)}
-.s3{background:radial-gradient(circle at 85% 50%,#f4b40055 0,#f4b40000 55%),linear-gradient(135deg,#0b1525,#2a2410)}
+.s2{background:linear-gradient(90deg,#1c0b08f7 0,#2a100cdd 45%,#2a100c55 72%,#2a100c10),url(img/tortilla-bunuelo-paquetes.webp) 80% 50%/cover;min-height:210px}
+.s3{background:linear-gradient(90deg,#1a0d05 0,#1a0d05 calc(100% - 360px),#1a0d0500 calc(100% - 170px)),url(img/promo-mantequilla.webp) right center/auto 112% no-repeat,#1a0d05;min-height:210px}
+@media(max-width:600px){.s3{background:linear-gradient(180deg,#1a0d05 0,#1a0d05 12%,#1a0d0500 30%),linear-gradient(90deg,#1a0d05 0,#1a0d05ee 48%,#1a0d0500 78%),url(img/promo-mantequilla.webp) right -55px bottom -6px/auto 84% no-repeat,#1a0d05}}
 .dots{display:flex;justify-content:center;gap:6px;margin:8px 0 0}
 .dots i{width:7px;height:7px;border-radius:9px;background:#24385a;transition:width .2s,background .2s}
 .dots i.on{width:20px;background:#f4b400}
@@ -287,8 +288,8 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
     <button class="slide s5" data-open="r2"><div><span class="chip" style="background:#b3261e">🎄 Edición Navidad</span><h2>Arreglo<br><span>Navideño</span></h2><p>Pay casero, buñuelos, Kisses y pretzels con chocolate en caja de regalo.</p><span class="pill">Lo quiero · 170 pesos</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
     <button class="slide s1" data-go="grid"><div><h2>Si no te lo mejoramos,<br><span>te lo igualamos</span></h2><p>¿Tienes un mejor precio? Enséñanoslo con confianza.</p><span class="pill">Ver catálogo →</span></div><img class="round" src="img/logo.webp" alt=""></button>
     <button class="slide s6" data-calc><div><span class="chip" style="background:#0b6b35">🎉 Posadas, bodas y fiestas</span><h2>¿Cuántas tortillas<br><span>necesito?</span></h2><p>Dinos cuántos invitados y qué vas a servir. Te decimos cuántos paquetes y cuánto sale.</p><span class="pill">🧮 Calcular</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
-    <button class="slide s2" data-open="k2"><div><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div><img src="img/tortilla-bunuelo-paquetes.webp" alt=""></button>
-    <button class="slide s3" data-cat="Tortillas"><div><h2>Sabor<br><span>mantequilla</span></h2><p>Tortillas de harina Los 2 Carnales, recién hechas.</p><span class="pill">Ver tortillas →</span></div><img src="img/tortilla-mantequilla-etiqueta.webp" alt=""></button>
+    <button class="slide s2" data-open="k2"><div><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
+    <button class="slide s3" data-cat="Tortillas"><div><h2>Sabor<br><span>mantequilla</span></h2><p>Tortillas de harina Los 2 Carnales, recién hechas.</p><span class="pill">Ver tortillas →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
   </div>
   <div class="dots" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
 </section>
