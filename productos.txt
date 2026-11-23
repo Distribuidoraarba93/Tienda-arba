@@ -1576,7 +1576,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Fibra verde 3M P96
 id: l4
 precio: 20.31 pesos
-mínimo: 5 piezas
+mínimo: 3 piezas
 presentación: Pieza
 foto: fibra-verde
 dibujo: caja
@@ -1585,7 +1585,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Fibra blanca 3M P66
 id: l14
 precio: 20.89 pesos
-mínimo: 5 piezas
+mínimo: 3 piezas
 presentación: Pieza
 dibujo: caja
 descripción: Fibra blanca no rayadora 3M, para limpiar teflón, acero inoxidable, vidrio y superficies delicadas sin rayarlas.
