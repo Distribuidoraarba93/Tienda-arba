@@ -250,9 +250,10 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
   <button class="x" data-closep aria-label="Cerrar">×</button>
   <div class="tx">
     <h3>Panel del negocio</h3>
+    <div id="pFb" style="margin:6px 0 12px"></div>
+    <div id="pPriv" hidden>
     <a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener" style="display:inline-block;margin:4px 0 8px;padding:8px 14px;border-radius:999px;background:#3f9b2f;color:#fff;font-weight:600;text-decoration:none">📦 Mi inventario</a>
     <div id="pQuick" hidden style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 6px"><div id="pResumen" class="note" style="grid-column:1/-1;font-weight:600;color:var(--ink)"></div><button class="go" data-st="ok" style="background:#2e8b2e;font-size:17px;padding:16px 8px">✅ Aceptar pedido</button><button class="sec" data-st="cancel" style="background:#b3261e;color:#fff;border-color:#b3261e;font-size:17px;padding:16px 8px">❌ Cancelar pedido</button><a id="pInv" hidden target="_blank" rel="noopener" style="grid-column:1/-1;display:none;text-align:center;background:#f2c230;color:#111;border-radius:12px;padding:14px;font-weight:700;text-decoration:none">📦 Ahora descuéntalo del inventario</a></div>
-    <div id="pFb" style="margin:6px 0 12px"></div>
     <p class="note">Contesta a tus clientes con un toque. Se abre WhatsApp con el mensaje listo para enviar.</p>
     <label>Pega aquí el mensaje del pedido<textarea id="pMsg" placeholder="Copia el mensaje del pedido que te llegó por WhatsApp y pégalo aquí: se llenan los datos solos"></textarea></label>
     <p class="note" id="pChk" style="font-weight:600;color:var(--ink)"></p>
@@ -280,6 +281,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
     </div>
     <label>Tus datos bancarios (solo tú los ves, no salen en la tienda)<textarea id="pBanco" placeholder="Banco: …&#10;CLABE: …&#10;A nombre de: …"></textarea></label>
     <p class="note" id="pBst"></p>
+    </div>
   </div></div></div>
 <div class="modal" id="estado" role="dialog" aria-modal="true" aria-label="Estatus de tu pedido"><div class="box pbox"><button class="x" data-closee aria-label="Cerrar">×</button><div class="tx" id="estBox"></div></div></div>
 
@@ -691,9 +693,9 @@ function estFbCambia(p,st){const s=EST_DE[st];if(!s||!pK||!/^ARBA-[\d-]+$/.test(
 /* Panel: lista de pedidos en línea */
 const EST_NOM={recibido:'Recibido',aceptado:'Aceptado',pagado:'Pagado',camino:'En camino',listo:'Listo para recoger',entregado:'Entregado',cancelado:'Cancelado'};
 let fbLista=null;
-function fbPanel(){const box=$('#pFb');if(!box)return;const F=window.ARBA_FB;
-  if(!F){box.innerHTML='<p class="note">Cargando pedidos en línea…</p>';return}
-  if(!F.usuario()){box.innerHTML='<button class="go" data-fbin style="width:100%">🔐 Entrar con Google para ver tus pedidos</button><p class="note">Solo con tu cuenta ('+F.ADMIN+') puedes ver y cambiar los pedidos.</p>';if(fbLista){fbLista();fbLista=null}return}
+function fbPanel(){const box=$('#pFb');if(!box)return;const F=window.ARBA_FB;const pv=$('#pPriv');if(pv)pv.hidden=!(F&&F.admin());
+  if(!F){box.innerHTML='<p class="note">Cargando… si tarda mucho, revisa tu internet y vuelve a abrir el panel.</p>';return}
+  if(!F.usuario()){box.innerHTML='<button class="go" data-fbin style="width:100%">🔐 Entrar con Google</button><p class="note">Panel solo para el negocio.</p>';if(fbLista){fbLista();fbLista=null}return}
   if(!F.admin()){box.innerHTML='<p class="note">Entraste con '+F.usuario()+', pero esa cuenta no es la del negocio.</p><button class="sec" data-fbout style="width:100%">Salir y entrar con otra cuenta</button>';return}
   box.innerHTML='<p class="note" style="margin:0 0 6px">Conectado como '+F.usuario()+' · <a href="#" data-fbout>Salir</a></p><div id="pLista" class="estlist"><p class="note">Cargando…</p></div>';
   if(fbLista)fbLista();fbLista=F.lista(rows=>{const L=$('#pLista');if(!L)return;
