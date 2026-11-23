@@ -1996,7 +1996,7 @@ opción: Grande · rinde 8 personas | 180 pesos
 
 Arreglo Navideño 🎄
 id: r2
-precio: 160 pesos
+precio: 170 pesos
 presentación: Caja de regalo con moño
 etiqueta: Navidad
 foto: arreglo-navideno
