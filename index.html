@@ -123,6 +123,8 @@ textarea{min-height:64px;resize:vertical}
 .seg3{grid-template-columns:repeat(3,minmax(0,1fr))}.seg3 button{font-size:14px;padding:0 4px}
 .chk{display:flex;align-items:center;gap:10px;font-size:15px;min-height:44px}.chk input{width:22px;height:22px;accent-color:var(--g)}
 .facbox{display:grid;gap:10px;padding:12px;border:1px dashed var(--g);border-radius:10px}
+.mispbtn{margin-left:0;background:transparent;color:inherit;border:1px solid var(--line);border-radius:999px;min-height:44px;padding:0 14px;font-weight:600;white-space:nowrap}
+.est{list-style:none;margin:14px 0 6px;padding:0;display:grid;gap:0}.est li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;position:relative;padding-bottom:18px;color:var(--mute)}.est li:last-child{padding-bottom:0}.est li:not(:last-child)::after{content:"";position:absolute;left:16px;top:34px;bottom:0;width:3px;background:var(--line);border-radius:2px}.est .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:3px solid var(--line);background:var(--card);font-size:16px;font-weight:700}.est li.hecho{color:var(--ink)}.est li.hecho .dot{background:#25a244;border-color:#25a244;color:#fff}.est li.hecho:not(:last-child)::after{background:#25a244}.est li.ahora{color:var(--ink)}.est li.ahora .dot{background:var(--y);border-color:var(--y);color:#152016;box-shadow:0 0 0 6px rgba(244,180,0,.25)}.est b{display:block;font-size:16px;line-height:34px}.est small{display:block;margin-top:-6px;font-size:13px;color:var(--mute)}.estcan{background:#b3261e;color:#fff;border-radius:12px;padding:14px;font-weight:700;text-align:center;margin:12px 0}.estlist{display:grid;gap:8px;margin:10px 0}.estlist button{text-align:left;border:1px solid var(--line);background:transparent;color:inherit;border-radius:10px;padding:10px 12px;font-weight:600}@media(max-width:600px){.mispbtn{padding:0 12px;font-size:18px}.mispbtn span{display:none}}
 .pbox{grid-template-columns:1fr;max-width:460px}.pbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pbtns .go{grid-column:1/-1}
 .foot-a{color:#cfe8d5;font-size:13px}
 .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,120px);background:#152016;color:#fff;padding:12px 18px;border-radius:10px;z-index:70;transition:transform .25s;font-weight:600}
@@ -171,6 +173,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
     <div class="logo"><img src="img/logo.webp" alt="" width="46" height="46"><div>Distribuidora ARBA<small>Desechables, abarrotes y tortillería</small></div></div>
     <label class="search" aria-label="Buscar productos"><input id="q" type="search" placeholder="Buscar tortillas, vasos, papas…" autocomplete="off"><span>Buscar</span></label>
     <button class="cartbtn" id="openCart" aria-label="Abrir carrito">Carrito <b id="count">0</b></button>
+    <button class="mispbtn" id="misPed" hidden aria-label="Ver estatus de mis pedidos">📍<span> Mi pedido</span></button>
   </div>
   <nav class="cats"><div id="cats"></div></nav>
 </header>
@@ -268,6 +271,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
       <button class="sec" data-st="camino">Va en camino</button>
       <button class="sec" data-st="listo">Listo para recoger</button>
       <button class="sec" data-st="pago">Pago recibido</button>
+      <button class="sec" data-st="entregado">Pedido entregado</button>
       <button class="sec" data-st="factura">Factura enviada</button>
       <button class="sec" data-st="no">No tenemos algo</button>
       <button class="sec" data-st="cancel">Cancelar pedido</button>
@@ -276,6 +280,7 @@ footer{background:#0b1525;border-top:3px solid #7ed957}
     <label>Tus datos bancarios (solo tú los ves, no salen en la tienda)<textarea id="pBanco" placeholder="Banco: …&#10;CLABE: …&#10;A nombre de: …"></textarea></label>
     <p class="note" id="pBst"></p>
   </div></div></div>
+<div class="modal" id="estado" role="dialog" aria-modal="true" aria-label="Estatus de tu pedido"><div class="box pbox"><button class="x" data-closee aria-label="Cerrar">×</button><div class="tx" id="estBox"></div></div></div>
 
 <script>
 {
@@ -539,6 +544,8 @@ document.addEventListener('click',e=>{
   else if(t.dataset.st)aviso(t.dataset.st);
   else if('reset' in t.dataset){['pMsg','pPed','pTel','pNom','pLink','pTiempo'].forEach(id=>$('#'+id).value='');$('#pChk').textContent='';pp='';pe='';pT='';pA='';document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('on'));toast('Listo para otro pedido')}
   else if(t.dataset.t){$('#pTiempo').value=t.dataset.t;t.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t))}
+  else if('closee' in t.dataset)estCerrar();
+  else if(t.dataset.estver)estAbrir(t.dataset.estver);
   else if('closep' in t.dataset){$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname)}
 });
 $('#modal').addEventListener('click',e=>{if(e.target.id==='modal'){closeModal();$('#veil').classList.remove('on')}});
@@ -560,10 +567,10 @@ $('#form').addEventListener('submit',e=>{
   const tel=digits($('#tel').value),nom=$('#nom').value.trim();
   const fac=$('#fac').checked?['',`🧾 FACTURA`,`RFC: ${$('#rfc').value.trim().toUpperCase()}`,`Razón social: ${$('#rs').value.trim()}`,`C.P. fiscal: ${$('#cp').value.trim()}`,`Régimen: ${$('#reg').value}`,`Uso CFDI: ${$('#uso').value}`,`Correo: ${$('#mail').value.trim()}`]:[];
   const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`,``,`🔧 Solo para el negocio (aceptar o cancelar):`,panelLink({p:ped,n:nom,t:tel,g:pago==='Tarjeta'?'Tarjeta ('+tar+')':pago,T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega,i:ks.map(k=>k+'*'+cart[k]).join(',')})].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
-  openWA(WHATS,msg);
+  openWA(WHATS,msg);estGuarda(ped,'recibido',entrega==='Paso a recoger'?'r':entrega?'d':'');
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
-  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${ped}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a></div>`;
+  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${ped}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button></div>`;
 });
 const banco=()=>{try{return (localStorage.getItem('arba-banco')||'').trim()}catch(e){return ''}};
 $('#pBanco').value=banco();
@@ -600,6 +607,7 @@ const MSG={
   camino:(n,p)=>`Hola${n}, tu pedido${p} de Distribuidora ARBA ya va EN CAMINO 🚚.${$('#pTiempo').value.trim()?' Llega en: '+$('#pTiempo').value.trim()+'.':''}`,
   listo:(n,p)=>`Hola${n}, tu pedido${p} ya está LISTO PARA RECOGER 📦 en Distribuidora ARBA.`,
   pago:(n,p)=>`Hola${n}, recibimos tu pago del pedido${p} ✅. ¡Gracias!`,
+  entregado:(n,p)=>`Hola${n}, tu pedido${p} de Distribuidora ARBA fue ENTREGADO 📦✅. ¡Gracias por tu compra!`,
   factura:(n,p)=>`Hola${n}, ya te enviamos la factura de tu pedido${p} a tu correo 🧾. Cualquier cosa aquí estamos.`,
   verif:(n,p)=>`Hola${n}, recibimos tu pedido${p}${pT?' por '+pT:''} en Distribuidora ARBA. ¿Nos confirmas que es correcto para empezar a prepararlo? 🙏`,
   cancel:(n,p)=>`Hola${n}, lo sentimos 🙏, tu pedido${p} de Distribuidora ARBA fue CANCELADO. Por el momento no podemos surtirlo. Si quieres, escríbenos y te ayudamos con otra opción. ¡Gracias por tu preferencia!`,
@@ -623,8 +631,52 @@ $('#pMsg').addEventListener('input',e=>{const t=e.target.value,g=r=>((t.match(r)
   if(ped){$('#pPed').value=ped;$('#pTiempo').value='';$('#pLink').value='';document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('on'))}if(nom)$('#pNom').value=nom;if(tel)$('#pTel').value=tel;if(ped||tel)toast('Datos del pedido listos')});
 function aviso(st){const tel=digits($('#pTel').value);if(tel.length<10){toast('Escribe el WhatsApp del cliente');return}
   const n=$('#pNom').value.trim(),p=$('#pPed').value.trim(),l=$('#pLink').value.trim();if(st==='link'&&!/^https?:\/\//.test(l)){toast('Pega primero el link de pago');$('#pLink').focus();return}
-  if((st==='trans'||(st==='ok'&&(/Transferencia/.test(pp)||(pA&&!/Link/.test(pp)))))&&!banco()){toast('Primero escribe tus datos bancarios abajo');$('#pBanco').focus();return}openWA('52'+tel,MSG[st](n?' '+n:'',p?' '+p:'',l))}
+  if((st==='trans'||(st==='ok'&&(/Transferencia/.test(pp)||(pA&&!/Link/.test(pp)))))&&!banco()){toast('Primero escribe tus datos bancarios abajo');$('#pBanco').focus();return}let m=MSG[st](n?' '+n:'',p?' '+p:'',l);const el=estLink(p,st);if(el)m+=`\n\n📍 Mira el estatus de tu pedido aquí:\n${el}`;openWA('52'+tel,m)}
 function route(){if(location.hash.indexOf('#panel-arba')===0){const qs=new URLSearchParams(location.hash.split('?')[1]||'');closeAll();history.replaceState(null,'',location.pathname+location.search+'#panel-arba');if(qs.get('p')){$('#pPed').value=qs.get('p');$('#pNom').value=qs.get('n')||'';$('#pTel').value=qs.get('t')||'';pp=qs.get('g')||'';pT=qs.get('T')||'';pA=qs.get('a')||'';pe=qs.get('e')||'';pI=(qs.get('i')||'').split(',').filter(Boolean).map(s=>{const [k,n]=s.split('*');return [k,+n||1]});$('#pInv').hidden=true;$('#pInv').style.display='none';$('#pTiempo').value='';$('#pLink').value='';document.querySelectorAll('[data-t]').forEach(b=>b.classList.remove('on'));$('#pResumen').textContent='Pedido '+qs.get('p')+(qs.get('n')?' · '+qs.get('n'):'')+(pT?' · '+pT:'')+(pp?' · '+pp:'');$('#pQuick').hidden=false;$('#pQuick').style.display='grid'}else{$('#pQuick').hidden=true;$('#pQuick').style.display='none'}$('#panel').classList.add('on');$('#veil').classList.add('on');initBanco()}}
+/* ===== ESTATUS DEL PEDIDO =====
+   El dueño manda desde el panel un link con el estatus; el cliente lo abre y ve en qué va su pedido.
+   Los pedidos del cliente se guardan en su celular (arba-pedidos) para que los vuelva a ver con "📍 Mi pedido". */
+const TIENDA_URL='https://distribuidoraarba93.github.io/Tienda-arba/';
+const EST_ORDEN={recibido:1,aceptado:2,pagado:3,camino:4,listo:4,entregado:5,cancelado:9};
+const EST_DE={verif:'recibido',ok:'aceptado',pago:'pagado',camino:'camino',listo:'listo',entregado:'entregado',cancel:'cancelado'};
+function estLink(ped,st){const s=EST_DE[st];if(!s||!/^ARBA-[\d-]+$/.test(ped||''))return '';
+  const q=new URLSearchParams({p:ped,s});if(pe==='Paso a recoger')q.set('e','r');else if(pe)q.set('e','d');
+  const tm=$('#pTiempo').value.trim();if(tm&&(s==='aceptado'||s==='camino'||s==='listo'))q.set('t',tm);
+  q.set('f',Date.now().toString(36));return TIENDA_URL+'#estatus?'+q.toString()}
+function estTodos(){try{return JSON.parse(localStorage.getItem('arba-pedidos')||'{}')}catch(e){return {}}}
+function estGuarda(p,s,e,t,f){if(!/^ARBA-[\d-]+$/.test(p||'')||!EST_ORDEN[s])return;const all=estTodos(),o=all[p]||{};
+  const fecha=f||Date.now();
+  if(o.s&&o.f&&fecha<o.f){/* link viejo: no regresa el estatus */}
+  else{o.s=s;o.f=fecha;if(t)o.t=t;else if(s!=='aceptado'&&s!=='camino'&&s!=='listo')delete o.t}
+  if(e)o.e=e;if(!o.c)o.c=Date.now();all[p]=o;
+  const ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));ks.slice(15).forEach(k=>delete all[k]);
+  try{localStorage.setItem('arba-pedidos',JSON.stringify(all))}catch(err){}estBoton()}
+function estBoton(){const b=$('#misPed');if(b)b.hidden=!Object.keys(estTodos()).length}
+function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido</h3><p>No encontramos ese pedido en este celular. Abre el link que te mandamos por WhatsApp.</p>';
+  const rec=o.e==='r'||o.s==='listo';const n=EST_ORDEN[o.s]||1;
+  const pasos=[['recibido','Pedido recibido','Ya nos llegó tu pedido por WhatsApp.'],['aceptado','Pedido aceptado','Lo estamos preparando.'],['pagado','Pago recibido','Gracias, ya quedó tu pago.'],
+    rec?['listo','Listo para recoger','Ya puedes pasar por él.']:['camino','Va en camino','Tu pedido ya va para allá. 🚚'],['entregado',rec?'Recogido':'Entregado','¡Gracias por tu compra!']];
+  const fec=new Date(o.f||Date.now()).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
+  let h=`<h3>Tu pedido ${p}</h3><p class="note" style="margin:0">Actualizado: ${fec}</p>`;
+  if(o.s==='cancelado')return h+`<div class="estcan">❌ Este pedido fue cancelado</div><p>Si tienes dudas, escríbenos y te ayudamos con otra opción.</p><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, tengo una duda sobre mi pedido '+p)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>`;
+  h+='<ol class="est">'+pasos.map(([k,t,d],i)=>{const lv=i+1,cls=lv<n||(lv===n&&k==='entregado')?'hecho':lv===n?'ahora':'';
+    const extra=cls==='ahora'&&o.t?` <br>🕒 ${rec?'Listo en':'Llega en'}: ${o.t}`:'';
+    return `<li class="${cls}"><span class="dot">${cls==='hecho'?'✓':lv}</span><div><b>${t}</b>${cls?`<small>${d}${extra}</small>`:''}</div></li>`}).join('')+'</ol>';
+  if(n===2&&!o.t)h+='<p class="note">Te avisamos por WhatsApp en cuanto cambie.</p>';
+  return h+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
+function estAbrir(p){if(p==='*')p='';closeAll();const all=estTodos(),ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));
+  if(!p&&ks.length===1)p=ks[0];
+  $('#estBox').innerHTML=p?estHtml(p)+(ks.length>1?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')
+    :'<h3>Mis pedidos</h3><div class="estlist">'+ks.map(k=>{const o=all[k];const nm={recibido:'Recibido',aceptado:'Aceptado',pagado:'Pagado',camino:'En camino',listo:'Listo para recoger',entregado:'Entregado',cancelado:'Cancelado'}[o.s]||'';return `<button data-estver="${k}">${k} · ${nm}</button>`}).join('')+'</div>';
+  $('#estado').classList.add('on');$('#veil').classList.add('on')}
+function estCerrar(){$('#estado').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#estatus')===0)history.replaceState(null,'',location.pathname+location.search)}
+function estRuta(){if(location.hash.indexOf('#estatus')!==0)return;const q=new URLSearchParams(location.hash.split('?')[1]||'');const p=q.get('p')||'';
+  if(p&&q.get('s'))estGuarda(p,q.get('s'),q.get('e')||'',q.get('t')||'',parseInt(q.get('f')||'',36)||Date.now());
+  estAbrir(p==='*'?'':p);history.replaceState(null,'',location.pathname+location.search)}
+$('#misPed').onclick=()=>estAbrir('');
+$('#estado').addEventListener('click',e=>{if(e.target.id==='estado')estCerrar()});
+$('#veil').addEventListener('click',()=>$('#estado').classList.remove('on'));
+window.addEventListener('hashchange',estRuta);estBoton();estRuta();
 window.addEventListener('hashchange',route);route();
 renderCats();renderGrid();renderCart();
 }
