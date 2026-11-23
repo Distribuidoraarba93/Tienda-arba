@@ -1489,6 +1489,13 @@ opción: Codito | 154.44 pesos
 opción: Fideos con chile 82 g | 156.32 pesos
 opción: Coditos con chile 82 g | 156.32 pesos
 
+Sal individual Dilox en sobre
+id: a61
+precio: 264.91 pesos
+presentación: Caja con 2,000 sobres de 1 g
+dibujo: caja
+descripción: Sobres individuales de sal de mesa de 1 g, ideales para loncheras, restaurantes, taquerías y comida para llevar. Caja con 2,000 piezas.
+
 ==================== Bebidas ====================
 
 Bebida Arizona lata 460 ml varios sabores
