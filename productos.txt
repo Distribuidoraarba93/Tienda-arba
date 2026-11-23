@@ -26,7 +26,6 @@
 #  - La categoría la da el título ==== Nombre ==== de arriba del producto.
 # =====================================================================
 
-
 ==================== Combos ====================
 
 Combo Burrero
@@ -47,7 +46,6 @@ dibujo: tortilla
 descripción: Todo para la cena navideña: 2 paquetes de 10 tortillas para buñuelo grande (24 a 25 cm), una bolsa de frijol cocido de 800 g y un paquete de 10 tortillas de harina. Escoge si quieres las tortillas normales o sabor mantequilla. Por separado cuesta 106 pesos (107 con mantequilla); en combo pagas solo 90 pesos. Tortillería Los 2 Carnales.
 opción: Con tortillas normales | 90 pesos
 opción: Con tortillas sabor mantequilla | 90 pesos
-
 
 ==================== Tortillas ====================
 
@@ -136,7 +134,6 @@ precio: 25 pesos
 presentación: Paquete de 10 piezas · 12 a 14 cm aprox.
 dibujo: tortilla
 descripción: Tortillas de harina para gorditas de 12 a 14 cm aprox. Importante: no van cocidas al 100%; hay que terminar de cocerlas en el comal para que se puedan abrir. Tortillería Los 2 Carnales.
-
 
 ==================== Contenedores ====================
 
@@ -348,7 +345,6 @@ opción: Plato para pay 9" · 300 piezas | 2775.95 pesos
 opción: Domo para plato de pay 9" · 300 piezas | 1043.29 pesos
 opción: Molde para tartaleta AL-09 · 1,000 piezas | 1402.49 pesos
 
-
 ==================== Vasos ====================
 
 Vaso térmico
@@ -517,7 +513,6 @@ presentación: Caja con 2,000 piezas (20/100)
 dibujo: vaso
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-
 ==================== Bowls y envases ====================
 
 Bowl café
@@ -573,7 +568,6 @@ presentación: Caja 20/25
 foto: tapa-reyma
 dibujo: tapa
 descripción: Tapa térmica (unicel) para envase térmico Reyma de 1/2 litro y 1 litro. Pídelo y te confirmamos disponibilidad por WhatsApp.
-
 
 ==================== Servilletas y empaque ====================
 
@@ -839,7 +833,6 @@ opción: Toalla de cocina 168 hojas · 4/6 rollos | 518.81 pesos
 opción: Toalla secamanos 180 m · 6 rollos | 522.73 pesos
 opción: Papel higiénico 300 hojas · 24/4 rollos | 623.36 pesos
 
-
 ==================== Higiene y varios ====================
 
 Plastinudo
@@ -962,7 +955,6 @@ precio: 539.9 pesos
 presentación: Paquete con 5 piezas
 dibujo: caja
 descripción: Hielera de unicel con capacidad de 20 litros.
-
 
 ==================== Abarrotes ====================
 
@@ -1497,7 +1489,6 @@ opción: Codito | 154.44 pesos
 opción: Fideos con chile 82 g | 156.32 pesos
 opción: Coditos con chile 82 g | 156.32 pesos
 
-
 ==================== Bebidas ====================
 
 Bebida Arizona lata 460 ml varios sabores
@@ -1555,7 +1546,6 @@ presentación: Paquete de 12 piezas
 foto: coca-zero
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
 
 ==================== Limpieza ====================
 
@@ -1656,7 +1646,6 @@ foto: magitel
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-
 ==================== Botanas ====================
 
 Botana Sabrisurtido
@@ -1689,27 +1678,6 @@ precio: 102.5 pesos
 presentación: Bolsa de 500 g
 foto: papa-natural
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Barra Soft energética
-id: b6
-precio: cotizar
-presentación: Pieza
-dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Galletas Canelitas
-id: b7
-precio: cotizar
-presentación: Pieza
-dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Galletas Polvorones
-id: b8
-precio: cotizar
-presentación: Pieza
-dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Galletas surtidas Paketines
@@ -1976,7 +1944,6 @@ opción: Zarape · 20 kg | 1058.49 pesos | foto zarape
 opción: Rotini · 20 kg | 1058.49 pesos | foto rotini
 opción: Anillo · 20 kg | 1058.49 pesos | foto anillo
 
-
 ==================== Dulces ====================
 
 Paleta de chile Rockaleta
@@ -2010,7 +1977,6 @@ presentación: Caja con 24 piezas de 140 ml
 foto: chechi-fresco
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
 
 ==================== Repostería ====================
 

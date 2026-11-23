@@ -1,0 +1,23 @@
+# Productos quitados de la tienda hasta tener su precio.
+# Para volver a ponerlos: copia el bloque a productos.txt en su categoría (Botanas) y cambia "precio: cotizar" por el precio.
+
+Barra Soft energética
+id: b6
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Galletas Canelitas
+id: b7
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+
+Galletas Polvorones
+id: b8
+precio: cotizar
+presentación: Pieza
+dibujo: caja
+descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
