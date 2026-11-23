@@ -2020,5 +2020,6 @@ precio: 170 pesos
 presentación: Caja de regalo con moño
 etiqueta: Navidad
 foto: arreglo-navideno
+fotos: arreglo-abierto
 dibujo: tortilla
 descripción: Regala sabor casero esta Navidad. Incluye pay de manzana casero, buñuelos chicos, Kisses de chocolate y pretzels con chocolate, todo en caja de regalo con moño. Ideal para familia, amigos y clientes. Hecho por Los 2 Carnales.
