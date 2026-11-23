@@ -244,18 +244,18 @@ main{padding-top:14px}
 .calc .res{margin-top:16px;padding:14px;border-radius:14px;background:#14301d;border:1px solid #7ed957}.calc .res b{color:#f4b400;font-size:22px}.calc .res p{margin:4px 0;font-size:14px}.calc .res .note{color:#9fb0c8;font-size:12px}
 .calc .go{width:100%;margin-top:12px;border:0;border-radius:12px;background:#f4b400;color:#152016;font:700 16px Poppins,sans-serif;padding:14px;cursor:pointer}
 .calc .x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:#0b1525;color:#f4b400;font-size:22px;box-shadow:0 0 0 2px #f4b400;cursor:pointer}
-/* Protección de fotos: sin descargar y con marca de agua */
+/* Protección de fotos: sin descargar */
 img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
 .p .img,.box .img{position:relative}
-.p .img:has(img.foto)::after,.box .img:has(img.foto)::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:url(img/logo.webp) center/46% no-repeat;opacity:.22;mix-blend-mode:multiply}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
 .s5 h2 span{color:#f2d27a}
-.slide img.sello2c{position:absolute;top:12px;right:12px;width:74px;height:74px;max-height:none;border-radius:50%;background:#fff;box-shadow:0 0 0 4px #7ed957,0 6px 14px #0008;filter:none}
+.slide img.sello2c{position:static;display:inline-block;vertical-align:middle;width:42px;height:42px;max-height:none;margin:0 8px 8px 0;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #7ed957,0 3px 8px #0008;filter:none}
+.slide .sello2c+.chip{vertical-align:middle;margin-bottom:8px}
+.slide .sello2c+h2{margin-top:2px}
 .cats .ic2c{background:#fff!important;overflow:hidden}.cats .ic2c img{width:100%;height:100%;object-fit:contain;padding:2px}
-.p .img img.sello{position:absolute;top:8px;right:8px;width:46px;height:46px;padding:2px;border-radius:50%;background:#fff;box-shadow:0 2px 8px #0006;z-index:1;object-fit:contain}
+.p .img img.sello{position:absolute;bottom:8px;left:8px;top:auto;right:auto;width:34px;height:34px;opacity:.95;padding:2px;border-radius:50%;background:#fff;box-shadow:0 2px 8px #0006;z-index:1;object-fit:contain}
 .thead{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:center;margin:0 0 14px;padding:14px;border-radius:14px;background:linear-gradient(135deg,#14301d,#0b1525);border:1px solid #7ed95755}
 .thead img{width:92px;height:92px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px #7ed957}
 .thead b{display:block;font:24px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;color:#f4b400;margin-bottom:4px}
@@ -284,12 +284,12 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 </div></section>
 <section class="promo" aria-label="Promociones">
   <div class="slides" id="slides">
-    <button class="slide s4" data-cat="Tortillas"><div><span class="chip" style="background:#0b6b35">🔥 Recién hechas</span><h2>Tortillería<br><span>Los 2 Carnales</span></h2><p>Tortillas de harina artesanales, de taco a montado jumbo.</p><span class="pill">Ver tortillas →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
-    <button class="slide s5" data-open="r2"><div><span class="chip" style="background:#b3261e">🎄 Edición Navidad</span><h2>Arreglo<br><span>Navideño</span></h2><p>Pay casero, buñuelos, Kisses y pretzels con chocolate en caja de regalo.</p><span class="pill">Lo quiero · 170 pesos</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
+    <button class="slide s4" data-cat="Tortillas"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#0b6b35">🔥 Recién hechas</span><h2>Tortillería<br><span>Los 2 Carnales</span></h2><p>Tortillas de harina artesanales, de taco a montado jumbo.</p><span class="pill">Ver tortillas →</span></div></button>
+    <button class="slide s5" data-open="r2"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#b3261e">🎄 Edición Navidad</span><h2>Arreglo<br><span>Navideño</span></h2><p>Pay casero, buñuelos, Kisses y pretzels con chocolate en caja de regalo.</p><span class="pill">Lo quiero · 170 pesos</span></div></button>
     <button class="slide s1" data-go="grid"><div><h2>Si no te lo mejoramos,<br><span>te lo igualamos</span></h2><p>¿Tienes un mejor precio? Enséñanoslo con confianza.</p><span class="pill">Ver catálogo →</span></div><img class="round" src="img/logo.webp" alt=""></button>
-    <button class="slide s6" data-calc><div><span class="chip" style="background:#0b6b35">🎉 Posadas, bodas y fiestas</span><h2>¿Cuántas tortillas<br><span>necesito?</span></h2><p>Dinos cuántos invitados y qué vas a servir. Te decimos cuántos paquetes y cuánto sale.</p><span class="pill">🧮 Calcular</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
-    <button class="slide s2" data-open="k2"><div><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
-    <button class="slide s3" data-cat="Tortillas"><div><h2>Sabor<br><span>mantequilla</span></h2><p>Tortillas de harina Los 2 Carnales, recién hechas.</p><span class="pill">Ver tortillas →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
+    <button class="slide s6" data-calc><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#0b6b35">🎉 Posadas, bodas y fiestas</span><h2>¿Cuántas tortillas<br><span>necesito?</span></h2><p>Dinos cuántos invitados y qué vas a servir. Te decimos cuántos paquetes y cuánto sale.</p><span class="pill">🧮 Calcular</span></div></button>
+    <button class="slide s2" data-open="k2"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div></button>
+    <button class="slide s3" data-cat="Tortillas"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><h2>Sabor<br><span>mantequilla</span></h2><p>Tortillas de harina Los 2 Carnales, recién hechas.</p><span class="pill">Ver tortillas →</span></div></button>
   </div>
   <div class="dots" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
 </section>
@@ -638,7 +638,7 @@ function renderGrid(){
   $('#banner').hidden=!(cat==="Tortillas"&&!q);repPinta(cat==="Todos"&&!q);$('#tortHead').hidden=!(cat==="Tortillas"&&!q);
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p">
-    <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${SELLO_2C.includes(p.cat)?'<img class="sello" src="img/logo-2c.webp" alt="Los 2 Carnales">':''}${pic(p)}</button>
+    <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${SELLO_2C.includes(p.cat)&&!/etiqueta|integral/.test(p.img||'')?'<img class="sello" src="img/logo-2c.webp" alt="Los 2 Carnales">':''}${pic(p)}</button>
     <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.min?'<span class="free" style="color:#f4b400">🛒 Compra mínima: '+p.min+' piezas</span>':''}${ANTIC(p)?'<span class="free" style="color:#f4b400">📅 Pídelo un día antes</span>':p.cat==="Tortillas"?'<span class="free">⚡ Mismo día si hay disponibilidad</span>':''}
     ${p.v?`<button class="add" data-open="${p.id}">Ver opciones</button>`:`<button class="add" data-add="${p.id}">${p.pr==null?'Agregar para cotizar':'Agregar al carrito'}</button>`}</div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
