@@ -1993,3 +1993,12 @@ dibujo: tortilla
 descripción: Pay de manzana hecho en casa y recién horneado. El individual es para 1 persona; el grande rinde 8 personas, ideal para compartir.
 opción: Individual · para 1 persona | 40 pesos
 opción: Grande · rinde 8 personas | 180 pesos
+
+Arreglo Navideño 🎄
+id: r2
+precio: 160 pesos
+presentación: Caja de regalo con moño
+etiqueta: Navidad
+foto: arreglo-navideno
+dibujo: tortilla
+descripción: Regala sabor casero esta Navidad. Incluye pay de manzana casero, buñuelos chicos, Kisses de chocolate y pretzels con chocolate, todo en caja de regalo con moño. Ideal para familia, amigos y clientes. Hecho por Los 2 Carnales.
