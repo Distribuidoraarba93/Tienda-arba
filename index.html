@@ -1063,7 +1063,8 @@ window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,up
   upd();
 })();
 </script>
-<script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>{r.update();setInterval(()=>r.update(),30*60*1000)}).catch(()=>{});
+let yaRec=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(yaRec&&!sessionStorage.getItem("arba-rec")){sessionStorage.setItem("arba-rec","1");location.reload()}});}</script>
 <div id="instBar" style="display:none;position:fixed;left:12px;right:12px;bottom:14px;z-index:9999;background:#0b1a3a;border:2px solid #3f9b2f;border-radius:16px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5);font-family:inherit;color:#fff">
 <div style="display:flex;align-items:center;gap:12px"><img src="icon-192.png" alt="" style="width:48px;height:48px;border-radius:12px">
 <div style="flex:1"><b style="font-size:16px">Instala la app de Distribuidora ARBA</b><div id="instTxt" style="font-size:13px;opacity:.85;margin-top:2px">Pide más rápido desde tu celular</div></div>
