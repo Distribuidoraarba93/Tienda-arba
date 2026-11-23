@@ -247,6 +247,13 @@ main{padding-top:14px}
 /* Protección de fotos: sin descargar */
 img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
 .p .img,.box .img{position:relative}
+/* Tarjetas limpias y fotos con fondo parejo */
+.p .img .tag{z-index:2}
+.p h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.p .unit{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.bdg{display:block;margin-top:2px;font-size:12.5px;font-weight:700;color:#7ed957;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bdg.am{color:#f4b400}
+.p .img,.box .img,.li .th,.ab-p .th{background:#f4f5f1!important}
+.p .img img.foto,.box .img img.foto,.li .th img,.ab-p .th img{background:transparent!important;mix-blend-mode:multiply}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
@@ -615,6 +622,7 @@ const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const item=k=>{const [id,vi]=k.split(':'),p=P.find(x=>x.id===id);if(!p)return null;const o=p.v&&vi!=null?p.v[+vi]:null;if(p.v&&!o)return null;return {p,vi:o?+vi:null,name:p.n+(o?' '+o.n:''),unit:p.u,pr:o?o.pr:p.pr}};
 const myOf=(p,vi)=>vi!=null&&p.v?p.v[vi].my:p.my;
 const upI=(it,c)=>{const m=myOf(it.p,it.vi);return m&&c>=m[0]?m[1]:it.pr};
+const badge=p=>{if(p.min)return '<span class="bdg am">🛒 Mínimo '+p.min+' piezas</span>';if(ANTIC(p))return '<span class="bdg am">📅 Pídelo un día antes</span>';const m=p.my||(p.v&&(p.v.find(o=>o.my)||{}).my);if(m)return '<span class="bdg">💰 Mayoreo desde '+m[0]+'</span>';if(p.cat==='Tortillas')return '<span class="bdg">⚡ Mismo día</span>';return ''};
 const myTxt=(p,vi)=>{const m=myOf(p,vi);if(m)return `<span class="free">Mayoreo: ${fmt(m[1])} desde ${m[0]} ${p.myu||'paquetes'}</span>`;if(vi==null&&p.v&&p.v.some(o=>o.my))return `<span class="free">Precio de mayoreo desde ${p.v.find(o=>o.my).my[0]} ${p.myu||'paquetes'}</span>`;return ''};
 const priceHTML=p=>{const m=minPr(p);if(m==null)return `<div class="quote">Pide tu precio</div>`;
   const [e,c]=m.toFixed(2).split('.');return `<div class="price">${p.v&&p.v.length>1&&p.v.some(x=>x.pr!==m)?'<small>desde </small>':''}${(+e).toLocaleString('es-MX')}${c!=='00'?`<sup>${c}</sup>`:''} <small>pesos</small></div>`};
@@ -639,7 +647,7 @@ function renderGrid(){
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p">
     <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${SELLO_2C.includes(p.cat)&&!/etiqueta|integral/.test(p.img||'')?'<img class="sello" src="img/logo-2c.webp" alt="Los 2 Carnales">':''}${pic(p)}</button>
-    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.min?'<span class="free" style="color:#f4b400">🛒 Compra mínima: '+p.min+' piezas</span>':''}${ANTIC(p)?'<span class="free" style="color:#f4b400">📅 Pídelo un día antes</span>':p.cat==="Tortillas"?'<span class="free">⚡ Mismo día si hay disponibilidad</span>':''}
+    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${badge(p)}
     ${p.v?`<button class="add" data-open="${p.id}">Ver opciones</button>`:`<button class="add" data-add="${p.id}">${p.pr==null?'Agregar para cotizar':'Agregar al carrito'}</button>`}</div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
