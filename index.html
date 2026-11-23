@@ -267,6 +267,8 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 /* Barra del carrito, animación y botón fijo */
 .cbar{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;z-index:31;width:min(480px,calc(100% - 24px));display:flex;align-items:center;gap:12px;border:0;border-radius:16px;padding:10px 14px;background:#0b6b35;color:#fff;font-family:Poppins,system-ui,sans-serif;box-shadow:0 10px 26px #000a;cursor:pointer;animation:cbIn .3s ease}
 .cbar[hidden]{display:none}
+
+.cbar.sale{transition:transform .3s,opacity .3s;transform:translate(-50%,40px);opacity:0}
 @keyframes cbIn{from{transform:translate(-50%,30px);opacity:0}to{transform:translateX(-50%);opacity:1}}
 .cbar .ci{position:relative;font-size:24px}.cbar .ci b{position:absolute;top:-8px;right:-12px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#f4b400;color:#152016;font-size:12px;display:grid;place-items:center}
 .cbar .ct{display:flex;flex-direction:column;text-align:left;line-height:1.15;margin-left:6px}.cbar .ct small{font-size:11.5px;opacity:.85}.cbar .ct b{font-size:16px}
@@ -693,6 +695,8 @@ function relDe(ids,n=5){const ya=new Set(ids),out=[],ok=q=>q&&!ya.has(q.id)&&!ou
   return out.slice(0,n)}
 function relHTML(ids,tit){const r=relDe(ids);if(!r.length)return '';
   return `<div class="rel"><b>${tit}</b><div class="rel-row">${r.map(q=>{const m=minPr(q);return `<div class="rel-c"><button class="rel-im" data-open="${q.id}">${pic(q)}</button><span class="rel-n">${q.n}</span><span class="rel-p">${m==null?'Cotizar':(q.v?'desde ':'')+fmt(m)}</span>${q.v?`<button class="rel-b" data-open="${q.id}">Ver</button>`:`<button class="rel-b" data-add="${q.id}">+ Agregar</button>`}</div>`}).join('')}</div></div>`}
+function barra(){const cb=document.getElementById('cbar');if(!cb)return;cb.hidden=false;document.body.classList.add('hascbar');clearTimeout(cb._t);
+  cb._t=setTimeout(()=>{cb.classList.add('sale');setTimeout(()=>{cb.hidden=true;cb.classList.remove('sale');document.body.classList.remove('hascbar')},300)},3000)}
 function vuela(src){try{if(!src)return;const r=src.getBoundingClientRect();if(!r.width)return;
   setTimeout(()=>{const cb=document.getElementById('cbar'),bn=document.getElementById('bnCart'),oc=document.getElementById('openCart');
     const tg=[cb,bn,oc].find(x=>x&&!x.hidden&&x.getBoundingClientRect().width>0);if(!tg)return;const t=tg.getBoundingClientRect();
@@ -712,12 +716,12 @@ function renderCart(){
     <div class="qty"><button data-dec="${k}" aria-label="Quitar uno">−</button><span>${c}</span><button data-inc="${k}" aria-label="Agregar uno">+</button></div></div>`}).join('');
   $('#total').textContent=fmt(Math.round(tot*100)/100)+(quote?' + cotización':'');
   cTot=Math.round(tot*100)/100;
-  {const n=ks.reduce((a,k)=>a+cart[k],0);$('#cbN').textContent=n;$('#cbT').textContent=fmt(cTot)+(quote?' + cotización':'');$('#cbar').hidden=false;document.body.classList.add('hascbar')}
+  {const n=ks.reduce((a,k)=>a+cart[k],0);$('#cbN').textContent=n;$('#cbT').textContent=fmt(cTot)+(quote?' + cotización':'');}
   $('#items').insertAdjacentHTML('beforeend',relHTML([...new Set(ks.map(k=>k.split(':')[0]))],'🛒 ¿No te falta algo? Clientes también llevan'));
   $('#qnote').textContent=(ks.some(k=>ANTIC(item(k).p))?'📅 Tu pedido lleva productos que preparamos al momento. '+T_ANT+' ':'🚚 '+T_HOY+' ')+(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
 }
 function toast(t){if(/^Agregad/.test(t)&&!document.getElementById('cbar').hidden)return;const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
-function add(k,n=1){const it=item(k),mn=(it&&it.p.min)||1;if(!cart[k]&&n>0){cart[k]=Math.max(n,mn);if(mn>1)toast('Compra mínima: '+mn+' piezas 👍')}else cart[k]=(cart[k]||0)+n;if(cart[k]<mn)delete cart[k];save();renderCart()}
+function add(k,n=1){const it=item(k),mn=(it&&it.p.min)||1;if(!cart[k]&&n>0){cart[k]=Math.max(n,mn);if(mn>1)toast('Compra mínima: '+mn+' piezas 👍')}else cart[k]=(cart[k]||0)+n;if(cart[k]<mn)delete cart[k];save();renderCart();if(n>0)barra()}
 function openDrawer(){closeModal();$('#drawer').classList.add('on');$('#veil').classList.add('on')}
 function closeModal(){$('#modal').classList.remove('on')}
 function closeAll(){$('#drawer').classList.remove('on');closeModal();$('#panel')&&$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}
