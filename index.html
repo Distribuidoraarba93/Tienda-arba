@@ -282,6 +282,12 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .box .tx{padding-bottom:0}
 .box .buy{position:sticky;bottom:0;z-index:4;display:flex;gap:10px;align-items:center;margin:8px -22px 0;padding:12px 22px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid #ffffff1a;box-shadow:0 -10px 20px #0005}
 .box .buy .add{flex:1;margin:0}
+/* Blindaje contra el modo oscuro forzado de Android (Samsung Internet / Chrome) */
+@media (prefers-color-scheme:dark){:root{color-scheme:only dark}}
+.p .img,.box .img,.rel-im,.li .th,.ab-p .th{background-image:linear-gradient(#f4f5f1,#f4f5f1)!important}
+.plus:not(.ver),.cbar .cg,.ab-btn,.calcbtn,.rep .add,.calc .go,.ab-f button{background-image:linear-gradient(#f4b400,#f4b400)!important}
+.plus.ver,.rel-b,.cbar{background-image:linear-gradient(#0b6b35,#0b6b35)!important}
+.tag{background-image:linear-gradient(#e53935,#e53935)}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
