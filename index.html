@@ -222,6 +222,7 @@ main{padding-top:14px}
   .toast{bottom:84px}
 }
 
+.entr{margin:0;padding:10px 12px;border-radius:10px;background:#7ed95718;border:1px solid #7ed95755;font-size:13.5px;line-height:1.4}.entr.ant{background:#f4b40018;border-color:#f4b40077}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
@@ -257,7 +258,7 @@ main{padding-top:14px}
 </div></section>
 <section class="promo" aria-label="Promociones">
   <div class="slides" id="slides">
-    <button class="slide s4" data-cat="Tortillas"><div><span class="chip" style="background:#0b6b35">🔥 Hechas hoy</span><h2>Tortillería<br><span>Los 2 Carnales</span></h2><p>Tortillas de harina artesanales, de taco a montado jumbo.</p><span class="pill">Ver tortillas →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
+    <button class="slide s4" data-cat="Tortillas"><div><span class="chip" style="background:#0b6b35">🔥 Recién hechas</span><h2>Tortillería<br><span>Los 2 Carnales</span></h2><p>Tortillas de harina artesanales, de taco a montado jumbo.</p><span class="pill">Ver tortillas →</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
     <button class="slide s5" data-open="r2"><div><span class="chip" style="background:#b3261e">🎄 Edición Navidad</span><h2>Arreglo<br><span>Navideño</span></h2><p>Pay casero, buñuelos, Kisses y pretzels con chocolate en caja de regalo.</p><span class="pill">Lo quiero · 170 pesos</span></div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"></button>
     <button class="slide s1" data-go="grid"><div><h2>Si no te lo mejoramos,<br><span>te lo igualamos</span></h2><p>¿Tienes un mejor precio? Enséñanoslo con confianza.</p><span class="pill">Ver catálogo →</span></div><img class="round" src="img/logo.webp" alt=""></button>
     <button class="slide s2" data-open="k2"><div><span class="chip">Ahorras hasta 17 pesos</span><h2>Combo<br><span>Navideño 🎄</span></h2><p>Buñuelo grande, frijol y tortillas. Solo 90 pesos.</p><span class="pill">Ver combo →</span></div><img src="img/tortilla-bunuelo.webp" alt=""></button>
@@ -271,11 +272,14 @@ main{padding-top:14px}
 
 <main>
   <div class="head"><h2 id="title">Todos los productos</h2><span id="n"></span></div>
-  <div class="thead" id="tortHead" hidden><img src="img/logo-2c.webp" alt="Tortillería Los 2 Carnales"><div><b>Tortillería Los 2 Carnales</b><span>Tortillas de harina recién hechas aquí en Chihuahua, normales y sabor mantequilla.</span><span class="tg">🔥 Hechas hoy · 💰 Mayoreo desde 5 paquetes · 🌯 Burrito, montado, taco y buñuelo</span></div></div>
+  <div class="thead" id="tortHead" hidden><img src="img/logo-2c.webp" alt="Tortillería Los 2 Carnales"><div><b>Tortillería Los 2 Carnales</b><span>Tortillas de harina recién hechas aquí en Chihuahua, normales y sabor mantequilla.</span><span class="tg">🔥 Recién hechas · 💰 Mayoreo desde 5 paquetes · 🌯 Burrito, montado, taco y buñuelo</span></div></div>
   <figure class="cban" id="banner" hidden><img src="img/tortillas-tamanos.webp" alt="Tamaños de las tortillas Los 2 Carnales, del montado jumbo al taco chico"><figcaption>Así son los tamaños de nuestras tortillas: del montado jumbo al taco chico.</figcaption></figure>
   <div class="grid" id="grid"></div>
 </main>
 <section class="pol" id="condiciones"><div>
+  <h2>Tiempos de entrega</h2>
+  <p><b>Desechables, abarrotes, botanas y tortillas de tienda (paquete de 10 y de 6):</b> pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.</p>
+  <p><b>Tortillas especiales (burrito, mantequilla, buñuelo, taco y montado), pays, arreglos y combos:</b> se piden con un día de anticipación. Recibimos pedidos hasta las 8 pm, de domingo a viernes, y entregamos al día siguiente de 6 am a 3 pm, de lunes a sábado.</p>
   <h2>Anticipo y cancelaciones</h2>
   <p><b>Pedidos de 500 pesos o más:</b> pedimos el 35% de anticipo por transferencia o link de pago para empezar a preparar tu pedido. El resto lo pagas al recibir.</p>
   <p><b>Si cancelas antes de que preparemos tu pedido,</b> te devolvemos todo tu anticipo.</p>
@@ -576,6 +580,9 @@ const priceHTML=p=>{const m=minPr(p);if(m==null)return `<div class="quote">Pide 
   const [e,c]=m.toFixed(2).split('.');return `<div class="price">${p.v&&p.v.length>1&&p.v.some(x=>x.pr!==m)?'<small>desde </small>':''}${(+e).toLocaleString('es-MX')}${c!=='00'?`<sup>${c}</sup>`:''} <small>pesos</small></div>`};
 
 
+const ANTIC=p=>['Repostería','Combos'].includes(p.cat)||(p.cat==='Tortillas'&&p.id!=='t1');
+const T_ANT='Se prepara al momento para ti, no hay en existencia. Pídelo con un día de anticipación: recibimos pedidos hasta las 8 pm (domingo a viernes) y entregamos al día siguiente de 6 am a 3 pm (lunes a sábado).';
+const T_HOY='Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.';
 const SELLO_2C=["Tortillas","Combos","Repostería"];
 const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁'};
 function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}"><span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
@@ -586,7 +593,7 @@ function renderGrid(){
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p">
     <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${SELLO_2C.includes(p.cat)?'<img class="sello" src="img/logo-2c.webp" alt="Los 2 Carnales">':''}${pic(p)}</button>
-    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.cat==="Tortillas"?'<span class="free">Tortillería Los 2 Carnales · Hechas hoy</span>':''}
+    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${ANTIC(p)?'<span class="free" style="color:#f4b400">📅 Pídelo un día antes</span>':p.cat==="Tortillas"?'<span class="free">⚡ Mismo día si hay disponibilidad</span>':''}
     ${p.v?`<button class="add" data-open="${p.id}">Ver opciones</button>`:`<button class="add" data-add="${p.id}">${p.pr==null?'Agregar para cotizar':'Agregar al carrito'}</button>`}</div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
@@ -600,7 +607,7 @@ function renderCart(){
     <div class="qty"><button data-dec="${k}" aria-label="Quitar uno">−</button><span>${c}</span><button data-inc="${k}" aria-label="Agregar uno">+</button></div></div>`}).join('');
   $('#total').textContent=fmt(Math.round(tot*100)/100)+(quote?' + cotización':'');
   cTot=Math.round(tot*100)/100;
-  $('#qnote').textContent=(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
+  $('#qnote').textContent=(ks.some(k=>ANTIC(item(k).p))?'📅 Tu pedido lleva productos que preparamos al momento. '+T_ANT+' ':'🚚 '+T_HOY+' ')+(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
 function add(k,n=1){cart[k]=(cart[k]||0)+n;if(cart[k]<=0)delete cart[k];save();renderCart()}
@@ -612,7 +619,7 @@ function openModal(id){
   const draw=()=>{const m=myOf(p,p.v?vi:null),pr=m&&c>=m[0]?m[1]:(p.v?p.v[vi].pr:p.pr);
   $('#box').innerHTML=`<button class="x" data-close aria-label="Cerrar">×</button><div class="img">${pic(p,p.v?vi:null)}</div>
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
-  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>
+  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p><p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}" data-vi="${i}">${o.n}<small>${fmt(o.pr)}</small></button>`).join('')}</div>`:''}
   <div style="display:flex;gap:10px;align-items:center"><span>Cantidad</span><div class="qty"><button data-m="-1" aria-label="Menos">−</button><span>${c}</span><button data-m="1" aria-label="Más">+</button></div></div>
   <button class="add" id="madd">${pr==null?'Agregar para cotizar':'Agregar al carrito'}${pr!=null&&c>1?' · '+fmt(Math.round(pr*c*100)/100):''}</button></div>`;
@@ -660,7 +667,7 @@ $('#form').addEventListener('submit',e=>{
   const kk=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');const d=new Date(),ped=`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;
   const tel=digits($('#tel').value),nom=$('#nom').value.trim();
   const fac=$('#fac').checked?['',`🧾 FACTURA`,`RFC: ${$('#rfc').value.trim().toUpperCase()}`,`Razón social: ${$('#rs').value.trim()}`,`C.P. fiscal: ${$('#cp').value.trim()}`,`Régimen: ${$('#reg').value}`,`Uso CFDI: ${$('#uso').value}`,`Correo: ${$('#mail').value.trim()}`]:[];
-  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',$('#vend').value.trim()?`🤝 Vendedor: ${$('#vend').value.trim()}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
+  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,ks.some(k=>ANTIC(item(k).p))?'📅 Lleva productos sobre pedido (1 día de anticipación)':'',tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',$('#vend').value.trim()?`🤝 Vendedor: ${$('#vend').value.trim()}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
   openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);
   fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{})});
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
@@ -1072,13 +1079,13 @@ function responde(raw){const t=norm(raw);let l=null;
   else if(tiene(t,/gracias|grax|thank/)){burbuja('¡Con gusto! 😊 Si necesitas algo más, aquí estoy.');}
   else if(tiene(t,/mi pedido|estatus|status|donde (va|viene|esta) mi|ya (salio|viene)|seguimiento|rastre/)){burbuja('Para ver cómo va tu pedido, toca el botón de abajo. Ahí ves si ya fue aceptado, si va en camino o si está listo para recoger.');const b=burbuja('<button type="button" data-abest style="border:0;border-radius:999px;background:#f4b400;color:#152016;font:700 14px Poppins,sans-serif;padding:10px 16px;cursor:pointer">📍 Ver mi pedido</button>');}
   else if(tiene(t,/mayoreo|por mayor|cantidad|volumen|descuento/)){burbuja('💰 <b>Mayoreo en tortillas Los 2 Carnales</b>, desde 5 paquetes:\n• Tortilla de harina normal: 25 pesos → <b>22 pesos</b>\n• Sabor mantequilla: 26 pesos → <b>23 pesos</b>\n\nEn otros productos, el precio de mayoreo sale en cada tarjeta cuando aplica, y el carrito lo aplica solo al llegar a la cantidad. 😉');}
-  else if(tiene(t,/tortill|buñuelo|bunuelo|montado|burrito|harina|mantequilla/)&&!tiene(t,/harina de|harina para|hot ?cake|maseca/)){burbuja('🫓 <b>Tortillería Los 2 Carnales</b>: tortillas de harina recién hechas aquí en Chihuahua. Estas son:');tarjetas(P.filter(p=>p.cat==='Tortillas'));l=['💰 Mayoreo','🎁 Combos','🚚 Entregas','🛒 ¿Cómo pido?'];}
+  else if(tiene(t,/tortill|buñuelo|bunuelo|montado|burrito|harina|mantequilla/)&&!tiene(t,/harina de|harina para|hot ?cake|maseca/)){burbuja('🫓 <b>Tortillería Los 2 Carnales</b>: tortillas de harina recién hechas aquí en Chihuahua.\n⚡ Las de tienda: mismo día si hay disponibilidad.\n📅 Las especiales (burrito, mantequilla, buñuelo, taco y montado): pídelas un día antes, hasta las 8 pm.');tarjetas(P.filter(p=>p.cat==='Tortillas'));l=['💰 Mayoreo','🎁 Combos','🚚 Entregas','🛒 ¿Cómo pido?'];}
   else if(tiene(t,/arreglo|regalo|navidad|navide|kisses|pretzel/)){burbuja('🎄 <b>Arreglo Navideño</b> de Los 2 Carnales: pay de manzana casero, buñuelos chicos, Kisses y pretzels con chocolate, en caja de regalo con moño. Ideal para regalar a familia, amigos o clientes.');tarjetas(P.filter(p=>p.id==='r2'||p.cat==='Combos'));}
   else if(tiene(t,/combo|cena/)){burbuja('🎁 Estos son nuestros combos:');tarjetas(P.filter(p=>p.cat==='Combos'));}
   else if(tiene(t,/\bpay\b|pastel|postre|reposteri/)){burbuja('🥧 Repostería casera de Los 2 Carnales:');tarjetas(P.filter(p=>p.cat==='Repostería'));}
   else if(tiene(t,/anticipo|cancel|devol|reembols/)){burbuja('📋 <b>Anticipo y cancelaciones</b>\n• Pedidos de <b>500 pesos o más</b>: pedimos 35% de anticipo (transferencia o link de pago) para empezar a prepararlo. El resto lo pagas al recibir.\n• Pedidos menores a 500 pesos no necesitan anticipo.\n• Si cancelas <b>antes</b> de que lo preparemos, te devolvemos todo el anticipo.\n• Si cancelas cuando ya está preparado o al momento de la entrega, el anticipo no se devuelve.');}
   else if(tiene(t,/pago|pagar|tarjeta|efectivo|transfer|deposit|credito|debito|terminal/)){burbuja('💳 <b>Formas de pago</b>\n• Efectivo\n• Transferencia\n• Tarjeta: con terminal al entregar o con link de pago\n\nEn pedidos de 500 pesos o más se pide 35% de anticipo.');l=['📋 Anticipo','🚚 Entregas','🛒 ¿Cómo pido?'];}
-  else if(tiene(t,/entreg|envio|envia|mandan|domicilio|llevan|reparto|recoger|flete|a casa/)){burbuja('🚚 <b>Entregas</b>\n• Entregamos a domicilio en Chihuahua, o si prefieres pasas a recoger.\n• Lo escoges al hacer tu pedido en el carrito.\n• El tiempo de entrega te lo confirmamos por WhatsApp cuando aceptamos tu pedido.\n\n¿Dudas del costo o de tu zona? '+WA('Hola, ¿entregan en mi zona? Mi colonia es: '));}
+  else if(tiene(t,/entreg|envio|envia|mandan|domicilio|llevan|reparto|recoger|flete|a casa|cuando llega|tarda|tiempo|mismo dia|anticipa|dia antes/)){burbuja('🚚 <b>Entregas</b>\n• Entregamos a domicilio en Chihuahua, o pasas a recoger.\n\n<b>Mismo día:</b> desechables, abarrotes, botanas y tortillas de tienda. Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad; si no, te avisamos el tiempo antes de confirmar.\n\n<b>Un día antes:</b> tortillas especiales (burrito, mantequilla, buñuelo, taco y montado), pays, arreglos y combos. Pedidos hasta las 8 pm (domingo a viernes) y se entregan al día siguiente de 6 am a 3 pm (lunes a sábado).\n\n¿Dudas del costo o de tu zona? '+WA('Hola, ¿entregan en mi zona? Mi colonia es: '));}
   else if(tiene(t,/como (pido|compro|hago|ordeno)|hacer (un )?pedido|comprar|ordenar/)){burbuja('🛒 <b>Así de fácil:</b>\n1. Toca <b>+</b> o <b>Agregar al carrito</b> en lo que quieras.\n2. Abre el <b>Carrito</b>.\n3. Pon tu nombre, teléfono, si es a domicilio o pasas a recoger, y cómo pagas.\n4. Toca <b>Enviar pedido</b>: se abre WhatsApp con tu pedido listo.\n5. Te confirmamos y puedes seguirlo en <b>Mi pedido</b>. 📍');}
   else if(tiene(t,/horario|hora|abren|cierran|abierto|domingo|sabado/)){burbuja('🕒 Para confirmarte el horario de hoy, '+WA('Hola, ¿cuál es su horario?'));}
   else if(tiene(t,/donde estan|ubicacion|direccion|domicilio de ustedes|local|sucursal/)){burbuja('📍 Estamos en Chihuahua, Chihuahua. Para la ubicación exacta, '+WA('Hola, ¿me pasan su ubicación?'));}
