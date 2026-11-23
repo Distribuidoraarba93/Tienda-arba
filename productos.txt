@@ -79,7 +79,7 @@ descripción: Nuestra nueva línea: la misma tortilla de harina con sabor a mant
 Tortillas para buñuelo
 id: t3
 presentación: Paquete de 10 piezas
-foto: tortilla-bunuelo
+foto: tortilla-bunuelo-paquetes
 dibujo: tortilla
 descripción: Tortillas de harina delgaditas, listas para freír y hacer buñuelos. Chica de 14 a 15 cm aprox. y grande de 25 cm aprox. Tortillería Los 2 Carnales.
 opción: Chica · 14 a 15 cm | 20 pesos
@@ -132,7 +132,7 @@ Tortillas para gorditas
 id: t10
 precio: 25 pesos
 presentación: Paquete de 10 piezas · 12 a 14 cm aprox.
-foto: tortilla-gorditas
+dibujo: tortilla
 descripción: Tortillas de harina para gorditas de 12 a 14 cm aprox. Importante: no van cocidas al 100%; hay que terminar de cocerlas en el comal para que se puedan abrir. Tortillería Los 2 Carnales.
 
 ==================== Contenedores ====================
