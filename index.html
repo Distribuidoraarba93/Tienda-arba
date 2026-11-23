@@ -573,7 +573,7 @@ function leerProductos(txt){const N=s=>{if(s==null)return null;const m=String(s)
    if(!kv){p.d+=(p.d?' ':'')+l;return}
    const k=key(kv[1]),v=kv[2].trim();
    if(k==='id')p.id=v;else if(k==='precio')p.pr=/cotiz/i.test(v)?null:N(v);else if(k==='presentacion')p.u=v;
-   else if(k==='mayoreo'){const r=MY(v);if(r){p.my=r.m;if(r.u)p.myu=r.u}}else if(k==='etiqueta')p.tag=v;else if(k==='foto')p.img=v;else if(k==='dibujo')p.art=v;
+   else if(k==='mayoreo'){const r=MY(v);if(r){p.my=r.m;if(r.u)p.myu=r.u}}else if(k==='etiqueta')p.tag=v;else if(k==='minimo'){const m=N(v);if(m>1)p.min=m}else if(k==='foto')p.img=v;else if(k==='dibujo')p.art=v;
    else if(k==='descripcion')p.d=v;
    else if(k==='opcion'){const a=v.split('|').map(s=>s.trim());const o={n:a[0],pr:/cotiz/i.test(a[1]||'')?null:N(a[1]),img:null,my:null};a.slice(2).forEach(s=>{if(/^mayoreo/i.test(s)){const r=MY(s);if(r)o.my=r.m}else if(/^foto/i.test(s))o.img=s.replace(/^foto\s*:?\s*/i,'')});(p.v=p.v||[]).push(o)}});
   if(p&&p.n){if(!p.id)p.id='p'+(++n)+'-'+p.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,20);if(!p.art)p.art='caja';if(!p.v&&p.pr===undefined)p.pr=null;if(!p.d)p.d='Pídelo y te confirmamos precio y disponibilidad por WhatsApp.';out.push(p)}});
@@ -638,7 +638,7 @@ function renderGrid(){
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p">
     <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${p.tag?`<span class="tag">${p.tag}</span>`:''}${SELLO_2C.includes(p.cat)?'<img class="sello" src="img/logo-2c.webp" alt="Los 2 Carnales">':''}${pic(p)}</button>
-    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${ANTIC(p)?'<span class="free" style="color:#f4b400">📅 Pídelo un día antes</span>':p.cat==="Tortillas"?'<span class="free">⚡ Mismo día si hay disponibilidad</span>':''}
+    <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito">+</button>`}${priceHTML(p)}<h3>${p.n}</h3><span class="unit">${p.v?p.v.length+' opciones · ':''}${p.u}</span>${myTxt(p)}${p.min?'<span class="free" style="color:#f4b400">🛒 Compra mínima: '+p.min+' piezas</span>':''}${ANTIC(p)?'<span class="free" style="color:#f4b400">📅 Pídelo un día antes</span>':p.cat==="Tortillas"?'<span class="free">⚡ Mismo día si hay disponibilidad</span>':''}
     ${p.v?`<button class="add" data-open="${p.id}">Ver opciones</button>`:`<button class="add" data-add="${p.id}">${p.pr==null?'Agregar para cotizar':'Agregar al carrito'}</button>`}</div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
@@ -655,7 +655,7 @@ function renderCart(){
   $('#qnote').textContent=(ks.some(k=>ANTIC(item(k).p))?'📅 Tu pedido lleva productos que preparamos al momento. '+T_ANT+' ':'🚚 '+T_HOY+' ')+(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
 }
 function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
-function add(k,n=1){cart[k]=(cart[k]||0)+n;if(cart[k]<=0)delete cart[k];save();renderCart()}
+function add(k,n=1){const it=item(k),mn=(it&&it.p.min)||1;if(!cart[k]&&n>0){cart[k]=Math.max(n,mn);if(mn>1)toast('Compra mínima: '+mn+' piezas 👍')}else cart[k]=(cart[k]||0)+n;if(cart[k]<mn)delete cart[k];save();renderCart()}
 function openDrawer(){closeModal();$('#drawer').classList.add('on');$('#veil').classList.add('on')}
 function closeModal(){$('#modal').classList.remove('on')}
 function closeAll(){$('#drawer').classList.remove('on');closeModal();$('#panel')&&$('#panel').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}
@@ -664,7 +664,7 @@ function openModal(id){
   const draw=()=>{const m=myOf(p,p.v?vi:null),pr=m&&c>=m[0]?m[1]:(p.v?p.v[vi].pr:p.pr);
   $('#box').innerHTML=`<button class="x" data-close aria-label="Cerrar">×</button><div class="img">${pic(p,p.v?vi:null)}</div>
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
-  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p><p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
+  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>${p.min?'<p class="entr ant">🛒 <b>Compra mínima: '+p.min+' piezas.</b></p>':''}<p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}" data-vi="${i}">${o.n}<small>${fmt(o.pr)}</small></button>`).join('')}</div>`:''}
   <div style="display:flex;gap:10px;align-items:center"><span>Cantidad</span><div class="qty"><button data-m="-1" aria-label="Menos">−</button><span>${c}</span><button data-m="1" aria-label="Más">+</button></div></div>
   <button class="add" id="madd">${pr==null?'Agregar para cotizar':'Agregar al carrito'}${pr!=null&&c>1?' · '+fmt(Math.round(pr*c*100)/100):''}</button></div>`;

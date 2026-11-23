@@ -1575,7 +1575,8 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Fibra verde 3M P96
 id: l4
-precio: 18.37 pesos
+precio: 20.31 pesos
+mínimo: 5 piezas
 presentación: Pieza
 foto: fibra-verde
 dibujo: caja
@@ -1583,7 +1584,8 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Fibra blanca 3M P66
 id: l14
-precio: 18.5 pesos
+precio: 20.89 pesos
+mínimo: 5 piezas
 presentación: Pieza
 dibujo: caja
 descripción: Fibra blanca no rayadora 3M, para limpiar teflón, acero inoxidable, vidrio y superficies delicadas sin rayarlas.
@@ -1598,7 +1600,7 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Recogedor de bote
 id: l15
-precio: 76.2 pesos
+precio: 83.67 pesos
 presentación: Pieza · con mango largo
 foto: recogedor-bote
 descripción: Recogedor tipo bote con mango largo, para barrer sin agacharte. Ideal para negocios, cocinas y estacionamientos.
@@ -1630,7 +1632,7 @@ descripción: Pastilla aromatizante para WC. El aroma es surtido y se entrega el
 
 Porrón de cloro Génesis
 id: l9
-precio: 208.45 pesos
+precio: 237.51 pesos
 presentación: Pieza
 foto: cloro-arba
 dibujo: botella
