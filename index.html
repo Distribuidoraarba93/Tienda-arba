@@ -267,7 +267,7 @@ main{padding-top:14px}
   <div class="dots" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
 </section>
 <nav class="cats" aria-label="Categorías"><div id="cats"></div></nav>
-<div class="trust"><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span></div>
+<div class="trust"><span>🕒 Atención 24 horas</span><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span></div>
 <section class="promise"><div><p><b>¿No lo ves en el catálogo?</b> Pregunta por él y te lo conseguimos.</p><p><b>Precios con IVA incluido.</b> Entregamos en Chihuahua o pasas a recoger.</p><p><b>Pedidos desde 500 pesos:</b> 35% de anticipo. <a href="#condiciones" style="color:#fff">Ver condiciones</a></p><a class="wa" href="https://wa.me/526141077999" target="_blank" rel="noopener">Contáctanos por WhatsApp · 614 107 7999</a></div></section>
 
 <main>
@@ -277,6 +277,9 @@ main{padding-top:14px}
   <div class="grid" id="grid"></div>
 </main>
 <section class="pol" id="condiciones"><div>
+  <h2>Atención y envío</h2>
+  <p><b>Te atendemos las 24 horas</b> por la tienda o por WhatsApp.</p>
+  <p><b>Envío:</b> mándanos tu ubicación por WhatsApp. Tenemos varias rutas por la ciudad; si te queda en alguna, el envío no es problema. Si pasas a recoger, te mandamos la ubicación por WhatsApp al confirmar tu pedido.</p>
   <h2>Tiempos de entrega</h2>
   <p><b>Desechables, abarrotes, botanas y tortillas de tienda (paquete de 10 y de 6):</b> pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.</p>
   <p><b>Tortillas especiales (burrito, mantequilla, buñuelo, taco y montado), pays, arreglos y combos:</b> se piden con un día de anticipación. Recibimos pedidos hasta las 8 pm, de domingo a viernes, y entregamos al día siguiente de 6 am a 3 pm, de lunes a sábado.</p>
@@ -1059,8 +1062,8 @@ window.dispatchEvent(new Event('arba-fb'));
 (()=>{
 const {$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir}=window.ARBA_T;
 const M=$('#abM'),Q=$('#abQ'),I=$('#abI'),AB=$('#ab');
-const WA=t=>`<a href="https://wa.me/${WHATS}?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">Escríbenos por WhatsApp 💬</a>`;
-const RAPIDAS=['🎄 Arreglo Navideño','🫓 Tortillas','💰 Mayoreo','🚚 Entregas','💳 Formas de pago','🛒 ¿Cómo pido?','📍 Mi pedido','👤 Hablar con alguien'];
+const WA=(t,l)=>`<a href="https://wa.me/${WHATS}?text=${encodeURIComponent(t)}" target="_blank" rel="noopener">${l||'Escríbenos por WhatsApp 💬'}</a>`;
+const RAPIDAS=['🎄 Arreglo Navideño','🫓 Tortillas','💰 Mayoreo','🚚 Entregas','💳 Formas de pago','🛒 ¿Cómo pido?','💲 Costo de envío','🕒 Horario','📍 Mi pedido','👤 Hablar con alguien'];
 const esc2=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function burbuja(html,cl='bot'){const d=document.createElement('div');d.className='ab-b '+cl;d.innerHTML=html;M.appendChild(d);M.scrollTop=M.scrollHeight;return d}
 function rapidas(l){Q.innerHTML=(l||RAPIDAS).map(t=>`<button type="button" data-abq="${esc2(t)}">${esc2(t)}</button>`).join('')}
@@ -1085,10 +1088,11 @@ function responde(raw){const t=norm(raw);let l=null;
   else if(tiene(t,/\bpay\b|pastel|postre|reposteri/)){burbuja('🥧 Repostería casera de Los 2 Carnales:');tarjetas(P.filter(p=>p.cat==='Repostería'));}
   else if(tiene(t,/anticipo|cancel|devol|reembols/)){burbuja('📋 <b>Anticipo y cancelaciones</b>\n• Pedidos de <b>500 pesos o más</b>: pedimos 35% de anticipo (transferencia o link de pago) para empezar a prepararlo. El resto lo pagas al recibir.\n• Pedidos menores a 500 pesos no necesitan anticipo.\n• Si cancelas <b>antes</b> de que lo preparemos, te devolvemos todo el anticipo.\n• Si cancelas cuando ya está preparado o al momento de la entrega, el anticipo no se devuelve.');}
   else if(tiene(t,/pago|pagar|tarjeta|efectivo|transfer|deposit|credito|debito|terminal/)){burbuja('💳 <b>Formas de pago</b>\n• Efectivo\n• Transferencia\n• Tarjeta: con terminal al entregar o con link de pago\n\nEn pedidos de 500 pesos o más se pide 35% de anticipo.');l=['📋 Anticipo','🚚 Entregas','🛒 ¿Cómo pido?'];}
-  else if(tiene(t,/entreg|envio|envia|mandan|domicilio|llevan|reparto|recoger|flete|a casa|cuando llega|tarda|tiempo|mismo dia|anticipa|dia antes/)){burbuja('🚚 <b>Entregas</b>\n• Entregamos a domicilio en Chihuahua, o pasas a recoger.\n\n<b>Mismo día:</b> desechables, abarrotes, botanas y tortillas de tienda. Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad; si no, te avisamos el tiempo antes de confirmar.\n\n<b>Un día antes:</b> tortillas especiales (burrito, mantequilla, buñuelo, taco y montado), pays, arreglos y combos. Pedidos hasta las 8 pm (domingo a viernes) y se entregan al día siguiente de 6 am a 3 pm (lunes a sábado).\n\n¿Dudas del costo o de tu zona? '+WA('Hola, ¿entregan en mi zona? Mi colonia es: '));}
+  else if(tiene(t,/costo (de|del) envio|cuanto (cobran|cuesta|es) (de |el )?(envio|flete|entrega)|cobran (el )?envio|envio gratis|cobran por llevar/)){burbuja('📦 <b>Envío:</b> mándanos tu ubicación por WhatsApp. Tenemos varias rutas por la ciudad; si te queda en alguna, el envío no es problema.\n\n'+WA('Hola, les mando mi ubicación para ver si me queda en alguna de sus rutas: ','📍 Mandar mi ubicación por WhatsApp'));}
+  else if(tiene(t,/entreg|envio|envia|mandan|domicilio|llevan|reparto|recoger|flete|a casa|cuando llega|tarda|tiempo|mismo dia|anticipa|dia antes/)){burbuja('🚚 <b>Entregas</b>\n• Entregamos a domicilio en Chihuahua, o pasas a recoger.\n\n<b>Mismo día:</b> desechables, abarrotes, botanas y tortillas de tienda. Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad; si no, te avisamos el tiempo antes de confirmar.\n\n<b>Un día antes:</b> tortillas especiales (burrito, mantequilla, buñuelo, taco y montado), pays, arreglos y combos. Pedidos hasta las 8 pm (domingo a viernes) y se entregan al día siguiente de 6 am a 3 pm (lunes a sábado).\n\n📦 <b>Envío:</b> mándanos tu ubicación por WhatsApp. Tenemos varias rutas por la ciudad; si te queda en alguna, el envío no es problema.\n'+WA('Hola, les mando mi ubicación para ver si me queda en alguna de sus rutas: ','📍 Mandar mi ubicación por WhatsApp'));l=['💲 Costo de envío','🕒 Horario','🛒 ¿Cómo pido?'];}
   else if(tiene(t,/como (pido|compro|hago|ordeno)|hacer (un )?pedido|comprar|ordenar/)){burbuja('🛒 <b>Así de fácil:</b>\n1. Toca <b>+</b> o <b>Agregar al carrito</b> en lo que quieras.\n2. Abre el <b>Carrito</b>.\n3. Pon tu nombre, teléfono, si es a domicilio o pasas a recoger, y cómo pagas.\n4. Toca <b>Enviar pedido</b>: se abre WhatsApp con tu pedido listo.\n5. Te confirmamos y puedes seguirlo en <b>Mi pedido</b>. 📍');}
-  else if(tiene(t,/horario|hora|abren|cierran|abierto|domingo|sabado/)){burbuja('🕒 Para confirmarte el horario de hoy, '+WA('Hola, ¿cuál es su horario?'));}
-  else if(tiene(t,/donde estan|ubicacion|direccion|domicilio de ustedes|local|sucursal/)){burbuja('📍 Estamos en Chihuahua, Chihuahua. Para la ubicación exacta, '+WA('Hola, ¿me pasan su ubicación?'));}
+  else if(tiene(t,/horario|hora|abren|cierran|abierto|domingo|sabado/)){burbuja('🕒 <b>Te atendemos las 24 horas</b>, aquí o por WhatsApp, sin problema.\n\nLas entregas van según el producto: lo de mismo día si pides antes de las 2 pm, y lo que preparamos al momento con un día de anticipación. Pregúntame "tiempos de entrega" si quieres el detalle.');}
+  else if(tiene(t,/donde estan|ubicacion|direccion|domicilio de ustedes|local|sucursal/)){burbuja('📍 Estamos en Chihuahua, Chihuahua. Si pasas a recoger, <b>te mandamos la ubicación por WhatsApp</b> al confirmar tu pedido. '+WA('Hola, ¿me pasan su ubicación para recoger?'));}
   else if(tiene(t,/factura|rfc|cfdi/)){burbuja('🧾 Para dudas de factura, '+WA('Hola, necesito factura de mi pedido.'));}
   else if(tiene(t,/humano|persona|alguien|asesor|encargado|dueno|llamar|telefono|whats/)){burbuja('Claro 🙌 Te atiende una persona del equipo: '+WA('Hola, tengo una duda: ')+'\nO llama al 614 107 7999.');}
   else if(tiene(t,/iva|factura/)){burbuja('✅ Todos los precios ya incluyen IVA.');}
@@ -1102,7 +1106,7 @@ function abrir(){AB.classList.add('on');AB.setAttribute('aria-hidden','false');i
 function cerrar(){AB.classList.remove('on');AB.setAttribute('aria-hidden','true')}
 $('#abBtn').addEventListener('click',abrir);$('#abX').addEventListener('click',cerrar);
 $('#abF').addEventListener('submit',e=>{e.preventDefault();enviar(I.value)});
-const MAPQ={'🎄 Arreglo Navideño':'arreglo navideño','🫓 Tortillas':'tortillas','💰 Mayoreo':'mayoreo','🚚 Entregas':'entregas','💳 Formas de pago':'formas de pago','🛒 ¿Cómo pido?':'como pido','📍 Mi pedido':'mi pedido','👤 Hablar con alguien':'hablar con alguien','🎁 Combos':'combos','📋 Anticipo':'anticipo'};
+const MAPQ={'💲 Costo de envío':'costo de envio','🕒 Horario':'horario','🎄 Arreglo Navideño':'arreglo navideño','🫓 Tortillas':'tortillas','💰 Mayoreo':'mayoreo','🚚 Entregas':'entregas','💳 Formas de pago':'formas de pago','🛒 ¿Cómo pido?':'como pido','📍 Mi pedido':'mi pedido','👤 Hablar con alguien':'hablar con alguien','🎁 Combos':'combos','📋 Anticipo':'anticipo'};
 AB.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.dataset.abq){burbuja(esc2(b.dataset.abq),'yo');const e2=burbuja('Escribiendo…','bot esc');setTimeout(()=>{e2.remove();responde(MAPQ[b.dataset.abq]||b.dataset.abq)},400)}
   else if(b.dataset.abadd){add(b.dataset.abadd);toast('Agregado al carrito ✅');b.textContent='✓ Listo'}
