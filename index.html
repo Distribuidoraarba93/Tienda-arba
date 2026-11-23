@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="only dark">
+<meta name="darkreader-lock">
 <title>Distribuidora ARBA</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#050816">
@@ -141,7 +143,7 @@ textarea{min-height:64px;resize:vertical}
 footer{background:var(--gd);color:#fff;text-align:center;padding:22px 16px;font-size:14px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 /* TEMA MEZCLA: fondo azul marino oscuro con el verde y amarillo de la marca, precios en amarillo (prueba) */
-:root,:root[data-theme=light]{color-scheme:dark;--bg:#0d1828;--card:#14233a;--ink:#eef2f8;--mute:#9fb0c8;--line:#24385a;--g:#0b6b35;--gd:#0b1525;--y:#f4b400;--r:#ef4444;--lime:#7ed957;--olive:#0b6b35;--gold:linear-gradient(90deg,#f4b400 0%,#f4b400 55%,#7d8f1d 100%)}
+:root,:root[data-theme=light]{color-scheme:only dark;--bg:#0d1828;--card:#14233a;--ink:#eef2f8;--mute:#9fb0c8;--line:#24385a;--g:#0b6b35;--gd:#0b1525;--y:#f4b400;--r:#ef4444;--lime:#7ed957;--olive:#0b6b35;--gold:linear-gradient(90deg,#f4b400 0%,#f4b400 55%,#7d8f1d 100%)}
 header{background:#0b1525;border-bottom:3px solid #7ed957}
 .cats{background:#101d31}
 .cats button.on{background:#f4b400;color:#152016;border-color:#f4b400}
@@ -714,7 +716,7 @@ function renderCart(){
   $('#items').insertAdjacentHTML('beforeend',relHTML([...new Set(ks.map(k=>k.split(':')[0]))],'🛒 ¿No te falta algo? Clientes también llevan'));
   $('#qnote').textContent=(ks.some(k=>ANTIC(item(k).p))?'📅 Tu pedido lleva productos que preparamos al momento. '+T_ANT+' ':'🚚 '+T_HOY+' ')+(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
 }
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
+function toast(t){if(/^Agregad/.test(t)&&!document.getElementById('cbar').hidden)return;const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),1800)}
 function add(k,n=1){const it=item(k),mn=(it&&it.p.min)||1;if(!cart[k]&&n>0){cart[k]=Math.max(n,mn);if(mn>1)toast('Compra mínima: '+mn+' piezas 👍')}else cart[k]=(cart[k]||0)+n;if(cart[k]<mn)delete cart[k];save();renderCart()}
 function openDrawer(){closeModal();$('#drawer').classList.add('on');$('#veil').classList.add('on')}
 function closeModal(){$('#modal').classList.remove('on')}
