@@ -806,7 +806,23 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
     const extra=cls==='ahora'&&o.t?` <br>🕒 ${rec?'Listo en':'Llega en'}: ${o.t}`:'';
     return `<li class="${cls}"><span class="dot">${cls==='hecho'?'✓':lv}</span><div><b>${t}</b>${cls?`<small>${d}${extra}</small>`:''}</div></li>`}).join('')+'</ol>';
   if(n===2&&!o.t)h+='<p class="note">Te avisamos por WhatsApp en cuanto cambie.</p>';
-  return h+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
+  const nb=('Notification' in window)&&n<5?(Notification.permission==='granted'?'<p class="note" style="color:#7ed957">🔔 Avisos activados: te avisamos en tu celular cuando cambie tu pedido.</p>':Notification.permission!=='denied'?'<button class="go" data-notif style="width:100%;margin-top:10px;background:#f4b400;color:#152016">🔔 Avísame en mi celular cuando cambie</button>':''):'';
+  return h+nb+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
+/* Avisos en el celular cuando cambia el estatus */
+const NOTI={aceptado:['✅ Pedido aceptado','Ya estamos preparando tu pedido.'],pagado:['💰 Pago recibido','Gracias, ya quedó registrado tu pago.'],camino:['🚚 Tu pedido va en camino','Ya va para allá. ¡Prepárate!'],listo:['📦 Listo para recoger','Tu pedido ya está listo, puedes pasar por él.'],entregado:['🎉 Pedido entregado','¡Gracias por tu compra! Cada pedido tuyo hace crecer a una familia chihuahuense 💛'],cancelado:['❌ Pedido cancelado','Escríbenos si tienes dudas.']};
+const notiVisto=()=>{try{return JSON.parse(localStorage.getItem('arba-notif')||'{}')}catch(e){return {}}};
+function avisar(p,st){const m=NOTI[st];if(!m)return;const v=notiVisto();if((v[p]||'recibido')===st)return;v[p]=st;try{localStorage.setItem('arba-notif',JSON.stringify(v))}catch(e){}
+  const o=estTodos()[p]||{};const tt=m[0]+(o.t&&(st==='camino'||st==='aceptado'||st==='listo')?' · '+o.t:'');
+  if(!document.hidden)toast(tt);
+  if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'icon-192.png',tag:p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
+const vig={};
+function vigilar(){const F=window.ARBA_FB;if(!F||!F.escuchar)return;const al=estTodos();
+  Object.keys(al).forEach(p=>{const o=al[p];if(!o||!o.k||vig[p]||o.s==='entregado'||o.s==='cancelado'||Date.now()-(o.c||o.f||0)>7*864e5)return;
+    vig[p]=F.escuchar(p+'_'+o.k,d=>{if(!d||!EST_ORDEN[d.s])return;const a2=estTodos(),x=a2[p]||{};x.s=d.s;if(d.t)x.t=d.t;a2[p]=x;try{localStorage.setItem('arba-pedidos',JSON.stringify(a2))}catch(e){}
+      avisar(p,d.s);if(d.s==='entregado'||d.s==='cancelado'){try{vig[p]()}catch(e){}}})})}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-notif]');if(!b)return;
+  Notification.requestPermission().then(r=>{if(r==='granted'){toast('🔔 Listo, te avisamos cuando cambie tu pedido');if(navigator.serviceWorker)navigator.serviceWorker.ready.then(g=>g.showNotification('🔔 Avisos activados',{body:'Te avisaremos aquí cuando tu pedido cambie.',icon:'icon-192.png'}));vigilar()}
+    else toast('No se activaron los avisos. Te seguimos avisando por WhatsApp.');const bx=$('#estBox');if(bx&&estAbierto)bx.innerHTML=estHtml(estAbierto)})});
 function estAbrir(p){if(p==='*')p='';closeAll();const all=estTodos(),ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));
   if(!p&&ks.length===1)p=ks[0];
   $('#estBox').innerHTML=p?estHtml(p)+(ks.length>1?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')
@@ -853,8 +869,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fbin],[dat
     location.hash='#panel-arba?'+new URLSearchParams(Object.fromEntries(Object.entries({p:r.p,n:r.n,t:r.tel,g:r.g,T:r.T,a:r.a,e:r.e,i:r.i,k:r.k}).filter(([k,v])=>v))).toString();$('#panel .tx').scrollTop=0;$('#panel .box').scrollTop=0}});
 document.addEventListener('change',e=>{const t=e.target.closest('[data-fbst]');if(!t)return;const F=window.ARBA_FB;if(!F)return;
   F.cambiar(t.dataset.fbst,{s:t.value}).then(()=>toast('Estatus cambiado a: '+EST_NOM[t.value]),()=>toast('No se pudo cambiar el estatus'))});
-window.addEventListener('arba-fb',()=>{fbPanel();const q=window._fbQ||[];window._fbQ=[];q.forEach(([fn,a])=>{try{window.ARBA_FB[fn](...a)}catch(e){}});if(estAbierto)estVivo(estAbierto)});
-window.addEventListener('arba-auth',fbPanel);fbPanel();
+window.addEventListener('arba-fb',()=>{fbPanel();vigilar();const q=window._fbQ||[];window._fbQ=[];q.forEach(([fn,a])=>{try{window.ARBA_FB[fn](...a)}catch(e){}});if(estAbierto)estVivo(estAbierto)});
+window.addEventListener('arba-auth',fbPanel);fbPanel();vigilar();
 $('#misPed').onclick=()=>estAbrir('');
 $('#estado').addEventListener('click',e=>{if(e.target.id==='estado')estCerrar()});
 $('#veil').addEventListener('click',()=>$('#estado').classList.remove('on'));
