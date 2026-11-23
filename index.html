@@ -1080,6 +1080,14 @@ let yaRec=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventL
 (function(){
  var bar=document.getElementById('instBar'),btn=document.getElementById('instBtn'),txt=document.getElementById('instTxt'),dp=null;
  var standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+ if(/SamsungBrowser/i.test(navigator.userAgent)&&/android/i.test(navigator.userAgent)){
+  var hoy=new Date().toDateString();try{if(localStorage.getItem('arba-samsung')===hoy)return;}catch(e){}
+  document.getElementById('instX').onclick=function(){bar.style.display='none';try{localStorage.setItem('arba-samsung',hoy)}catch(e){}};
+  bar.querySelector('b').textContent='Se ve mejor en Chrome ✨';
+  txt.innerHTML='Tu navegador Samsung cambia los colores de la tienda. Ábrela en <b>Chrome</b> y ahí toca <b>“Instalar app”</b>.';
+  btn.textContent='Abrir en Chrome';
+  btn.onclick=function(){location.href='intent://'+location.host+location.pathname+location.search+'#Intent;scheme=https;package=com.android.chrome;end'};
+  bar.style.display='block';return;}
  if(standalone)return;
  var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
  var pedido=/[?&]app\b/.test(location.search);
