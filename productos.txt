@@ -41,9 +41,9 @@ Combo Navideño 🎄
 id: k2
 presentación: 2 paquetes de tortilla para buñuelo grande + 1 frijol cocido 800 g + 1 paquete de tortillas de harina (normales o sabor mantequilla)
 etiqueta: Ahorras hasta 17 pesos
-foto: tortilla-bunuelo
+foto: tortilla-bunuelo-paquetes
 dibujo: tortilla
-descripción: Todo para la cena navideña: 2 paquetes de 10 tortillas para buñuelo grande (24 a 25 cm), una bolsa de frijol cocido de 800 g y un paquete de 10 tortillas de harina. Escoge si quieres las tortillas normales o sabor mantequilla. Por separado cuesta 106 pesos (107 con mantequilla); en combo pagas solo 90 pesos. Tortillería Los 2 Carnales.
+descripción: Todo para la cena navideña: 2 paquetes de 10 tortillas para buñuelo grande (25 cm), una bolsa de frijol cocido de 800 g y un paquete de 10 tortillas de harina. Escoge si quieres las tortillas normales o sabor mantequilla. Por separado cuesta 106 pesos (107 con mantequilla); en combo pagas solo 90 pesos. Tortillería Los 2 Carnales.
 opción: Con tortillas normales | 90 pesos
 opción: Con tortillas sabor mantequilla | 90 pesos
 
