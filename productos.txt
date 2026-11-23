@@ -109,7 +109,7 @@ Tortillas de harina integrales
 id: t7
 presentación: 24 cm aprox.
 etiqueta: Nuevo
-dibujo: tortilla
+foto: tortilla-integral
 descripción: Tortillas de harina integral de 24 cm aprox., hechas al momento por la Tortillería Los 2 Carnales. Mismo precio que la tortilla de tienda, con precio de mayoreo desde 5 paquetes.
 opción: Paquete de 10 piezas | 25 pesos | mayoreo desde 5, 22 pesos
 opción: Paquete de 6 piezas | 15 pesos | mayoreo desde 5, 12 pesos
@@ -132,7 +132,7 @@ Tortillas para gorditas
 id: t10
 precio: 25 pesos
 presentación: Paquete de 10 piezas · 12 a 14 cm aprox.
-dibujo: tortilla
+foto: tortilla-gorditas
 descripción: Tortillas de harina para gorditas de 12 a 14 cm aprox. Importante: no van cocidas al 100%; hay que terminar de cocerlas en el comal para que se puedan abrir. Tortillería Los 2 Carnales.
 
 ==================== Contenedores ====================
