@@ -243,6 +243,11 @@ main{padding-top:14px}
 .calc .res{margin-top:16px;padding:14px;border-radius:14px;background:#14301d;border:1px solid #7ed957}.calc .res b{color:#f4b400;font-size:22px}.calc .res p{margin:4px 0;font-size:14px}.calc .res .note{color:#9fb0c8;font-size:12px}
 .calc .go{width:100%;margin-top:12px;border:0;border-radius:12px;background:#f4b400;color:#152016;font:700 16px Poppins,sans-serif;padding:14px;cursor:pointer}
 .calc .x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:#0b1525;color:#f4b400;font-size:22px;box-shadow:0 0 0 2px #f4b400;cursor:pointer}
+/* Protección de fotos: sin descargar y con marca de agua */
+img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.p .img,.box .img{position:relative}
+.p .img:has(img.foto)::after,.box .img:has(img.foto)::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:url(img/logo.webp) center/46% no-repeat;opacity:.22;mix-blend-mode:multiply}
 /* Tortillería Los 2 Carnales */
 .s4{background:linear-gradient(90deg,#0b1525f5 0,#0b1525d9 42%,#0b152530 75%,#0b152500),url(img/promo-tortillas.webp) 65% 60%/cover;min-height:210px}
 .s5{background:linear-gradient(90deg,#5c0f14f5 0,#7a1219e0 42%,#7a121940 75%,#7a121900),url(img/promo-arreglo.webp) 70% 55%/cover;min-height:210px;border:2px solid #d4af37}
@@ -419,7 +424,7 @@ const WHATS = "526141077999";
 
 const CATS = ["Todos","Combos","Tortillas","Contenedores","Vasos","Bowls y envases","Servilletas y empaque","Higiene y varios","Abarrotes","Bebidas","Limpieza","Botanas","Dulces","Repostería"];
 const v=(n,pr,img,my)=>({n,pr,img,my});
-const pic=(p,vi)=>{const im=(p.v&&vi!=null&&p.v[vi]&&p.v[vi].img)||p.img;return im?`<img src="${'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp')}" alt="${p.n}" loading="lazy">`:ART[p.art]()};
+const pic=(p,vi)=>{const im=(p.v&&vi!=null&&p.v[vi]&&p.v[vi].img)||p.img;return im?`<img class="foto" draggable="false" src="${'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp')}" alt="${p.n}" loading="lazy">`:ART[p.art]()};
 const P = [
   {id:"c1",cat:"Contenedores",art:"contenedor",img:"cont-blanco",n:"Contenedor blanco",u:"Liso o con división · 200 piezas",d:"Contenedor blanco con bisagra para comida para llevar. Pídelo liso o con división.",v:[v("7x7",334),v("8x8",495.96),v("9x9",562.95)]},
   {id:"c2",cat:"Contenedores",art:"contenedorN",img:"cont-negro",n:"Contenedor negro",u:"Liso o con división · 200 piezas",d:"Contenedor negro con bisagra, se ve elegante para tus platillos.",v:[v("8x8",562.96),v("9x9",602.85)]},
@@ -883,6 +888,7 @@ window.addEventListener('hashchange',estRuta);estBoton();estRuta();
 window.addEventListener('hashchange',route);route();
 {const qv=new URLSearchParams(location.search).get('v');try{if(qv)localStorage.setItem('arba-vend',qv.slice(0,40));const sv=localStorage.getItem('arba-vend');if(sv)$('#vend').value=sv}catch(e){}}
 renderCats();renderGrid();renderCart();
+document.addEventListener('contextmenu',e=>{if(e.target.closest('img'))e.preventDefault()});document.addEventListener('dragstart',e=>{if(e.target.closest('img'))e.preventDefault()});
 window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,upI,openDrawer,repUlt};
 }
 </script>
