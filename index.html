@@ -341,11 +341,14 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 #temaFx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:28}
 .logo-hat{position:relative;display:inline-flex;flex:none}
 .logo-hat .hat{position:absolute;width:56%;left:2%;top:-18%;transform:rotate(-12deg);filter:drop-shadow(0 2px 2px #0006);pointer-events:none}
-.share{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0}
+.share{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0}
 .share button,.share a{flex:1 1 0;min-width:0;white-space:nowrap;display:inline-flex;justify-content:center;align-items:center;gap:6px;border:1px solid #24385a;background:#0b1525;color:#e6eef8;border-radius:999px;padding:9px 8px;font:700 12.5px Poppins,sans-serif;text-decoration:none;cursor:pointer}
 .share a[href*="wa.me"]{border-color:#25d36677;color:#7ed957}.share a[href*="instagram"]{border-color:#e1306c77;color:#ff7aa8}
 .igbtn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:11px 18px;border-radius:999px;color:#fff;text-decoration:none;font:700 14.5px Poppins,sans-serif;background:linear-gradient(45deg,#f58529,#dd2a7b 50%,#8134af)}
 .igbtn b{font-weight:800}
+.redes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.redes .igbtn{margin-top:14px}
+.fbbtn{background:#1877f2!important}
+.share a[href*="facebook"]{border-color:#1877f277;color:#60a5fa}
 /* Clips */
 .hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
 .hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -478,10 +481,10 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
   <p>Esto empezó como un sueño, y lo hemos sostenido a puro esfuerzo: deudas, noches sin dormir, días con el estómago vacío para poder invertir en lo que necesitábamos.</p>
   <p>Ha dolido, pero nunca nos rendimos. Y seguimos aquí, con el mismo amor del primer día.</p>
   <p class="fin">Cada pedido tuyo es la razón para seguir. Gracias por ser parte de este sueño. 🌾</p>
-  <a class="igbtn" href="https://instagram.com/2car_nales" target="_blank" rel="noopener"><span>📸</span> Síguenos en Instagram <b>@2car_nales</b></a>
+  <div class="redes"><a class="igbtn" href="https://instagram.com/2car_nales" target="_blank" rel="noopener"><span>📸</span> Instagram <b>@2car_nales</b></a><a class="igbtn fbbtn" href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener"><span>👍</span> Facebook <b>Los 2 Carnales</b></a></div>
 </div></section>
 
-<footer>Distribuidora ARBA · Tortillería Los 2 Carnales · Chihuahua, Chihuahua · Precios en pesos mexicanos, IVA incluido<br><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener" style="color:#f4b400;font-weight:700">📸 Instagram @2car_nales</a></footer>
+<footer>Distribuidora ARBA · Tortillería Los 2 Carnales · Chihuahua, Chihuahua · Precios en pesos mexicanos, IVA incluido<br><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener" style="color:#f4b400;font-weight:700">📸 Instagram @2car_nales</a> · <a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener" style="color:#60a5fa;font-weight:700">👍 Facebook</a></footer>
 
 <div class="veil" id="veil"></div>
 
@@ -856,7 +859,7 @@ function openModal(id){
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
   ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>${p.min?'<p class="entr ant">🛒 <b>Compra mínima: '+p.min+' piezas.</b></p>':''}<p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}" data-vi="${i}">${o.n}<small>${fmt(o.pr)}</small></button>`).join('')}</div>`:''}
-  <div class="share"><button type="button" data-share="${p.id}">📤 Compartir</button><a href="https://wa.me/?text=${encodeURIComponent('Mira esto en Distribuidora ARBA 👉 '+p.n+' '+TIENDA_URL+'?p='+p.id)}" target="_blank" rel="noopener">💬 WhatsApp</a><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener">📸 Instagram</a></div>
+  <div class="share"><button type="button" data-share="${p.id}">📤 Compartir</button><a href="https://wa.me/?text=${encodeURIComponent('Mira esto en Distribuidora ARBA 👉 '+p.n+' '+TIENDA_URL+'?p='+p.id)}" target="_blank" rel="noopener">💬 WhatsApp</a><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener">📸 Instagram</a><a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener">👍 Facebook</a></div>
   ${relHTML([p.id],'🛒 Clientes también llevan')}
   <div class="buy"><div class="qty"><button data-m="-1" aria-label="Menos">−</button><span>${c}</span><button data-m="1" aria-label="Más">+</button></div>
   <button class="add" id="madd">${pr==null?'Agregar para cotizar':'Agregar'}${pr!=null?' · '+fmt(Math.round(pr*c*100)/100):''}</button></div></div>`;
