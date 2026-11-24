@@ -347,6 +347,16 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .ch-santa em::after{content:"";position:absolute;left:18px;bottom:-6px;border:6px solid transparent;border-top-color:#fff;border-bottom:0}
 @keyframes corre{from{transform:translateX(-140px)}to{transform:translateX(calc(100vw + 60px))}}
 @keyframes brinco{50%{translate:0 -10px}}
+.trineo{position:fixed;left:0;right:0;top:calc(150px + env(safe-area-inset-top));height:120px;z-index:40;pointer-events:none}
+.tr-in{position:absolute;left:0;top:0;display:flex;align-items:center;animation:vuelaT 8s linear forwards}
+.tr-in b{font-size:58px;display:inline-block;transform:scaleX(-1)}
+.tr-sa{font-size:40px;margin-left:-62px;margin-top:-30px;transform:scaleX(-1);display:inline-block}
+.tr-r{font-size:50px;display:inline-block;margin-left:14px;animation:galope .4s ease-in-out infinite}.tr-r.r2{animation-delay:.2s;margin-left:6px}
+.tr-st{font-size:20px;position:relative;opacity:.9;animation:chispa .6s ease-in-out infinite alternate}.tr-st.s2{font-size:14px;top:16px;animation-delay:.2s}.tr-st.s3{top:-14px;animation-delay:.4s}
+.tr-in em{position:absolute;top:-34px;left:60px;white-space:nowrap;font:800 13px Poppins,sans-serif;color:#152016;background:#fff;padding:4px 9px;border-radius:12px;box-shadow:0 3px 8px #0006}
+@keyframes vuelaT{0%{transform:translate(-320px,40px)}50%{transform:translate(calc(50vw - 160px),-10px)}100%{transform:translate(calc(100vw + 40px),30px)}}
+@keyframes galope{50%{translate:0 -8px}}
+@keyframes chispa{to{opacity:.3;scale:.7}}
 /* Clips */
 .hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
 .hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -1490,7 +1500,10 @@ if(T.id==='navidad'&&T.fx==='nieve'&&!matchMedia('(prefers-reduced-motion: reduc
   const k='arba-chase',hoyS=new Date().toDateString();let ya='';try{ya=localStorage.getItem(k)}catch(e){}
   if(ya!==hoyS||q){setTimeout(()=>{const c=document.createElement('div');c.className='chase';c.setAttribute('aria-hidden','true');
     c.innerHTML='<span class="ch-mapa"><b>🎄</b><i>🦝</i></span><span class="ch-dust">💨</span><span class="ch-santa"><i>🎅</i><em>¡Mi arbolito!</em></span>';
-    document.body.appendChild(c);setTimeout(()=>c.remove(),7600);try{localStorage.setItem(k,hoyS)}catch(e){}},2500)}}
+    document.body.appendChild(c);setTimeout(()=>c.remove(),7600);try{localStorage.setItem(k,hoyS)}catch(e){}},2500);
+   setTimeout(()=>{const v=document.createElement('div');v.className='trineo';v.setAttribute('aria-hidden','true');
+    v.innerHTML='<span class="tr-in"><i class="tr-st">✨</i><i class="tr-st s2">⭐</i><i class="tr-st s3">✨</i><b>🛷</b><i class="tr-sa">🎅</i><i class="tr-r">🦌</i><i class="tr-r r2">🦌</i><em>¡Jo, jo, jo! 🎁</em></span>';
+    document.body.appendChild(v);setTimeout(()=>v.remove(),8200)},(q?2500:2500)+7600)}}
 // partículas
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const cv=document.getElementById('temaFx'),cx=cv.getContext('2d');let W,H;
