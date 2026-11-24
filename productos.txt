@@ -242,9 +242,10 @@ id: dp3
 presentación: Caja con 500 piezas (10/50)
 foto: charola-855
 dibujo: charola
-descripción: Charola de unicel #855.
+descripción: Charola de unicel #855 para carnes, botanas y comida. Escoge color: blanca, bio beige o negra.
 opción: Blanca | 211.7 pesos | foto charola-blanca
 opción: Bio beige | 261.36 pesos | foto charola-beige
+opción: Negra León térmica | 472.04 pesos | foto charola-negra-855
 
 Charolas de unicel Reyma
 id: dp4
