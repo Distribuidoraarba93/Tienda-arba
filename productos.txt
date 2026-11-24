@@ -1587,7 +1587,7 @@ id: l14
 precio: 20.89 pesos
 mínimo: 3 piezas
 presentación: Pieza
-dibujo: caja
+foto: fibra-blanca-3m
 descripción: Fibra blanca no rayadora 3M, para limpiar teflón, acero inoxidable, vidrio y superficies delicadas sin rayarlas.
 
 Fibra verde con esponja
