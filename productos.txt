@@ -1213,12 +1213,13 @@ presentación: Pieza
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Pasta de tomate Menú
+Pasta de tomate Menú Solutions
 id: a41
 precio: 161.5 pesos
-presentación: Pieza
+presentación: Bolsa de 3 kg
+foto: pasta-tomate-menu
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta de tomate lista para servir, en bolsa de 3 kg. Ideal para spaghetti, guisos, salsas y cocinas de alto volumen.
 
 Pasta para lasaña La Moderna
 id: a42
