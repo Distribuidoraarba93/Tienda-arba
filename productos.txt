@@ -388,6 +388,7 @@ id: x6
 precio: 1668.66 pesos
 presentación: Caja 40/25
 dibujo: vasoEU
+foto: vaso-cristal
 descripción: Vaso desechable tipo cristal, transparente y resistente. Da buena presentación en eventos y bebidas.
 
 Tapas plásticas
