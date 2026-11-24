@@ -1287,12 +1287,13 @@ foto: chamoy-guacamaya
 dibujo: botella
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Salsa de soya Garden
+Salsa de soya Garden Club
 id: a51
 precio: 142.5 pesos
-presentación: 1 galón
+presentación: 1 galón (3.79 litros)
+foto: soya-garden
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa de soya Garden Club en galón, ideal para cocinas, restaurantes de comida oriental, marinados y botanas.
 
 Salsa Valentina
 id: a52
@@ -1340,7 +1341,7 @@ precio: 79.5 pesos
 presentación: 6 litros
 dibujo: botella
 foto: vinagre-6l
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Vinagre de alcohol de caña en garrafa de 6 litros, ideal para cocinas, taquerías y encurtidos.
 
 Frijol Saltillo
 id: a58
