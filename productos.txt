@@ -933,10 +933,11 @@ opción: Mediano biodegradable · 1,000 piezas | 562.41 pesos
 Popotes
 id: dp21
 presentación: Caja
+foto: popotes
 dibujo: palillo
 descripción: Popotes desechables.
-opción: Biodegradable estuchado 21 cm · 2,000 piezas (4/500) | 422.11 pesos
-opción: Biodegradable estuchado 26 cm · 2,000 piezas (4/500) | 469.14 pesos
+opción: Biodegradable estuchado 21 cm · 2,000 piezas (4/500) | 422.11 pesos | foto popotes
+opción: Biodegradable estuchado 26 cm · 2,000 piezas (4/500) | 469.14 pesos | foto popotes
 opción: Biodegradable estuchado 26 cm a granel · 2,000 piezas | 418.19 pesos
 opción: Biodegradable neón 21 cm a granel · 5 kg | 816.76 pesos
 opción: 26 cm a granel · 5 kg | 417.23 pesos
