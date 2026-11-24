@@ -338,12 +338,6 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 #temaFx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:28}
 .logo-hat{position:relative;display:inline-flex;flex:none}
 .logo-hat .hat{position:absolute;width:56%;left:2%;top:-18%;transform:rotate(-12deg);filter:drop-shadow(0 2px 2px #0006);pointer-events:none}
-.trineo{position:fixed;left:0;right:0;top:calc(110px + env(safe-area-inset-top));height:240px;z-index:40;pointer-events:none;overflow:hidden}
-.tr-in{position:absolute;left:0;top:30px;width:min(470px,96vw);z-index:1;animation:vuelaT 9s linear forwards}
-.tr-in img{width:100%;display:block;filter:drop-shadow(0 0 14px #fff6) drop-shadow(0 6px 10px #0007);animation:flota 1.2s ease-in-out infinite}
-.tr-in em{position:absolute;top:-14px;left:14%;white-space:nowrap;font:800 13px Poppins,sans-serif;color:#152016;background:#fff;padding:4px 9px;border-radius:12px;box-shadow:0 3px 8px #0006}
-@keyframes vuelaT{0%{transform:translate(-105%,60px) rotate(-6deg)}50%{transform:translate(calc(50vw - 50%),0) rotate(-3deg)}100%{transform:translate(105vw,-30px) rotate(-8deg)}}
-@keyframes flota{50%{translate:0 -6px}}
 /* Clips */
 .hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
 .hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -1482,12 +1476,6 @@ const hdr=document.querySelector('header');if(hdr)hdr.after(st);
 // gorro navideño en el logo
 if(T.id==='navidad'){const li=document.querySelector('.logo img');if(li){const w=document.createElement('span');w.className='logo-hat';li.parentNode.insertBefore(w,li);w.appendChild(li);
   w.insertAdjacentHTML('beforeend','<svg class="hat" viewBox="0 0 64 56" aria-hidden="true"><path d="M8 44 L52 44 L48 22 L36 8 L22 6 L10 12 L4 8 Z" fill="#d62028"/><path d="M34 44 L52 44 L48 22Z" fill="#a8141c"/><rect x="2" y="38" width="56" height="13" rx="6.5" fill="#fff"/><circle cx="6" cy="8" r="6" fill="#fff"/></svg>')}}
-// Santa en su trineo cruzando la pantalla
-if(T.id==='navidad'&&T.fx==='nieve'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  const k='arba-trineo',hoyS=new Date().toDateString();let ya='';try{ya=localStorage.getItem(k)}catch(e){}
-  if(ya!==hoyS||q){setTimeout(()=>{const v=document.createElement('div');v.className='trineo';v.setAttribute('aria-hidden','true');
-    v.innerHTML='<div class="tr-in"><img src="img/trineo.svg" alt=""><em>¡Jo, jo, jo! 🎁</em></div>';
-    document.body.appendChild(v);setTimeout(()=>v.remove(),9200);try{localStorage.setItem(k,hoyS)}catch(e){}},2500)}}
 // partículas
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const cv=document.getElementById('temaFx'),cx=cv.getContext('2d');let W,H;
