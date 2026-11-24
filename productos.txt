@@ -520,10 +520,11 @@ Vaso y tapa Primo #0
 id: lb47
 presentación: Escoge vaso o tapa · se venden por separado
 dibujo: vaso
-foto: vaso-primo-0
+foto: primo-0-juego
+fotos: vaso-primo-0
 descripción: Vasito Primo #0 de 1 oz para salsas, aderezos y muestras, con su tapa. Ideal para taquerías y puestos de comida. Nota: el vaso y la tapa se venden por separado. Escoge cuál quieres o agrega los dos al carrito.
-opción: Vaso Primo #0 · caja con 2,000 piezas (20/100) | 448.69 pesos
-opción: Tapa Primo #0 · caja con 2,000 piezas (40/50) | 310.24 pesos
+opción: Vaso Primo #0 · caja con 2,000 piezas (20/100) | 448.69 pesos | foto vaso-primo-0-solo
+opción: Tapa Primo #0 · caja con 2,000 piezas (40/50) | 310.24 pesos | foto tapa-primo-0
 
 ==================== Bowls y envases ====================
 
@@ -562,8 +563,8 @@ foto: envase-primo-4oz
 fotos: envase-primo
 dibujo: envase
 descripción: Envase de 4 onzas para salsas, aderezos y porciones, con su tapa. Nota: el envase y la tapa se venden por separado. Escoge cuál quieres o agrega los dos al carrito.
-opción: Envase 4 oz · caja con 1,200 piezas | 596 pesos
-opción: Tapa para envase Primo #3 y #4 · 1,200 piezas | 427 pesos
+opción: Envase 4 oz · caja con 1,200 piezas | 596 pesos | foto envase-primo-4oz-solo
+opción: Tapa para envase Primo #3 y #4 · 1,200 piezas | 427 pesos | foto tapa-primo-4oz
 
 Envase térmico Reyma
 id: x9
