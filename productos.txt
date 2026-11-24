@@ -267,7 +267,7 @@ dibujo: charola
 descripción: Platos de unicel Reyma. Escoge medida y tipo (liso, hondo o con división).
 opción: #4 hondo | 185.56 pesos | foto plato-hondo
 opción: #6 liso | 279.66 pesos
-opción: #6 hondo | 294.03 pesos | foto plato-hondo
+opción: #6 hondo | 294.03 pesos | foto plato-hondo-6
 opción: #8 liso | 538.41 pesos
 opción: #8 hondo | 507.05 pesos | foto plato-hondo
 opción: #8 con división | 538.41 pesos
