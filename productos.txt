@@ -558,7 +558,8 @@ opción: Tapa para bowl de ensalada · 200 piezas | 697.24 pesos
 Envase y tapa Primo 4 oz
 id: e3
 presentación: Escoge envase o tapa · se venden por separado
-foto: envase-primo
+foto: envase-primo-4oz
+fotos: envase-primo
 dibujo: envase
 descripción: Envase de 4 onzas para salsas, aderezos y porciones, con su tapa. Nota: el envase y la tapa se venden por separado. Escoge cuál quieres o agrega los dos al carrito.
 opción: Envase 4 oz · caja con 1,200 piezas | 596 pesos
