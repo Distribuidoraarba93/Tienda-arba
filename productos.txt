@@ -163,7 +163,7 @@ foto: ham-beige
 dibujo: contenedor
 descripción: Contenedor para hamburguesa en tres colores.
 opción: Bio beige | 398.57 pesos | foto ham-beige
-opción: Negro (500 piezas) | 567.16 pesos | foto ham-negro
+opción: Negro (500 piezas) | 523.38 pesos | foto ham-negro
 opción: Blanco (500 piezas) | 501.81 pesos | foto ham-blanco
 
 Charola #066
@@ -234,8 +234,8 @@ foto: hotdog
 dibujo: contenedor
 descripción: Contenedores de unicel para hot dog, hoagie (sándwich largo) y #965.
 opción: Hot dog · 500 piezas (4/125) | 444.31 pesos
-opción: Hoagie · 200 piezas (2/100) | 296.64 pesos
-opción: #965 · 200 piezas (2/100) | 317.56 pesos
+opción: Hoagie · 200 piezas (2/100) | 266.12 pesos
+opción: #965 · 200 piezas (2/100) | 286.4 pesos
 
 Charola #855
 id: dp3
