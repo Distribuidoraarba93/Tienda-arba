@@ -511,6 +511,7 @@ id: lb47
 precio: 430 pesos
 presentación: Caja con 2,000 piezas (20/100)
 dibujo: vaso
+foto: vaso-primo-0
 descripción: Vasito Primo #0 para salsas, aderezos y muestras. Ideal para taquerías y puestos de comida.
 
 ==================== Bowls y envases ====================
