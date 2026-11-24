@@ -317,6 +317,22 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .s7{background:radial-gradient(circle at 82% 50%,#1d4ed855 0,#1d4ed800 55%),linear-gradient(135deg,#0b1525,#10224a);min-height:210px;text-decoration:none;color:#fff}
 .slide .negocios{max-width:250px}
 .slide .fiesta{width:100%;max-width:210px;height:auto;justify-self:center;align-self:center;filter:drop-shadow(0 6px 12px #0006)}
+/* Mi pedido estilo DiDi */
+.dhero{margin:12px 0 16px;padding:16px 14px 40px;border-radius:16px;background:linear-gradient(135deg,#14301d,#0b1525);border:1px solid #7ed95755}
+.dh-t{font:24px/1.1 Anton,Impact,sans-serif;text-transform:uppercase;color:#fff}
+.dh-eta{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:8px 0 2px}.dh-eta small{color:#9fb0c8;font-size:13px}.dh-eta b{color:#f4b400;font-size:26px;font-weight:800}.dh-eta span{color:#7ed957;font-weight:700;font-size:14px}
+.dh-track{position:relative;height:6px;margin:30px 18px 0;border-radius:3px;background:#24385a}
+.dh-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#7ed957,#f4b400);transition:width .8s}
+.dhero.vivo .dh-fill{background:repeating-linear-gradient(90deg,#7ed957 0 12px,#f4b400 12px 24px);background-size:48px 100%;animation:rayas 1s linear infinite}
+@keyframes rayas{to{background-position:48px 0}}
+.dh-st{position:absolute;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+.dh-st span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:17px;background:#14233a;border:2px solid #24385a;filter:grayscale(1);opacity:.6}
+.dh-st.ok span{filter:none;opacity:1;border-color:#7ed957;background:#0b1525}.dh-st.now span{border-color:#f4b400;box-shadow:0 0 0 4px #f4b40033;animation:late 1.6s ease-in-out infinite}
+.dh-st small{position:absolute;top:40px;white-space:nowrap;font-size:10.5px;color:#9fb0c8;font-weight:600}.dh-st.now small{color:#f4b400}
+@keyframes late{50%{box-shadow:0 0 0 9px #f4b40011}}
+.dh-truck{position:absolute;top:-34px;transform:translateX(-50%) scaleX(-1);font-size:24px;animation:bote .6s ease-in-out infinite;transition:left .8s}
+@keyframes bote{50%{margin-top:-3px}}
+.dhero.vivo .dh-st.now span{opacity:0}
 /* Clips */
 .hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
 .hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -964,6 +980,23 @@ function estGuarda(p,s,e,t,f,k){if(!/^ARBA-[\d-]+$/.test(p||'')||!EST_ORDEN[s])r
   const ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));ks.slice(15).forEach(k=>delete all[k]);
   try{localStorage.setItem('arba-pedidos',JSON.stringify(all))}catch(err){}estBoton()}
 function estBoton(){const b=$('#misPed');if(b)b.hidden=!Object.keys(estTodos()).length}
+function etaMin(t){if(!t)return null;t=norm(String(t));let m=null,r;
+  if(r=t.match(/(\d+(?:[.,]\d+)?)\s*(h|hr|hora)/))m=parseFloat(r[1].replace(',','.'))*60;
+  if(/media hora/.test(t))m=30;if(/hora y media/.test(t))m=(m||60)+30;else if(/una hora|1 hora/.test(t)&&m==null)m=60;
+  if(r=t.match(/(\d+)\s*(min|m\b)/))m=(m&&/hora/.test(t)?m:0)+ +r[1];
+  return m}
+function etaAbs(t,base){if(!t)return null;const n=norm(String(t));const r=n.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m|p\.m)/);if(r){let h=+r[1]%12;if(/p/.test(r[3]))h+=12;const d=new Date(base);d.setHours(h,+(r[2]||0),0,0);if(/manana/.test(n)||(d<base&&!/hoy/.test(n)))d.setDate(d.getDate()+1);return d.getTime()}
+  const m=etaMin(t);return m==null?null:base+m*60000}
+const hhmm=ts=>new Date(ts).toLocaleTimeString('es-MX',{hour:'numeric',minute:'2-digit'});
+function estHero(o,n,rec){const ic=['📝','✅','💰',rec?'📦':'🚚','🎉'],lb=['Recibido','Aceptado','Pagado',rec?'Listo':'En camino',rec?'Recogido':'Entregado'];
+  const pct=Math.min(100,Math.max(0,(n-1)/4*100)),act=o.s==='camino';
+  const tit={recibido:'Recibimos tu pedido',aceptado:'Estamos preparando tu pedido',pagado:'Pago recibido, ya casi',camino:'¡Tu pedido va en camino!',listo:'Tu pedido está listo',entregado:rec?'¡Pedido recogido!':'¡Pedido entregado!'}[o.s]||'Tu pedido';
+  const eta=(o.s==='camino'||o.s==='aceptado'||o.s==='pagado'||o.s==='listo')?etaAbs(o.t,o.f||Date.now()):null;
+  return `<div class="dhero${act?' vivo':''}"><div class="dh-t">${tit}</div>
+   ${eta?`<div class="dh-eta"><small>${rec?'Listo aprox.':'Llega aprox.'}</small><b>${hhmm(eta)}</b><span data-eta="${eta}"></span></div>`:o.t&&o.s!=='entregado'?`<div class="dh-eta"><small>${rec?'Listo en':'Llega en'}</small><b>${esc(o.t)}</b></div>`:''}
+   <div class="dh-track"><div class="dh-fill" style="width:${pct}%"></div>${act?`<div class="dh-truck" style="left:${pct}%">🚚</div>`:''}
+   ${ic.map((x,i)=>`<div class="dh-st${i+1<=n?' ok':''}${i+1===n?' now':''}" style="left:${i*25}%"><span>${x}</span><small>${lb[i]}</small></div>`).join('')}</div></div>`}
+setInterval(()=>document.querySelectorAll('[data-eta]').forEach(e=>{const d=+e.dataset.eta-Date.now();e.textContent=d>60000?'en '+(d>=3600000?Math.floor(d/3600000)+' h '+Math.round(d%3600000/60000)+' min':Math.round(d/60000)+' min'):d>-600000?'¡ya casi!':''}),1000);
 function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido</h3><p>No encontramos ese pedido en este celular. Abre el link que te mandamos por WhatsApp.</p>';
   const rec=o.e==='r'||o.s==='listo';const n=EST_ORDEN[o.s]||1;
   const pasos=[['recibido','Pedido recibido','Ya nos llegó tu pedido por WhatsApp.'],['aceptado','Pedido aceptado','Lo estamos preparando.'],['pagado','Pago recibido','Gracias, ya quedó tu pago.'],
@@ -971,6 +1004,7 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
   const fec=new Date(o.f||Date.now()).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
   let h=`<h3>Tu pedido ${p}</h3><p class="note" style="margin:0">Actualizado: ${fec}</p>`;
   if(o.s==='cancelado')return h+`<div class="estcan">❌ Este pedido fue cancelado</div><p>Si tienes dudas, escríbenos y te ayudamos con otra opción.</p><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, tengo una duda sobre mi pedido '+p)}" target="_blank" rel="noopener">Escribir por WhatsApp</a>`;
+  h+=estHero(o,n,rec);
   h+='<ol class="est">'+pasos.map(([k,t,d],i)=>{const lv=i+1,cls=lv<n||(lv===n&&k==='entregado')?'hecho':lv===n?'ahora':'';
     const extra=cls==='ahora'&&o.t?` <br>🕒 ${rec?'Listo en':'Llega en'}: ${o.t}`:'';
     return `<li class="${cls}"><span class="dot">${cls==='hecho'?'✓':lv}</span><div><b>${t}</b>${cls?`<small>${d}${extra}</small>`:''}</div></li>`}).join('')+'</ol>';
