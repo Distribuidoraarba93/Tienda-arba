@@ -338,25 +338,12 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 #temaFx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:28}
 .logo-hat{position:relative;display:inline-flex;flex:none}
 .logo-hat .hat{position:absolute;width:56%;left:2%;top:-18%;transform:rotate(-12deg);filter:drop-shadow(0 2px 2px #0006);pointer-events:none}
-.chase{position:fixed;left:0;right:0;bottom:calc(150px + env(safe-area-inset-bottom));height:90px;z-index:40;pointer-events:none;overflow:visible}
-.chase>span{position:absolute;bottom:0;left:0;display:flex;align-items:flex-end;animation:corre 7s linear forwards}
-.ch-mapa{animation-delay:0s!important}.ch-dust{font-size:26px;animation-delay:.12s!important;opacity:.8}.ch-santa{animation-delay:1.1s!important}
-.ch-mapa i,.ch-santa i{font-size:54px;display:inline-block;transform:scaleX(-1);animation:brinco .32s ease-in-out infinite}
-.ch-mapa b{font-size:46px;margin-right:-26px;transform:rotate(-14deg);display:inline-block;animation:brinco .32s ease-in-out infinite .08s}
-.ch-santa em{position:absolute;bottom:62px;left:6px;white-space:nowrap;font:800 13px Poppins,sans-serif;color:#152016;background:#fff;padding:4px 9px;border-radius:12px;box-shadow:0 3px 8px #0006}
-.ch-santa em::after{content:"";position:absolute;left:18px;bottom:-6px;border:6px solid transparent;border-top-color:#fff;border-bottom:0}
-@keyframes corre{from{transform:translateX(-140px)}to{transform:translateX(calc(100vw + 60px))}}
-@keyframes brinco{50%{translate:0 -10px}}
-.trineo{position:fixed;left:0;right:0;top:calc(150px + env(safe-area-inset-top));height:120px;z-index:40;pointer-events:none}
-.tr-in{position:absolute;left:0;top:0;display:flex;align-items:center;animation:vuelaT 8s linear forwards}
-.tr-in b{font-size:58px;display:inline-block;transform:scaleX(-1)}
-.tr-sa{font-size:40px;margin-left:-62px;margin-top:-30px;transform:scaleX(-1);display:inline-block}
-.tr-r{font-size:50px;display:inline-block;margin-left:14px;animation:galope .4s ease-in-out infinite}.tr-r.r2{animation-delay:.2s;margin-left:6px}
-.tr-st{font-size:20px;position:relative;opacity:.9;animation:chispa .6s ease-in-out infinite alternate}.tr-st.s2{font-size:14px;top:16px;animation-delay:.2s}.tr-st.s3{top:-14px;animation-delay:.4s}
-.tr-in em{position:absolute;top:-34px;left:60px;white-space:nowrap;font:800 13px Poppins,sans-serif;color:#152016;background:#fff;padding:4px 9px;border-radius:12px;box-shadow:0 3px 8px #0006}
-@keyframes vuelaT{0%{transform:translate(-320px,40px)}50%{transform:translate(calc(50vw - 160px),-10px)}100%{transform:translate(calc(100vw + 40px),30px)}}
-@keyframes galope{50%{translate:0 -8px}}
-@keyframes chispa{to{opacity:.3;scale:.7}}
+.trineo{position:fixed;left:0;right:0;top:calc(120px + env(safe-area-inset-top));height:200px;z-index:40;pointer-events:none;overflow:hidden}
+.tr-in{position:absolute;left:0;top:20px;width:min(420px,92vw);animation:vuelaT 9s linear forwards}
+.tr-in img{width:100%;display:block;filter:drop-shadow(0 0 14px #fff6) drop-shadow(0 6px 10px #0007);animation:flota 1.2s ease-in-out infinite}
+.tr-in em{position:absolute;top:-6px;left:22%;white-space:nowrap;font:800 13px Poppins,sans-serif;color:#152016;background:#fff;padding:4px 9px;border-radius:12px;box-shadow:0 3px 8px #0006}
+@keyframes vuelaT{0%{transform:translate(-105%,60px) rotate(-6deg)}50%{transform:translate(calc(50vw - 50%),0) rotate(-3deg)}100%{transform:translate(105vw,-30px) rotate(-8deg)}}
+@keyframes flota{50%{translate:0 -6px}}
 /* Clips */
 .hist{display:flex;gap:14px;overflow-x:auto;padding:4px max(3vw,14px) 10px;scrollbar-width:none}.hist::-webkit-scrollbar{display:none}
 .hist button{flex:0 0 auto;border:0;background:none;color:#e6eef8;font:600 12.5px Poppins,sans-serif;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
@@ -1495,15 +1482,12 @@ const hdr=document.querySelector('header');if(hdr)hdr.after(st);
 // gorro navideño en el logo
 if(T.id==='navidad'){const li=document.querySelector('.logo img');if(li){const w=document.createElement('span');w.className='logo-hat';li.parentNode.insertBefore(w,li);w.appendChild(li);
   w.insertAdjacentHTML('beforeend','<svg class="hat" viewBox="0 0 64 56" aria-hidden="true"><path d="M8 44 L52 44 L48 22 L36 8 L22 6 L10 12 L4 8 Z" fill="#d62028"/><path d="M34 44 L52 44 L48 22Z" fill="#a8141c"/><rect x="2" y="38" width="56" height="13" rx="6.5" fill="#fff"/><circle cx="6" cy="8" r="6" fill="#fff"/></svg>')}}
-// persecución navideña: mapache con árbol y Santa detrás
+// Santa en su trineo cruzando la pantalla
 if(T.id==='navidad'&&T.fx==='nieve'&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  const k='arba-chase',hoyS=new Date().toDateString();let ya='';try{ya=localStorage.getItem(k)}catch(e){}
-  if(ya!==hoyS||q){setTimeout(()=>{const c=document.createElement('div');c.className='chase';c.setAttribute('aria-hidden','true');
-    c.innerHTML='<span class="ch-mapa"><b>🎄</b><i>🦝</i></span><span class="ch-dust">💨</span><span class="ch-santa"><i>🎅</i><em>¡Mi arbolito!</em></span>';
-    document.body.appendChild(c);setTimeout(()=>c.remove(),7600);try{localStorage.setItem(k,hoyS)}catch(e){}},2500);
-   setTimeout(()=>{const v=document.createElement('div');v.className='trineo';v.setAttribute('aria-hidden','true');
-    v.innerHTML='<span class="tr-in"><i class="tr-st">✨</i><i class="tr-st s2">⭐</i><i class="tr-st s3">✨</i><b>🛷</b><i class="tr-sa">🎅</i><i class="tr-r">🦌</i><i class="tr-r r2">🦌</i><em>¡Jo, jo, jo! 🎁</em></span>';
-    document.body.appendChild(v);setTimeout(()=>v.remove(),8200)},(q?2500:2500)+7600)}}
+  const k='arba-trineo',hoyS=new Date().toDateString();let ya='';try{ya=localStorage.getItem(k)}catch(e){}
+  if(ya!==hoyS||q){setTimeout(()=>{const v=document.createElement('div');v.className='trineo';v.setAttribute('aria-hidden','true');
+    v.innerHTML='<div class="tr-in"><img src="img/trineo.svg" alt=""><em>¡Jo, jo, jo! 🎁</em></div>';
+    document.body.appendChild(v);setTimeout(()=>v.remove(),9200);try{localStorage.setItem(k,hoyS)}catch(e){}},2500)}}
 // partículas
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const cv=document.getElementById('temaFx'),cx=cv.getContext('2d');let W,H;

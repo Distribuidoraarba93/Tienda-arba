@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 220">
+<defs>
+ <g id="reno">
+  <path d="M10 70 q-6 -30 30 -34 q40 -4 62 6 q14 8 10 28 q-4 16 -26 18 l-60 0 q-16 -2 -16 -18z" fill="#a8693a"/>
+  <path d="M100 44 q10 -22 22 -30 q10 -6 18 2 q4 8 -6 12 q-10 4 -14 14 l-8 18z" fill="#a8693a"/>
+  <ellipse cx="134" cy="16" rx="11" ry="8" fill="#a8693a"/>
+  <circle cx="145" cy="16" r="3.5" fill="#3b2314"/>
+  <circle cx="132" cy="12" r="2" fill="#1a1a1a"/>
+  <path d="M124 8 q-6 -14 -2 -24 M124 -2 q-8 -4 -12 -10 M126 -10 q6 -6 6 -12 M130 8 q4 -14 14 -20 M138 -4 q6 0 10 -4" stroke="#d6a463" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M120 22 q6 -2 10 2" stroke="#6b4022" stroke-width="2" fill="none"/>
+  <path d="M30 86 l-8 34 M48 86 l6 30 M82 86 l14 30 M96 84 l-2 34" stroke="#8a5530" stroke-width="7" stroke-linecap="round"/>
+  <path d="M22 120 l-4 4 M54 116 l2 6 M96 116 l4 5 M94 118 l-3 5" stroke="#2a1a10" stroke-width="6" stroke-linecap="round"/>
+  <path d="M64 44 q10 26 0 50" stroke="#b3261e" stroke-width="9" fill="none"/>
+  <g fill="#f4c430"><circle cx="66" cy="52" r="3.5"/><circle cx="69" cy="64" r="3.5"/><circle cx="68" cy="76" r="3.5"/><circle cx="64" cy="88" r="3.5"/></g>
+  <path d="M8 66 q-6 -6 -2 -12" stroke="#a8693a" stroke-width="6" stroke-linecap="round" fill="none"/>
+ </g>
+</defs>
+<g fill="#fff8c4"><circle cx="8" cy="168" r="2.5"/><circle cx="22" cy="176" r="1.8"/><circle cx="34" cy="162" r="2.2"/><circle cx="48" cy="172" r="1.6"/><circle cx="60" cy="160" r="2"/><circle cx="16" cy="186" r="1.6"/><circle cx="42" cy="186" r="2"/></g>
+<path d="M52 150 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4z M14 140 l3 -6 l3 6 l6 3 l-6 3 l-3 6 l-3 -6 l-6 -3z" fill="#fff3a0"/>
+<!-- riendas -->
+<path d="M196 116 C 280 96, 360 92, 430 98 C 470 100, 520 92, 560 86" stroke="#2f9e5b" stroke-width="3" fill="none"/>
+<path d="M196 122 C 280 108, 360 106, 430 108" stroke="#3b82f6" stroke-width="3" fill="none"/>
+<!-- renos -->
+<use href="#reno" transform="translate(300 64) scale(.78)"/>
+<use href="#reno" transform="translate(440 50) scale(.78)"/>
+<!-- costal -->
+<ellipse cx="96" cy="110" rx="52" ry="44" fill="#2e8b57"/>
+<path d="M60 92 q10 -6 18 2 M96 82 q10 -6 18 2 M70 124 q10 -6 18 2 M110 118 q10 -6 18 2" stroke="#bfe8cf" stroke-width="3" fill="none"/>
+<path d="M118 70 q8 -18 26 -14 q-10 10 -12 22z" fill="#2e8b57"/><path d="M116 76 q12 4 22 0" stroke="#e8c15a" stroke-width="5" fill="none" stroke-linecap="round"/>
+<!-- Santa -->
+<path d="M150 112 q-4 -44 22 -54 q24 -6 30 22 l2 34z" fill="#d62828"/>
+<circle cx="176" cy="54" r="17" fill="#f6d0b1"/>
+<path d="M158 58 q2 28 20 30 q18 -2 18 -26 q-8 8 -18 8 q-12 0 -20 -12z" fill="#fff"/>
+<path d="M160 46 q12 -24 34 -10 q10 8 6 18 l-38 -4z" fill="#d62828"/>
+<path d="M158 50 q20 -8 42 2" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>
+<circle cx="206" cy="58" r="6" fill="#fff"/>
+<circle cx="180" cy="56" r="2" fill="#2a1a10"/>
+<path d="M196 86 q22 -18 30 -44" stroke="#d62828" stroke-width="12" stroke-linecap="round" fill="none"/>
+<circle cx="227" cy="38" r="8" fill="#fff"/>
+<path d="M200 96 l20 14" stroke="#d62828" stroke-width="11" stroke-linecap="round"/>
+<circle cx="222" cy="112" r="6" fill="#1f1f1f"/>
+<!-- trineo -->
+<path d="M60 116 q-6 34 30 46 l126 0 q26 -2 30 -34 q2 -12 -10 -12 l-176 0z" fill="#9b1c1c"/>
+<path d="M58 116 l182 0" stroke="#f4c430" stroke-width="9" stroke-linecap="round"/>
+<g fill="#fff1a8"><circle cx="78" cy="116" r="2.5"/><circle cx="104" cy="116" r="2.5"/><circle cx="130" cy="116" r="2.5"/><circle cx="156" cy="116" r="2.5"/><circle cx="182" cy="116" r="2.5"/><circle cx="208" cy="116" r="2.5"/><circle cx="232" cy="116" r="2.5"/></g>
+<path d="M78 176 l170 0 q24 0 28 -22" stroke="#f4c430" stroke-width="8" fill="none" stroke-linecap="round"/>
+<path d="M104 162 l-4 14 M206 162 l4 14" stroke="#f4c430" stroke-width="6" stroke-linecap="round"/>
+</svg>
