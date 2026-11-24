@@ -1313,9 +1313,11 @@ descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 Spaghetti Fiordi
 id: a54
 precio: 145 pesos
-presentación: 20 piezas
+presentación: 20 paquetes de 200 g
+foto: spaghetti-fiordi
+fotos: spaghetti-fiordi-suelto
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Spaghetti Fior di Pasta de sémola de trigo, paquetes de 200 g. Ideal para cocinas, fondas y comedores.
 
 Sustituto de crema para café
 id: a55
