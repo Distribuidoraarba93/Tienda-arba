@@ -1452,17 +1452,22 @@ $('#cGo').addEventListener('click',()=>{plan.forEach(([k,c])=>add(k,c));cerrar()
 <script>
 (()=>{
 const TEMAS=[
- {id:'reyes',  de:[1,1], a:[1,6],  fx:'confeti', msg:'🎆 ¡Feliz Año Nuevo! Gracias por un año más con nosotros', col:'#f4b400'},
+ {id:'anio',   de:[1,1], a:[1,5],  fx:'confeti', msg:'🎆 ¡Feliz Año Nuevo! Gracias por un año más con nosotros', col:'#f4b400'},
+ {id:'reyes',  de:[1,6], a:[1,6],  fx:'confeti', msg:'👑 ¡Feliz Día de Reyes! Que te salga el muñequito', col:'#f4b400'},
  {id:'amor',   de:[2,10],a:[2,14], fx:'corazones',msg:'❤️ Feliz Día del Amor y la Amistad', col:'#ec4899'},
  {id:'nino',   de:[4,28],a:[4,30], fx:'confeti', msg:'🎈 ¡Feliz Día del Niño!', col:'#38bdf8'},
  {id:'mama',   de:[5,8], a:[5,10], fx:'petalos', msg:'💐 Feliz Día de las Mamás, con todo nuestro cariño', col:'#f472b6'},
  {id:'patrio', de:[9,10],a:[9,16], fx:'patrio',  msg:'🇲🇽 ¡Viva México! Felices fiestas patrias', col:'#22c55e'},
  {id:'muertos',de:[10,28],a:[11,2],fx:'cempasuchil',msg:'🕯️ Día de Muertos: recordamos con cariño', col:'#f97316'},
- {id:'navidad',de:[12,1],a:[12,31],fx:'nieve',   msg:'🎄 Feliz Navidad de parte de Los 2 Carnales', col:'#ef4444'},
+ {id:'navidad',de:[12,1],a:[12,23],fx:'nieve',   msg:'🎄 ¡Felices fiestas! Te desean Los 2 Carnales', col:'#ef4444'},
+ {id:'navidad',de:[12,24],a:[12,24],fx:'nieve',  msg:'⭐ ¡Feliz Nochebuena! Que la pases en familia', col:'#ef4444'},
+ {id:'navidad',de:[12,25],a:[12,25],fx:'nieve',  msg:'🎄 ¡Feliz Navidad de parte de Los 2 Carnales!', col:'#ef4444'},
+ {id:'navidad',de:[12,26],a:[12,30],fx:'nieve',  msg:'🎄 ¡Felices fiestas y próspero Año Nuevo!', col:'#ef4444'},
+ {id:'navidad',de:[12,31],a:[12,31],fx:'confeti',msg:'🥂 ¡Feliz fin de año! Gracias por estar con nosotros', col:'#f4b400'},
 ];
 const q=new URLSearchParams(location.search).get('tema');
 const hoy=new Date(),md=(hoy.getMonth()+1)*100+hoy.getDate();
-const T=q?TEMAS.find(t=>t.id===q):TEMAS.find(t=>md>=t.de[0]*100+t.de[1]&&md<=t.a[0]*100+t.a[1]);
+const T=q?TEMAS.find(t=>t.id===q||t.id+t.de[1]===q):TEMAS.find(t=>md>=t.de[0]*100+t.de[1]&&md<=t.a[0]*100+t.a[1]);
 window.ARBA_TEMA=T?T.id:'';
 if(!T)return;
 document.body.classList.add('tema-'+T.id);
