@@ -970,6 +970,7 @@ id: dp23
 precio: 539.9 pesos
 presentación: Paquete con 5 piezas
 dibujo: caja
+foto: hielera-unicel
 descripción: Hielera de unicel con capacidad de 20 litros.
 
 ==================== Abarrotes ====================
