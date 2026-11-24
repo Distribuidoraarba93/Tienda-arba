@@ -731,6 +731,9 @@ opción: Negra bio grande · caja 20 kg | 1136.94 pesos
 opción: Negra bio chica · caja 10 kg | 591.66 pesos
 opción: Negra bio mediana · caja 10 kg | 591.66 pesos
 opción: Negra bio grande · caja 10 kg | 591.66 pesos
+opción: Durabag bio mediana impresa · bulto 25 kg | 1072.25 pesos
+opción: Vitabag bio mediana (Anguiplast) · bulto 25 kg | 1310 pesos
+opción: Pana biodegradable chica blanca · bulto 25 kg | 1725 pesos
 
 Bolsa transparente por caja
 id: dp25
