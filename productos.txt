@@ -163,7 +163,7 @@ foto: ham-beige
 dibujo: contenedor
 descripción: Contenedor para hamburguesa en tres colores.
 opción: Bio beige | 398.57 pesos | foto ham-beige
-opción: Negro (500 piezas) | 523.38 pesos | foto ham-negro
+opción: Negro (500 piezas) | 546.13 pesos | foto ham-negro
 opción: Blanco (500 piezas) | 501.81 pesos | foto ham-blanco
 
 Charola #066
@@ -234,8 +234,8 @@ foto: hotdog
 dibujo: contenedor
 descripción: Contenedores de unicel para hot dog, hoagie (sándwich largo) y #965.
 opción: Hot dog · 500 piezas (4/125) | 444.31 pesos
-opción: Hoagie · 200 piezas (2/100) | 266.12 pesos
-opción: #965 · 200 piezas (2/100) | 286.4 pesos
+opción: Hoagie · 200 piezas (2/100) | 277.69 pesos
+opción: #965 · 200 piezas (2/100) | 298.85 pesos
 
 Charola #855
 id: dp3
@@ -512,8 +512,8 @@ presentación: Escoge vaso o tapa · se venden por separado
 dibujo: vaso
 foto: vaso-primo-0
 descripción: Vasito Primo #0 de 1 oz para salsas, aderezos y muestras, con su tapa. Ideal para taquerías y puestos de comida. Nota: el vaso y la tapa se venden por separado. Escoge cuál quieres o agrega los dos al carrito.
-opción: Vaso Primo #0 · caja con 2,000 piezas (20/100) | 430 pesos
-opción: Tapa Primo #0 · caja con 2,000 piezas (40/50) | 297.31 pesos
+opción: Vaso Primo #0 · caja con 2,000 piezas (20/100) | 448.69 pesos
+opción: Tapa Primo #0 · caja con 2,000 piezas (40/50) | 310.24 pesos
 
 ==================== Bowls y envases ====================
 
@@ -731,9 +731,9 @@ opción: Negra bio grande · caja 20 kg | 1136.94 pesos
 opción: Negra bio chica · caja 10 kg | 591.66 pesos
 opción: Negra bio mediana · caja 10 kg | 591.66 pesos
 opción: Negra bio grande · caja 10 kg | 591.66 pesos
-opción: Durabag bio mediana impresa · bulto 25 kg | 1072.25 pesos
-opción: Vitabag bio mediana (Anguiplast) · bulto 25 kg | 1310 pesos
-opción: Pana biodegradable chica blanca · bulto 25 kg | 1725 pesos
+opción: Durabag bio mediana impresa · bulto 25 kg | 1118.75 pesos
+opción: Vitabag bio mediana (Anguiplast) · bulto 25 kg | 1367.03 pesos
+opción: Pana biodegradable chica blanca · bulto 25 kg | 1800.12 pesos
 
 Bolsa transparente por caja
 id: dp25
