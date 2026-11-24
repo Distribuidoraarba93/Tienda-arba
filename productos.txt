@@ -263,6 +263,7 @@ opción: #835 · 500 piezas (10/50) | 269.2 pesos
 Platos de unicel
 id: dp5
 presentación: Caja con 500 piezas
+foto: platos-unicel
 dibujo: charola
 descripción: Platos de unicel Reyma. Escoge medida y tipo (liso, hondo o con división).
 opción: #4 hondo | 185.56 pesos | foto plato-hondo-4
