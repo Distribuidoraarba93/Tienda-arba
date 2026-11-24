@@ -272,7 +272,7 @@ opción: #8 liso | 538.41 pesos | foto plato-liso-8
 opción: #8 hondo | 507.05 pesos | foto plato-hondo-8
 opción: #8 con división | 538.41 pesos
 opción: #9 con división | 527.95 pesos
-opción: #10 liso | 606.36 pesos
+opción: #10 liso | 606.36 pesos | foto plato-liso-10
 opción: #10 hondo | 556.7 pesos | foto plato-hondo-10
 opción: #10 con división | 606.36 pesos
 opción: #8 hondo biodegradable | 616.81 pesos
