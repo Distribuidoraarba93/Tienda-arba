@@ -348,6 +348,14 @@ opción: Molde para tartaleta AL-09 · 1,000 piezas | 1402.49 pesos
 
 ==================== Vasos ====================
 
+Vaso de papel blanco Inix 8 oz
+id: v9
+precio: 1210.29 pesos
+presentación: Caja con 1,000 piezas
+foto: vaso-papel-inix
+dibujo: vaso
+descripción: Vaso de papel blanco Inix de 8 oz para café, té, champurrado y bebidas calientes. Caja con 1,000 piezas.
+
 Vaso térmico
 id: v1
 presentación: Caja
