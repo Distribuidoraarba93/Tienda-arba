@@ -452,8 +452,8 @@ dibujo: vaso
 descripción: Vasitos chicos para salsa, aderezos y muestras.
 opción: #0 · 2,000 piezas (20/100) | 477.78 pesos
 opción: 1 oz · 1,800 piezas (18/100) | 568.68 pesos
-opción: 2 oz · 1,000 piezas | 515.19 pesos
-opción: 2 oz · 1,200 piezas (12/100) | 397.79 pesos
+opción: 2 oz · 1,000 piezas | 515.19 pesos | foto vasito-2oz
+opción: 2 oz · 1,200 piezas (12/100) | 397.79 pesos | foto vasito-2oz
 opción: 2 oz negro · 1,200 piezas (12/100) | 463.11 pesos
 
 Tapa para vasito de salsa
