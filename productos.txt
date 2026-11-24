@@ -100,10 +100,10 @@ id: t5
 presentación: Paquete de 10 piezas
 foto: tortilla-montado
 dibujo: tortilla
-descripción: Tortillas de harina grandes para montados. Jumbo de 35 a 38 cm (6 pesos la pieza), chica de 28 a 30 cm (4 pesos con 50 centavos la pieza) y jumbo chica de 28 a 30 cm, más gruesa (6 pesos la pieza). Tortillería Los 2 Carnales.
+descripción: Tortillas de harina grandes para montados. Jumbo de 35 a 38 cm (6 pesos la pieza), chica de 28 a 30 cm (4 pesos con 50 centavos la pieza) y jumbo chica de 28 a 30 cm, más gruesa (7 pesos la pieza). Tortillería Los 2 Carnales.
 opción: Jumbo · 35 a 38 cm | 60 pesos
 opción: Chica · 28 a 30 cm | 45 pesos
-opción: Jumbo chica · 28 a 30 cm, más gruesa | 60 pesos
+opción: Jumbo chica · 28 a 30 cm, más gruesa | 70 pesos
 
 Tortillas de harina integrales
 id: t7
