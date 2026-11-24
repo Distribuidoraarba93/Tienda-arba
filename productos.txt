@@ -189,7 +189,7 @@ precio: 1019 pesos
 presentación: Caja con 250 piezas
 foto: bisagra-ntr
 dibujo: contenedor
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Contenedor de bisagra 22x14 para comida para llevar. Cierra firme y resiste comida caliente.
 
 Botanero base y domo 31 cm
 id: x2
@@ -197,7 +197,7 @@ precio: 1271.51 pesos
 presentación: Caja con 50 piezas (base con domo)
 foto: botanero
 dibujo: contenedor
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Charola botanera de 31 cm con domo transparente, ideal para botanas, fruta, bocadillos y eventos.
 
 Charola térmica 9D con división Reyma
 id: x3
@@ -205,7 +205,7 @@ precio: 575.5 pesos
 presentación: Caja 20/25 (20 paquetes de 25 piezas)
 foto: charola-9d
 dibujo: charola
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Charola térmica Reyma de 9 pulgadas con divisiones, perfecta para comida corrida y platillos con guarnición.
 
 Pavera de aluminio chica
 id: x4
@@ -213,7 +213,7 @@ precio: 9 pesos
 presentación: 1 pieza · 38.8 x 27 x 6 cm (medidas internas)
 foto: pavera-chica
 dibujo: charola
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pavera de aluminio chica, ideal para hornear pavo, pierna, pollo o pasteles y para eventos.
 
 Contenedor biodegradable
 id: dp1
@@ -381,14 +381,14 @@ precio: 577.61 pesos
 presentación: 20/50 · 1,000 piezas
 foto: vaso-pl8
 dibujo: vasoEU
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Vaso de plástico #8 para agua, refresco, aguas frescas y bebidas frías.
 
 Vaso tipo cristal
 id: x6
 precio: 1668.66 pesos
 presentación: Caja 40/25
 dibujo: vasoEU
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Vaso desechable tipo cristal, transparente y resistente. Da buena presentación en eventos y bebidas.
 
 Tapas plásticas
 id: x8
@@ -510,7 +510,7 @@ id: lb47
 precio: 430 pesos
 presentación: Caja con 2,000 piezas (20/100)
 dibujo: vaso
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Vasito Primo #0 para salsas, aderezos y muestras. Ideal para taquerías y puestos de comida.
 
 ==================== Bowls y envases ====================
 
@@ -646,21 +646,21 @@ id: x12
 precio: 441.5 pesos
 presentación: Pieza
 dibujo: rollo
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Rollo de papel aluminio grueso de 45 cm, resistente para cocina, asados y envolver comida.
 
 Papel aluminio precortado
 id: x13
 precio: 211.21 pesos
 presentación: 500 piezas
 dibujo: papel
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Hojas de papel aluminio ya cortadas, listas para envolver burritos, tortas y tacos rápido.
 
 Papel menú deli
 id: x14
 precio: 203 pesos
 presentación: 1,000 piezas
 dibujo: papel
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Papel menú deli para envolver tacos, burritos y tortas o forrar canastas y charolas.
 
 Servilleta Dalia interdoblada blanca
 id: x22
@@ -668,7 +668,7 @@ precio: 414 pesos
 presentación: 12/250 piezas
 foto: servilleta-dalia
 dibujo: servilleta
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Servilleta interdoblada blanca Dalia para despachador. Práctica para restaurantes y taquerías.
 
 Toalla interdoblada blanca Dalia
 id: x23
@@ -676,7 +676,7 @@ precio: 414 pesos
 presentación: 12/250
 foto: toalla-interdoblada
 dibujo: servilleta
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Toalla interdoblada blanca Dalia para secado de manos en baños y cocinas.
 
 Toalla en rollo café Dalia
 id: x24
@@ -684,7 +684,7 @@ precio: 60.5 pesos
 presentación: Rollo
 foto: toalla-rollo-cafe
 dibujo: rollo
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Toalla en rollo café Dalia para despachador. Rendidora, para baños y cocinas de negocio.
 
 Bolsa camiseta por caja
 id: dp24
@@ -881,7 +881,7 @@ precio: 53.5 pesos
 presentación: Caja con 50 piezas
 foto: cubrebocas-negro
 dibujo: guante
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cubrebocas tricapa negro desechable, cómodo para cocina y atención al cliente.
 
 Cuchara sopera americana
 id: x26
@@ -889,7 +889,7 @@ precio: 167 pesos
 presentación: Caja con 1,000 piezas
 foto: cuchara
 dibujo: palillo
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cuchara sopera desechable tipo americana, resistente para sopas, caldos y postres.
 
 Cucharas desechables
 id: dp19
@@ -974,7 +974,7 @@ precio: 458.85 pesos
 presentación: Caja con 12 botellas de 900 ml
 foto: aceite-kartamus
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Aceite vegetal comestible Kartamus en botella de 900 ml, para cocinar y freír.
 
 Aderezo de mayonesa Bachi
 id: a2
@@ -982,7 +982,7 @@ precio: 131.5 pesos
 presentación: Bote de 3.7 litros
 foto: mayonesa-bachi
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Aderezo de mayonesa Bachi en bote de 3.7 litros, rendidor para tortas, hamburguesas y ensaladas.
 
 Ajo molido
 id: a3
@@ -990,7 +990,7 @@ precio: 94.5 pesos
 presentación: 1 kg
 foto: ajo-molido
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Ajo molido listo para usar, para sazonar guisos, carnes y salsas sin pelar ni picar.
 
 Ajo picado en agua
 id: a4
@@ -998,7 +998,7 @@ precio: 131 pesos
 presentación: Bote de 1.27 kg (885 g drenado)
 foto: ajo-picado
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Ajo picado en agua, listo para cocinar. Ahorra tiempo en tu cocina.
 
 Arroz Verde Valle Súper Extra
 id: a7
@@ -1006,7 +1006,7 @@ precio: 88 pesos
 presentación: Bolsa de 2 kg
 foto: arroz-verde-valle
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Arroz Verde Valle Súper Extra de grano largo, rinde y queda suelto.
 
 Atún en agua El Dorado
 id: a8
@@ -1014,7 +1014,7 @@ precio: 217.5 pesos
 presentación: Lata de 1.880 kg (1.350 kg drenado)
 foto: atun-dorado
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Atún en agua El Dorado en lata grande, ideal para tostadas, ensaladas y cocinas de alto volumen.
 
 Café de Chiapas molido
 id: a12
@@ -1022,7 +1022,7 @@ precio: 333.5 pesos
 presentación: Bolsa de 900 g
 foto: cafe-chiapas
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Café de Chiapas molido, de sabor intenso y aroma rico, para cafetería o negocio.
 
 Caldo de pollo Knorr
 id: a13
@@ -1030,7 +1030,7 @@ precio: 211 pesos
 presentación: Bote de 1.5 kg
 foto: caldo-knorr
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Caldo de pollo Knorr en polvo, bote grande para sazonar sopas, arroces y guisos.
 
 Catsup Heinz en sobre
 id: a14
@@ -1038,7 +1038,7 @@ precio: 131 pesos
 presentación: Caja con 200 sobres de 8 g
 foto: catsup-heinz
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Catsup Heinz en sobres individuales, prácticos para comida para llevar.
 
 Champiñones rebanados Herdez
 id: a15
@@ -1046,7 +1046,7 @@ precio: 222.5 pesos
 presentación: Lata de 2.8 kg (1.51 kg drenado)
 foto: champinones-herdez
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Champiñones rebanados Herdez en lata grande, listos para pizzas, cremas y guisos.
 
 Chile cascabel seco
 id: a17
@@ -1054,7 +1054,7 @@ precio: 278 pesos
 presentación: 1 kg
 foto: chile-cascabel
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile cascabel seco por kilo, para salsas y guisos con sabor ahumado.
 
 Chile colorín seco
 id: a18
@@ -1062,7 +1062,7 @@ precio: 170.5 pesos
 presentación: 1 kg
 foto: chile-colorin2
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile colorín seco por kilo, para salsas y adobos.
 
 Chile de árbol seco
 id: a19
@@ -1070,7 +1070,7 @@ precio: 148 pesos
 presentación: 1 kg
 foto: chile-arbol
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile de árbol seco por kilo, para salsas picosas y botanas.
 
 Chile en polvo Tajín
 id: a20
@@ -1078,7 +1078,7 @@ precio: 67.5 pesos
 presentación: 1 kg
 foto: tajin
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile en polvo Tajín por kilo, para fruta, botanas, bebidas y escarchados.
 
 Chiles jalapeños en rodajas Menú
 id: a21
@@ -1086,7 +1086,7 @@ precio: 99.5 pesos
 presentación: Bolsa de 3 kg (1.65 kg drenado)
 foto: chile-rodajas-menu
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chiles jalapeños en rodajas Menú, bolsa de 3 kg para nachos, tortas y hamburguesas.
 
 Chile morita
 id: a22
@@ -1094,7 +1094,7 @@ precio: 148 pesos
 presentación: 1 kg
 foto: chile-colorin
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile morita seco por kilo, picosito y ahumado, ideal para salsas.
 
 Chiles jalapeños en rajas en escabeche Menú
 id: a23
@@ -1102,7 +1102,7 @@ precio: 102.5 pesos
 presentación: Bolsa de 3 kg (1.65 kg drenado)
 foto: chile-rajas-menu
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Rajas de jalapeño en escabeche Menú, bolsa de 3 kg con zanahoria y cebolla.
 
 Chiles chipotles enteros adobados Menú
 id: a24
@@ -1110,7 +1110,7 @@ precio: 211.5 pesos
 presentación: Lata de 2.8 kg (1.54 kg drenado)
 foto: chipotle-menu
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chiles chipotles adobados Menú en lata grande, para salsas, cremas y marinados.
 
 Crema ácida Lala
 id: a25
@@ -1118,7 +1118,7 @@ precio: 279 pesos
 presentación: Cubeta de 4 litros (3.92 kg)
 foto: crema-lala
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Crema ácida Lala en cubeta de 4 litros, rendidora para antojitos, tacos y postres.
 
 Elote dorado Del Monte 6 pack
 id: a26
@@ -1126,7 +1126,7 @@ precio: 79 pesos
 presentación: 6 latas de 225 g
 foto: elote-delmonte-6
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Elote dorado Del Monte en paquete de 6 latas de 225 g.
 
 Elote dorado en granos Del Monte
 id: a27
@@ -1134,7 +1134,7 @@ precio: 141 pesos
 presentación: Lata de 2.9 kg (1.6 kg drenado)
 foto: elote-delmonte-29
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Elote dorado en granos Del Monte en lata grande, para esquites, ensaladas y guisos.
 
 Empanizador Cuétara (galleta salada molida)
 id: a28
@@ -1142,7 +1142,7 @@ precio: 386 pesos
 presentación: Bolsa de 5 kg
 foto: empanizador
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Empanizador Cuétara de galleta salada molida, bolsa de 5 kg para milanesas, pescado y pollo.
 
 Jamón lunchero Bafar 800 g (40 rebanadas aprox.)
 id: a32
@@ -1150,7 +1150,7 @@ precio: 72 pesos
 presentación: Pieza
 foto: jamon-bafar
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Jamón lunchero Bafar de 800 g, con unas 40 rebanadas. Para tortas, sándwiches y desayunos.
 
 Jugo sazonador Maggi
 id: a59
@@ -1174,7 +1174,7 @@ precio: 136.5 pesos
 presentación: Bote de 1.91 kg
 foto: margarina-country-crock
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Margarina Country Crock en bote de 1.91 kg, para untar, cocinar y hornear.
 
 Mayonesa Heinz en sobre
 id: a35
@@ -1182,14 +1182,14 @@ precio: 157.5 pesos
 presentación: Caja con 200 sobres de 8 g
 foto: mayonesa-heinz
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Mayonesa Heinz en sobres individuales, prácticos para comida para llevar.
 
 Mole almendrado
 id: a36
 precio: 114 pesos
 presentación: 1/2 litro
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Mole almendrado de 1/2 litro, listo para preparar con caldo. Sabor tradicional.
 
 Mostaza Heinz en sobre
 id: a37
@@ -1197,21 +1197,21 @@ precio: 139 pesos
 presentación: Caja con 200 sobres de 5 g
 foto: mostaza-heinz
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Mostaza Heinz en sobres individuales, prácticos para hot dogs y hamburguesas.
 
 Pasta codo mediano
 id: a39
 precio: 97 pesos
 presentación: Pieza
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta codo mediano, para sopas y ensaladas de coditos.
 
 Pasta para spaghetti Menú
 id: a40
 precio: 103.5 pesos
 presentación: Pieza
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta para spaghetti Menú, para cocinas y comedores.
 
 Pasta de tomate Menú Solutions
 id: a41
@@ -1227,7 +1227,7 @@ precio: 457.5 pesos
 presentación: Caja con 12 paquetes de 500 g
 foto: lasana-moderna
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta para lasaña La Moderna, caja con 12 paquetes de 500 g.
 
 Pimienta negra molida McCormick
 id: a43
@@ -1235,28 +1235,28 @@ precio: 148.5 pesos
 presentación: 510 g
 foto: pimienta-mccormick
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pimienta negra molida McCormick, bote de 510 g para cocina de negocio.
 
 Queso para nachos Economy
 id: a44
 precio: 224 pesos
 presentación: 3 kg
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Queso amarillo para nachos Economy de 3 kg, listo para calentar y servir.
 
 Sal con ajo
 id: a45
 precio: 54.5 pesos
 presentación: 1 kg
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sal con ajo por kilo, para sazonar carnes, papas y verduras.
 
 Sal individual de mar en sobres
 id: a46
 precio: 282.5 pesos
 presentación: 3,000 piezas
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sobres individuales de sal de mar, prácticos para comida para llevar.
 
 Sal La Fina
 id: a47
@@ -1264,21 +1264,21 @@ precio: 477.25 pesos
 presentación: Bulto de 25 kg (bolsas de 1 kg)
 foto: sal-la-fina
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sal La Fina refinada, bulto de 25 kg en bolsas de 1 kg.
 
 Salchicha de pavo Frankfurt
 id: a48
 precio: 161.5 pesos
 presentación: Pieza
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salchicha de pavo tipo Frankfurt, para hot dogs, desayunos y botanas.
 
 Salsa botanera
 id: a49
 precio: 123 pesos
 presentación: Galón
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa botanera en galón, para papas, cueritos, frutas y botanas.
 
 Salsa chamoy Guacamaya
 id: a50
@@ -1286,7 +1286,7 @@ precio: 37 pesos
 presentación: 1 litro
 foto: chamoy-guacamaya
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa chamoy Guacamaya de 1 litro, para fruta, raspados y botanas.
 
 Salsa de soya Garden Club
 id: a51
@@ -1302,7 +1302,7 @@ precio: 43 pesos
 presentación: 1 litro
 foto: valentina
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa Valentina de 1 litro, la clásica para papitas y botanas.
 
 Sopa Maruchan
 id: a53
@@ -1310,7 +1310,7 @@ precio: 226.5 pesos
 presentación: Caja con 12 piezas
 foto: maruchan
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sopa instantánea Maruchan, caja con 12 piezas.
 
 Spaghetti Fiordi
 id: a54
@@ -1326,7 +1326,7 @@ id: a55
 precio: 109.5 pesos
 presentación: Pieza
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sustituto de crema para café, rinde muchas tazas.
 
 Vinagre blanco La Costeña
 id: a56
@@ -1334,7 +1334,7 @@ precio: 46.5 pesos
 presentación: 1 galón
 foto: vinagre-costena
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Vinagre blanco La Costeña en galón, para cocinar, encurtir y aderezar.
 
 Vinagre Menú
 id: a57
@@ -1350,14 +1350,14 @@ precio: 625 pesos
 presentación: Costal de 25 kg
 foto: frijol-saltillo
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Frijol Saltillo en costal de 25 kg, de buen cocimiento y sabor.
 
 Salsa Valentina por caja
 id: lb29
 presentación: Caja
 foto: valentina-1l
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa Valentina por caja: escoge sobres, botella de 370 ml o de 1 litro.
 opción: Sobres · caja con 900 | 517.83 pesos
 opción: 370 ml · caja con 24 | 517.83 pesos
 opción: 1 litro · caja con 12 | 517.83 pesos
@@ -1367,7 +1367,7 @@ id: lb30
 presentación: Caja
 foto: costa-brava
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa Costa Brava por caja, en 1.5 litros o galón.
 opción: 1.5 litros · caja con 12 | 571.64 pesos
 opción: Galón · caja con 3 | 390.06 pesos
 
@@ -1376,7 +1376,7 @@ id: lb31
 presentación: Caja
 foto: botanera
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa La Botanera por caja, en 1 litro o galón. Para papitas y botanas.
 opción: 1 litro · caja con 12 | 458.48 pesos
 opción: Galón · caja con 6 | 679.25 pesos
 
@@ -1385,7 +1385,7 @@ id: lb32
 presentación: Caja
 foto: chamoy-mega
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chamoy Mega por caja, en 1 litro o galón. Para fruta, raspados y botanas.
 opción: 1 litro · caja con 12 | 463.07 pesos
 opción: Galón · caja con 6 | 755.43 pesos
 
@@ -1394,35 +1394,35 @@ id: lb33
 precio: 737.08 pesos
 presentación: Galón
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa de soya Sazonando en galón, para cocina oriental, marinados y botanas.
 
 Jugo sazonador 1 litro
 id: lb34
 precio: 1355.79 pesos
 presentación: 1 litro
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Jugo sazonador de 1 litro, para carnes, sopas, cócteles y botanas.
 
 Salsa de soya 1 litro
 id: lb35
 precio: 624.09 pesos
 presentación: 1 litro
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Salsa de soya de 1 litro, para cocina, marinados y botanas.
 
 Concentrado de limón 1 litro
 id: lb36
 precio: 710.17 pesos
 presentación: 1 litro
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Concentrado de limón de 1 litro, práctico para aguas, cócteles y cocina.
 
 Aceite para freír 20 litros
 id: lb37
 precio: 860.82 pesos
 presentación: Bote de 20 litros
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Aceite para freír en bote de 20 litros, rendidor para negocio de frituras y comida.
 
 Maíz palomero 20 kg
 id: lb38
@@ -1430,21 +1430,21 @@ precio: 504.39 pesos
 presentación: Bulto de 20 kg
 foto: maiz-palomero
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Maíz palomero en bulto de 20 kg, revienta parejo. Ideal para cines y puestos.
 
 Chile botanero Chiligrin 25 kg
 id: lb39
 precio: 1753.52 pesos
 presentación: Bulto de 25 kg
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chile botanero Chiligrin en bulto de 25 kg, para botanas y frituras.
 
 Cereal a granel Sun Cereal
 id: lb40
 presentación: Bulto a granel
 foto: zucarines
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cereal a granel Sun Cereal: aritos, Zucarines o Rodarroz, por bulto.
 opción: Aritos · 7 kg | 439.79 pesos
 opción: Zucarines · 15 kg | 949.37 pesos | foto zucarines
 opción: Rodarroz · 15 kg | 1013.9 pesos
@@ -1454,7 +1454,7 @@ id: lb41
 presentación: Caja con 20 paquetes
 foto: moderna-surtida
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta La Moderna por caja de 20 paquetes. Escoge spaghetti, pluma, fideo, codo, letra y más.
 opción: Spaghetti 200 g | 162.72 pesos
 opción: Pluma 200 g | 162.72 pesos
 opción: Fideo 0 220 g | 162.72 pesos
@@ -1468,7 +1468,7 @@ id: lb42
 presentación: Caja con 20 paquetes de 200 g
 foto: la-perla
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta La Perla por caja de 20 paquetes de 200 g. Escoge el tipo que necesites.
 opción: Spaghetti | 150.85 pesos
 opción: Fideo mediano | 150.85 pesos
 opción: Fideo cambray | 150.85 pesos
@@ -1487,7 +1487,7 @@ Sopa en sobre por caja
 id: lb43
 presentación: Caja con 12 paquetes
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Sopa en sobre por caja de 12 paquetes: fideo, letra, estrellita, codito y con chile.
 opción: Fideo | 154.44 pesos
 opción: Letra | 154.44 pesos
 opción: Estrellita | 154.44 pesos
@@ -1511,7 +1511,7 @@ precio: 413.54 pesos
 presentación: Paquete de 24 latas
 foto: arizona
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Bebida Arizona en lata de 460 ml, varios sabores, paquete de 24.
 
 Fuze Tea 600 ml (durazno, limón y frutos rojos)
 id: d2
@@ -1519,7 +1519,7 @@ precio: 310.88 pesos
 presentación: Paquete de 12 piezas
 foto: fuze-tea
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fuze Tea de 600 ml en sabores durazno, limón y frutos rojos, paquete de 12.
 
 Gatorade 600 ml
 id: d5
@@ -1527,7 +1527,7 @@ precio: 143.84 pesos
 presentación: Paquete de 6 piezas · sabor surtido
 foto: gatorade
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Gatorade de 600 ml en sabor surtido, paquete de 6.
 
 Jugo Jumex en lata 355 ml
 id: d6
@@ -1535,7 +1535,7 @@ precio: 342.2 pesos
 presentación: Paquete de 24 latas · mix de sabores
 foto: jumex
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Jugo Jumex en lata de 355 ml, mix de sabores, paquete de 24.
 
 Refresco Coca-Cola regular en lata
 id: d7
@@ -1543,7 +1543,7 @@ precio: 572.46 pesos
 presentación: Paquete de 24 latas
 foto: coca-lata
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Coca-Cola regular en lata, paquete de 24.
 
 Refresco Coca-Cola regular 600 ml
 id: d8
@@ -1551,7 +1551,7 @@ precio: 531.3 pesos
 presentación: Paquete de 24 piezas
 foto: coca-600
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Coca-Cola regular de 600 ml, paquete de 24.
 
 Refresco Coca-Cola sin azúcar (Zero)
 id: d9
@@ -1559,7 +1559,7 @@ precio: 330.6 pesos
 presentación: Paquete de 12 piezas
 foto: coca-zero
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Coca-Cola sin azúcar (Zero), paquete de 12.
 
 ==================== Limpieza ====================
 
@@ -1569,7 +1569,7 @@ precio: 51 pesos
 presentación: Pieza · color surtido
 foto: escoba
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Escoba tipo abanico de mango largo, para barrer patios, cocinas y negocios.
 
 Fibra negra 3M
 id: l3
@@ -1577,7 +1577,7 @@ precio: 26.5 pesos
 presentación: Pieza
 foto: fibra-negra
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fibra negra 3M de uso pesado, para planchas, parrillas y comales.
 
 Fibra verde 3M P96
 id: l4
@@ -1586,7 +1586,7 @@ mínimo: 3 piezas
 presentación: Pieza
 foto: fibra-verde
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fibra verde 3M P96 de uso general, para trastes y superficies de cocina.
 
 Fibra blanca 3M P66
 id: l14
@@ -1602,7 +1602,7 @@ precio: 15 pesos
 presentación: Pieza
 foto: fibra-esponja
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fibra verde con esponja, para lavar trastes de todos los días.
 
 Recogedor de bote
 id: l15
@@ -1617,7 +1617,7 @@ precio: 415.5 pesos
 presentación: Porrón de 20 litros
 foto: jabon-trastes-arba
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Jabón líquido para trastes en porrón de 20 litros, rendidor para cocinas de negocio.
 
 Microdyn para verduras
 id: l7
@@ -1625,7 +1625,7 @@ precio: 161 pesos
 presentación: Botella de 500 ml
 foto: microdyn
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Microdyn desinfectante para frutas y verduras, botella de 500 ml.
 
 Pastilla para WC Wiese
 id: l8
@@ -1642,7 +1642,7 @@ precio: 237.51 pesos
 presentación: Pieza
 foto: cloro-arba
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cloro Génesis en porrón, para desinfectar pisos, baños y cocinas.
 
 Porrón de desengrasante rojo
 id: l10
@@ -1650,7 +1650,7 @@ precio: 355 pesos
 presentación: Pieza
 foto: desengrasante-rojo-arba
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Desengrasante rojo en porrón, para quitar grasa de planchas, campanas y pisos de cocina.
 
 Porrón de lavanda Génesis
 id: l11
@@ -1658,7 +1658,7 @@ precio: 246.5 pesos
 presentación: Pieza
 foto: lavanda-multiusos
 dibujo: botella
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Limpiador de lavanda Génesis en porrón, para pisos y superficies con aroma fresco.
 
 Shampoo Herbal Essences
 id: l12
@@ -1674,7 +1674,7 @@ precio: 38 pesos
 presentación: Pieza
 foto: magitel
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Tela multiusos Magitel, absorbente y lavable, para limpiar y secar.
 
 ==================== Botanas ====================
 
@@ -1684,7 +1684,7 @@ precio: 482.34 pesos
 presentación: Caja con 35 piezas surtidas · 1.46 kg
 foto: sabrisurtido
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Botana Sabrisurtido, caja con 35 bolsitas surtidas para tu tienda.
 
 Cacahuate japonés
 id: b3
@@ -1692,7 +1692,7 @@ precio: 106.5 pesos
 presentación: Bolsa de 1 kg
 foto: cacahuate-japones
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cacahuate japonés de 1 kg, crujiente, para botanear o vender a granel.
 
 Arándano deshidratado
 id: b4
@@ -1700,7 +1700,7 @@ precio: 170.5 pesos
 presentación: Bolsa de 1 kg
 foto: arandano
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Arándano deshidratado de 1 kg, para botanas, ensaladas y repostería.
 
 Papa natural 500 g
 id: b5
@@ -1708,7 +1708,7 @@ precio: 102.5 pesos
 presentación: Bolsa de 500 g
 foto: papa-natural
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Papa natural de 500 g, para preparar con salsa y limón.
 
 Galletas surtidas Paketines
 id: b9
@@ -1716,13 +1716,13 @@ precio: 206.88 pesos
 presentación: Caja con 14 paketines · 1 kg
 foto: paketines
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Galletas surtidas Paketines, caja con 14 paquetitos.
 
 Fritura de harina 800 g
 id: lb1
 presentación: Bolsa de 800 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fritura de harina de 800 g en varias formas, natural o enchilada. Lista para preparar.
 opción: Minicuadro | 54.52 pesos
 opción: Rotini | 54.52 pesos
 opción: Anillo | 54.52 pesos
@@ -1738,7 +1738,7 @@ Fritura de harina 2.5 kg
 id: lb2
 presentación: Bolsa de 2.5 kg
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fritura de harina de 2.5 kg en varias formas, natural o enchilada. Ideal para negocio.
 opción: Minicuadro | 160.09 pesos
 opción: Rotini | 160.09 pesos
 opción: Anillo | 160.09 pesos
@@ -1754,34 +1754,34 @@ id: lb3
 precio: 51.54 pesos
 presentación: Paquete con 18 piezas
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fritura 10 x 10, paquete con 18 piezas.
 
 Fritura de harina Balón
 id: lb4
 precio: 28.44 pesos
 presentación: Bolsa de 350 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Fritura de harina tipo balón de 350 g.
 
 Hojuela de papa 600 g
 id: lb5
 precio: 105.44 pesos
 presentación: Bolsa de 600 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Hojuela de papa de 600 g, crujiente y lista para botanear.
 
 Palomitas 600 g
 id: lb6
 precio: 40.37 pesos
 presentación: Bolsa de 600 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Palomitas de 600 g, listas para botanear o vender.
 
 Chetos 700 g
 id: lb7
 presentación: Bolsa de 700 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chetos de 700 g, naturales o enchilados.
 opción: Natural | 73.15 pesos
 opción: Enchilado | 73.15 pesos
 
@@ -1790,7 +1790,7 @@ id: lb8
 presentación: Bolsa de 3 kg
 foto: chetotis-3kg
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chetos Totis de 3 kg, ideal para vender a granel.
 opción: Chetotis | 251.98 pesos | foto chetotis-3kg
 opción: Cheto Hot Explosion | 251.98 pesos
 
@@ -1799,14 +1799,14 @@ id: lb9
 precio: 446.82 pesos
 presentación: Caja con 10 bolsas de 400 g
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chetos Totis de 400 g, caja con 10 bolsas.
 
 Donitas Totis (bulto)
 id: lb10
 presentación: Bulto 10/25 piezas
 foto: donitas-totis
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Donitas Totis por bulto, sabor sal y limón o con chile.
 opción: Sal y limón | 533.75 pesos | foto donitas-totis
 opción: Con chile | 533.75 pesos | foto donitas-chile
 
@@ -1815,7 +1815,7 @@ id: lb11
 presentación: Caja con 40 bolsas de 55 g
 foto: donitas-totis
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Donitas Totis de 55 g, caja con 40 bolsas.
 opción: Sal y limón | 506.47 pesos | foto donitas-totis
 opción: Chile | 506.47 pesos | foto donitas-chile
 
@@ -1824,7 +1824,7 @@ id: lb12
 presentación: 8 tiras de 10 bolsas de 40 g
 foto: toptops-salsanegra
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Top Tops Totis de 40 g en tiras para exhibir: salsa negra, hot chili o nacho.
 opción: Salsa negra | 546.58 pesos | foto toptops-salsanegra
 opción: Hot chili | 546.58 pesos
 opción: Nacho | 546.58 pesos | foto toptops-nacho
@@ -1834,7 +1834,7 @@ id: lb13
 presentación: Caja con 30 bolsas de 40 g
 foto: toptops-nacho
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Top Tops Totis de 40 g, caja con 30 bolsas.
 opción: Hot chili | 208.3 pesos
 opción: Nacho | 208.3 pesos | foto toptops-nacho
 opción: Salsa negra | 208.3 pesos | foto toptops-salsanegra
@@ -1844,7 +1844,7 @@ id: lb14
 presentación: Caja con 40 bolsas de 90 g
 foto: papitas-sal
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totis Papitas de 90 g, caja con 40 bolsas en varios sabores.
 opción: Sal | 736.02 pesos | foto papitas-sal
 opción: Hot | 736.02 pesos | foto papitas-hot
 opción: Adobo | 736.02 pesos
@@ -1857,14 +1857,14 @@ precio: 220.11 pesos
 presentación: Caja con 3 bolsas de 1 kg
 foto: totopos-1kg
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totopos Totis de 1 kg, caja con 3 bolsas. Para nachos y chilaquiles.
 
 Totis Totopos 120 g
 id: lb16
 presentación: Caja con 40 bolsas de 120 g
 foto: totopos-120
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totopos Totis de 120 g, caja con 40 bolsas.
 opción: Hot chili | 545.79 pesos
 opción: Nacho | 545.79 pesos
 opción: Salsa negra | 545.79 pesos
@@ -1875,7 +1875,7 @@ precio: 545.79 pesos
 presentación: Caja con 40 bolsas de 100 g
 foto: twisters
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totis Twisters de queso y chile de 100 g, caja con 40 bolsas.
 
 Totis Bolings queso y chile 80 g
 id: lb18
@@ -1883,7 +1883,7 @@ precio: 506.48 pesos
 presentación: Caja con 40 bolsas de 80 g
 foto: bolings
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totis Bolings de queso y chile de 80 g, caja con 40 bolsas.
 
 Totis Tubix chile 37 g
 id: lb19
@@ -1891,7 +1891,7 @@ precio: 555.9 pesos
 presentación: 5 tiras de 25 bolsas de 37 g
 foto: tubix
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Totis Tubix con chile de 37 g, en tiras para exhibir.
 
 Cacahuate japonés Nipon (tiras)
 id: lb20
@@ -1899,14 +1899,14 @@ precio: 1258.27 pesos
 presentación: 12 tiras de 20 piezas
 foto: nipon
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Cacahuate japonés Nipón en tiras para exhibir en tu tienda.
 
 Kiubo-re Mix Gonac 42 g
 id: lb21
 presentación: 8 tiras de 10 bolsas de 42 g
 foto: kiubo-remix
 dibujo: papas
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Kiubo-re Mix Gonac de 42 g en tiras para exhibir.
 opción: Mix | 448.75 pesos
 opción: Queso | 448.75 pesos | foto kiubo-remix
 opción: Explosión | 448.75 pesos
@@ -1915,7 +1915,7 @@ Galletas Marianitas
 id: lb22
 presentación: Caja con 20 piezas
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Galletas Marianitas, caja con 20 piezas en varios sabores.
 opción: Nuez | 270.53 pesos
 opción: Chocolate | 270.53 pesos
 opción: Coco | 270.53 pesos
@@ -1927,7 +1927,7 @@ Galletas 70 g
 id: lb23
 presentación: Caja con 20 paquetes de 70 g
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Galletas de 70 g, caja con 20 paquetes en varios sabores.
 opción: Avellana | 268.31 pesos
 opción: Choco vainilla | 268.31 pesos
 opción: Mantequilla | 268.31 pesos
@@ -1939,7 +1939,7 @@ precio: 531.39 pesos
 presentación: Caja con 12 piezas de 200 g
 foto: nutret
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Barra rellena de fresa Nutret de 200 g, caja con 12 piezas.
 
 Waffer Natta 62 g
 id: lb25
@@ -1947,13 +1947,13 @@ precio: 288.44 pesos
 presentación: Caja con 16 piezas de 62 g
 foto: waffer-natta
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Waffer Natta de 62 g, caja con 16 piezas.
 
 Chicharrón de harina para freír (La Moderna)
 id: lb26
 presentación: Bulto a granel
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chicharrón de harina La Moderna para freír, a granel en varias figuras. Rinde mucho para negocio.
 opción: Chicharrón #100 · 15 kg | 681.87 pesos
 opción: Chicharrón #25 · 20 kg | 777.34 pesos
 opción: Chicharrín · 20 kg | 777.34 pesos
@@ -1966,7 +1966,7 @@ id: lb27
 presentación: Bulto a granel
 foto: palmex-surtido
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Pasta para fritura Palmex para freír, a granel: hojuela, parrilla, rueda, zarape y más.
 opción: Hojuela de papa · 6 kg | 1034.85 pesos | foto hojuela-papa
 opción: Parrilla · 15 kg | 793.88 pesos | foto parrilla
 opción: Mini rueda · 15 kg | 793.88 pesos | foto minirueda
@@ -1982,7 +1982,7 @@ precio: 148.35 pesos
 presentación: Bolsa con 25 paletas de 24 g
 foto: rockaleta
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Paleta de chile Rockaleta, bolsa con 25 piezas.
 
 Paletas surtidas Vero Mix Banda Fuego
 id: b11
@@ -1990,7 +1990,7 @@ precio: 142.6 pesos
 presentación: Bolsa con 65 piezas · 940 g
 foto: mix-fuego
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Paletas surtidas Vero Mix Banda Fuego, bolsa con 65 piezas.
 
 Bubulubu Mini Ricolino
 id: b12
@@ -2006,7 +2006,7 @@ precio: 111.64 pesos
 presentación: Caja con 24 piezas de 140 ml
 foto: chechi-fresco
 dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
+descripción: Chechi Fresco Gonac de 140 ml, caja con 24 piezas.
 
 ==================== Repostería ====================
 
