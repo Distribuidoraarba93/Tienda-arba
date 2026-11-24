@@ -1337,6 +1337,7 @@ id: a57
 precio: 79.5 pesos
 presentación: 6 litros
 dibujo: botella
+foto: vinagre-6l
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
 Frijol Saltillo
