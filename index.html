@@ -315,6 +315,8 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
  body.v3 .nfot{font-size:9.5px;padding:2px 5px;top:5px;right:5px}
 }
 .s7{background:radial-gradient(circle at 82% 50%,#1d4ed855 0,#1d4ed800 55%),linear-gradient(135deg,#0b1525,#10224a);min-height:210px;text-decoration:none;color:#fff}
+.slide[hidden]{display:none!important}
+.s8{background:linear-gradient(90deg,#0b1430 0,#0b1430f2 40%,#0b143000 62%),url(img/promo-reno.webp) right 0 top 25%/auto 112% no-repeat,#0b1430;min-height:210px}
 .slide .negocios{max-width:250px}
 .slide .fiesta{width:100%;max-width:210px;height:auto;justify-self:center;align-self:center;filter:drop-shadow(0 6px 12px #0006)}
 /* Mi pedido estilo DiDi */
@@ -395,6 +397,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 </div></section>
 <section class="promo" aria-label="Promociones">
   <div class="slides" id="slides">
+    <button class="slide s8" data-cat="Tortillas" data-tema="navidad" hidden><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#b3261e">🎄 Temporada navideña</span><h2>¡Que no se roben<br><span>tu Navidad!</span></h2><p>Pide tus tortillas a tiempo para la cena. Se preparan al momento con un día de anticipación.</p><span class="pill">Pedir tortillas →</span></div></button>
     <button class="slide s4" data-cat="Tortillas"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#0b6b35">🔥 Recién hechas</span><h2>Tortillería<br><span>Los 2 Carnales</span></h2><p>Tortillas de harina desde taco hasta montado jumbo.</p><span class="pill">Ver tortillas →</span></div></button>
     <button class="slide s5" data-open="r2"><div><img class="sello2c" src="img/logo-2c.webp" alt="Los 2 Carnales"><span class="chip" style="background:#b3261e">🎄 Edición Navidad</span><h2>Arreglo<br><span>Navideño</span></h2><p>Pay casero, buñuelos, Kisses y pretzels con chocolate en caja de regalo.</p><span class="pill">Lo quiero · 170 pesos</span></div></button>
     <button class="slide s1" data-go="grid"><div><h2>Si no te lo mejoramos,<br><span>te lo igualamos</span></h2><p>¿Tienes un mejor precio? Enséñanoslo con confianza.</p><span class="pill">Ver catálogo →</span></div><img class="round" src="img/logo.webp" alt=""></button>
@@ -1278,10 +1281,10 @@ window.dispatchEvent(new Event('arba-fb'));
 <script>
 /* ===== DISEÑO NUEVO: carrusel, barra de abajo ===== */
 (function(){
-  const sl=document.getElementById('slides'),dots=[...document.querySelectorAll('#dots i')];let i=0,tm;
-  const marca=()=>{const n=Math.round(sl.scrollLeft/sl.clientWidth);dots.forEach((d,k)=>d.classList.toggle('on',k===n));i=n};
+  const sl=document.getElementById('slides'),D=()=>[...document.querySelectorAll('#dots i')];let i=0,tm;
+  const marca=()=>{const n=Math.round(sl.scrollLeft/sl.clientWidth);D().forEach((d,k)=>d.classList.toggle('on',k===n));i=n};
   sl.addEventListener('scroll',()=>{clearTimeout(sl._t);sl._t=setTimeout(marca,80)},{passive:true});
-  const auto=()=>{clearInterval(tm);tm=setInterval(()=>{if(document.hidden)return;i=(i+1)%dots.length;sl.scrollTo({left:i*sl.clientWidth,behavior:'smooth'})},5000)};
+  const auto=()=>{clearInterval(tm);tm=setInterval(()=>{if(document.hidden)return;i=(i+1)%D().length;sl.scrollTo({left:i*sl.clientWidth,behavior:'smooth'})},5000)};
   sl.addEventListener('touchstart',auto,{passive:true});auto();
   document.querySelectorAll('[data-go=grid]').forEach(b=>b.addEventListener('click',()=>document.getElementById('grid').scrollIntoView({behavior:'smooth'})));
   document.querySelectorAll('.slide[data-cat]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>document.getElementById('title').scrollIntoView({behavior:'smooth',block:'start'}),50)));
@@ -1469,6 +1472,7 @@ const q=new URLSearchParams(location.search).get('tema');
 const hoy=new Date(),md=(hoy.getMonth()+1)*100+hoy.getDate();
 const T=q?TEMAS.find(t=>t.id===q||t.id+t.de[1]===q):TEMAS.find(t=>md>=t.de[0]*100+t.de[1]&&md<=t.a[0]*100+t.a[1]);
 window.ARBA_TEMA=T?T.id:'';
+document.querySelectorAll('[data-tema]').forEach(e=>{if(T&&e.dataset.tema===T.id){e.hidden=false;const ds=document.getElementById('dots');if(ds)ds.insertAdjacentHTML('beforeend','<i></i>')}});
 if(!T)return;
 document.body.classList.add('tema-'+T.id);
 const st=document.getElementById('temaStrip');st.textContent=T.msg;st.style.setProperty('--tc',T.col);st.hidden=false;
