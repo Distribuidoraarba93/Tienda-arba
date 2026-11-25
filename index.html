@@ -464,6 +464,37 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 #repaW .rfc label{display:grid;gap:4px;font-size:13px;font-weight:600}#repaW .rfc input,#repaW .rfc textarea{padding:10px;border-radius:10px;border:1px solid #ffffff30;background:#0b1220;color:#fff;font:15px Poppins,system-ui}
 #repaW #rQ{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #ffffff30;background:#152036;color:#fff;font:15px Poppins,system-ui;margin-bottom:6px}
 #repaW .rpr{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid #ffffff10;font-size:14px}#repaW .rpr b{color:#f4b400}
+
+/* ===== Estilo Uber: barra flotante, etiquetas en categorías y tarjetas de promoción ===== */
+@media(max-width:760px){
+  .bnav{left:10px!important;right:10px!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;padding:6px!important;border:1px solid #ffffff1f!important;border-radius:30px!important;background:#0b1525ee!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 10px 30px #000c,0 0 0 1px #7ed95733}
+  .bnav button,.bnav a{min-height:50px!important;border-radius:22px;padding:5px 0!important;transition:background .2s,color .2s}
+  .bnav .on{background:#f4b40022;color:#f4b400}
+  .bnav .bi{font-size:21px!important}
+  .bnav b{top:0!important}
+  body{padding-bottom:92px!important}
+  .toast{bottom:96px!important}
+  .cbar{bottom:calc(84px + env(safe-area-inset-bottom))!important}
+  .ab-btn{bottom:calc(92px + env(safe-area-inset-bottom))!important}
+  body.hascbar .ab-btn{bottom:calc(152px + env(safe-area-inset-bottom))!important}
+  body.hascbar #toast{bottom:calc(160px + env(safe-area-inset-bottom))!important}
+}
+.cats button{position:relative}
+.cats .ctag{position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:1;background:#e53935;color:#fff;font-size:10.5px;font-weight:800;line-height:1;padding:4px 7px;border-radius:99px;white-space:nowrap;box-shadow:0 2px 6px #0007;border:2px solid #0b1525}
+.cats div{padding-top:12px!important}
+.promos{margin:14px 0 4px}
+.promos h2{max-width:1240px;margin:0 auto 8px;padding:0 max(3vw,12px);display:flex;align-items:center;gap:8px;font:800 19px Poppins,sans-serif;color:#fff}
+.promos h2 i{font-style:normal;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1.5px solid #ffffff55;font-size:14px}
+.prow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px max(3vw,12px) 10px;scrollbar-width:none;max-width:1240px;margin:auto}
+.prow::-webkit-scrollbar{display:none}
+.pcard{flex:none;width:min(78vw,300px);scroll-snap-align:start;border:0;padding:0;text-align:left;background:none;color:#e6eef8;font-family:Poppins,sans-serif;cursor:pointer}
+.pcard .pim{position:relative;height:135px;border-radius:18px;overflow:hidden;background:#f4f5f1;display:grid;place-items:center}
+.pcard .pim img,.pcard .pim svg{width:100%;height:100%;object-fit:cover}
+.pcard .pchip{position:absolute;top:10px;left:10px;background:#e53935;color:#fff;font-size:12.5px;font-weight:800;padding:5px 10px;border-radius:8px;box-shadow:0 3px 8px #0006}
+.pcard .pprice{position:absolute;right:10px;bottom:10px;background:#f4b400;color:#152016;font-weight:800;font-size:15px;padding:6px 12px;border-radius:999px;box-shadow:0 4px 10px #0007}
+.pcard .pprice small{font-size:11px;font-weight:700}
+.pcard b{display:block;margin:8px 2px 0;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard span.pu{display:block;margin:2px 2px 0;font-size:12.5px;color:#9fb0c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -561,6 +592,7 @@ header .bar{position:relative}
 <section class="promise"><div><p><b>¿No lo ves en el catálogo?</b> Pregunta por él y te lo conseguimos.</p><p><b>Precios con IVA incluido.</b> Entregamos en Chihuahua o pasas a recoger.</p><p><b>Pedidos desde 500 pesos:</b> 35% de anticipo. <a href="#condiciones" style="color:#fff">Ver condiciones</a></p><a class="wa" href="https://wa.me/526141077999" target="_blank" rel="noopener">Contáctanos por WhatsApp · 614 107 7999</a></div></section>
 
 <main>
+  <section class="promos" id="promos" hidden><h2>🔥 Lo más pedido <i data-pmas role="button" aria-label="Ver más">›</i></h2><div class="prow" id="prow"></div></section>
   <div class="rep" id="rep" hidden></div>
   <div class="head"><h2 id="title">Todos los productos</h2><span class="hr"><span id="n"></span><span class="vista" role="group" aria-label="Vista"><button data-vista="2" aria-label="Vista grande">▦</button><button data-vista="3" aria-label="Vista compacta">▦▦</button></span></span></div>
   <div class="thead" id="tortHead" hidden><img src="img/logo-2c.webp" alt="Tortillería Los 2 Carnales"><div><b>Tortillería Los 2 Carnales</b><span>Tortillas de harina recién hechas aquí en Chihuahua, normales y sabor mantequilla.</span><span class="tg">🔥 Recién hechas · 💰 Mayoreo desde 5 paquetes · 🌯 Burrito, burro jumbo, quesibirria, gordita, integral, montado, taco y buñuelo</span><button class="calcbtn" data-calc>🧮 ¿Haces fiesta? Calcula tus tortillas</button></div></div>
@@ -902,14 +934,23 @@ const T_ANT='Se prepara al momento para ti, no hay en existencia. Pídelo con un
 const T_HOY='Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.';
 const SELLO_2C=["Tortillas","Combos","Repostería"];
 const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁'};
-function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}"><span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
+const CTAG=c=>{if(c==='Combos')return 'Ahorra';if(c==='Todos')return '';const t=P.find(p=>p.cat===c&&p.tag&&!agot(p.id));return t?t.tag:''};
+function renderCats(){$('#cats').innerHTML=CATS.map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}">${CTAG(c)?`<span class="ctag">${CTAG(c)}</span>`:''}<span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
 function repUlt(){try{const u=JSON.parse(localStorage.getItem('arba-ultimo')||'null');if(!u||!u.c)return null;const ks=Object.keys(u.c).filter(k=>item(k));return ks.length?{...u,ks}:null}catch(e){return null}}
 function repPinta(ver){const box=$('#rep');if(!box)return;const u=ver&&repUlt();if(!u){box.hidden=true;return}
   const n=u.ks.reduce((a,k)=>a+u.c[k],0),tot=u.ks.reduce((a,k)=>{const it=item(k);return a+(it.pr==null?0:upI(it,u.c[k])*u.c[k])},0);
   const nom=u.ks.slice(0,3).map(k=>{const it=item(k);return u.c[k]+' × '+it.p.n+(it.vi!=null?' ('+it.p.v[it.vi].n+')':'')}).join(' · ')+(u.ks.length>3?' · y '+(u.ks.length-3)+' más':'');
   const d=Math.round((Date.now()-u.f)/864e5);
   box.innerHTML=`<div class="rt">🔁</div><div class="rx"><b>¿Lo mismo de la vez pasada?</b><span>${esc(nom)}</span><small>${n} artículo${n>1?'s':''} · aprox. ${fmt(Math.round(tot*100)/100)} · ${d<1?'hoy':d===1?'hace 1 día':'hace '+d+' días'}</small></div><button class="add" data-repetir>Repetir pedido</button>`;box.hidden=false}
+document.addEventListener('click',e=>{if(e.target.closest('[data-pmas]')){const r=document.getElementById('prow');r.scrollBy({left:r.clientWidth*.8,behavior:'smooth'})}});
+function renderPromos(){const box=$('#promos');if(!box)return;const ver=cat==='Todos'&&!q;box.hidden=!ver;if(!ver)return;
+  const pri=p=>p.tag?0:p.cat==='Combos'?1:(p.my||(p.v&&p.v.some(o=>o.my)))?2:3;
+  const L=P.filter(p=>p.img&&!agot(p.id)&&minPr(p)!=null&&pri(p)<3).sort((a,b)=>pri(a)-pri(b)).slice(0,8);
+  if(!L.length){box.hidden=true;return}
+  $('#prow').innerHTML=L.map(p=>{const m=minPr(p),ch=p.tag||(p.cat==='Combos'?'🎁 Combo':'💰 Mayoreo');
+    return `<button class="pcard" data-open="${p.id}"><div class="pim">${pic(p)}<span class="pchip">${ch}</span><span class="pprice">${p.v?'<small>desde </small>':''}${fmt(m)}</span></div><b>${p.n}</b><span class="pu">${p.v?p.v.length+' opciones · ':''}${p.u}</span></button>`}).join('')}
 function renderGrid(){
+  renderPromos();
   const list=[...P].sort((a,b)=>{const r=x=>{const i=["Tortillas","Repostería","Combos"].indexOf(x.cat);return i<0?9:i};return r(a)-r(b)}).filter(p=>(cat==="Todos"||p.cat===cat)&&(!q||norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' ')+' '+((window.ARBA_ENX||{})[p.id]||'')).includes(norm(q))));
   $('#title').textContent=q?`Resultados para “${q}”`:(cat==="Todos"?"Todos los productos":cat);
   $('#banner').hidden=!(cat==="Tortillas"&&!q);repPinta(cat==="Todos"&&!q);$('#tortHead').hidden=!(cat==="Tortillas"&&!q);
@@ -1960,7 +2001,9 @@ window.addEventListener('arba-auth',iniciar);window.addEventListener('arba-fb',i
   document.querySelectorAll('.slide[data-cat]').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>document.getElementById('title').scrollIntoView({behavior:'smooth',block:'start'}),50)));
   const cnt=document.getElementById('count'),bc=document.getElementById('bnCount');
   const sync=()=>{bc.textContent=cnt.textContent;bc.hidden=cnt.textContent==='0'};sync();new MutationObserver(sync).observe(cnt,{childList:true,characterData:true,subtree:true});
-  document.querySelector('.bnav').addEventListener('click',e=>{const b=e.target.closest('[data-bn]');if(!b)return;const k=b.dataset.bn;
+  const bnOn=k=>document.querySelectorAll('.bnav [data-bn]').forEach(x=>x.classList.toggle('on',x.dataset.bn===k));
+  addEventListener('scroll',()=>{if(scrollY<60)bnOn('inicio')},{passive:true});
+  document.querySelector('.bnav').addEventListener('click',e=>{const b=e.target.closest('[data-bn]');if(!b)return;const k=b.dataset.bn;bnOn(k);
     if(k==='inicio')window.scrollTo({top:0,behavior:'smooth'});
     else if(k==='cats')document.querySelector('.cats').scrollIntoView({behavior:'smooth',block:'center'});
     else if(k==='carrito')document.getElementById('openCart').click();
@@ -2260,7 +2303,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=5';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=6';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
