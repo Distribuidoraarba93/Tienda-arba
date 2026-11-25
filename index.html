@@ -1405,7 +1405,7 @@ let yaRec=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventL
 /* Firebase de Distribuidora ARBA: guarda pedidos y estatus en vivo. Solo el correo del negocio puede cambiarlos (ver reglas en Firestore). */
 const BASE='https://www.gstatic.com/firebasejs/10.12.2/';
 /* Llave pública de notificaciones (Firebase → Configuración → Cloud Messaging → Certificados push web) */
-const VAPID='';
+const VAPID='BAscqtnxiJoNkFMiy5FtmlxYLCtAMRo3pdmR9Cr6t6AP7ko2jz2_tP6LT08bBUbDaYNIc2lxq8yRQVM0ZkWehZs';
 const ADMIN='arturo.arba93@gmail.com';
 try{
 const [{initializeApp},fs,au]=await Promise.all([import(BASE+'firebase-app.js'),import(BASE+'firebase-firestore.js'),import(BASE+'firebase-auth.js')]);
