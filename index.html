@@ -404,6 +404,7 @@ body.dlock #panel{display:block!important;position:fixed;inset:0;background:#0b1
 body.dlock #panel .box{max-width:640px;width:100%;height:100%;max-height:none;margin:0 auto;border-radius:0;border:0;box-shadow:none}
 body.dlock #panel [data-closep],body.dlock #veil{display:none!important}
 body.dueno #panel h3:first-of-type::before{content:"🔐 ARBA Dueño · ";color:#f4b400}
+body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display:none}
 #duBar{position:sticky;top:0;z-index:61;background:linear-gradient(90deg,#0b1220,#1a2540);border-bottom:2px solid #f4b400;padding:8px 10px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 #duBar::-webkit-scrollbar{display:none}
 .invq{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:inherit;margin:8px 0}
@@ -2221,10 +2222,12 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba">📋 Pedidos</a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
+  var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
+   if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
    location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
