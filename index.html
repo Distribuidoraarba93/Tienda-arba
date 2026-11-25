@@ -495,6 +495,18 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 .pcard .pprice small{font-size:11px;font-weight:700}
 .pcard b{display:block;margin:8px 2px 0;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcard span.pu{display:block;margin:2px 2px 0;font-size:12.5px;color:#9fb0c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.progbox{display:grid;gap:8px;padding:12px;border-radius:12px;background:#4f8cff14;border:1px solid #4f8cff66;margin:-2px 0 6px}
+.progbox input[type=date]{min-height:46px;font-size:16px;color-scheme:dark}
+#pgTxt b{color:#f4b400}
+.prgc{display:grid;gap:6px;padding:12px;border:1px solid #4f8cff88;border-radius:12px;margin:8px 0;background:#4f8cff12}
+.prgc.ok{border-color:#7ed95788;background:#7ed95710}
+.prgc .pd{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.prgc .pd b{font-size:16px}.prgc .pd em{font-style:normal;font-size:12px;font-weight:800;padding:3px 9px;border-radius:99px;background:#4f8cff;color:#fff;white-space:nowrap}
+.prgc.ok .pd em{background:#2e8b2e}.prgc.hoy .pd em{background:#e53935}
+.prgc small{opacity:.85;font-size:12.5px}.prgc .rb{display:grid;grid-template-columns:1fr auto;gap:8px}.prgc .rb button{padding:10px 12px;border-radius:10px}
+@keyframes parpaAz{0%,100%{box-shadow:0 0 0 0 #4f8cff00}50%{box-shadow:0 0 0 4px #4f8cffaa;background:#4f8cff44}}
+#duBar .parpa-az{animation:parpaAz 1.2s infinite}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -588,7 +600,7 @@ header .bar{position:relative}
 </section>
 <div class="hist" id="hist" aria-label="Clips"></div>
 <nav class="cats" aria-label="Categorías"><div id="cats"></div></nav>
-<div class="trust"><span>🕒 Atención 24 horas</span><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span></div>
+<div class="trust"><span>🕒 Atención 24 horas</span><span>✅ Precios con IVA</span><span>🚚 Entregamos en Chihuahua</span><span>🔎 ¿No lo ves? Te lo conseguimos</span><span>💳 Anticipo 35% desde 500 pesos</span><span>📅 Programa tu pedido</span></div>
 <section class="promise"><div><p><b>¿No lo ves en el catálogo?</b> Pregunta por él y te lo conseguimos.</p><p><b>Precios con IVA incluido.</b> Entregamos en Chihuahua o pasas a recoger.</p><p><b>Pedidos desde 500 pesos:</b> 35% de anticipo. <a href="#condiciones" style="color:#fff">Ver condiciones</a></p><a class="wa" href="https://wa.me/526141077999" target="_blank" rel="noopener">Contáctanos por WhatsApp · 614 107 7999</a></div></section>
 
 <main>
@@ -636,6 +648,13 @@ header .bar{position:relative}
     <button class="sec" id="clear" data-clear>Vaciar carrito</button>
   </div>
   <form class="df" id="form" hidden>
+    <span class="lbl">¿Para cuándo lo quieres?</span>
+    <div class="seg" role="group" aria-label="Para cuándo" id="cuSeg"><button type="button" class="on" data-cu="ya">Lo antes posible</button><button type="button" data-cu="prog">📅 Programar pedido</button></div>
+    <div id="progBox" class="progbox" hidden>
+      <label>Elige el día<input id="pgD" type="date"></label>
+      <div class="seg seg3" role="group" aria-label="Horario" id="pfSeg"><button type="button" class="on" data-pf="6 a 9 am">6 a 9 am</button><button type="button" data-pf="9 a 12 pm">9 a 12 pm</button><button type="button" data-pf="12 a 3 pm">12 a 3 pm</button></div>
+      <p class="note" id="pgTxt">📅 Te escribimos antes de prepararlo para confirmar tu pedido. Entregamos de lunes a sábado.</p>
+    </div>
     <label>Tu nombre<input id="nom" required autocomplete="name"></label>
     <label>Tu WhatsApp (10 dígitos)<input id="tel" type="tel" inputmode="numeric" required pattern="[0-9 ]{10,14}" placeholder="614 123 4567" autocomplete="tel"></label>
     <span class="lbl">Entrega</span>
@@ -1068,6 +1087,16 @@ $('#openCart').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim();renderGrid()});
 $('#next').onclick=()=>{pideFolio();const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
+/* Pedido programado: el cliente elige día y horario */
+let cuando='ya',franja='6 a 9 am';
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const pgBonito=v=>{if(!v)return '';const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'})};
+function pgLimites(){const h=new Date(),mi=new Date(h);mi.setDate(h.getDate()+(h.getHours()>=20?2:1));if(mi.getDay()===0)mi.setDate(mi.getDate()+1);const ma=new Date(h);ma.setDate(h.getDate()+90);const i=$('#pgD');i.min=ymd(mi);i.max=ymd(ma);if(!i.value||i.value<i.min)i.value=i.min;pgPinta()}
+function pgPinta(){const v=$('#pgD').value;$('#pgTxt').innerHTML=v?`📅 Para el <b>${pgBonito(v)}</b>, de ${franja}. Te escribimos antes de prepararlo para confirmar tu pedido.`:'📅 Elige el día. Entregamos de lunes a sábado.'}
+document.addEventListener('click',e=>{const c=e.target.closest('[data-cu]');if(c){cuando=c.dataset.cu;document.querySelectorAll('[data-cu]').forEach(b=>b.classList.toggle('on',b===c));$('#progBox').hidden=cuando!=='prog';$('#pgD').required=cuando==='prog';if(cuando==='prog')pgLimites();return}
+  const f=e.target.closest('[data-pf]');if(f){franja=f.dataset.pf;document.querySelectorAll('[data-pf]').forEach(b=>b.classList.toggle('on',b===f));pgPinta()}});
+$('#pgD').addEventListener('change',e=>{const v=e.target.value;if(v){const [y,m,d]=v.split('-').map(Number);if(new Date(y,m-1,d).getDay()===0){toast('Los domingos no entregamos. Elige otro día 🙏');const x=new Date(y,m-1,d+1);e.target.value=ymd(x)}}pgPinta()});
+window.ARBA_PROG=()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()};
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
@@ -1084,20 +1113,22 @@ $('#form').addEventListener('submit',e=>{
   const ks=Object.keys(cart).filter(k=>cart[k]>0&&item(k));let tot=0,quote=false;
   {const ag=ks.filter(agot);if(ag.length){toast('😔 Se agotó: '+ag.map(k=>item(k).name).join(', ')+'. Quítalo del carrito para seguir.');$('#back').click();return}}
   if(entrega==='Entrega a domicilio'&&faltaMin()){toast('Te faltan '+fmt(faltaMin())+' para envío a domicilio, o cambia a paso a recoger o punto medio');$('#minBox').scrollIntoView({behavior:'smooth',block:'center'});return}
+  const pg=cuando==='prog'?$('#pgD').value:'';
+  if(cuando==='prog'&&(!pg||pg<$('#pgD').min)){toast('Elige un día para tu pedido programado');$('#pgD').focus();return}
   const kk=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');const d=new Date();
   const ped=typeof FOLIO==='number'?'ARBA-'+FOLIO:`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;FOLIO=null;
   const tel=digits($('#tel').value),nom=$('#nom').value.trim(),dir=$('#dir').value.trim(),pmv=$('#pm').value.trim(),nota=$('#nota').value.trim();
   const fa=$('#fac').checked?`RFC ${$('#rfc').value.trim().toUpperCase()} · ${$('#rs').value.trim()} · CP ${$('#cp').value.trim()} · ${$('#reg').value} · ${$('#uso').value} · ${$('#mail').value.trim()}`:'';
   const ent=entrega==='Paso a recoger'?'🏠 Paso a recoger':entrega==='Punto medio'?'📍 Punto medio: '+pmv:'🚚 Domicilio: '+dir;
   const lines=ks.map(k=>{const it=item(k),c=cart[k];if(it.pr==null)quote=true;else tot+=upI(it,c)*c;return `• ${c} x ${it.name}`});
-  const msg=[`🛒 Nuevo pedido ${pedN(ped)}`,...lines,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)}`:'',ent,`👤 ${nom}`,fa?'🧾 Pide factura':''].filter(Boolean).join('\n');
+  const msg=[pg?`📅 Pedido programado ${pedN(ped)}`:`🛒 Nuevo pedido ${pedN(ped)}`,pg?`🗓️ Para el ${pgBonito(pg)}, de ${franja}`:'',...lines,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)}`:'',ent,`👤 ${nom}`,fa?'🧾 Pide factura':''].filter(Boolean).join('\n');
   try{localStorage.setItem('arba-ultimo',JSON.stringify({c:Object.fromEntries(ks.map(k=>[k,cart[k]])),f:Date.now(),p:ped}))}catch(e){}
-  openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);
+  openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);if(pg){try{const A=estTodos();if(A[ped]){A[ped].pg=pg;A[ped].pf=franja;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}}
   const lug=entrega==='Entrega a domicilio'?dir:entrega==='Punto medio'?'Punto medio: '+pmv:'';
-  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(nota?{no:nota.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...refDe()});
+  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(nota?{no:nota.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...(pg?{pg,pf:franja}:{}),...refDe()});
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
-  cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
-  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${pedN(ped)}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button>${campana()}</div>`;
+  cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;{const y=document.querySelector('[data-cu="ya"]');if(y)y.click()}
+  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${pedN(ped)}</b>.<br>${pg?`📅 Programado para el <b>${pgBonito(pg)}</b>, de ${franja}. Te escribimos antes para confirmarlo.<br>`:''}Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button>${campana()}</div>`;
 });
 const banco=()=>{try{return (localStorage.getItem('arba-banco')||'').trim()}catch(e){return ''}};
 $('#pBanco').value=banco();
@@ -1203,6 +1234,7 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
   const fec=new Date(o.f||Date.now()).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
   let h=`<h3>Tu pedido ${pedN(p)}</h3><p class="note" style="margin:0">Actualizado: ${fec}</p>`;
   if(o.s==='cancelado')return h+`<div class="estcan">❌ Este pedido fue cancelado</div><p>Si tienes dudas, escríbenos y te ayudamos con otra opción.</p><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, tengo una duda sobre mi pedido '+pedN(p))}" target="_blank" rel="noopener">Escribir por WhatsApp</a>`;
+  if(o.pg&&n<3)h+=`<div class="progbox" style="margin:10px 0"><b>📅 Pedido programado</b><span>Para el ${pgBonito(o.pg)}, de ${esc(o.pf||'')}. Te escribimos antes de prepararlo para confirmarlo.</span></div>`;
   h+=estHero(o,n,rec);
   h+='<ol class="est">'+pasos.map(([k,t,d],i)=>{const lv=i+1,cls=lv<n||(lv===n&&k==='entregado')?'hecho':lv===n?'ahora':'';
     const extra=cls==='ahora'&&o.t?` <br>🕒 ${rec?'Listo en':'Llega en'}: ${o.t}`:'';
@@ -1463,7 +1495,8 @@ const ok=/^ARBA-[\d-]+_[a-z0-9]{6,20}$/;
 const FK=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');
 window.ARBA_FB={ADMIN,
   crear(id,pub,priv){if(!ok.test(id))return Promise.reject('id');const t=fs.serverTimestamp();
-    return fs.setDoc(fs.doc(db,'pedidos',id),{...pub,f:t,c:t}).then(()=>fs.setDoc(fs.doc(db,'pedidos_priv',id),{...priv,c:fs.serverTimestamp()}).catch(e=>{if(!priv.rt)throw e;const {rt,...r}=priv;return fs.setDoc(fs.doc(db,'pedidos_priv',id),{...r,c:fs.serverTimestamp()})}))},
+    return fs.setDoc(fs.doc(db,'pedidos',id),{...pub,f:t,c:t}).then(()=>fs.setDoc(fs.doc(db,'pedidos_priv',id),{...priv,c:fs.serverTimestamp()}).catch(e=>{if(!priv.rt&&!priv.pg)throw e;const {rt,pg,pf,...r}=priv;if(pg)r.no=('📅 Programado '+pg+' '+(pf||'')+(r.no?' · '+r.no:'')).slice(0,300);return fs.setDoc(fs.doc(db,'pedidos_priv',id),{...r,c:fs.serverTimestamp()})}))},
+  prgVer(desde,cb){return fs.onSnapshot(fs.query(fs.collection(db,'pedidos_priv'),fs.where('pg','>=',desde),fs.orderBy('pg'),fs.limit(150)),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),e=>{console.warn('prg',e);cb(null)})},
   escuchar(id,cb){return fs.onSnapshot(fs.doc(db,'pedidos',id),s=>cb(s.exists()?s.data():null),()=>{})},
   cambiar(id,d){return fs.updateDoc(fs.doc(db,'pedidos',id),{...d,f:fs.serverTimestamp()})},
   usuario(){return auth.currentUser&&auth.currentUser.email||''},
@@ -2303,7 +2336,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=6';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=7';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
@@ -2366,8 +2399,9 @@ const inv=document.createElement('div');inv.id='invAdm';inv.innerHTML=`<h4 style
 <p class="note">Pon cuántas piezas tienes. Se descuenta solo cuando <b>aceptas</b> un pedido (y regresa si lo cancelas). Lo que dejes <b>vacío</b> no se controla, por ejemplo lo que haces al momento. Al llegar a 0, tus clientes lo ven como <b>Agotado</b>.</p>
 <div id="invRes"></div><div class="opts" role="group" id="invF"><button type="button" data-if="todo" class="on">Todos</button><button type="button" data-if="po">⚠️ Por acabarse</button><button type="button" data-if="ag">❌ Agotados</button><button type="button" data-if="con">Con inventario</button></div>
 <input id="invQ" class="invq" placeholder="🔎 Busca un producto" autocomplete="off"><div id="invL"><p class="note">Cargando…</p></div>`;
+const prg=document.createElement('div');prg.id='prgAdm';prg.innerHTML=`<h4 style="margin:18px 0 6px">📅 Pedidos programados</h4><p class="note">Pedidos que tus clientes apartaron para otro día. Te llega un aviso al recibirlo y otro <b>un día antes a las 8 am</b>. Confírmalo con el cliente antes de prepararlo.</p><div id="prgL"><p class="note">Cargando…</p></div>`;
 const sol=document.createElement('div');sol.id='solAdm';sol.innerHTML=`<h4 style="margin:18px 0 6px">🙋 Solicitudes de repartidores</h4><p class="note">Lo que tus repartidores te piden con <b>“Ocupo esto”</b> y sus avisos de que algo se está acabando.</p><div id="solL"><p class="note">Cargando…</p></div>`;
-{const anc=document.getElementById('entAdm')||document.getElementById('venAdm');if(anc&&anc.parentNode===pv){pv.insertBefore(sol,anc.nextSibling);pv.insertBefore(inv,anc.nextSibling)}else{pv.prepend(sol);pv.prepend(inv)}}
+{const anc=document.getElementById('entAdm')||document.getElementById('venAdm');if(anc&&anc.parentNode===pv){pv.insertBefore(sol,anc.nextSibling);pv.insertBefore(inv,anc.nextSibling);pv.insertBefore(prg,anc.nextSibling)}else{pv.prepend(sol);pv.prepend(inv);pv.prepend(prg)}}
 let IK='',DESDE=0,INV={q:{},m:{}},filtro='todo',un=[],SOLS=null,visto=null,pend=false;
 const DESC=['aceptado','pagado','camino','listo','entregado'];
 const claves=()=>{const L=[];T().P.forEach(p=>{if(p.v&&p.v.length)p.v.forEach((o,i)=>L.push({k:p.id+':'+i,n:p.n,o:o.n,u:p.u,c:p.cat}));else L.push({k:p.id,n:p.n,o:'',u:p.u,c:p.cat})});return L};
@@ -2405,6 +2439,28 @@ function porEstado(id,s){if(!IK)return;const q=DESC.includes(s)?true:(s==='cance
   const key=id+'|'+q;if(hecho[key])return;hecho[key]=1;
   FB().invPedido(id,q,IK,DESDE).then(n=>{if(n)T().toast(q?'📦 Inventario descontado':'📦 Inventario regresado')},er=>{delete hecho[key];console.warn('inv',er)})}
 function envuelve(){const F=FB();if(!F||F._invW||!F.cambiar)return;const o=F.cambiar;F.cambiar=function(id,d){return o.call(F,id,d).then(r=>{if(d&&d.s){delete hecho[id+'|true'];delete hecho[id+'|false'];porEstado(id,d.s)}return r})};F._invW=1}
+/* Pedidos programados */
+let PRG=null;const PST={};
+const hoyY=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const diasA=v=>{const [y,m,d]=v.split('-').map(Number);const h=new Date();h.setHours(0,0,0,0);return Math.round((new Date(y,m-1,d)-h)/864e5)};
+const pgB=v=>{const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'short'})};
+const resumen=i=>(i||'').split(',').filter(Boolean).map(x=>{const [k,c]=x.split('*');const [id,vi]=k.split(':');const p=T().P.find(q=>q.id===id);return c+' × '+(p?p.n+(vi!=null&&p.v&&p.v[+vi]?' ('+p.v[+vi].n+')':''):id)}).join(' · ');
+async function prgEst(L){await Promise.all(L.filter(x=>!(x.id in PST)).map(async x=>{try{const d=await FB().docGet('pedidos',x.id);PST[x.id]=d?d.s:''}catch(e){PST[x.id]=''}}))}
+function prgPinta(){const L=prg.querySelector('#prgL');if(!PRG){L.innerHTML='<p class="note">No se pudieron cargar. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
+  const V=PRG.filter(x=>!['cancelado','entregado'].includes(PST[x.id]));const pend=V.filter(x=>!x.pc);badge('prgN',pend.length);
+  const b=document.querySelector('#duBar [data-du="prg"]');if(b)b.classList.toggle('parpa-az',pend.some(x=>diasA(x.pg)<=2));
+  if(!V.length){L.innerHTML='<p class="note">No hay pedidos programados por ahora.</p>';return}
+  L.innerHTML=V.map(x=>{const n=diasA(x.pg),cu=n<=0?'Hoy':n===1?'Mañana':'Faltan '+n+' días';
+    return `<div class="prgc${x.pc?' ok':''}${n<=1&&!x.pc?' hoy':''}"><div class="pd"><b>📅 ${esc(pgB(x.pg))}</b><em>${x.pc?'✅ Confirmado':cu}</em></div>
+    <div><b>${esc(T().pedN(x.p||''))}</b> · ${esc(x.n||'')} · ${esc(x.T||'')}</div><small>🕒 ${esc(x.pf||'')} · ${esc(x.e||'')}${x.d?' · '+esc(x.d):''}</small><small>🛒 ${esc(resumen(x.i))}</small>${x.no?`<small>📝 ${esc(x.no)}</small>`:''}
+    <div class="rb">${x.pc?`<button type="button" class="sec" data-pgw="${esc(x.id)}">💬 Escribirle</button>`:`<button type="button" class="go" data-pgok="${esc(x.id)}">✅ Confirmar con el cliente</button>`}<button type="button" class="sec" data-pgab="${esc(x.id)}">Abrir</button></div></div>`}).join('')}
+prg.addEventListener('click',async e=>{const b=e.target.closest('[data-pgok],[data-pgw],[data-pgab]');if(!b)return;const x=(PRG||[]).find(r=>r.id===(b.dataset.pgok||b.dataset.pgw||b.dataset.pgab));if(!x)return;
+  const tel='52'+String(x.tel||'').replace(/\D/g,'').slice(-10),fol=T().pedN(x.p||'');
+  if(b.dataset.pgab){location.hash='#panel-arba?'+new URLSearchParams(Object.fromEntries(Object.entries({p:x.p,n:x.n,t:x.tel,g:x.g,T:x.T,a:x.a,e:x.e,i:x.i,k:x.k}).filter(([k,v])=>v))).toString();const bx=document.querySelector('#panel .box');if(bx)bx.scrollTop=0;return}
+  if(b.dataset.pgw){window.open('https://wa.me/'+tel+'?text='+encodeURIComponent('Hola '+(x.n||'')+' 👋 Te escribimos de Distribuidora ARBA sobre tu pedido '+fol+' para el '+pgB(x.pg)+'.'),'_blank');return}
+  const msg='Hola '+(x.n||'')+' 👋 Te confirmamos tu pedido '+fol+' de Distribuidora ARBA para el '+pgB(x.pg)+', de '+(x.pf||'')+'.\n🛒 '+resumen(x.i)+'\nTotal: '+(x.T||'')+'\n¿Sigue todo igual? Contéstanos y lo preparamos 🙌';
+  window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(msg),'_blank');
+  b.disabled=true;try{await FB().docMerge('pedidos_priv',x.id,{pc:Date.now()});FB().docMerge('pedidos',x.id,{pc:x.pg}).catch(()=>{});T().toast('📅 Pedido confirmado ✅')}catch(er){console.warn(er);b.disabled=false;T().toast('No se pudo marcar. Revisa tu internet.')}});
 /* Solicitudes */
 function solPinta(){const L=sol.querySelector('#solL');if(!SOLS){L.innerHTML='<p class="note">No se pudieron cargar. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
   const p=SOLS.filter(x=>x.s==='pendiente'),h=SOLS.filter(x=>x.s!=='pendiente').slice(0,15);badge('solN',p.length);
@@ -2442,6 +2498,7 @@ async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];
       (rows||[]).forEach(r=>{const c=r.c&&r.c.toMillis?r.c.toMillis():0;
       if(DESC.includes(r.s)&&!r.iv&&c>=DESDE)porEstado(r.id,r.s);else if(r.s==='cancelado'&&r.iv)porEstado(r.id,'cancelado');
       if(r.rt&&!r.rf&&!hecho['rt'+r.id]){hecho['rt'+r.id]=1;F.docGet('ligas',r.rt).then(l=>{if(l&&l.u&&l.r)return F.docMerge('pedidos_priv',r.id,{rf:l.r})}).catch(()=>{})}})}));
+  un.push(F.prgVer(hoyY(),async L=>{if(L)await prgEst(L);PRG=L;prgPinta()}));
   un.push(F.solVer(L=>{SOLS=L;if(L){const nuevos=L.filter(x=>x.s==='pendiente'&&visto&&!visto.has(x.id));if(nuevos.length){T().toast('🙋 '+(nuevos[0].n||'Un repartidor')+': '+(nuevos[0].t==='aviso'?'se está acabando ':'ocupa ')+nuevos[0].pn);try{navigator.vibrate&&navigator.vibrate([150,80,150])}catch(e){}}visto=new Set(L.map(x=>x.id))}solPinta()}))}
 window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
 })();
@@ -2453,14 +2510,14 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='aj')return;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
   if(lk&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
