@@ -458,11 +458,33 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 #repaW #rQ{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #ffffff30;background:#152036;color:#fff;font:15px Poppins,system-ui;margin-bottom:6px}
 #repaW .rpr{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid #ffffff10;font-size:14px}#repaW .rpr b{color:#f4b400}
 </style>
+<script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
+<style>
+html.l-chica{zoom:.9}html.l-grande{zoom:1.12}
+html.f-chicas .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}html.f-chicas .grid .p h3,html.f-chicas .grid .p .nm{font-size:12px}
+html.f-grandes .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+@media(min-width:900px){html.f-chicas .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}html.f-grandes .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}}
+html.claro{filter:invert(1) hue-rotate(180deg);background:#fff}
+html.claro img,html.claro video,html.claro picture,html.claro canvas,html.claro iframe,html.claro .img,html.claro [style*="background-image"]{filter:invert(1) hue-rotate(180deg)}
+html.claro .img img{filter:none}
+header .bar{position:relative}
+.ajbtn{position:absolute;top:8px;right:10px;width:40px;height:40px;border-radius:50%;border:1px solid #ffffff33;background:#0b1525;font-size:20px;display:grid;place-items:center;cursor:pointer;z-index:3}
+#ajW{position:fixed;inset:0;background:#000b;z-index:95;display:flex;align-items:flex-end;justify-content:center}
+#ajW>div{background:#152036;color:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:18px 16px 22px;display:grid;gap:10px;border-top:2px solid #f4b400;font-family:Poppins,system-ui}
+#ajW h3{margin:0;font:800 18px Poppins,system-ui;display:flex;justify-content:space-between;align-items:center}
+#ajW h3 button{background:none;border:0;color:#f4b400;font-size:26px;cursor:pointer}
+#ajW .lbl{font-size:13px;font-weight:700;opacity:.85;margin-top:4px}
+#ajW .ops{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+#ajW .ops button{padding:11px 6px;border-radius:12px;border:1px solid #ffffff30;background:#0b1220;color:#fff;font:700 14px Poppins,system-ui;cursor:pointer}
+#ajW .ops button.on{border:2px solid #7ed957;background:#14301d}
+#ajW .ops button small{display:block;font-weight:500;opacity:.7;font-size:11px}
+</style>
 </head>
 <body>
 <header>
   <div class="bar">
     <div class="logo"><img src="img/logo.webp" alt="" width="46" height="46"><div>Distribuidora ARBA<small>Desechables, abarrotes y tortillería</small></div></div>
+    <button type="button" class="ajbtn" id="ajBtn" aria-label="Ajustes">⚙️</button>
     <label class="search" aria-label="Buscar productos"><input id="q" type="search" placeholder="Buscar tortillas, vasos, papas…" autocomplete="off"><span>Buscar</span></label>
     <button class="cartbtn" id="openCart" aria-label="Abrir carrito">Carrito <b id="count">0</b></button>
     <button class="mispbtn" id="misPed" hidden aria-label="Ver estatus de mis pedidos">📍<span> Mi pedido</span></button>
@@ -1572,7 +1594,7 @@ const qr=new URLSearchParams(location.search).get("r");let RC='';try{if(qr)local
 if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   document.title='ARBA Reparto';document.body.classList.add('repa');
   {const m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-reparto.json';const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220'}
-  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-rsal>Salir</button></div><button type="button" class="go rshare" data-rshare>📤 Compartir tienda <small>(tu liga para comisión)</small></button><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
+  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-raj>⚙️</button><button type="button" data-rsal>Salir</button></div><button type="button" class="go rshare" data-rshare>📤 Compartir tienda <small>(tu liga para comisión)</small></button><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
   const FKr=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');let INV=null,invSub=null;
   const hay=k=>{if(!INV||!INV.q)return null;const v=INV.q[FKr(k)];return v==null?null:+v};
   const minDe=k=>{const m=INV&&INV.m&&INV.m[FKr(k)];return m!=null?+m:5};
@@ -2122,6 +2144,26 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
 })();
 </script>
 <script>
+/* ===== AJUSTES: tamaño de letra, tamaño de fotos y modo oscuro/claro (se guarda en el celular) ===== */
+(function(){
+const K='arba-aj',ld=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}};
+const OPS={l:[['chica','Chica','Aa'],['normal','Normal','Aa'],['grande','Grande','Aa']],f:[['chicas','Chicas','4 por fila'],['normales','Normales','3 por fila'],['grandes','Grandes','2 por fila']],t:[['oscuro','🌙 Oscuro',''],['claro','☀️ Claro',''],['auto','📱 Auto','como tu celular']]};
+function aplica(A){const c=document.documentElement.classList;['l-chica','l-grande','f-chicas','f-grandes','claro'].forEach(x=>c.remove(x));
+  if(A.l&&A.l!=='normal')c.add('l-'+A.l);if(A.f&&A.f!=='normales')c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro');
+  const m=document.querySelector('meta[name=theme-color]');if(m&&!document.body.classList.contains('dueno'))m.content=c.contains('claro')?'#f4f4f4':'#0b1525'}
+function abre(){const A=Object.assign({l:'normal',f:'normales',t:'oscuro'},ld());let w=document.getElementById('ajW');if(w)w.remove();w=document.createElement('div');w.id='ajW';
+  const g=(k,t)=>`<span class="lbl">${t}</span><div class="ops">${OPS[k].map(([v,n,s])=>`<button type="button" data-k="${k}" data-v="${v}" class="${A[k]===v?'on':''}"${k==='l'?` style="font-size:${v==='chica'?12.5:v==='grande'?17:14.5}px"`:''}>${n}${s&&k!=='l'?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
+  w.innerHTML=`<div role="dialog" aria-label="Ajustes"><h3>⚙️ Ajustes<button type="button" data-x aria-label="Cerrar">×</button></h3>${g('l','Tamaño de letra')}${g('f','Tamaño de fotos')}${g('t','Modo')}<p style="margin:4px 0 0;font-size:12px;opacity:.7">Se guarda en este celular.</p></div>`;
+  document.body.appendChild(w);
+  w.addEventListener('click',e=>{if(e.target===w||e.target.closest('[data-x]')){w.remove();return}const b=e.target.closest('[data-k]');if(!b)return;const A2=ld();A2[b.dataset.k]=b.dataset.v;try{localStorage.setItem(K,JSON.stringify(A2))}catch(er){}aplica(A2);
+    w.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle('on',x===b))})}
+window.ARBA_AJ=abre;
+document.addEventListener('click',e=>{if(e.target.closest('#ajBtn,[data-du="aj"],[data-raj]'))abre()});
+try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>aplica(ld()))}catch(e){}
+aplica(ld());
+})();
+</script>
+<script>
 /* ===== INVENTARIO, LIGAS DE REPARTIDOR Y SOLICITUDES =====
    dueno/inv = {ik: llave secreta, desde: ms}  · inventario/{ik} = {q:{kID:piezas}, m:{kID:avisar en}} (lo leen tú y tus repartidores)
    estado/agotados = {ids:[claves agotadas]} (público, solo dice qué está agotado, nunca cantidades)
@@ -2234,10 +2276,11 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba">📋 Pedidos</a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba">📋 Pedidos</a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
+   if(k==='aj')return;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
    location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
