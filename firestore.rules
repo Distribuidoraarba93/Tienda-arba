@@ -138,6 +138,19 @@ service cloud.firestore {
         && request.resource.data.n <= resource.data.n + 1200);
     }
 
+    // Notificaciones: cada celular guarda su token (dueño, repartidor o cliente de un pedido)
+    match /push/{id} {
+      allow get, list, delete: if esAdmin();
+      allow create, update: if request.resource.data.keys().hasOnly(['t', 'rol', 'p', 'r', 'n', 'f'])
+        && request.resource.data.t is string && request.resource.data.t.size() < 400
+        && request.resource.data.f == request.time
+        && ((request.resource.data.rol == 'dueno' && esAdmin())
+          || (request.resource.data.rol == 'repa' && request.resource.data.r is string && request.resource.data.r.size() < 40
+              && exists(/databases/$(database)/documents/rutas/$(request.resource.data.r)))
+          || (request.resource.data.rol == 'cliente' && request.resource.data.p is string && request.resource.data.p.size() < 60
+              && exists(/databases/$(database)/documents/pedidos/$(request.resource.data.p))));
+    }
+
     // Todo lo demás cerrado
     match /{document=**} {
       allow read, write: if false;

@@ -254,6 +254,8 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .p h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .p .unit{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
 .cstlk{position:fixed;inset:0;background:#000b;z-index:90;display:flex;align-items:flex-end;justify-content:center}.cstlk>div{background:#152036;width:100%;max-width:600px;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:8px;border-top:2px solid #f4b400}.cstlk .vrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #ffffff1a}.cstlk .vrow b{white-space:nowrap;color:#f4b400}.cstlk .rb{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.cstlk .rb button{padding:12px;border-radius:12px}
+.pushc{display:grid;gap:6px;padding:12px;border-radius:12px;border:1px solid #7ed957;background:#7ed95714;margin:8px 0}.pushc span{font-size:13px;opacity:.85}.pushc button{padding:11px;border-radius:12px}
+.rmsg{display:grid;gap:6px;padding:10px 12px;border-radius:12px;border:1px solid #f4b400;background:#f4b40014;margin:8px 0}.rmsg div{display:grid;font-size:14px}.rmsg span{font-size:11px;opacity:.7}
 .minbox{display:grid;gap:6px;padding:10px 12px;border-radius:10px;background:#f4b40018;border:1px solid #f4b400;margin:0 0 4px}.minbox>span{font-size:13px;opacity:.85}.msug{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px}.msug button{border:1px solid #7ed957;background:none;color:#7ed957;border-radius:999px;padding:5px 10px;font-weight:700;white-space:nowrap}
 .bdg.ago{color:#ff6b6b}article.p.ago .img{opacity:.45;filter:grayscale(.7)}button.add[disabled]{opacity:.55;cursor:not-allowed}.opts button.ago{opacity:.5;text-decoration:line-through}.li.ago{opacity:.7}
 .bdg{display:block;margin-top:2px;font-size:12.5px;font-weight:700;color:#7ed957;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bdg.am{color:#f4b400}
@@ -1166,14 +1168,16 @@ const notiVisto=()=>{try{return JSON.parse(localStorage.getItem('arba-notif')||'
 function avisar(p,st){const m=NOTI[st];if(!m)return;const v=notiVisto();if((v[p]||'recibido')===st)return;v[p]=st;try{localStorage.setItem('arba-notif',JSON.stringify(v))}catch(e){}
   const o=estTodos()[p]||{};const tt=m[0]+(o.t&&(st==='camino'||st==='aceptado'||st==='listo')?' · '+o.t:'');
   if(!document.hidden)toast(tt);
-  if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'icon-192.png',tag:p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
+  if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'icon-192.png',tag:'arba-'+p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
 const vig={};
 function vigilar(){const F=window.ARBA_FB;if(!F||!F.escuchar)return;const al=estTodos();
   Object.keys(al).forEach(p=>{const o=al[p];if(!o||!o.k||vig[p]||o.s==='entregado'||o.s==='cancelado'||Date.now()-(o.c||o.f||0)>7*864e5)return;
+    if(!o.pu&&F.pushListo&&F.pushListo())F.pushActivar({rol:'cliente',p:p+'_'+o.k},Promise.resolve('granted')).then(()=>{const a=estTodos();if(a[p]){a[p].pu=1;try{localStorage.setItem('arba-pedidos',JSON.stringify(a))}catch(e){}}}).catch(()=>{});
     vig[p]=F.escuchar(p+'_'+o.k,d=>{if(!d||!EST_ORDEN[d.s])return;const a2=estTodos(),x=a2[p]||{};x.s=d.s;if(d.t)x.t=d.t;a2[p]=x;try{localStorage.setItem('arba-pedidos',JSON.stringify(a2))}catch(e){}
       avisar(p,d.s);if(d.s==='entregado'||d.s==='cancelado'){try{vig[p]()}catch(e){}}})})}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-notif]');if(!b)return;
-  Notification.requestPermission().then(r=>{if(r==='granted'){toast('🔔 Listo, te avisamos cuando cambie tu pedido');if(navigator.serviceWorker)navigator.serviceWorker.ready.then(g=>g.showNotification('🔔 Avisos activados',{body:'Te avisaremos aquí cuando tu pedido cambie.',icon:'icon-192.png'}));vigilar()}
+  const prP=Notification.requestPermission();const F0=window.ARBA_FB;if(F0&&F0.pushActivar){Object.entries(estTodos()).forEach(([p,o])=>{if(o&&o.k&&!['entregado','cancelado'].includes(o.s))F0.pushActivar({rol:'cliente',p:p+'_'+o.k},prP).then(()=>{const a=estTodos();if(a[p]){a[p].pu=1;try{localStorage.setItem('arba-pedidos',JSON.stringify(a))}catch(e){}}}).catch(()=>{})})}
+  prP.then(r=>{if(r==='granted'){toast('🔔 Listo, te avisamos cuando cambie tu pedido');if(navigator.serviceWorker)navigator.serviceWorker.ready.then(g=>g.showNotification('🔔 Avisos activados',{body:'Te avisaremos aquí cuando tu pedido cambie.',icon:'icon-192.png'}));vigilar()}
     else toast('No se activaron los avisos. Te seguimos avisando por WhatsApp.');const bx=$('#estBox');if(bx&&estAbierto)bx.innerHTML=estHtml(estAbierto)})});
 function estAbrir(p){if(p==='*')p='';closeAll();const all=estTodos(),ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));
   if(!p&&ks.length===1)p=ks[0];
@@ -1400,6 +1404,8 @@ let yaRec=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventL
 <script type="module">
 /* Firebase de Distribuidora ARBA: guarda pedidos y estatus en vivo. Solo el correo del negocio puede cambiarlos (ver reglas en Firestore). */
 const BASE='https://www.gstatic.com/firebasejs/10.12.2/';
+/* Llave pública de notificaciones (Firebase → Configuración → Cloud Messaging → Certificados push web) */
+const VAPID='';
 const ADMIN='arturo.arba93@gmail.com';
 try{
 const [{initializeApp},fs,au]=await Promise.all([import(BASE+'firebase-app.js'),import(BASE+'firebase-firestore.js'),import(BASE+'firebase-auth.js')]);
@@ -1436,6 +1442,13 @@ window.ARBA_FB={ADMIN,
     if(!!x.iv===quitar)return 0;if(quitar&&desde&&x.c&&x.c.toMillis&&x.c.toMillis()<desde)return 0;
     const q=si.data().q||{},n={};(x.i||'').split(',').filter(Boolean).forEach(t=>{const [k,c]=t.split('*'),f=FK(k);if(q[f]!=null)n[f]=(n[f]||0)+(+c||1)});
     const u={};Object.keys(n).forEach(f=>u['q.'+f]=fs.increment(quitar?-n[f]:n[f]));if(Object.keys(u).length)tx.update(iv,u);tx.update(pr,{iv:quitar});return Object.keys(n).length})},
+  /* Notificaciones push: guarda el token de este celular. pr = promesa de Notification.requestPermission() pedida al tocar el botón. */
+  async pushActivar(o,pr){if(!VAPID)throw new Error('sin-vapid');const perm=await pr;if(perm!=='granted')throw new Error('permiso');
+    const mm=await import(BASE+'firebase-messaging.js');if(!(await mm.isSupported()))throw new Error('nosoporta');
+    const reg=await navigator.serviceWorker.ready;const t=await mm.getToken(mm.getMessaging(app),{vapidKey:VAPID,serviceWorkerRegistration:reg});if(!t)throw new Error('sin-token');
+    const id=(o.rol+'_'+(o.p||o.r||'d')+'_'+t.slice(-32)).replace(/[^A-Za-z0-9_-]/g,'_').slice(0,140);
+    await fs.setDoc(fs.doc(db,'push',id),{t,rol:o.rol,...(o.p?{p:o.p}:{}),...(o.r?{r:o.r}:{}),...(o.n?{n:String(o.n).slice(0,40)}:{}),f:fs.serverTimestamp()});return true},
+  pushListo(){return VAPID&&'Notification' in window&&Notification.permission==='granted'},
   folio(){const r=fs.doc(db,'contador','pedidos');return fs.runTransaction(db,async tx=>{const d=await tx.get(r);let n=d.exists()?d.data().n+1:777;while(String(n).includes('666'))n++;if(d.exists())tx.update(r,{n});else tx.set(r,{n});return n})},
   ligaNueva(t,r){return fs.setDoc(fs.doc(db,'ligas',t),{r,c:fs.serverTimestamp()})},
   ligaReclama(t,u){return fs.updateDoc(fs.doc(db,'ligas',t),{u,uf:fs.serverTimestamp()}).then(()=>true,()=>false)},
@@ -1619,7 +1632,7 @@ const qr=new URLSearchParams(location.search).get("r");let RC='';try{if(qr)local
 if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   document.title='ARBA Reparto';document.body.classList.add('repa');
   {const m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-reparto.json';const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220'}
-  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-raj>⚙️</button><button type="button" data-rsal>Salir</button></div><button type="button" class="go rshare" data-rshare>📤 Compartir tienda <small>(tu liga para comisión)</small></button><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
+  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-raj>⚙️</button><button type="button" data-rsal>Salir</button></div><button type="button" class="go rshare" data-rshare>📤 Compartir tienda <small>(tu liga para comisión)</small></button><div id="rPush"></div><div id="rMsg"></div><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
   const FKr=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');let INV=null,invSub=null;
   const hay=k=>{if(!INV||!INV.q)return null;const v=INV.q[FKr(k)];return v==null?null:+v};
   const minDe=k=>{const m=INV&&INV.m&&INV.m[FKr(k)];return m!=null?+m:5};
@@ -1627,6 +1640,9 @@ if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   const SKEY='arba-sols-'+RC;const misSol=()=>{try{return JSON.parse(localStorage.getItem(SKEY)||'[]')}catch(e){return []}};
   const st={};let ruta=null;const subs={};
   function pinta(){const L=document.getElementById('rLst');if(!ruta){L.innerHTML='<p class="note">Este código de repartidor no existe. Pídele la liga a Distribuidora ARBA.</p>';return}
+    {const M=(ruta.m||[]).slice(-3).reverse(),mb=document.getElementById('rMsg');if(mb)mb.innerHTML=M.length?'<div class="rmsg"><b>📢 Avisos del dueño</b>'+M.map(x=>`<div><span>${new Date(x.f).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}</span>${esc(x.t)}</div>`).join('')+'</div>':'';
+     const pb=document.getElementById('rPush'),F=FB();if(pb){if(F&&F.pushListo&&F.pushListo()&&localStorage.getItem('arba-push-repa')){pb.innerHTML='';if(!pinta.pr){pinta.pr=1;F.pushActivar({rol:'repa',r:RC},Promise.resolve('granted')).catch(()=>{})}}
+       else if(!pb.innerHTML)pb.innerHTML='<div class="pushc"><b>🔔 Que te lleguen tus entregas y avisos con la app cerrada</b><button type="button" class="go" data-rpush>🔔 Activar notificaciones</button></div>'}}
     document.getElementById('rNom').textContent=ruta.n;
     const ids=(ruta.ids||[]).filter(id=>ruta.e&&ruta.e[id]);const pend=ids.filter(id=>!['entregado','cancelado'].includes(st[id]));const hech=ids.filter(id=>st[id]==='entregado');
     const card=id=>{const x=ruta.e[id],s=st[id]||'aceptado',tel=(x.tel||'').replace(/\D/g,'');
@@ -1663,6 +1679,7 @@ if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   w.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
     if(b.dataset.rtab){w.querySelectorAll('[data-rtab]').forEach(x=>x.classList.toggle('on',x===b));const t=b.dataset.rtab;document.getElementById('rLst').hidden=t!=='e';document.getElementById('rPre').hidden=t!=='p';document.getElementById('rSol').hidden=t!=='s';if(t==='p')precios();if(t==='s')solPinta();return}
     if('rshare' in b.dataset){compartir();return}
+    if('rpush' in b.dataset){window.ARBA_PUSH({rol:'repa',r:RC},b).then(ok=>{if(ok)document.getElementById('rPush').innerHTML=''});return}
     if('ocupo' in b.dataset){forma(b.dataset.ocupo,b.dataset.pn,'ocupo');return}
     if('seacaba' in b.dataset){forma(b.dataset.seacaba,b.dataset.pn,'aviso');return}
     if('rfx' in b.dataset){document.getElementById('rForm').hidden=true;return}
@@ -1695,11 +1712,11 @@ function pinta(){const box=sec.querySelector('#entLst'),res=sec.querySelector('#
    (RUT.length?RUT.map(r=>{const m=act.filter(x=>asignado(x.id)===r.id);return `<div class="vrow"><span>🚚 ${esc(r.n)}</span><b>${m.length} pendientes${m.filter(x=>x.s==='camino').length?' · '+m.filter(x=>x.s==='camino').length+' en camino':''}</b></div>`}).join(''):'');
   box.innerHTML=act.length?act.map(r=>`<div class="entc"><div><b>${esc(T().pedN(r.p))}</b> · ${esc(r.n)}<br><small>${ESTN[r.s]||r.s}${r.T?' · '+esc(r.T):''}${r.d?' · 📍 '+esc(r.d):''}</small></div>
     <select data-asig="${r.id}"><option value="">— Sin repartidor —</option>${RUT.map(x=>`<option value="${x.id}" ${asignado(r.id)===x.id?'selected':''}>${esc(x.n)}</option>`).join('')}</select></div>`).join(''):'<p class="note">🎉 No hay pedidos a domicilio pendientes.</p>';
-  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar liga</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
+  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-msg="${r.id}">💬 Aviso</button><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar liga</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
 sec.addEventListener('change',async e=>{const s=e.target.closest('[data-asig]');if(!s)return;const F=FB(),id=s.dataset.asig,nv=s.value,old=asignado(id),r=PED.find(x=>x.id===id);
-  try{if(old&&old!==nv){const o=RUT.find(x=>x.id===old);const e2={...(o.e||{})};delete e2[id];await F.docSet('rutas',old,{n:o.n,ik:window.ARBA_IKV||o.ik||'',ids:(o.ids||[]).filter(x=>x!==id),e:e2})}
+  try{if(old&&old!==nv){const o=RUT.find(x=>x.id===old);const e2={...(o.e||{})};delete e2[id];await F.docSet('rutas',old,{n:o.n,m:o.m||[],ik:window.ARBA_IKV||o.ik||'',ids:(o.ids||[]).filter(x=>x!==id),e:e2})}
     if(nv){const n=RUT.find(x=>x.id===nv);const e2={...(n.e||{})};e2[id]={p:r.p||'',n:r.n||'',tel:r.tel||'',d:r.d||'',i:itemsTxt(r.i),T:r.T||'',g:r.g||'',a:r.a||''};
-      await F.docSet('rutas',nv,{n:n.n,ik:window.ARBA_IKV||n.ik||'',ids:[...new Set([...(n.ids||[]),id])].slice(-80),e:e2});
+      await F.docSet('rutas',nv,{n:n.n,m:n.m||[],ik:window.ARBA_IKV||n.ik||'',ids:[...new Set([...(n.ids||[]),id])].slice(-80),e:e2});
       if(['recibido'].includes(r.s))await F.cambiar(id,{s:'aceptado'});T().toast('Asignado a '+n.n+' 🚚')}}
   catch(err){console.warn(err);T().toast('No se pudo asignar. ¿Ya publicaste las reglas de Firebase?')}});
 sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const F=FB();
@@ -1708,6 +1725,8 @@ sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)
      const code='R'+(n.normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,6))+rnd(5);await F.docSet('rutas',code,{n:n.slice(0,40),ik:window.ARBA_IKV||'',ids:[],e:{}});sec.querySelector('#repNom').value='';T().toast('Repartidor agregado')}
    else if(b.dataset.repWa){const r=RUT.find(x=>x.id===b.dataset.repWa);const url=location.origin+location.pathname+'?r='+r.id;
      const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(`Hola ${r.n} 👋 Esta es tu liga de reparto de Distribuidora ARBA. Ahí te salen tus entregas y las marcas como entregadas:\n${url}\n\nÁbrela en Chrome y agrégala a tu pantalla de inicio.`);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+   else if(b.dataset.repMsg){const r=RUT.find(x=>x.id===b.dataset.repMsg);const t=(prompt('Aviso para '+r.n+' (le llega como notificación):')||'').trim().slice(0,300);if(!t)return;
+     await F.docMerge('rutas',r.id,{m:[...(r.m||[]).slice(-9),{t,f:Date.now()}]});T().toast('💬 Aviso enviado a '+r.n)}
    else if(b.dataset.repDel){if(confirm('¿Borrar este repartidor? Ya no podrá ver entregas.'))await F.negBorrar('rutas',b.dataset.repDel)}
   }catch(err){console.warn(err);T().toast('No se pudo. ¿Ya publicaste las reglas de Firebase?')}});
 function iniciar(){const F=FB();un.forEach(f=>f());un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok()))return;
@@ -2182,6 +2201,14 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
 })();
 </script>
 <script>
+/* Activar notificaciones push con un toque (tienda, dueño y reparto) */
+window.ARBA_PUSH=function(o,btn){const T=window.ARBA_T,F=window.ARBA_FB;
+  if(!('Notification' in window)||!navigator.serviceWorker){T.toast(/iPhone|iPad/.test(navigator.userAgent)?'En iPhone primero agrega la app a tu pantalla de inicio (Compartir → Agregar a inicio) y ábrela desde ahí.':'Este celular no permite notificaciones.');return Promise.resolve(false)}
+  const pr=Notification.requestPermission();if(btn){btn.disabled=true;btn.textContent='Activando…'}
+  const go=()=>window.ARBA_FB.pushActivar(o,pr).then(()=>{try{localStorage.setItem('arba-push-'+o.rol,'1')}catch(e){}T.toast('🔔 Listo, ya te llegan las notificaciones');return true},e=>{const m=String(e&&e.message||e);
+    T.toast(m==='permiso'?'No diste permiso. Actívalo en los ajustes del navegador para esta página.':m==='nosoporta'?'Este navegador no permite notificaciones. Usa Chrome, o en iPhone la app agregada a inicio.':m==='sin-vapid'?'Las notificaciones todavía no están listas. Falta un paso de configuración.':'No se pudieron activar. Revisa tu internet.');
+    if(btn){btn.disabled=false;btn.textContent='🔔 Activar notificaciones'}return false});
+  return F&&F.pushActivar?go():new Promise(r=>window.addEventListener('arba-fb',()=>r(go()),{once:true}))};
 /* Traductor automático español → inglés para productos nuevos (gratis, sin llave). Si falla, regresa null. */
 window.ARBA_TRAD=async function(t){t=String(t||'').trim();if(!t)return '';const to=ms=>new Promise((_,r)=>setTimeout(()=>r('tarde'),ms));
   try{const r=await Promise.race([fetch('https://api.mymemory.translated.net/get?langpair=es|en&de=arturo.arba93@gmail.com&q='+encodeURIComponent(t.slice(0,480))),to(7000)]);const j=await r.json();const x=j&&j.responseData&&j.responseData.translatedText;if(x&&!/MYMEMORY WARNING|QUERY LENGTH/i.test(x))return x}catch(e){}
@@ -2318,6 +2345,11 @@ function solPinta(){const L=sol.querySelector('#solL');if(!SOLS){L.innerHTML='<p
   L.innerHTML=(p.length?p.map(card).join(''):'<p class="note">🎉 No hay solicitudes pendientes.</p>')+(h.length?'<p class="note" style="margin:10px 0 4px"><b>Ya atendidas</b></p>'+h.map(card).join(''):'')}
 sol.addEventListener('click',async e=>{const b=e.target.closest('[data-sok],[data-sdel]');if(!b)return;b.disabled=true;
   try{if(b.dataset.sok){await FB().solListo(b.dataset.sok,'listo');T().toast('Marcada como lista ✅')}else await FB().negBorrar('solicitudes',b.dataset.sdel)}catch(er){console.warn(er);T().toast('No se pudo. Revisa tu internet.');b.disabled=false}});
+function pushDueno(){let c=document.getElementById('pushAdm');const F=FB();
+  if(F.pushListo&&F.pushListo()&&localStorage.getItem('arba-push-dueno')){if(c)c.remove();F.pushActivar({rol:'dueno',n:navigator.userAgent.includes('iPhone')?'iPhone':'Android'},Promise.resolve('granted')).catch(()=>{});return}
+  if(!c){c=document.createElement('div');c.id='pushAdm';c.className='pushc';pv.prepend(c)}
+  c.innerHTML='<b>🔔 Que te lleguen los pedidos aunque tengas la app cerrada</b><span>Te avisa de pedidos nuevos y de lo que te piden tus repartidores.</span><button type="button" class="go" data-pushd>🔔 Activar notificaciones</button>';
+  c.querySelector('[data-pushd]').onclick=e=>window.ARBA_PUSH({rol:'dueno',n:navigator.userAgent.includes('iPhone')?'iPhone':'Android'},e.target).then(ok=>{if(ok)c.remove()})}
 async function costosLink(){let raw=null;try{raw=sessionStorage.getItem('arba-costos-link')}catch(e){}if(!raw)return;
   const P2=T().P,L=raw.split(',').map(x=>{const [k,v]=x.split('=');const [id,vi]=k.split(':');const p=P2.find(q=>q.id===id);const c=parseFloat(v);
     if(!p||!(c>=0)||(vi!=null&&!(p.v&&p.v[+vi])))return null;return {id,vi:vi==null?null:+vi,c,n:p.n+(vi!=null?' · '+p.v[+vi].n:'')}}).filter(Boolean);
@@ -2328,7 +2360,7 @@ async function costosLink(){let raw=null;try{raw=sessionStorage.getItem('arba-co
     try{for(const x of L){await FB().docMerge('costos',x.id,x.vi==null?{c:x.c}:{v:{[x.vi]:x.c}})}box.remove();T().toast('✅ '+L.length+(L.length>1?' costos guardados':' costo guardado'))}
     catch(er){console.warn(er);b.disabled=false;b.textContent='Guardar costos';T().toast('No se pudo guardar. Revisa tu internet.')}})}
 async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok())||!F.invPedido)return;
-  agoVigila();envuelve();setTimeout(costosLink,600);
+  agoVigila();envuelve();setTimeout(costosLink,600);pushDueno();
   try{let d=await F.docGet('dueno','inv');if(!d||!d.ik){d={ik:rnd(24),desde:Date.now()};await F.docSet('dueno','inv',d)}IK=d.ik;DESDE=d.desde||0;window.ARBA_IKV=IK;
     await F.docMerge('inventario',IK,{})}catch(e){console.warn('inv',e);inv.querySelector('#invL').innerHTML='<p class="note">No se pudo abrir el inventario. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
   let primero=true;
