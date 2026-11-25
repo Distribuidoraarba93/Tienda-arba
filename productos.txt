@@ -512,6 +512,7 @@ opción: Térmica 60 oz · 30/10 piezas | 1104.68 pesos
 
 Vaso biodegradable
 id: dp18
+foto: vaso-biodegradable
 presentación: Caja
 dibujo: vasoEU
 descripción: Vasos biodegradables Reyma.
