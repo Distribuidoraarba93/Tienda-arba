@@ -34,7 +34,9 @@ service cloud.firestore {
     // Datos privados del pedido (nombre, WhatsApp, productos): solo los ves tú
     match /pedidos_priv/{id} {
       allow create: if exists(/databases/$(database)/documents/pedidos/$(id))
-        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c', 'v', 'cn', 'd', 'rt'])
+        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c', 'v', 'cn', 'd', 'rt', 'no', 'fa'])
+        && (!('no' in request.resource.data) || request.resource.data.no.size() <= 300)
+        && (!('fa' in request.resource.data) || request.resource.data.fa.size() <= 400)
         && request.resource.data.n.size() <= 80
         && request.resource.data.tel.size() <= 15
         && request.resource.data.i.size() <= 1500
@@ -123,6 +125,17 @@ service cloud.firestore {
         && request.resource.data.nota is string && request.resource.data.nota.size() <= 300
         && request.resource.data.s == 'pendiente'
         && request.resource.data.f == request.time;
+    }
+
+    // Número de pedido consecutivo (empieza en 777 y se brinca cualquier número con 666)
+    match /contador/{d} {
+      allow get: if true;
+      allow create: if d == 'pedidos' && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == 777;
+      allow update: if esAdmin() || (d == 'pedidos'
+        && request.resource.data.keys().hasOnly(['n'])
+        && request.resource.data.n is int
+        && request.resource.data.n > resource.data.n
+        && request.resource.data.n <= resource.data.n + 1200);
     }
 
     // Todo lo demás cerrado
