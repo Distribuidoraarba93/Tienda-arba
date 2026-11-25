@@ -34,6 +34,14 @@ service cloud.firestore {
       allow read, update, delete: if esAdmin();
     }
 
+    // Seguridad del dueño: celulares aprobados y códigos de rescate (solo tú)
+    match /dueno/{d} {
+      allow read, write: if esAdmin();
+    }
+    match /dueno_disp/{d} {
+      allow read, write: if esAdmin();
+    }
+
     // Precios de negocio: el cliente solo puede leer su ficha si conoce su código exacto
     match /clientes/{codigo} {
       allow get: if true;

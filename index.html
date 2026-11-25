@@ -391,6 +391,10 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 #negAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #0001}#negAdm .negrow>div{flex:1}#negAdm .negrow span{display:block;font-size:12px;opacity:.75}
 #negAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}#negAdm .negnew{display:grid;gap:6px;margin-top:8px}
 #negAdm .nlrows{max-height:340px;overflow:auto;border:1px solid #0002;border-radius:10px;padding:4px 8px}#negAdm .nlr{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #0001;margin:0}#negAdm .nlr span{flex:1;font-size:13px}#negAdm .nlr small{display:block;opacity:.7}#negAdm .nlr input{width:96px;margin:0}
+
+.lkbox h4{margin:4px 0 8px}.lkpin{letter-spacing:.5em;text-align:center;font-size:22px;margin:6px 0}
+.lkcod{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}.lkcod span{font:700 16px ui-monospace,monospace;background:#0003;border:1px solid #f4b40088;border-radius:8px;padding:8px;text-align:center;letter-spacing:.08em}
+#segAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #0001}#segAdm .negrow>div{flex:1}#segAdm .negrow span{display:block;font-size:12px;opacity:.75}#segAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}
 </style>
 </head>
 <body>
@@ -1083,6 +1087,7 @@ function fbPanel(){const box=$('#pFb');if(!box)return;const F=window.ARBA_FB;con
   if(!F){box.innerHTML='<p class="note">Cargando… si tarda mucho, revisa tu internet y vuelve a abrir el panel.</p>';return}
   if(!F.usuario()){box.innerHTML='<button class="go" data-fbin style="width:100%">🔐 Entrar con Google</button><p class="note">Panel solo para el negocio.</p>';if(fbLista){fbLista();fbLista=null}return}
   if(!F.admin()){box.innerHTML='<p class="note">Entraste con '+F.usuario()+', pero esa cuenta no es la del negocio.</p><button class="sec" data-fbout style="width:100%">Salir y entrar con otra cuenta</button>';return}
+  if(window.ARBA_LOCK&&!window.ARBA_LOCK.ok()){if(pv)pv.hidden=true;if(fbLista){fbLista();fbLista=null}window.ARBA_LOCK.pinta(box);return}
   box.innerHTML='<p class="note" style="margin:0 0 6px">Conectado como '+F.usuario()+' · <a href="#" data-fbout>Salir</a></p><div id="pLista" class="estlist"><p class="note">Cargando…</p></div>';
   if(fbLista)fbLista();fbLista=F.lista(rows=>{const L=$('#pLista');if(!L)return;
     if(!rows.length){L.innerHTML='<p class="note">Todavía no hay pedidos en línea.</p>';return}
@@ -1295,6 +1300,8 @@ window.ARBA_FB={ADMIN,
     try{await au.signInWithPopup(auth,p)}catch(e){if(/popup-blocked|operation-not-supported|web-storage-unsupported/.test(e.code||''))return au.signInWithRedirect(auth,p);throw e}},
   salir(){return au.signOut(auth)},
   async negocio(code){const c=await fs.getDoc(fs.doc(db,'clientes',code));if(!c.exists())return null;const x=c.data();const l=await fs.getDoc(fs.doc(db,'listas',x.l));return l.exists()?{c:code,n:x.n,l:x.l,...l.data(),ln:l.data().n}:null},
+  async docGet(col,id){const d=await fs.getDoc(fs.doc(db,col,id));return d.exists()?d.data():null},
+  docSet(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
   negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
@@ -1306,6 +1313,113 @@ au.onAuthStateChanged(auth,()=>window.dispatchEvent(new Event('arba-auth')));
 au.getRedirectResult(auth).catch(()=>{});
 window.dispatchEvent(new Event('arba-fb'));
 }catch(e){console.warn('Firebase no cargó',e)}
+</script>
+<script>
+/* ===== SEGURIDAD DEL DUEÑO: 3 llaves =====
+   1) Cuenta de Google del negocio (con verificación en 2 pasos de Google)
+   2) PIN o huella en cada celular
+   3) Solo celulares aprobados (se aprueban desde otro celular o con un código de rescate)
+   Firestore: dueno/config = {rc:[hash…]} · dueno_disp/{id} = {n, f, ok} */
+(function(){
+const FB=()=>window.ARBA_FB,T=()=>window.ARBA_T;
+const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},d:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+const rnd=(n,a='ABCDEFGHJKMNPQRSTUVWXYZ23456789')=>Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>a[b%a.length]).join('');
+let DEV=LS.g('arba-dev');if(!DEV){DEV=rnd(20);LS.s('arba-dev',DEV)}
+const H=async s=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('arba|'+s)))).map(b=>b.toString(16).padStart(2,'0')).join('');
+const MIN=10*60*1000;
+const ok=()=>{try{const t=+sessionStorage.getItem('arba-unl')||0;return Date.now()-t<MIN}catch(e){return false}};
+const marca=()=>{try{sessionStorage.setItem('arba-unl',String(Date.now()))}catch(e){}};
+['click','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{if(ok())marca()},{passive:true}));
+const refrescar=()=>window.dispatchEvent(new Event('arba-auth'));
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nombreDisp=()=>{const u=navigator.userAgent;return /iPhone/.test(u)?'iPhone':/iPad/.test(u)?'iPad':/Android/.test(u)?((u.match(/Android[^;]*;\s*([^;)]+)/)||[])[1]||'Android').trim():/Mac/.test(u)?'Mac':/Windows/.test(u)?'Computadora Windows':'Aparato'};
+const fallos=()=>+(LS.g('arba-pinf')||0);
+// huella / Face ID (WebAuthn del propio celular)
+const bioSi=()=>!!(window.PublicKeyCredential&&navigator.credentials&&LS.g('arba-bio'));
+async function bioCrear(){const id=crypto.getRandomValues(new Uint8Array(16));
+  const c=await navigator.credentials.create({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),rp:{name:'ARBA Dueño'},user:{id,name:'dueno',displayName:'Dueño ARBA'},pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required',residentKey:'discouraged'},timeout:60000}});
+  LS.s('arba-bio',btoa(String.fromCharCode(...new Uint8Array(c.rawId))))}
+async function bioUsar(){const raw=Uint8Array.from(atob(LS.g('arba-bio')),c=>c.charCodeAt(0));
+  await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:raw}],userVerification:'required',timeout:60000}});return true}
+
+let estado=null,cfg=null,dev=null,sinReglas=false,cargando=false;
+async function revisar(){const F=FB();cargando=true;sinReglas=false;
+  try{cfg=await F.docGet('dueno','config');dev=await F.docGet('dueno_disp',DEV);
+    if(!cfg)estado='nuevo';else if(!dev||!dev.ok){estado='pendiente';if(!dev){dev={n:nombreDisp(),f:Date.now(),ok:false};await F.docSet('dueno_disp',DEV,dev)}}
+    else if(!LS.g('arba-pin'))estado='pin-nuevo';else estado='bloqueado'}
+  catch(e){console.warn('seguridad',e);sinReglas=/permission|insufficient/i.test(String(e&&(e.code||e.message)));estado=sinReglas?'sin-reglas':'error'}
+  cargando=false}
+const kp=(id,ph)=>`<input id="${id}" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" placeholder="${ph}" class="lkpin">`;
+function pantalla(box){const s=estado;let h='';
+  if(s==='nuevo')h=`<h4>🔐 Vamos a proteger tu panel</h4><p class="note">Esto se hace una sola vez. Este celular quedará como tu primer aparato aprobado.</p>
+   <label>Nombre de este celular<input id="lkN" value="${esc(nombreDisp())}"></label>${kp('lkP1','Crea un PIN de 6 números')}${kp('lkP2','Repite el PIN')}
+   <button class="go" data-lk="crear" style="width:100%;margin-top:8px">Activar seguridad</button>`;
+  else if(s==='codigos')h=`<h4>🧾 Tus códigos de rescate</h4><p class="note"><b>Guárdalos fuera del celular</b> (tómales foto en otro aparato, imprímelos o anótalos). Te sirven para aprobar un celular nuevo si pierdes este. Cada código sirve una sola vez.</p>
+   <div class="lkcod">${(window._lkCod||[]).map(c=>`<span>${c}</span>`).join('')}</div>
+   <button class="sec" data-lk="copiar" style="width:100%;margin:6px 0">📋 Copiar códigos</button><button class="go" data-lk="listo" style="width:100%">Ya los guardé</button>`;
+  else if(s==='pendiente')h=`<h4>📱 Este celular no está aprobado</h4><p class="note">Por seguridad, solo tus celulares aprobados abren el panel. Tienes dos opciones:</p>
+   <p class="note"><b>1.</b> En tu otro celular abre el panel → <b>🔐 Seguridad</b> → aprueba <b>${esc(dev&&dev.n||'este celular')}</b>, y luego toca "Ya lo aprobé".</p>
+   <button class="sec" data-lk="recheck" style="width:100%;margin-bottom:10px">Ya lo aprobé</button>
+   <p class="note"><b>2.</b> Escribe uno de tus códigos de rescate:</p><input id="lkR" placeholder="Código de rescate" autocomplete="off" style="text-transform:uppercase">
+   <button class="go" data-lk="rescate" style="width:100%;margin-top:8px">Aprobar con código</button>`;
+  else if(s==='pin-nuevo')h=`<h4>🔢 Crea el PIN de este celular</h4>${kp('lkP1','PIN de 6 números')}${kp('lkP2','Repite el PIN')}<button class="go" data-lk="pin" style="width:100%;margin-top:8px">Guardar PIN</button>`;
+  else if(s==='bloqueado'){const esp=(+LS.g('arba-pinb')||0)-Date.now();
+   h=`<h4>🔒 Panel bloqueado</h4><p class="note">Desbloquea con tu ${bioSi()?'huella o ':''}PIN.</p>${bioSi()?'<button class="go" data-lk="bio" style="width:100%;margin-bottom:8px">👆 Usar huella / Face ID</button>':''}
+   ${esp>0?`<p class="note" style="color:#ff8a80">Muchos intentos. Espera ${Math.ceil(esp/60000)} min.</p>`:kp('lkP','Tu PIN')+'<button class="go" data-lk="abrir" style="width:100%;margin-top:8px">Desbloquear</button>'}`}
+  else if(s==='sin-reglas')h=`<p class="note" style="color:#ffd60a">⚠️ La seguridad extra todavía no está activa: falta publicar las reglas nuevas de Firebase. Mientras, tu panel sigue protegido por tu cuenta de Google.</p><button class="go" data-lk="pasar" style="width:100%">Continuar</button>`;
+  else if(s==='error')h=`<p class="note">No pudimos revisar la seguridad. Revisa tu internet.</p><button class="sec" data-lk="recheck" style="width:100%">Reintentar</button>`;
+  else h='<p class="note">Revisando seguridad…</p>';
+  box.innerHTML=`<div class="lkbox">${h}<p class="note" style="margin-top:10px"><a href="#" data-fbout>Salir de la cuenta</a></p></div>`;
+  const f=box.querySelector('.lkpin');if(f)setTimeout(()=>f.focus(),100)}
+window.ARBA_LOCK={ok:()=>ok()||estado==='pasar',
+  async pinta(box){if(estado==null&&!cargando){pantalla(box);await revisar()}if(!cargando)pantalla(box)},
+  bloquear(){try{sessionStorage.removeItem('arba-unl')}catch(e){}estado=null;refrescar()}};
+const $b=s=>document.querySelector(s);
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]');if(!b)return;e.preventDefault();const F=FB(),a=b.dataset.lk,box=$b('#pFb'),msg=t=>T().toast(t);
+ try{
+  if(a==='crear'){const p1=$b('#lkP1').value,p2=$b('#lkP2').value;if(!/^\d{6}$/.test(p1)){msg('El PIN debe ser de 6 números');return}if(p1!==p2){msg('Los PIN no coinciden');return}
+    const cod=Array.from({length:10},()=>rnd(4)+'-'+rnd(4));await F.docSet('dueno','config',{rc:await Promise.all(cod.map(c=>H(c))),f:Date.now()});
+    await F.docSet('dueno_disp',DEV,{n:($b('#lkN').value.trim()||nombreDisp()).slice(0,40),f:Date.now(),ok:true});LS.s('arba-pin',await H(DEV+p1));
+    window._lkCod=cod;estado='codigos';pantalla(box)}
+  else if(a==='copiar'){try{await navigator.clipboard.writeText('Códigos de rescate ARBA:\n'+window._lkCod.join('\n'));msg('Copiados 📋')}catch(err){msg('No se pudo copiar, tómales foto')}}
+  else if(a==='listo'){window._lkCod=null;marca();estado='bloqueado';ofrecerBio()}
+  else if(a==='recheck'){estado=null;refrescar()}
+  else if(a==='rescate'){const c=($b('#lkR').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');const fm=c.slice(0,4)+'-'+c.slice(4,8);const h=await H(fm);
+    const c2=await F.docGet('dueno','config');const i=(c2&&c2.rc||[]).indexOf(h);if(i<0){msg('Código incorrecto o ya usado');return}
+    c2.rc.splice(i,1);await F.docSet('dueno','config',c2);await F.docSet('dueno_disp',DEV,{...(dev||{}),n:(dev&&dev.n)||nombreDisp(),f:Date.now(),ok:true});
+    msg('Celular aprobado ✅ Te quedan '+c2.rc.length+' códigos');estado='pin-nuevo';pantalla(box)}
+  else if(a==='pin'){const p1=$b('#lkP1').value,p2=$b('#lkP2').value;if(!/^\d{6}$/.test(p1)){msg('El PIN debe ser de 6 números');return}if(p1!==p2){msg('Los PIN no coinciden');return}
+    LS.s('arba-pin',await H(DEV+p1));marca();estado='bloqueado';ofrecerBio()}
+  else if(a==='abrir'){const p=$b('#lkP').value;if((await H(DEV+p))===LS.g('arba-pin')){LS.d('arba-pinf');marca();refrescar()}
+    else{const n=fallos()+1;LS.s('arba-pinf',n);if(n>=5){LS.s('arba-pinb',Date.now()+5*60000);LS.d('arba-pinf')}msg('PIN incorrecto');pantalla(box)}}
+  else if(a==='bio'){if(await bioUsar()){marca();refrescar()}}
+  else if(a==='pasar'){estado='pasar';refrescar()}
+ }catch(err){console.warn(err);msg(a==='bio'?'No se pudo con la huella, usa tu PIN':'No se pudo. Revisa tu internet e intenta otra vez.')}});
+async function ofrecerBio(){if(window.PublicKeyCredential&&!LS.g('arba-bio')){try{if(await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()&&confirm('¿Quieres desbloquear también con tu huella o Face ID?'))await bioCrear()}catch(e){}}refrescar()}
+
+/* ---------- Sección Seguridad dentro del panel ---------- */
+const pv=document.getElementById('pPriv');if(!pv)return;
+const sec=document.createElement('div');sec.id='segAdm';sec.innerHTML=`<h4 style="margin:18px 0 6px">🔐 Seguridad</h4>
+<p class="note">Celulares que pueden abrir tu panel. Si cambias o pierdes uno, bórralo de aquí.</p><div id="segDisp"></div>
+<div class="pbtns" style="margin-top:8px"><button type="button" class="sec" data-sg="bio">👆 Activar huella aquí</button><button type="button" class="sec" data-sg="pin">🔢 Cambiar PIN</button><button type="button" class="sec" data-sg="cod">🧾 Nuevos códigos de rescate</button><button type="button" class="sec" data-sg="lock">🔒 Bloquear ahora</button></div>`;
+pv.prepend(sec);let un=null;
+function verDisp(){if(un){un();un=null}const F=FB();if(!F||!F.admin()||!ok())return;
+  un=F.negVer('dueno_disp',L=>{if(!L)return;const box=sec.querySelector('#segDisp');
+    if(!L.some(d=>d.id===DEV&&d.ok)){window.ARBA_LOCK.bloquear();return}
+    box.innerHTML=L.sort((a,b)=>(b.ok?1:0)-(a.ok?1:0)).map(d=>`<div class="negrow"><div><b>${esc(d.n)}${d.id===DEV?' (este)':''}</b><span>${d.ok?'✅ Aprobado':'⏳ Esperando aprobación'} · ${new Date(d.f||0).toLocaleDateString('es-MX')}</span></div>${d.ok?'':`<button type="button" class="go" data-sg-ok="${d.id}">Aprobar</button>`}${d.id===DEV?'':`<button type="button" class="sec" data-sg-del="${d.id}">Borrar</button>`}</div>`).join('')})}
+window.addEventListener('arba-auth',verDisp);
+setTimeout(refrescar,0);
+sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const F=FB(),msg=t=>T().toast(t);
+ try{
+  if(b.dataset.sgOk){const L=await F.docGet('dueno_disp',b.dataset.sgOk);if(L&&confirm('¿Aprobar "'+L.n+'"? Solo hazlo si es tu celular.')){await F.docSet('dueno_disp',b.dataset.sgOk,{...L,ok:true});msg('Aprobado ✅')}}
+  else if(b.dataset.sgDel){if(confirm('¿Quitar este celular? Ya no podrá abrir tu panel.')){await F.negBorrar('dueno_disp',b.dataset.sgDel);msg('Celular quitado')}}
+  else if(b.dataset.sg==='lock')window.ARBA_LOCK.bloquear();
+  else if(b.dataset.sg==='bio'){await bioCrear();msg('Huella activada en este celular 👆')}
+  else if(b.dataset.sg==='pin'){LS.d('arba-pin');estado='pin-nuevo';try{sessionStorage.removeItem('arba-unl')}catch(err){}refrescar()}
+  else if(b.dataset.sg==='cod'){if(!confirm('Los códigos anteriores dejarán de servir. ¿Generar nuevos?'))return;const cod=Array.from({length:10},()=>rnd(4)+'-'+rnd(4));
+    await F.docSet('dueno','config',{rc:await Promise.all(cod.map(c=>H(c))),f:Date.now()});window._lkCod=cod;estado='codigos';try{sessionStorage.removeItem('arba-unl')}catch(err){}refrescar()}
+ }catch(err){console.warn(err);msg('No se pudo. Intenta otra vez.')}});
+})();
 </script>
 <script>
 /* ===== PRECIOS DE NEGOCIO: listas de precios por cliente (tiendas, restaurantes…) =====
