@@ -460,6 +460,8 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
+/* Que al tocar botones no salga 'Tocar para buscar' de Google ni se seleccione texto */
+#duBar,#duBar *,.dun,nav,nav *,button,.seg,.opts,.ajbtn,#repaW .rh,#repaW .rtabs,.cats,.chips{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html.l-chica{zoom:.9}html.l-grande{zoom:1.12}
 html.f-chicas .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}html.f-chicas .grid .p h3,html.f-chicas .grid .p .nm{font-size:12px}
 html.f-grandes .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
