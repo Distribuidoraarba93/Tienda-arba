@@ -34,6 +34,12 @@ service cloud.firestore {
       allow read, update, delete: if esAdmin();
     }
 
+    // Catálogo: los cambios que haces desde la app de dueño. Todos lo leen, solo tú escribes.
+    match /catalogo/{id} {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+
     // Seguridad del dueño: celulares aprobados y códigos de rescate (solo tú)
     match /dueno/{d} {
       allow read, write: if esAdmin();

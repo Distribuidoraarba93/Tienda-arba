@@ -406,6 +406,18 @@ body.dueno #panel h3:first-of-type::before{content:"🔐 ARBA Dueño · ";color:
 #duBar::-webkit-scrollbar{display:none}
 #duBar b{flex:none;color:#f4b400;font:800 13px Poppins,system-ui;white-space:nowrap;align-self:center;margin-right:4px}
 #duBar a,#duBar button{flex:none;border:1px solid #f4b40066;background:#ffffff10;color:#fff;border-radius:999px;padding:7px 12px;font:600 13px Poppins,system-ui;text-decoration:none;white-space:nowrap;cursor:pointer}
+
+#edProd{position:fixed;inset:0;z-index:300;background:#0b1220;overflow:auto;color:#eef2f8}
+#edProd .edin{max-width:560px;margin:0 auto;padding:12px 16px 40px;display:grid;gap:8px}
+#edProd .edh{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0b1220;padding:8px 0;z-index:2}#edProd .edh b{color:#f4b400;font:800 18px Poppins,system-ui}
+#edProd .edh button{border:2px solid #f4b400;background:#0b1220;color:#f4b400;border-radius:50%;width:38px;height:38px;font-size:18px}
+#edProd label{display:grid;gap:4px;font:600 13px Poppins,system-ui}#edProd input,#edProd select,#edProd textarea{width:100%;box-sizing:border-box;background:#152036;color:#fff;border:1px solid #ffffff30;border-radius:10px;padding:10px;font:15px Poppins,system-ui}
+#edProd textarea{min-height:80px}#edProd .ed2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#edProd .edimg{display:grid;gap:8px;justify-items:center}#edProd .edimg img,#edProd .edph{width:200px;height:200px;border-radius:14px;background:#fff;object-fit:contain;display:grid;place-items:center;color:#555}
+#edProd .edfile{display:inline-block;border:1px solid #f4b400;color:#f4b400;border-radius:999px;padding:8px 16px;cursor:pointer}
+#edProd .edop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:4px}#edProd .edop input{padding:8px;font-size:13px}#edProd .edop button{border:0;background:#b3261e;color:#fff;border-radius:8px;width:32px}
+#edProd .edchk{display:flex;gap:8px;align-items:center}#edProd .edchk input{width:auto}
+body.edon{overflow:hidden}
 </style>
 </head>
 <body>
@@ -608,9 +620,9 @@ const WHATS = "526141077999";
 
 const CATS = ["Todos","Combos","Tortillas","Contenedores","Vasos","Bowls y envases","Servilletas y empaque","Higiene y varios","Abarrotes","Bebidas","Limpieza","Botanas","Dulces","Repostería"];
 const v=(n,pr,img,my)=>({n,pr,img,my});
-const SRC=im=>'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp');
+const SRC=im=>/^data:|^https?:/.test(im)?im:'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp');
 const GAL=p=>{const a=[];[p.img,...(p.gal||[]),...(p.v||[]).map(o=>o.img)].forEach(x=>{if(x&&!a.includes(x))a.push(x)});return a};
-const pic=(p,vi)=>{const im=(p.v&&vi!=null&&p.v[vi]&&p.v[vi].img)||p.img;return im?`<img class="foto" draggable="false" src="${'img/'+(/\.(webp|jpe?g|png)$/i.test(im)?im:im+'.webp')}" alt="${p.n}" loading="lazy">`:ART[p.art]()};
+const pic=(p,vi)=>{const im=(p.v&&vi!=null&&p.v[vi]&&p.v[vi].img)||p.img;return im?`<img class="foto" draggable="false" src="${SRC(im)}" alt="${p.n}" loading="lazy">`:ART[p.art]()};
 const P = [
   {id:"c1",cat:"Contenedores",art:"contenedor",img:"cont-blanco",n:"Contenedor blanco",u:"Liso o con división · 200 piezas",d:"Contenedor blanco con bisagra para comida para llevar. Pídelo liso o con división.",v:[v("7x7",334),v("8x8",495.96),v("9x9",562.95)]},
   {id:"c2",cat:"Contenedores",art:"contenedorN",img:"cont-negro",n:"Contenedor negro",u:"Liso o con división · 200 piezas",d:"Contenedor negro con bisagra, se ve elegante para tus platillos.",v:[v("8x8",562.96),v("9x9",602.85)]},
@@ -882,7 +894,7 @@ function openModal(id){
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
   ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${fmt(pr).replace(' pesos','')} <small>pesos</small></div>`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>${p.min?'<p class="entr ant">🛒 <b>Compra mínima: '+p.min+' piezas.</b></p>':''}<p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}" data-vi="${i}">${o.n}<small>${fmt(o.pr)}</small></button>`).join('')}</div>`:''}
-  <div class="share"><button type="button" data-share="${p.id}">📤 Compartir</button><a href="https://wa.me/?text=${encodeURIComponent('Mira esto en Distribuidora ARBA 👉 '+p.n+' '+TIENDA_URL+'?p='+p.id)}" target="_blank" rel="noopener">💬 WhatsApp</a><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener">📸 Instagram</a><a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener">👍 Facebook</a></div>
+  ${window.ARBA_EDIT?`<button type="button" class="go" data-edit="${p.id}" style="width:100%;margin:6px 0">✏️ Editar este producto</button>`:''}<div class="share"><button type="button" data-share="${p.id}">📤 Compartir</button><a href="https://wa.me/?text=${encodeURIComponent('Mira esto en Distribuidora ARBA 👉 '+p.n+' '+TIENDA_URL+'?p='+p.id)}" target="_blank" rel="noopener">💬 WhatsApp</a><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener">📸 Instagram</a><a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener">👍 Facebook</a></div>
   ${relHTML([p.id],'🛒 Clientes también llevan')}
   <div class="buy"><div class="qty"><button data-m="-1" aria-label="Menos">−</button><span>${c}</span><button data-m="1" aria-label="Más">+</button></div>
   <button class="add" id="madd">${pr==null?'Agregar para cotizar':'Agregar'}${pr!=null?' · '+fmt(Math.round(pr*c*100)/100):''}</button></div></div>`;
@@ -1139,7 +1151,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-share]');i
   if(navigator.share)navigator.share({title:p.n,text:txt,url}).catch(()=>{});
   else{try{navigator.clipboard.writeText(txt+' '+url);toast('Link copiado 📋 Pégalo donde quieras')}catch(err){prompt('Copia el link:',url)}}});
 {const qp=new URLSearchParams(location.search).get('p');if(qp&&P.find(x=>x.id===qp))setTimeout(()=>openModal(qp),400)}
-window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,upI,openDrawer,repUlt,renderGrid,renderCart};
+window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,upI,openDrawer,repUlt,renderGrid,renderCart,renderCats,CATS};
 }
 </script>
 <script>
@@ -1326,6 +1338,87 @@ window.dispatchEvent(new Event('arba-fb'));
 }catch(e){console.warn('Firebase no cargó',e)}
 </script>
 <script>
+/* ===== CATÁLOGO EDITABLE DESDE LA APP DEL DUEÑO =====
+   Firestore catalogo/{id}: el producto completo (cambiado o nuevo). Lo lee la tienda de todos y se aplica encima de productos.txt.
+   oculto:true lo quita de la tienda. Borrar el documento regresa el producto a como está en productos.txt. */
+(function(){
+const T=()=>window.ARBA_T,FB=()=>window.ARBA_FB;
+const clon=o=>JSON.parse(JSON.stringify(o));
+const BASE=clon(T().P);let OV={};
+try{OV=JSON.parse(localStorage.getItem('arba-cat')||'{}')}catch(e){}
+function aplicar(){const {P,renderGrid,renderCart,renderCats,CATS}=T();
+  const L=clon(BASE);const idx={};L.forEach((p,i)=>idx[p.id]=i);
+  Object.entries(OV).forEach(([id,d])=>{if(idx[id]!=null)L[idx[id]]=Object.assign(L[idx[id]],d,{id});else L.push(Object.assign({art:'caja',u:'',d:''},d,{id}))});
+  const fin=L.filter(p=>!p.oculto);P.length=0;fin.forEach(p=>P.push(p));
+  fin.forEach(p=>{if(p.cat&&!CATS.includes(p.cat))CATS.push(p.cat)});
+  renderCats();if(window.ARBA_NEGC&&window.ARBA_NEG_APLICAR)window.ARBA_NEG_APLICAR(window.ARBA_NEGC);else{renderGrid();renderCart()}}
+window.ARBA_CAT={base:id=>BASE.find(p=>p.id===id),ov:id=>OV[id],aplicar};
+if(Object.keys(OV).length)aplicar();
+function escuchar(){const F=FB();if(!F||!F.negVer||escuchar.ok)return;escuchar.ok=1;
+  F.negVer('catalogo',docs=>{if(!docs)return;const n={};docs.forEach(d=>{const {id,...r}=d;n[id]=r});
+    if(JSON.stringify(n)===JSON.stringify(OV))return;OV=n;try{localStorage.setItem('arba-cat',JSON.stringify(OV))}catch(e){}aplicar()})}
+if(FB())escuchar();window.addEventListener('arba-fb',escuchar);
+
+/* ---------- Editor (solo dueño desbloqueado) ---------- */
+const libre=()=>{const F=FB(),L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())};
+setInterval(()=>{window.ARBA_EDIT=libre()},1000);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let ed=document.createElement('div');ed.id='edProd';ed.hidden=true;document.body.appendChild(ed);
+let foto=null,cur=null;
+const opRow=(o={})=>`<div class="edop"><input placeholder="Opción (ej. Paquete de 10)" value="${esc(o.n)}" data-on><input type="number" step="0.01" placeholder="Precio" value="${o.pr==null?'':o.pr}" data-op><input type="number" placeholder="Mayoreo desde" value="${o.my?o.my[0]:''}" data-omn><input type="number" step="0.01" placeholder="Precio mayoreo" value="${o.my?o.my[1]:''}" data-omp><button type="button" data-oq>✕</button></div>`;
+function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero 🔐');return}
+  const {P,CATS}=T();const p=id?(P.find(x=>x.id===id)||(OV[id]&&{id,...OV[id]})):null;cur=id||('n'+Date.now().toString(36));foto=null;
+  const v=p&&p.v||[];const cats=[...new Set([...CATS.filter(c=>c!=='Todos'),p&&p.cat].filter(Boolean))];
+  ed.innerHTML=`<div class="edin"><div class="edh"><b>${id?'✏️ Editar producto':'➕ Producto nuevo'}</b><button type="button" data-edx>✕</button></div>
+  <div class="edimg">${p&&p.img?`<img src="${esc(/^data:|^https?:/.test(p.img)?p.img:'img/'+(/\.(webp|jpe?g|png)$/i.test(p.img)?p.img:p.img+'.webp'))}" id="edPrev">`:'<div id="edPrev" class="edph">Sin foto</div>'}
+   <label class="edfile">📷 ${p&&p.img?'Cambiar foto':'Agregar foto'}<input type="file" accept="image/*" id="edFile" hidden></label></div>
+  <label>Nombre<input id="edN" value="${esc(p&&p.n)}"></label>
+  <label>Categoría<select id="edC">${cats.map(c=>`<option ${p&&p.cat===c?'selected':''}>${esc(c)}</option>`).join('')}<option value="__n">+ Categoría nueva…</option></select></label>
+  <label id="edCNw" hidden>Nombre de la categoría nueva<input id="edCN"></label>
+  <label>Presentación (ej. Caja con 500 piezas)<input id="edU" value="${esc(p&&p.u)}"></label>
+  <label>Descripción<textarea id="edD">${esc(p&&p.d)}</textarea></label>
+  <div class="ed2"><label>Precio (pesos)<input id="edP" type="number" step="0.01" value="${p&&p.pr!=null?p.pr:''}" placeholder="Vacío = cotizar"></label><label>Compra mínima<input id="edMin" type="number" value="${p&&p.min||''}" placeholder="1"></label></div>
+  <div class="ed2"><label>Mayoreo desde<input id="edMyN" type="number" value="${p&&p.my?p.my[0]:''}"></label><label>Precio mayoreo<input id="edMyP" type="number" step="0.01" value="${p&&p.my?p.my[1]:''}"></label></div>
+  <label>Etiqueta (opcional, ej. Nuevo, Oferta)<input id="edTag" value="${esc(p&&p.tag)}"></label>
+  <p class="note" style="margin:10px 0 4px"><b>Opciones</b> (tamaños, medidas o sabores). Si tiene opciones, el precio de arriba no se usa.</p>
+  <div id="edOps">${v.map(opRow).join('')}</div><button type="button" class="sec" data-oadd style="margin:4px 0 10px">+ Agregar opción</button>
+  <label class="edchk"><input type="checkbox" id="edHide" ${p&&p.oculto?'checked':''}> Ocultar de la tienda (agotado o ya no lo vendo)</label>
+  <div class="pbtns" style="margin-top:12px"><button type="button" class="go" data-edsave style="grid-column:1/-1">💾 Guardar y publicar</button>
+  ${id&&OV[id]&&window.ARBA_CAT.base(id)?'<button type="button" class="sec" data-edrst style="grid-column:1/-1">↩️ Regresar a como estaba</button>':''}
+  ${id&&OV[id]&&!window.ARBA_CAT.base(id)?'<button type="button" class="sec" data-eddel style="grid-column:1/-1">🗑️ Borrar producto</button>':''}</div>
+  <p class="note">Los cambios se ven en la tienda de todos tus clientes en unos segundos.</p></div>`;
+  ed.hidden=false;document.body.classList.add('edon');
+  ed.querySelector('#edC').onchange=e=>{ed.querySelector('#edCNw').hidden=e.target.value!=='__n'};
+  ed.querySelector('#edFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;foto=await achicar(f);const pv=ed.querySelector('#edPrev');pv.outerHTML=`<img src="${foto}" id="edPrev">`}}
+function achicar(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const S=600,c=document.createElement('canvas');c.width=c.height=S;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,S,S);
+  const k=Math.min(S/im.width,S/im.height)*0.94,w=im.width*k,h=im.height*k;x.drawImage(im,(S-w)/2,(S-h)/2,w,h);
+  let q=0.82,u=c.toDataURL('image/webp',q);while(u.length>350000&&q>0.4){q-=0.1;u=c.toDataURL('image/webp',q)}if(!/^data:image\/webp/.test(u))u=c.toDataURL('image/jpeg',0.8);URL.revokeObjectURL(im.src);ok(u)};im.onerror=no;im.src=URL.createObjectURL(f)})}
+const cerrar=()=>{ed.hidden=true;document.body.classList.remove('edon')};
+const num=v=>v===''||v==null?null:Math.round(parseFloat(v)*100)/100;
+ed.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const F=FB(),msg=t=>T().toast(t);
+ if('edx' in b.dataset)cerrar();
+ else if('oadd' in b.dataset)ed.querySelector('#edOps').insertAdjacentHTML('beforeend',opRow());
+ else if('oq' in b.dataset)b.closest('.edop').remove();
+ else if('edrst' in b.dataset){if(confirm('¿Regresar este producto a como estaba originalmente?')){await F.negBorrar('catalogo',cur);msg('Listo, regresó a como estaba');cerrar()}}
+ else if('eddel' in b.dataset){if(confirm('¿Borrar este producto?')){await F.negBorrar('catalogo',cur);msg('Producto borrado');cerrar();T().$('#modal')&&T().$('#modal').classList.remove('on')}}
+ else if('edsave' in b.dataset){const g=s=>ed.querySelector(s).value.trim();const n=g('#edN');if(!n){msg('Ponle nombre al producto');return}
+   let cat=g('#edC');if(cat==='__n')cat=g('#edCN');if(!cat){msg('Escoge o escribe la categoría');return}
+   const prev=T().P.find(x=>x.id===cur)||OV[cur]||{};const ops=[...ed.querySelectorAll('.edop')].map((r,i)=>{const on=r.querySelector('[data-on]').value.trim();if(!on)return null;
+     const mn=num(r.querySelector('[data-omn]').value),mp=num(r.querySelector('[data-omp]').value),old=(prev.v||[]).find(o=>o.n===on)||(prev.v||[])[i]||{};
+     return {n:on,pr:num(r.querySelector('[data-op]').value),my:mn&&mp?[mn,mp]:null,img:old.img||null}}).filter(Boolean);
+   const mn=num(g('#edMyN')),mp=num(g('#edMyP'));
+   const d={n,cat,u:g('#edU'),d:g('#edD')||'Pídelo y te confirmamos disponibilidad por WhatsApp.',pr:ops.length?null:num(g('#edP')),my:mn&&mp?[mn,mp]:null,v:ops.length?ops:null,
+     min:num(g('#edMin'))>1?num(g('#edMin')):null,tag:g('#edTag')||null,oculto:ed.querySelector('#edHide').checked,img:foto||prev.img||null,art:prev.art||'caja',gal:prev.gal||null,f:Date.now()};
+   if(!d.v)delete d.v;
+   try{b.disabled=true;b.textContent='Guardando…';await F.docSet('catalogo',cur,JSON.parse(JSON.stringify(d)));msg(d.oculto?'Guardado y oculto de la tienda':'¡Publicado! Ya se ve en la tienda ✅');cerrar()}
+   catch(err){console.warn(err);msg('No se pudo guardar. ¿Ya publicaste las reglas de Firebase?');b.disabled=false;b.textContent='💾 Guardar y publicar'}}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-edit]');if(b){e.preventDefault();abrir(b.dataset.edit)}
+  const a=e.target.closest('[data-du="nuevo"]');if(a)abrir(null)
+  const o=e.target.closest('[data-du="ocultos"]');if(o){const ids=Object.keys(OV).filter(k=>OV[k].oculto);if(!ids.length){T().toast('No tienes productos ocultos');return}
+    const nm=prompt('Productos ocultos:\n'+ids.map((k,i)=>(i+1)+'. '+OV[k].n).join('\n')+'\n\nEscribe el número para editarlo:');const i=parseInt(nm)-1;if(ids[i])abrir(ids[i])}});
+})();
+</script>
+<script>
 /* ===== SEGURIDAD DEL DUEÑO: 3 llaves =====
    1) Cuenta de Google del negocio (con verificación en 2 pasos de Google)
    2) PIN o huella en cada celular
@@ -1455,10 +1548,11 @@ async function entrar(code,silencio){code=(code||'').toUpperCase().replace(/[^A-
   const go=async()=>{try{const c=await FB().negocio(code);
       if(!c){if(!silencio)T().toast('Ese código no existe. Revísalo con Distribuidora ARBA 🙏');try{if(silencio)localStorage.removeItem('arba-cli')}catch(e){}return}
       try{localStorage.setItem('arba-cli',code)}catch(e){}
-      window.ARBA_NEG={c:code,n:c.n};aplicar(c);if(!silencio)T().toast('¡Listo! Ya ves tus precios de negocio 🏪')}
+      window.ARBA_NEG={c:code,n:c.n};window.ARBA_NEGC=c;aplicar(c);if(!silencio)T().toast('¡Listo! Ya ves tus precios de negocio 🏪')}
     catch(e){if(!silencio)T().toast('No pudimos revisar el código. Intenta de nuevo en un momento.')}};
   if(FB()&&FB().negocio)go();else window.addEventListener('arba-fb',go,{once:true})}
-function salir(){try{localStorage.removeItem('arba-cli')}catch(e){}window.ARBA_NEG=null;aplicar(null);T().toast('Volviste a los precios normales')}
+window.ARBA_NEG_APLICAR=aplicar;
+function salir(){try{localStorage.removeItem('arba-cli')}catch(e){}window.ARBA_NEG=null;window.ARBA_NEGC=null;aplicar(null);T().toast('Volviste a los precios normales')}
 // botón en el pie de página
 const f=document.querySelector('footer');if(f){const d=document.createElement('div');d.className='negfoot';
   d.innerHTML='<button type="button" data-negcod>🏪 ¿Eres tienda o restaurante? Pon tu código de negocio</button>';f.prepend(d)}
@@ -1784,7 +1878,7 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
