@@ -383,6 +383,14 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .thead b{display:block;font:24px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;color:#f4b400;margin-bottom:4px}
 .thead span{display:block;font-size:14px;color:#e6eef8}
 .thead .tg{margin-top:6px;font-size:12.5px;font-weight:600;color:#7ed957}
+
+#negBar{position:sticky;top:0;z-index:60;background:#f4b400;color:#152016;font:600 14px Poppins,system-ui,sans-serif;padding:8px 12px;text-align:center}
+#negBar button{margin-left:8px;border:0;border-radius:999px;background:#152016;color:#fff;padding:4px 10px;font:600 12px Poppins,system-ui}
+.negp{display:inline-block;margin-top:2px;padding:2px 8px;border-radius:999px;background:#f4b400;color:#152016;font:700 10px Poppins,system-ui}
+.negfoot{margin-bottom:10px}.negfoot button{border:1px solid #f4b400;background:transparent;color:#f4b400;border-radius:999px;padding:8px 14px;font:600 13px Poppins,system-ui;cursor:pointer}
+#negAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #0001}#negAdm .negrow>div{flex:1}#negAdm .negrow span{display:block;font-size:12px;opacity:.75}
+#negAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}#negAdm .negnew{display:grid;gap:6px;margin-top:8px}
+#negAdm .nlrows{max-height:340px;overflow:auto;border:1px solid #0002;border-radius:10px;padding:4px 8px}#negAdm .nlr{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #0001;margin:0}#negAdm .nlr span{flex:1;font-size:13px}#negAdm .nlr small{display:block;opacity:.7}#negAdm .nlr input{width:96px;margin:0}
 </style>
 </head>
 <body>
@@ -780,7 +788,7 @@ const upI=(it,c)=>{const m=myOf(it.p,it.vi);return m&&c>=m[0]?m[1]:it.pr};
 const badge=p=>{if(p.min)return '<span class="bdg am">🛒 Mínimo '+p.min+' piezas</span>';if(ANTIC(p))return '<span class="bdg am">📅 Pídelo un día antes</span>';const m=p.my||(p.v&&(p.v.find(o=>o.my)||{}).my);if(m)return '<span class="bdg">💰 Mayoreo desde '+m[0]+'</span>';if(p.cat==='Tortillas')return '<span class="bdg">⚡ Mismo día</span>';return ''};
 const myTxt=(p,vi)=>{const m=myOf(p,vi);if(m)return `<span class="free">Mayoreo: ${fmt(m[1])} desde ${m[0]} ${p.myu||'paquetes'}</span>`;if(vi==null&&p.v&&p.v.some(o=>o.my))return `<span class="free">Precio de mayoreo desde ${p.v.find(o=>o.my).my[0]} ${p.myu||'paquetes'}</span>`;return ''};
 const priceHTML=p=>{const m=minPr(p);if(m==null)return `<div class="quote">Pide tu precio</div>`;
-  const [e,c]=m.toFixed(2).split('.');return `<div class="price">${p.v&&p.v.length>1&&p.v.some(x=>x.pr!==m)?'<small>desde </small>':''}${(+e).toLocaleString('es-MX')}${c!=='00'?`<sup>${c}</sup>`:''} <small>pesos</small></div>`};
+  const [e,c]=m.toFixed(2).split('.');return `<div class="price">${p.v&&p.v.length>1&&p.v.some(x=>x.pr!==m)?'<small>desde </small>':''}${(+e).toLocaleString('es-MX')}${c!=='00'?`<sup>${c}</sup>`:''} <small>pesos</small></div>${p._neg?'<span class="negp">🏪 Precio negocio</span>':''}`};
 
 
 const ANTIC=p=>['Repostería','Combos'].includes(p.cat)||(p.cat==='Tortillas'&&p.id!=='t1');
@@ -912,10 +920,10 @@ $('#form').addEventListener('submit',e=>{
   const kk=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');const d=new Date(),ped=`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;
   const tel=digits($('#tel').value),nom=$('#nom').value.trim();
   const fac=$('#fac').checked?['',`🧾 FACTURA`,`RFC: ${$('#rfc').value.trim().toUpperCase()}`,`Razón social: ${$('#rs').value.trim()}`,`C.P. fiscal: ${$('#cp').value.trim()}`,`Régimen: ${$('#reg').value}`,`Uso CFDI: ${$('#uso').value}`,`Correo: ${$('#mail').value.trim()}`]:[];
-  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,ks.some(k=>ANTIC(item(k).p))?'📅 Lleva productos sobre pedido (1 día de anticipación)':'',tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',$('#vend').value.trim()?`🤝 Vendedor: ${$('#vend').value.trim()}`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
+  const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,ks.some(k=>ANTIC(item(k).p))?'📅 Lleva productos sobre pedido (1 día de anticipación)':'',tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',$('#vend').value.trim()?`🤝 Vendedor: ${$('#vend').value.trim()}`:'',window.ARBA_NEG?`🏪 Cliente negocio: ${window.ARBA_NEG.n} (código ${window.ARBA_NEG.c})`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
   try{localStorage.setItem('arba-ultimo',JSON.stringify({c:Object.fromEntries(ks.map(k=>[k,cart[k]])),f:Date.now(),p:ped}))}catch(e){}
   openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);
-  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{})});
+  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{})});
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
   $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${ped}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button></div>`;
@@ -1115,7 +1123,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-share]');i
   if(navigator.share)navigator.share({title:p.n,text:txt,url}).catch(()=>{});
   else{try{navigator.clipboard.writeText(txt+' '+url);toast('Link copiado 📋 Pégalo donde quieras')}catch(err){prompt('Copia el link:',url)}}});
 {const qp=new URLSearchParams(location.search).get('p');if(qp&&P.find(x=>x.id===qp))setTimeout(()=>openModal(qp),400)}
-window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,upI,openDrawer,repUlt};
+window.ARBA_T={$,P,WHATS,minPr,fmt,pic,norm,add,toast,openModal,estAbrir,item,upI,openDrawer,repUlt,renderGrid,renderCart};
 }
 </script>
 <script>
@@ -1286,6 +1294,10 @@ window.ARBA_FB={ADMIN,
   async entrar(){const p=new au.GoogleAuthProvider();p.setCustomParameters({login_hint:ADMIN,prompt:'select_account'});
     try{await au.signInWithPopup(auth,p)}catch(e){if(/popup-blocked|operation-not-supported|web-storage-unsupported/.test(e.code||''))return au.signInWithRedirect(auth,p);throw e}},
   salir(){return au.signOut(auth)},
+  async negocio(code){const c=await fs.getDoc(fs.doc(db,'clientes',code));if(!c.exists())return null;const x=c.data();const l=await fs.getDoc(fs.doc(db,'listas',x.l));return l.exists()?{c:code,n:x.n,l:x.l,...l.data(),ln:l.data().n}:null},
+  negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
+  negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
+  negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
   lista(cb){let pub={},priv=[];const pinta=()=>cb(priv.map(r=>({...r,...(pub[r.id]||{}),id:r.id,c:r.c})));
     const a=fs.onSnapshot(fs.query(fs.collection(db,'pedidos_priv'),fs.orderBy('c','desc'),fs.limit(40)),q=>{priv=q.docs.map(d=>({id:d.id,...d.data()}));pinta()},()=>cb([]));
     const b=fs.onSnapshot(fs.query(fs.collection(db,'pedidos'),fs.orderBy('c','desc'),fs.limit(60)),q=>{pub={};q.docs.forEach(d=>{const x=d.data();pub[d.id]={s:x.s,t:x.t}});pinta()},()=>{});
@@ -1294,6 +1306,92 @@ au.onAuthStateChanged(auth,()=>window.dispatchEvent(new Event('arba-auth')));
 au.getRedirectResult(auth).catch(()=>{});
 window.dispatchEvent(new Event('arba-fb'));
 }catch(e){console.warn('Firebase no cargó',e)}
+</script>
+<script>
+/* ===== PRECIOS DE NEGOCIO: listas de precios por cliente (tiendas, restaurantes…) =====
+   Firestore: clientes/{CODIGO} = {n: nombre, l: idLista} · listas/{id} = {n: nombre, d: % descuento, p: {"id" o "id:opción": precio}}
+   El cliente entra con ?c=CODIGO (o escribe su código) y su celular lo recuerda. */
+(function(){
+const T=()=>window.ARBA_T,FB=()=>window.ARBA_FB;
+const r2=x=>Math.round(x*100)/100;
+function aplicar(c){const {P,renderGrid,renderCart}=T();
+  P.forEach(p=>{const one=(o,k)=>{if(!o._o)o._o={pr:o.pr,my:o.my};const b=o._o;let np=null;
+      if(c&&c.p&&c.p[k]!=null)np=+c.p[k];else if(c&&c.d>0&&b.pr!=null)np=r2(b.pr*(1-c.d/100));
+      if(np!=null){o.pr=np;o.my=b.my&&b.my[1]<np?b.my:null;return true}o.pr=b.pr;o.my=b.my;return false};
+    if(p.v){let any=false;p.v.forEach((o,i)=>{if(one(o,p.id+':'+i))any=true});p._neg=any}
+    else p._neg=one(p,p.id)});
+  renderGrid();renderCart();barra(c)}
+function barra(c){let b=document.getElementById('negBar');
+  if(!c){if(b)b.remove();document.body.classList.remove('neg');return}
+  if(!b){b=document.createElement('div');b.id='negBar';document.body.prepend(b)}
+  document.body.classList.add('neg');
+  b.innerHTML=`🏪 <b>${c.n.replace(/</g,'&lt;')}</b> · Precios de negocio <button type="button" data-negsalir>Salir</button>`}
+async function entrar(code,silencio){code=(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(!code)return;
+  const go=async()=>{try{const c=await FB().negocio(code);
+      if(!c){if(!silencio)T().toast('Ese código no existe. Revísalo con Distribuidora ARBA 🙏');try{if(silencio)localStorage.removeItem('arba-cli')}catch(e){}return}
+      try{localStorage.setItem('arba-cli',code)}catch(e){}
+      window.ARBA_NEG={c:code,n:c.n};aplicar(c);if(!silencio)T().toast('¡Listo! Ya ves tus precios de negocio 🏪')}
+    catch(e){if(!silencio)T().toast('No pudimos revisar el código. Intenta de nuevo en un momento.')}};
+  if(FB()&&FB().negocio)go();else window.addEventListener('arba-fb',go,{once:true})}
+function salir(){try{localStorage.removeItem('arba-cli')}catch(e){}window.ARBA_NEG=null;aplicar(null);T().toast('Volviste a los precios normales')}
+// botón en el pie de página
+const f=document.querySelector('footer');if(f){const d=document.createElement('div');d.className='negfoot';
+  d.innerHTML='<button type="button" data-negcod>🏪 ¿Eres tienda o restaurante? Pon tu código de negocio</button>';f.prepend(d)}
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-negsalir]'))salir();
+  if(e.target.closest('[data-negcod]')){const v=prompt('Escribe tu código de negocio (te lo da Distribuidora ARBA):');if(v)entrar(v)}});
+// al abrir: ?c=CODIGO o el guardado
+const qc=new URLSearchParams(location.search).get('c');let sv='';try{sv=localStorage.getItem('arba-cli')||''}catch(e){}
+if(qc)entrar(qc);else if(sv)entrar(sv,true);
+
+/* ---------- Panel del dueño: listas y clientes ---------- */
+const box=document.getElementById('pPriv');if(!box)return;
+const sec=document.createElement('div');sec.id='negAdm';sec.innerHTML=`
+<h4 style="margin:18px 0 6px">🏪 Precios de negocio</h4>
+<p class="note">Crea listas de precios (por ejemplo <b>Tiendas</b> o <b>Restaurantes</b>) y asígnalas a tus clientes. Cada cliente recibe una liga con su código y ve sus precios en la tienda.</p>
+<div id="negListas"></div><button type="button" class="sec" data-nl-new style="margin:6px 0 14px">+ Nueva lista</button>
+<div id="negEd" hidden></div>
+<h4 style="margin:10px 0 6px">Clientes de negocio</h4>
+<div id="negCli"></div>
+<div class="negnew"><input id="ncNom" placeholder="Nombre del negocio (ej. Super Pacheco)"><select id="ncLis"></select><button type="button" class="go" data-nc-add>+ Agregar cliente</button></div>`;
+box.appendChild(sec);
+let LS=[],CS=[],unsub=[];const $$=s=>sec.querySelector(s);const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rid=n=>Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b%31]).join('');
+function pintaL(){$$('#negListas').innerHTML=LS.length?LS.map(l=>`<div class="negrow"><div><b>${esc(l.n)}</b><span>${l.d?l.d+'% de descuento':'Sin descuento general'} · ${Object.keys(l.p||{}).length} precios especiales · ${CS.filter(c=>c.l===l.id).length} clientes</span></div><button type="button" class="sec" data-nl-ed="${l.id}">Editar</button></div>`).join(''):'<p class="note">Todavía no tienes listas.</p>';
+  $$('#ncLis').innerHTML=LS.map(l=>`<option value="${l.id}">${esc(l.n)}</option>`).join('')||'<option value="">Primero crea una lista</option>'}
+function pintaC(){const U=location.origin+location.pathname;$$('#negCli').innerHTML=CS.length?CS.map(c=>{const l=LS.find(x=>x.id===c.l);return `<div class="negrow"><div><b>${esc(c.n)}</b><span>Código <b>${c.id}</b> · ${l?esc(l.n):'sin lista'}</span></div><button type="button" class="sec" data-nc-wa="${c.id}">📤 Mandar liga</button><button type="button" class="sec" data-nc-del="${c.id}">Borrar</button></div>`}).join(''):'<p class="note">Todavía no tienes clientes de negocio.</p>';pintaL()}
+function editor(l){const {P,fmt}=T();const ed=$$('#negEd');ed.hidden=false;
+  const rows=[];P.forEach(p=>{if(p.v)p.v.forEach((o,i)=>rows.push([p.id+':'+i,p.n+' · '+o.n,(o._o||o).pr]));else rows.push([p.id,p.n+(p.u?' · '+p.u:''),(p._o||p).pr])});
+  ed.innerHTML=`<div class="neged"><label>Nombre de la lista<input id="nlN" value="${esc(l.n)}"></label>
+  <label>Descuento general en todo (%)<input id="nlD" type="number" min="0" max="50" step="0.5" value="${l.d||0}"></label>
+  <p class="note">Precios especiales: escribe el precio solo en los productos que quieras. Los que dejes vacíos llevan el descuento general.</p>
+  <input id="nlQ" placeholder="🔎 Buscar producto…" style="margin-bottom:6px">
+  <div id="nlRows" class="nlrows">${rows.map(([k,n,b])=>`<label class="nlr" data-q="${esc(T().norm?T().norm(n):n.toLowerCase())}"><span>${esc(n)}<small>Normal: ${b==null?'cotizar':fmt(b)}</small></span><input type="number" step="0.01" min="0" data-k="${k}" value="${l.p&&l.p[k]!=null?l.p[k]:''}" placeholder="—"></label>`).join('')}</div>
+  <div class="pbtns" style="margin-top:10px"><button type="button" class="go" data-nl-save="${l.id}">Guardar lista</button><button type="button" class="sec" data-nl-close>Cerrar</button>${LS.find(x=>x.id===l.id)?`<button type="button" class="sec" data-nl-del="${l.id}" style="grid-column:1/-1">Borrar lista</button>`:''}</div></div>`;
+  $$('#nlQ').addEventListener('input',e=>{const q=(T().norm?T().norm(e.target.value):e.target.value.toLowerCase()).trim();sec.querySelectorAll('.nlr').forEach(r=>r.hidden=q&&!r.dataset.q.includes(q))});
+  ed.scrollIntoView({behavior:'smooth',block:'start'})}
+sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const F=FB();
+  try{
+  if('nlNew' in b.dataset)editor({id:'L'+rid(12),n:'',d:0,p:{}});
+  else if(b.dataset.nlEd)editor(LS.find(x=>x.id===b.dataset.nlEd));
+  else if('nlClose' in b.dataset){$$('#negEd').hidden=true}
+  else if(b.dataset.nlSave){const n=$$('#nlN').value.trim();if(!n){T().toast('Ponle nombre a la lista');return}
+    const p={};sec.querySelectorAll('#nlRows input').forEach(i=>{if(i.value!=='')p[i.dataset.k]=Math.round(parseFloat(i.value)*100)/100});
+    await F.negGuardar('listas',b.dataset.nlSave,{n,d:Math.max(0,Math.min(50,parseFloat($$('#nlD').value)||0)),p});$$('#negEd').hidden=true;T().toast('Lista guardada ✅')}
+  else if(b.dataset.nlDel){if(CS.some(c=>c.l===b.dataset.nlDel)){T().toast('Esa lista tiene clientes. Cámbialos de lista primero.');return}
+    if(confirm('¿Borrar esta lista?')){await F.negBorrar('listas',b.dataset.nlDel);$$('#negEd').hidden=true}}
+  else if('ncAdd' in b.dataset){const n=$$('#ncNom').value.trim(),l=$$('#ncLis').value;if(!n||!l){T().toast('Escribe el nombre y escoge una lista');return}
+    const code=(n.normalize('NFD').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,10)||'NEG')+rid(4);
+    await F.negGuardar('clientes',code,{n:n.slice(0,60),l});$$('#ncNom').value='';T().toast('Cliente agregado: '+code)}
+  else if(b.dataset.ncWa){const c=CS.find(x=>x.id===b.dataset.ncWa);const url=location.origin+location.pathname+'?c='+c.id;
+    const msg=`Hola ${c.n} 👋 Esta es tu liga de Distribuidora ARBA con tus precios de negocio:\n${url}\n\nSi la abres desde la app, toca "¿Eres tienda o restaurante?" hasta abajo y pon tu código: ${c.id}`;
+    const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+  else if(b.dataset.ncDel){if(confirm('¿Borrar este cliente? Ya no verá sus precios de negocio.'))await F.negBorrar('clientes',b.dataset.ncDel)}
+  }catch(err){console.warn(err);T().toast('No se pudo guardar. ¿Ya publicaste las reglas nuevas de Firebase?')}});
+function iniciar(){unsub.forEach(f=>f());unsub=[];const F=FB();if(!F||!F.admin||!F.admin())return;
+  unsub.push(F.negVer('listas',x=>{LS=x||[];pintaL();pintaC()}),F.negVer('clientes',x=>{CS=(x||[]).sort((a,b)=>a.n.localeCompare(b.n));pintaC()}))}
+window.addEventListener('arba-auth',iniciar);window.addEventListener('arba-fb',iniciar);if(FB())iniciar();
+})();
 </script>
 <script>
 /* ===== DISEÑO NUEVO: carrusel, barra de abajo ===== */

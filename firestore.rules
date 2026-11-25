@@ -26,12 +26,22 @@ service cloud.firestore {
     // Datos privados del pedido (nombre, WhatsApp, productos): solo los ves tú
     match /pedidos_priv/{id} {
       allow create: if exists(/databases/$(database)/documents/pedidos/$(id))
-        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c', 'v'])
+        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c', 'v', 'cn'])
         && request.resource.data.n.size() <= 80
         && request.resource.data.tel.size() <= 15
         && request.resource.data.i.size() <= 1500
         && request.resource.data.c == request.time;
       allow read, update, delete: if esAdmin();
+    }
+
+    // Precios de negocio: el cliente solo puede leer su ficha si conoce su código exacto
+    match /clientes/{codigo} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+    match /listas/{id} {
+      allow get: if true;
+      allow list, write: if esAdmin();
     }
 
     // Todo lo demás cerrado
