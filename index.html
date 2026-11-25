@@ -418,6 +418,8 @@ body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display
 #invAdm .vgrid .po b{color:#f4b400}#invAdm .vgrid .ag b{color:#ff6b6b}
 .solc{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid #7ed957;border-radius:10px;margin:6px 0;background:#7ed95712}.solc.av{border-color:#f4b400;background:#f4b40012}.solc.listo{opacity:.6;border-color:var(--line);background:none}
 .solc div{display:grid;gap:2px}.solc span{font-size:12px;opacity:.8}.solc i{font-size:13px}.solc button{padding:8px 12px;border-radius:10px}
+@keyframes parpaAm{0%,100%{background:#f4b400;color:#111;box-shadow:0 0 0 0 #f4b400aa}50%{background:#3a2e05;color:#f4b400;box-shadow:0 0 12px 3px #f4b400aa}}@keyframes parpaRo{0%,100%{background:#e53935;color:#fff;box-shadow:0 0 0 0 #e53935aa}50%{background:#3a0b0b;color:#ff8a80;box-shadow:0 0 14px 4px #e53935aa}}
+#duBar [data-du=inv].parpa-am{animation:parpaAm 1.2s ease-in-out infinite;border-color:#f4b400!important}#duBar [data-du=inv].parpa-ro{animation:parpaRo .9s ease-in-out infinite;border-color:#e53935!important}#duBar [data-du=inv].parpa-am .dun,#duBar [data-du=inv].parpa-ro .dun{background:#111;color:#fff}
 #duBar .dun{display:inline-block;margin-left:5px;background:#ff3b30;color:#fff;font:800 11px Poppins,system-ui;font-style:normal;border-radius:999px;padding:1px 6px}
 
 #duBar b{flex:none;color:#f4b400;font:800 13px Poppins,system-ui;white-space:nowrap;align-self:center;margin-right:4px}
@@ -2275,11 +2277,14 @@ const claves=()=>{const L=[];T().P.forEach(p=>{if(p.v&&p.v.length)p.v.forEach((o
 const qDe=k=>{const v=INV.q&&INV.q[FK(k)];return v==null?null:+v},mDe=k=>{const v=INV.m&&INV.m[FK(k)];return v==null?null:+v};
 const estDe=k=>{const q=qDe(k);if(q==null)return '';if(q<=0)return 'ag';return q<=(mDe(k)!=null?mDe(k):5)?'po':'ok'};
 function cuenta(){let po=0,ag=0,con=0;claves().forEach(x=>{const e=estDe(x.k);if(e)con++;if(e==='po')po++;if(e==='ag')ag++});return {po,ag,con}}
+/* Botón de Inventario parpadeando: amarillo si algo se está acabando, rojo si algo ya se agotó */
+function botonInv(){const b=document.querySelector('#duBar [data-du="inv"]');if(!b)return;const c=cuenta();b.classList.toggle('parpa-ro',c.ag>0);b.classList.toggle('parpa-am',!c.ag&&c.po>0);
+  b.title=c.ag?c.ag+' agotados'+(c.po?' y '+c.po+' por acabarse':''):c.po?c.po+' por acabarse':''}
 function badge(id,n){const e=document.getElementById(id);if(e){e.hidden=!n;e.textContent=n}}
 function pinta(){const L=inv.querySelector('#invL');if(!L)return;if(L.contains(document.activeElement)&&document.activeElement.tagName==='INPUT'){pend=true;return}pend=false;
   const {norm}=T(),q=norm(inv.querySelector('#invQ').value||'').trim(),c=cuenta();
   inv.querySelector('#invRes').innerHTML=`<div class="vgrid"><div><small>Con inventario</small><b>${c.con}</b></div><div class="po"><small>Por acabarse</small><b>${c.po}</b></div><div class="ag"><small>Agotados</small><b>${c.ag}</b></div></div>`;
-  badge('invN',c.po+c.ag);
+  badge('invN',c.po+c.ag);botonInv();
   let X=claves().filter(x=>{const e=estDe(x.k);if(filtro==='po'&&e!=='po')return false;if(filtro==='ag'&&e!=='ag')return false;if(filtro==='con'&&!e)return false;return !q||norm(x.n+' '+x.o+' '+x.u+' '+x.c).includes(q)});
   if(filtro!=='todo')X.sort((a,b)=>(qDe(a.k)||0)-(qDe(b.k)||0));const tot=X.length;X=X.slice(0,150);
   L.innerHTML=X.length?X.map(x=>{const v=qDe(x.k),m=mDe(x.k),e=estDe(x.k);return `<div class="invr ${e}"><div><b>${esc(x.n)}</b>${x.o?`<span>${esc(x.o)}</span>`:`<span>${esc(x.u)}</span>`}${e==='ag'?'<em>❌ Agotado</em>':e==='po'?'<em>⚠️ Se está acabando</em>':''}</div>
@@ -2326,7 +2331,7 @@ async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];
   try{let d=await F.docGet('dueno','inv');if(!d||!d.ik){d={ik:rnd(24),desde:Date.now()};await F.docSet('dueno','inv',d)}IK=d.ik;DESDE=d.desde||0;window.ARBA_IKV=IK;
     await F.docMerge('inventario',IK,{})}catch(e){console.warn('inv',e);inv.querySelector('#invL').innerHTML='<p class="note">No se pudo abrir el inventario. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
   let primero=true;
-  un.push(F.docVer('inventario',IK,d=>{INV=d||{q:{},m:{}};pinta();publica();if(primero){primero=false;const c=cuenta();if(c.po+c.ag)T().toast('⚠️ '+(c.ag?c.ag+' agotados':'')+(c.ag&&c.po?' y ':'')+(c.po?c.po+' por acabarse':'')+' en tu inventario')}}));
+  un.push(F.docVer('inventario',IK,d=>{INV=d||{q:{},m:{}};pinta();publica();botonInv()}));
   un.push(F.negVer('rutas',L=>{const RN={};(L||[]).forEach(r=>{RN[r.id]=r.n;if(r.ik!==IK)F.docMerge('rutas',r.id,{ik:IK}).catch(()=>{})});window.ARBA_RN=RN;window.dispatchEvent(new Event('arba-rn'))}));
   un.push(F.lista(rows=>{(rows||[]).forEach(r=>{const c=r.c&&r.c.toMillis?r.c.toMillis():0;
       if(DESC.includes(r.s)&&!r.iv&&c>=DESDE)porEstado(r.id,r.s);else if(r.s==='cancelado'&&r.iv)porEstado(r.id,'cancelado');
