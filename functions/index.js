@@ -24,11 +24,12 @@ async function tokens(campos) {
 
 async function enviar(lista, {title, body, url, tag}) {
   const vistos = new Set(); lista = lista.filter(x => !vistos.has(x.t) && vistos.add(x.t));
-  if (!lista.length) return;
+  if (!lista.length) { console.log('Sin celulares registrados para', title); return; }
   const r = await getMessaging().sendEachForMulticast({
     tokens: lista.map(x => x.t),
     webpush: {headers: {Urgency: 'high', TTL: '86400'}, data: {title, body, url: url || TIENDA, tag: tag || ''}},
   });
+  console.log('Aviso:', title, '· enviados', r.successCount, 'de', lista.length, r.responses.map((x, i) => x.success ? '' : lista[i].id + ' → ' + (x.error && x.error.code)).filter(Boolean).join(' | '));
   // Borra los celulares que ya no existen o quitaron el permiso
   await Promise.all(r.responses.map((x, i) => {
     const c = x.error && x.error.code || '';
