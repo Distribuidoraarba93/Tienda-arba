@@ -253,6 +253,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .p .img .tag{z-index:2}
 .p h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .p .unit{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.cstlk{position:fixed;inset:0;background:#000b;z-index:90;display:flex;align-items:flex-end;justify-content:center}.cstlk>div{background:#152036;width:100%;max-width:600px;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:8px;border-top:2px solid #f4b400}.cstlk .vrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #ffffff1a}.cstlk .vrow b{white-space:nowrap;color:#f4b400}.cstlk .rb{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.cstlk .rb button{padding:12px;border-radius:12px}
 .minbox{display:grid;gap:6px;padding:10px 12px;border-radius:10px;background:#f4b40018;border:1px solid #f4b400;margin:0 0 4px}.minbox>span{font-size:13px;opacity:.85}.msug{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px}.msug button{border:1px solid #7ed957;background:none;color:#7ed957;border-radius:999px;padding:5px 10px;font-weight:700;white-space:nowrap}
 .bdg.ago{color:#ff6b6b}article.p.ago .img{opacity:.45;filter:grayscale(.7)}button.add[disabled]{opacity:.55;cursor:not-allowed}.opts button.ago{opacity:.5;text-decoration:line-through}.li.ago{opacity:.7}
 .bdg{display:block;margin-top:2px;font-size:12.5px;font-weight:700;color:#7ed957;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bdg.am{color:#f4b400}
@@ -2151,6 +2152,8 @@ function arranca(){agoVigila();ligaReclama()}
 if(FB())arranca();window.addEventListener('arba-fb',arranca);
 
 /* ---------- 3) App del dueño ---------- */
+/* Link de costos: #costos=s1:1=337.49,a2=40 · se guarda en este celular y se borra de la dirección */
+{const m=/[#&]costos=([^&]+)/.exec(location.hash);if(m){try{sessionStorage.setItem('arba-costos-link',decodeURIComponent(m[1]))}catch(e){}history.replaceState(null,'',location.pathname+location.search)}}
 const pv=document.getElementById('pPriv');if(!pv)return;
 const inv=document.createElement('div');inv.id='invAdm';inv.innerHTML=`<h4 style="margin:18px 0 6px">📦 Inventario</h4>
 <p class="note">Pon cuántas piezas tienes. Se descuenta solo cuando <b>aceptas</b> un pedido (y regresa si lo cancelas). Lo que dejes <b>vacío</b> no se controla, por ejemplo lo que haces al momento. Al llegar a 0, tus clientes lo ven como <b>Agotado</b>.</p>
@@ -2201,8 +2204,17 @@ function solPinta(){const L=sol.querySelector('#solL');if(!SOLS){L.innerHTML='<p
   L.innerHTML=(p.length?p.map(card).join(''):'<p class="note">🎉 No hay solicitudes pendientes.</p>')+(h.length?'<p class="note" style="margin:10px 0 4px"><b>Ya atendidas</b></p>'+h.map(card).join(''):'')}
 sol.addEventListener('click',async e=>{const b=e.target.closest('[data-sok],[data-sdel]');if(!b)return;b.disabled=true;
   try{if(b.dataset.sok){await FB().solListo(b.dataset.sok,'listo');T().toast('Marcada como lista ✅')}else await FB().negBorrar('solicitudes',b.dataset.sdel)}catch(er){console.warn(er);T().toast('No se pudo. Revisa tu internet.');b.disabled=false}});
+async function costosLink(){let raw=null;try{raw=sessionStorage.getItem('arba-costos-link')}catch(e){}if(!raw)return;
+  const P2=T().P,L=raw.split(',').map(x=>{const [k,v]=x.split('=');const [id,vi]=k.split(':');const p=P2.find(q=>q.id===id);const c=parseFloat(v);
+    if(!p||!(c>=0)||(vi!=null&&!(p.v&&p.v[+vi])))return null;return {id,vi:vi==null?null:+vi,c,n:p.n+(vi!=null?' · '+p.v[+vi].n:'')}}).filter(Boolean);
+  try{sessionStorage.removeItem('arba-costos-link')}catch(e){}if(!L.length){T().toast('Ese link de costos no trae productos válidos');return}
+  const box=document.createElement('div');box.className='cstlk';box.innerHTML=`<div><b>💰 Guardar costos de tu factura</b><p class="note">Solo tú los ves, nunca el cliente.</p>${L.map(x=>`<div class="vrow"><span>${esc(x.n)}</span><b>${T().fmt(x.c)}</b></div>`).join('')}<div class="rb"><button type="button" class="sec" data-cx>Cancelar</button><button type="button" class="go" data-cok>Guardar costos</button></div></div>`;
+  document.body.appendChild(box);
+  box.addEventListener('click',async e=>{if(e.target.closest('[data-cx]')){box.remove();return}const b=e.target.closest('[data-cok]');if(!b)return;b.disabled=true;b.textContent='Guardando…';
+    try{for(const x of L){await FB().docMerge('costos',x.id,x.vi==null?{c:x.c}:{v:{[x.vi]:x.c}})}box.remove();T().toast('✅ '+L.length+(L.length>1?' costos guardados':' costo guardado'))}
+    catch(er){console.warn(er);b.disabled=false;b.textContent='Guardar costos';T().toast('No se pudo guardar. Revisa tu internet.')}})}
 async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok())||!F.invPedido)return;
-  agoVigila();envuelve();
+  agoVigila();envuelve();setTimeout(costosLink,600);
   try{let d=await F.docGet('dueno','inv');if(!d||!d.ik){d={ik:rnd(24),desde:Date.now()};await F.docSet('dueno','inv',d)}IK=d.ik;DESDE=d.desde||0;window.ARBA_IKV=IK;
     await F.docMerge('inventario',IK,{})}catch(e){console.warn('inv',e);inv.querySelector('#invL').innerHTML='<p class="note">No se pudo abrir el inventario. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
   let primero=true;
