@@ -421,6 +421,18 @@ body.edon{overflow:hidden}
 
 #venAdm .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}#venAdm .vgrid div{background:#ffffff0d;border:1px solid #f4b40044;border-radius:12px;padding:10px}#venAdm .vgrid small{display:block;opacity:.7;font-size:12px}#venAdm .vgrid b{font:800 20px Poppins,system-ui;color:#f4b400}
 #venAdm .vrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #ffffff12;font-size:14px}
+
+body.repa>header,body.repa>section,body.repa>.hist,body.repa>nav,body.repa>.trust,body.repa>main,body.repa>footer,body.repa>.bnav,body.repa>.cbar,body.repa #abBtn,body.repa #ab,body.repa #negBar,body.repa #temaStrip{display:none!important}
+body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px 40px;color:#eef2f8}
+#repaW .rh{position:sticky;top:0;background:#0b1220;display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:2px solid #f4b400;z-index:5}#repaW .rh b{color:#f4b400;font:800 18px Poppins,system-ui}#repaW .rh span{flex:1;font-weight:600}
+#repaW .rh button{border:1px solid #ffffff40;background:none;color:#fff;border-radius:999px;padding:6px 12px}
+#repaW .rc{background:#152036;border:1px solid #ffffff20;border-radius:14px;padding:12px;margin:10px 0}#repaW .rc.camino{border-color:#f4b400}#repaW .rc.entregado{opacity:.6}
+#repaW .rt{display:flex;justify-content:space-between}#repaW .rc p{margin:6px 0}#repaW a{color:#7ed957;font-weight:700}#repaW pre{white-space:pre-wrap;font:14px Poppins,system-ui;background:#0b1220;border-radius:10px;padding:8px;margin:6px 0}
+#repaW .rb{display:grid;grid-template-columns:1fr 1fr;gap:8px}#repaW .rb button{padding:12px;border-radius:12px;font-weight:700}
+#entAdm .entc{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #ffffff15}#entAdm .entc>div{flex:1;font-size:14px}#entAdm .entc small{opacity:.75}#entAdm .entc select{width:140px;padding:6px}
+#entAdm .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}#entAdm .vgrid div{background:#ffffff0d;border:1px solid #f4b40044;border-radius:12px;padding:10px}#entAdm .vgrid small{display:block;opacity:.7;font-size:12px}#entAdm .vgrid b{font:800 20px Poppins,system-ui;color:#f4b400}
+#entAdm .vrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #ffffff12;font-size:14px}
+#entAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #ffffff15}#entAdm .negrow>div{flex:1}#entAdm .negrow span{display:block;font-size:12px;opacity:.75}#entAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}#entAdm .negnew{display:grid;gap:6px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -953,7 +965,7 @@ $('#form').addEventListener('submit',e=>{
   const msg=[`🛒 PEDIDO ${ped}`,`Distribuidora ARBA`,``,...lines,``,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + productos por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,ks.some(k=>ANTIC(item(k).p))?'📅 Lleva productos sobre pedido (1 día de anticipación)':'',tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)} (acepta condiciones de anticipo y cancelación)`:'',``,`Nombre: ${nom}`,`WhatsApp: ${tel}`,entrega,entrega==="Entrega a domicilio"&&$('#dir').value?`Dirección: ${$('#dir').value}`:'',...fac,$('#nota').value?`Notas: ${$('#nota').value}`:'',$('#vend').value.trim()?`🤝 Vendedor: ${$('#vend').value.trim()}`:'',window.ARBA_NEG?`🏪 Cliente negocio: ${window.ARBA_NEG.n} (código ${window.ARBA_NEG.c})`:'',``,`⏳ Pedido pendiente: Distribuidora ARBA te lo confirma por aquí.`].filter((l,i,a)=>l!==''||a[i-1]!=='').join('\n');
   try{localStorage.setItem('arba-ultimo',JSON.stringify({c:Object.fromEntries(ks.map(k=>[k,cart[k]])),f:Date.now(),p:ped}))}catch(e){}
   openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);
-  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{})});
+  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(entrega==='Entrega a domicilio'&&$('#dir').value.trim()?{d:$('#dir').value.trim().slice(0,200)}:{})});
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
   $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${ped}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button></div>`;
@@ -1331,6 +1343,8 @@ window.ARBA_FB={ADMIN,
   async ventas(desde,hasta){const T0=fs.Timestamp.fromMillis(desde),q=[fs.where('c','>=',T0)];if(hasta!==Infinity)q.push(fs.where('c','<',fs.Timestamp.fromMillis(hasta)));
     const [a,b]=await Promise.all([fs.getDocs(fs.query(fs.collection(db,'pedidos_priv'),...q,fs.orderBy('c','desc'),fs.limit(1000))),fs.getDocs(fs.query(fs.collection(db,'pedidos'),...q,fs.limit(1000)))]);
     const st={};b.docs.forEach(d=>st[d.id]=d.data().s);return a.docs.map(d=>({id:d.id,...d.data(),s:st[d.id]||'recibido'}))},
+  repaRuta(code,cb){return fs.onSnapshot(fs.doc(db,'rutas',code),d=>cb(d.exists()?d.data():null),()=>cb(null))},
+  repaMarca(id,s,code){return fs.updateDoc(fs.doc(db,'pedidos',id),{s,r:code,f:fs.serverTimestamp()})},
   negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
   negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
@@ -1466,6 +1480,77 @@ async function iniciar(){const F=FB();un.forEach(f=>f());un=[];if(!F||!F.admin||
   try{const a=await F.docGet('dueno','ajustes');if(a)AJ=a}catch(e){}
   un.push(F.negVer('costos',L=>{COST={};(L||[]).forEach(d=>{const {id,...r}=d;COST[id]=r});window.ARBA_COST=COST;pinta()}));pinta()}
 window.addEventListener('arba-auth',()=>setTimeout(iniciar,100));
+})();
+</script>
+<script>
+/* ===== REPARTIDORES Y ENTREGAS =====
+   rutas/{CODIGO} = {n: nombre, ids:[pedidos asignados], e:{id:{p,n,tel,d,i,T,g,a}}}  (lo escribe el dueño; el repartidor lo lee con su código)
+   El repartidor marca "En camino" / "Entregado" y se actualiza el estatus que ve el cliente. */
+(function(){
+const T=()=>window.ARBA_T,FB=()=>window.ARBA_FB;
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd=n=>Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b%31]).join('');
+const ESTN={recibido:'🆕 Nuevo',aceptado:'👩‍🍳 Preparando',pagado:'💵 Pagado',camino:'🚚 En camino',listo:'📦 Listo',entregado:'✅ Entregado',cancelado:'❌ Cancelado'};
+const itemsTxt=i=>(i||'').split(',').filter(Boolean).map(s=>{const [k,q]=s.split('*'),it=T().item(k);return (q||1)+' x '+(it?it.name:k)}).join('\n');
+
+/* ---------- MODO REPARTIDOR (?r=CODIGO) ---------- */
+const qr=new URLSearchParams(location.search).get('r');let RC='';try{if(qr)localStorage.setItem('arba-repa',qr.toUpperCase());RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){RC=(qr||'').toUpperCase()}
+if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
+  document.title='ARBA Reparto';document.body.classList.add('repa');
+  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-rsal>Salir</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div>';document.body.appendChild(w);
+  const st={};let ruta=null;const subs={};
+  function pinta(){const L=document.getElementById('rLst');if(!ruta){L.innerHTML='<p class="note">Este código de repartidor no existe. Pídele la liga a Distribuidora ARBA.</p>';return}
+    document.getElementById('rNom').textContent=ruta.n;
+    const ids=(ruta.ids||[]).filter(id=>ruta.e&&ruta.e[id]);const pend=ids.filter(id=>!['entregado','cancelado'].includes(st[id]));const hech=ids.filter(id=>st[id]==='entregado');
+    const card=id=>{const x=ruta.e[id],s=st[id]||'aceptado',tel=(x.tel||'').replace(/\D/g,'');
+      return `<div class="rc ${s}"><div class="rt"><b>${esc(x.p)}</b><span>${ESTN[s]||s}</span></div><p><b>${esc(x.n)}</b>${tel?` · <a href="tel:${tel}">📞 ${esc(x.tel)}</a> · <a href="https://wa.me/52${tel.slice(-10)}" target="_blank" rel="noopener">💬</a>`:''}</p>
+      ${x.d?`<p>📍 ${esc(x.d)} · <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.d+' Chihuahua')}" target="_blank" rel="noopener">Abrir mapa</a></p>`:''}
+      <pre>${esc(x.i)}</pre><p>💰 <b>${esc(x.T)}</b> · ${esc(x.g||'')}${x.a?` · Anticipo ${esc(x.a)}`:''}</p>
+      ${s==='entregado'?'':`<div class="rb">${s!=='camino'?`<button type="button" class="sec" data-rs="camino" data-id="${id}">🚚 Salí en camino</button>`:''}<button type="button" class="go" data-rs="entregado" data-id="${id}">✅ Entregado</button></div>`}</div>`};
+    L.innerHTML=`<p class="note"><b>${pend.length}</b> pendientes · <b>${hech.length}</b> entregados</p>${pend.map(card).join('')||'<p class="note">🎉 No tienes entregas pendientes.</p>'}${hech.length?'<h4 style="margin:16px 0 6px">✅ Entregados</h4>'+hech.slice(-15).map(card).join(''):''}`}
+  function vigila(){const F=FB();if(!F)return;F.repaRuta(RC,r=>{ruta=r;(r&&r.ids||[]).forEach(id=>{if(!subs[id])subs[id]=F.escuchar(id,d=>{st[id]=d&&d.s;pinta()})});pinta()})}
+  if(FB()&&FB().repaRuta)vigila();else window.addEventListener('arba-fb',vigila,{once:true});
+  w.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
+    if('rsal' in b.dataset){try{localStorage.removeItem('arba-repa')}catch(er){}location.href=location.pathname;return}
+    if(b.dataset.rs){if(b.dataset.rs==='entregado'&&!confirm('¿Confirmas que ya entregaste el pedido '+ruta.e[b.dataset.id].p+'?'))return;
+      b.disabled=true;try{await FB().repaMarca(b.dataset.id,b.dataset.rs,RC);T().toast(b.dataset.rs==='entregado'?'¡Entregado! ✅':'Marcado en camino 🚚')}catch(er){console.warn(er);T().toast('No se pudo marcar. Revisa tu internet.');b.disabled=false}}});
+  return}
+
+/* ---------- PANEL DEL DUEÑO: 🚚 Entregas ---------- */
+const pv=document.getElementById('pPriv');if(!pv)return;
+const sec=document.createElement('div');sec.id='entAdm';sec.innerHTML=`<h4 style="margin:18px 0 6px">🚚 Entregas</h4>
+<p class="note">Asigna cada pedido a un repartidor. Él lo ve en su celular y marca <b>En camino</b> y <b>Entregado</b>; tu cliente ve el avance en vivo.</p>
+<div id="entRes"></div><div id="entLst"><p class="note">Cargando…</p></div>
+<h4 style="margin:14px 0 6px">Repartidores</h4><div id="repLst"></div>
+<div class="negnew"><input id="repNom" placeholder="Nombre del repartidor"><button type="button" class="go" data-rep-add>+ Agregar repartidor</button></div>`;
+const anc=document.getElementById('venAdm');if(anc&&anc.nextSibling)pv.insertBefore(sec,anc.nextSibling);else pv.prepend(sec);
+let RUT=[],PED=[],un=[];
+const asignado=id=>{const r=RUT.find(r=>(r.ids||[]).includes(id));return r?r.id:''};
+function pinta(){const box=sec.querySelector('#entLst'),res=sec.querySelector('#entRes');
+  const act=PED.filter(r=>r.e!=='r'&&!['entregado','cancelado'].includes(r.s));
+  const hoy=new Date().toDateString();const ent=PED.filter(r=>r.s==='entregado'&&r.c&&r.c.toDate&&r.c.toDate().toDateString()===hoy);
+  res.innerHTML=`<div class="vgrid"><div><small>Por entregar</small><b>${act.length}</b></div><div><small>Sin repartidor</small><b>${act.filter(r=>!asignado(r.id)).length}</b></div><div><small>En camino</small><b>${act.filter(r=>r.s==='camino').length}</b></div><div><small>Entregados hoy</small><b>${ent.length}</b></div></div>`+
+   (RUT.length?RUT.map(r=>{const m=act.filter(x=>asignado(x.id)===r.id);return `<div class="vrow"><span>🚚 ${esc(r.n)}</span><b>${m.length} pendientes${m.filter(x=>x.s==='camino').length?' · '+m.filter(x=>x.s==='camino').length+' en camino':''}</b></div>`}).join(''):'');
+  box.innerHTML=act.length?act.map(r=>`<div class="entc"><div><b>${esc(r.p)}</b> · ${esc(r.n)}<br><small>${ESTN[r.s]||r.s}${r.T?' · '+esc(r.T):''}${r.d?' · 📍 '+esc(r.d):''}</small></div>
+    <select data-asig="${r.id}"><option value="">— Sin repartidor —</option>${RUT.map(x=>`<option value="${x.id}" ${asignado(r.id)===x.id?'selected':''}>${esc(x.n)}</option>`).join('')}</select></div>`).join(''):'<p class="note">🎉 No hay pedidos a domicilio pendientes.</p>';
+  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar liga</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
+sec.addEventListener('change',async e=>{const s=e.target.closest('[data-asig]');if(!s)return;const F=FB(),id=s.dataset.asig,nv=s.value,old=asignado(id),r=PED.find(x=>x.id===id);
+  try{if(old&&old!==nv){const o=RUT.find(x=>x.id===old);const e2={...(o.e||{})};delete e2[id];await F.docSet('rutas',old,{n:o.n,ids:(o.ids||[]).filter(x=>x!==id),e:e2})}
+    if(nv){const n=RUT.find(x=>x.id===nv);const e2={...(n.e||{})};e2[id]={p:r.p||'',n:r.n||'',tel:r.tel||'',d:r.d||'',i:itemsTxt(r.i),T:r.T||'',g:r.g||'',a:r.a||''};
+      await F.docSet('rutas',nv,{n:n.n,ids:[...new Set([...(n.ids||[]),id])].slice(-80),e:e2});
+      if(['recibido'].includes(r.s))await F.cambiar(id,{s:'aceptado'});T().toast('Asignado a '+n.n+' 🚚')}}
+  catch(err){console.warn(err);T().toast('No se pudo asignar. ¿Ya publicaste las reglas de Firebase?')}});
+sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const F=FB();
+  try{
+   if('repAdd' in b.dataset){const n=sec.querySelector('#repNom').value.trim();if(!n){T().toast('Escribe el nombre');return}
+     const code='R'+(n.normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,6))+rnd(5);await F.docSet('rutas',code,{n:n.slice(0,40),ids:[],e:{}});sec.querySelector('#repNom').value='';T().toast('Repartidor agregado')}
+   else if(b.dataset.repWa){const r=RUT.find(x=>x.id===b.dataset.repWa);const url=location.origin+location.pathname+'?r='+r.id;
+     const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(`Hola ${r.n} 👋 Esta es tu liga de reparto de Distribuidora ARBA. Ahí te salen tus entregas y las marcas como entregadas:\n${url}\n\nÁbrela en Chrome y agrégala a tu pantalla de inicio.`);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+   else if(b.dataset.repDel){if(confirm('¿Borrar este repartidor? Ya no podrá ver entregas.'))await F.negBorrar('rutas',b.dataset.repDel)}
+  }catch(err){console.warn(err);T().toast('No se pudo. ¿Ya publicaste las reglas de Firebase?')}});
+function iniciar(){const F=FB();un.forEach(f=>f());un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok()))return;
+  un.push(F.negVer('rutas',L=>{RUT=(L||[]).sort((a,b)=>a.n.localeCompare(b.n));pinta()}),F.lista(rows=>{PED=rows;pinta()}))}
+window.addEventListener('arba-auth',()=>setTimeout(iniciar,150));
 })();
 </script>
 <script>
@@ -1928,11 +2013,11 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
   if(lk&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
