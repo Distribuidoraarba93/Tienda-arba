@@ -497,6 +497,7 @@ opción: Envase 60 oz · 30/10 piezas | 940.39 pesos
 
 Tapas Dart
 id: dp17
+foto: tapas-dart
 presentación: Caja
 dibujo: tapa
 descripción: Tapas de plástico para vasos y envases térmicos Dart.
