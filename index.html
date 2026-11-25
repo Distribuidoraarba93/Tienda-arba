@@ -425,6 +425,7 @@ body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display
 
 #edProd{position:fixed;inset:0;z-index:300;background:#0b1220;overflow:auto;color:#eef2f8}
 #edProd .edin{max-width:560px;margin:0 auto;padding:12px 16px 40px;display:grid;gap:8px}
+.eden{border:1px solid #ffffff25;border-radius:10px;padding:8px 10px}.eden summary{font:700 13px Poppins,system-ui;cursor:pointer}.eden summary small{font-weight:500;opacity:.7}.eden label{margin-top:8px}
 #edProd .edh{display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0b1220;padding:8px 0;z-index:2}#edProd .edh b{color:#f4b400;font:800 18px Poppins,system-ui}
 #edProd .edh button{border:2px solid #f4b400;background:#0b1220;color:#f4b400;border-radius:50%;width:38px;height:38px;font-size:18px}
 #edProd label{display:grid;gap:4px;font:600 13px Poppins,system-ui}#edProd input,#edProd select,#edProd textarea{width:100%;box-sizing:border-box;background:#152036;color:#fff;border:1px solid #ffffff30;border-radius:10px;padding:10px;font:15px Poppins,system-ui}
@@ -1468,7 +1469,15 @@ window.ARBA_CAT={base:id=>BASE.find(p=>p.id===id),ov:id=>OV[id],aplicar};
 if(Object.keys(OV).length)aplicar();
 function escuchar(){const F=FB();if(!F||!F.negVer||escuchar.ok)return;escuchar.ok=1;
   F.negVer('catalogo',docs=>{if(!docs)return;const n={};docs.forEach(d=>{const {id,...r}=d;n[id]=r});
-    if(JSON.stringify(n)===JSON.stringify(OV))return;OV=n;try{localStorage.setItem('arba-cat',JSON.stringify(OV))}catch(e){}aplicar()})}
+    if(JSON.stringify(n)===JSON.stringify(OV))return;OV=n;try{localStorage.setItem('arba-cat',JSON.stringify(OV))}catch(e){}aplicar();if(window.ARBA_EN_LLENA)window.ARBA_EN_LLENA();setTimeout(rellena,3000)})}
+/* Productos nuevos o cambiados sin inglés: el dueño los traduce solo al abrir su app */
+let rellenando=false;
+async function rellena(){if(rellenando||!libre()||!window.ARBA_TRAD)return;rellenando=true;const F=FB();
+  try{for(const [id,d] of Object.entries(OV)){if(d.oculto||!d.n)continue;const base=BASE.find(p=>p.id===id);
+      if(d.en&&d.en.n)continue;if(base&&base.n===d.n&&base.d===d.d)continue;
+      const [tn,td]=await Promise.all([window.ARBA_TRAD(d.n),window.ARBA_TRAD(d.d||'')]);if(!tn)break;
+      await F.docMerge('catalogo',id,{en:{n:tn,d:td||'',a:true}})}}catch(e){console.warn('traducir',e)}rellenando=false}
+window.addEventListener('arba-auth',()=>setTimeout(rellena,4000));
 if(FB())escuchar();window.addEventListener('arba-fb',escuchar);
 
 /* ---------- Editor (solo dueño desbloqueado) ---------- */
@@ -1489,6 +1498,9 @@ function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero �
   <label id="edCNw" hidden>Nombre de la categoría nueva<input id="edCN"></label>
   <label>Presentación (ej. Caja con 500 piezas)<input id="edU" value="${esc(p&&p.u)}"></label>
   <label>Descripción<textarea id="edD">${esc(p&&p.d)}</textarea></label>
+  <details class="eden" ${p&&p.en&&p.en.n?'':''}><summary>🇺🇸 Inglés <small>(se traduce solo al guardar)</small></summary>
+   <label>Nombre en inglés<input id="edNE" data-noen value="${esc(p&&p.en&&p.en.n)}" placeholder="Se llena solo al guardar"></label>
+   <label>Descripción en inglés<textarea id="edDE" data-noen placeholder="Se llena solo al guardar">${esc(p&&p.en&&p.en.d)}</textarea></label></details>
   <div class="ed2"><label>Precio (pesos)<input id="edP" type="number" step="0.01" value="${p&&p.pr!=null?p.pr:''}" placeholder="Vacío = cotizar"></label><label>Compra mínima<input id="edMin" type="number" value="${p&&p.min||''}" placeholder="1"></label></div>
   <div class="ed2"><label>Mayoreo desde<input id="edMyN" type="number" value="${p&&p.my?p.my[0]:''}"></label><label>Precio mayoreo<input id="edMyP" type="number" step="0.01" value="${p&&p.my?p.my[1]:''}"></label></div>
   <label>Etiqueta (opcional, ej. Nuevo, Oferta)<input id="edTag" value="${esc(p&&p.tag)}"></label>
@@ -1523,6 +1535,13 @@ ed.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)r
    const d={n,cat,u:g('#edU'),d:g('#edD')||'Pídelo y te confirmamos disponibilidad por WhatsApp.',pr:ops.length?null:num(g('#edP')),my:mn&&mp?[mn,mp]:null,v:ops.length?ops:null,
      min:num(g('#edMin'))>1?num(g('#edMin')):null,tag:g('#edTag')||null,oculto:ed.querySelector('#edHide').checked,img:foto||prev.img||null,art:prev.art||'caja',gal:prev.gal||null,f:Date.now()};
    if(!d.v)delete d.v;
+   {const nE=g('#edNE'),dE=g('#edDE'),old=prev.en||{},auto=old.a!==false;
+    const cambioN=n!==prev.n,cambioD=d.d!==prev.d;
+    let en={n:nE,d:dE,a:auto&&nE===(old.n||'')&&dE===(old.d||'')};
+    if((!nE||(en.a&&cambioN))||(!dE||(en.a&&cambioD))){b.disabled=true;b.textContent='Traduciendo al inglés…';
+      const [tn,td]=await Promise.all([(!nE||(en.a&&cambioN))?window.ARBA_TRAD(n):nE,(!dE||(en.a&&cambioD))?window.ARBA_TRAD(d.d):dE]);
+      en={n:tn||nE||'',d:td||dE||'',a:true}}
+    if(en.n)d.en=en}
    const cc={c:num(g('#edCost')),v:{}};[...ed.querySelectorAll('.edop')].filter(r=>r.querySelector('[data-on]').value.trim()).forEach((r,i)=>{const x=num(r.querySelector('[data-oc]').value);if(x!=null)cc.v[i]=x});
    try{b.disabled=true;b.textContent='Guardando…';await F.docSet('catalogo',cur,JSON.parse(JSON.stringify(d)));try{await F.docSet('costos',cur,cc)}catch(e){}msg(d.oculto?'Guardado y oculto de la tienda':'¡Publicado! Ya se ve en la tienda ✅');cerrar()}
    catch(err){console.warn(err);msg('No se pudo guardar. ¿Ya publicaste las reglas de Firebase?');b.disabled=false;b.textContent='💾 Guardar y publicar'}}});
@@ -2146,6 +2165,11 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
 })();
 </script>
 <script>
+/* Traductor automático español → inglés para productos nuevos (gratis, sin llave). Si falla, regresa null. */
+window.ARBA_TRAD=async function(t){t=String(t||'').trim();if(!t)return '';const to=ms=>new Promise((_,r)=>setTimeout(()=>r('tarde'),ms));
+  try{const r=await Promise.race([fetch('https://api.mymemory.translated.net/get?langpair=es|en&de=arturo.arba93@gmail.com&q='+encodeURIComponent(t.slice(0,480))),to(7000)]);const j=await r.json();const x=j&&j.responseData&&j.responseData.translatedText;if(x&&!/MYMEMORY WARNING|QUERY LENGTH/i.test(x))return x}catch(e){}
+  try{const r=await Promise.race([fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=en&dt=t&q='+encodeURIComponent(t)),to(7000)]);const j=await r.json();const x=(j[0]||[]).map(a=>a[0]).join('');if(x)return x}catch(e){}
+  return null};
 /* ===== AJUSTES: tamaño de letra, tamaño de fotos y modo oscuro/claro (se guarda en el celular) ===== */
 (function(){
 const K='arba-aj',ld=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}};
@@ -2155,8 +2179,7 @@ function aplica(A){const c=document.documentElement.classList;['l-chica','l-gran
   const m=document.querySelector('meta[name=theme-color]');if(m&&!document.body.classList.contains('dueno'))m.content=c.contains('claro')?'#f4f4f4':'#0b1525'}
 function abre(){const A=Object.assign({i:'es',l:'normal',f:'normales',t:'oscuro'},ld());let w=document.getElementById('ajW');if(w)w.remove();w=document.createElement('div');w.id='ajW';
   const g=(k,t)=>`<span class="lbl">${t}</span><div class="ops">${OPS[k].map(([v,n,s])=>`<button type="button" data-k="${k}" data-v="${v}" class="${A[k]===v?'on':''}"${k==='l'?` style="font-size:${v==='chica'?12.5:v==='grande'?17:14.5}px"`:''}>${n}${s&&k!=='l'?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
-  const solo=!(document.body.classList.contains('dueno')||document.body.classList.contains('repa'));
-  w.innerHTML=`<div role="dialog" aria-label="Ajustes"><h3>⚙️ Ajustes<button type="button" data-x aria-label="Cerrar">×</button></h3>${solo?g('i','Idioma').replace('class="ops"','class="ops ops2"'):''}${g('l','Tamaño de letra')}${g('f','Tamaño de fotos')}${g('t','Modo')}<p style="margin:4px 0 0;font-size:12px;opacity:.7">Se guarda en este celular.</p></div>`;
+  w.innerHTML=`<div role="dialog" aria-label="Ajustes"><h3>⚙️ Ajustes<button type="button" data-x aria-label="Cerrar">×</button></h3>${g('i','Idioma').replace('class="ops"','class="ops ops2"')}${g('l','Tamaño de letra')}${g('f','Tamaño de fotos')}${g('t','Modo')}<p style="margin:4px 0 0;font-size:12px;opacity:.7">Se guarda en este celular.</p></div>`;
   document.body.appendChild(w);
   w.addEventListener('click',e=>{if(e.target===w||e.target.closest('[data-x]')){w.remove();return}const b=e.target.closest('[data-k]');if(!b)return;const A2=ld();const cambiaIdioma=b.dataset.k==='i'&&(A2.i||'es')!==b.dataset.v;A2[b.dataset.k]=b.dataset.v;try{localStorage.setItem(K,JSON.stringify(A2))}catch(er){}if(cambiaIdioma){location.reload();return}aplica(A2);
     w.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle('on',x===b))})}
@@ -2165,26 +2188,27 @@ document.addEventListener('click',e=>{if(e.target.closest('#ajBtn,[data-du="aj"]
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>aplica(ld()))}catch(e){}
 aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
-if(ld().i==='en'&&!/[?&](dueno|r|repa)=/.test(location.search)&&localStorage.getItem('arba-modo')!=='dueno'&&!localStorage.getItem('arba-repa')){
+if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=1';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=3';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
-  P.forEach(p=>{const x=E.N[p.id];if(!x)return;NM[p.n]=x[0];if(p.d)NM[p.d]=x[1];ENX[p.id]=x[0]+' '+x[1]});window.ARBA_ENX=ENX;
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
+  const palF=t=>{let c=0;const r=String(t).replace(ES,w=>{if(E.W[w]!=null){c++;return E.W[w]}return w}).replace(/\s{2,}/g,' ').trim();return c?r:null};
+  const llena=()=>{window.ARBA_T.P.forEach(p=>{if(p.u&&NM[p.u]==null){const x=palF(p.u);if(x)NM[p.u]=x}(p.v||[]).forEach(o=>{if(o.n&&NM[o.n]==null){const x=palF(o.n);if(x)NM[o.n]=x}});const x=p.en&&p.en.n?[p.en.n,p.en.d||'']:E.N[p.id];if(!x)return;NM[p.n]=x[0];if(p.d&&x[1])NM[p.d]=x[1];ENX[p.id]=x[0]+' '+x[1]})};llena();window.ARBA_ENX=ENX;window.ARBA_EN_LLENA=()=>{llena();todo(document.body)};
   const pal=t=>{if(t.length>70)return null;let c=0,n=0;const r=t.replace(ES,w=>{if(/^[a-záéíóúñü]/.test(w))n++;if(E.W[w]!=null){if(/^[a-záéíóúñü]/.test(w))c++;else c+=0.5;return E.W[w]}return w}).replace(/\s{2,}/g,' ').trim();return c&&(n===0||c/n>=0.6)?r:null};
   const llaves=t=>t.replace(/\{([^}]*)\}/g,(m,x)=>uno(x)??x);
-  const NOMS=P.map(p=>p.n).filter(n=>NM[n]).sort((a,b)=>b.length-a.length);
+  const NOMS=()=>window.ARBA_T.P.map(p=>p.n).filter(n=>NM[n]).sort((a,b)=>b.length-a.length);let SINPAL=false;
   function uno(t){if(NM[t]!=null)return NM[t];
-    for(const n of NOMS){if(t.startsWith(n+' ')){const r=t.slice(n.length+1);return NM[n]+' '+(uno(r)??r)}}
+    for(const n of NOMS()){if(t.startsWith(n+' ')){const r=t.slice(n.length+1);return NM[n]+' '+(uno(r)??r)}}
     for(const [re,rp] of E.R){if(re.test(t))return llaves(t.replace(re,rp))}
     if(t.includes(' · '))return t.split(' · ').map(x=>uno(x)??x).join(' · ');
     if(/^(.+) (\(.+\))$/.test(t)){const m=/^(.+) (\(.+\))$/.exec(t);const a=uno(m[1]);if(a!=null)return a+' '+(uno(m[2].slice(1,-1))!=null?'('+uno(m[2].slice(1,-1))+')':m[2])}
-    return pal(t)}
+    return SINPAL?null:pal(t)}
   const tr=s=>{const t=s.trim();if(!t)return null;const r=uno(t);return r==null||r===t?null:s.replace(t,r)};
-  const SKIP='#duBar,#pPriv,#repaW,#panel,script,style,[data-noen]';const LISTO=new WeakMap();
-  const nodo=n=>{const p=n.parentElement;if(!p||p.closest(SKIP))return;if(LISTO.get(n)===n.nodeValue)return;const r=tr(n.nodeValue);if(r!=null)n.nodeValue=r;LISTO.set(n,n.nodeValue)};
-  const attrs=el=>{if(el.closest&&el.closest(SKIP))return;['placeholder','aria-label','title'].forEach(a=>{const v=el.getAttribute&&el.getAttribute(a);if(v){const r=tr(v);if(r!=null)el.setAttribute(a,r)}})};
+  const SKIP='script,style,textarea,[data-noen]',DATOS='#pPriv,#panel,#repaW,#edProd,.solc,.invr';const LISTO=new WeakMap();
+  const nodo=n=>{const p=n.parentElement;if(!p||p.closest(SKIP))return;if(LISTO.get(n)===n.nodeValue)return;SINPAL=!!p.closest(DATOS);const r=tr(n.nodeValue);SINPAL=false;if(r!=null)n.nodeValue=r;LISTO.set(n,n.nodeValue)};
+  const attrs=el=>{if(el.closest&&el.closest('script,style,[data-noen]'))return;['placeholder','aria-label','title'].forEach(a=>{const v=el.getAttribute&&el.getAttribute(a);if(v){const r=tr(v);if(r!=null)el.setAttribute(a,r)}})};
   const todo=root=>{if(root.nodeType===3){nodo(root);return}if(root.nodeType!==1)return;attrs(root);const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode())nodo(n);root.querySelectorAll('[placeholder],[aria-label],[title]').forEach(attrs)};
   todo(document.body);document.title='Distribuidora ARBA · Disposables, groceries and tortillas';
   new MutationObserver(ms=>ms.forEach(m=>{if(m.type==='characterData')nodo(m.target);else if(m.type==='attributes')attrs(m.target);else m.addedNodes.forEach(todo)})).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','aria-label','title']});
