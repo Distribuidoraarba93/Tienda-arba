@@ -1,8 +1,8 @@
 {
- "id": "panel-arba",
+ "id": "arba-dueno",
  "name": "ARBA Dueño",
  "short_name": "ARBA Dueño",
- "start_url": "./panel.html",
+ "start_url": "./panel.html?app=dueno",
  "scope": "./",
  "display": "standalone",
  "background_color": "#0b1220",
