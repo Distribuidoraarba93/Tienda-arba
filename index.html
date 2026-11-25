@@ -1168,7 +1168,7 @@ const notiVisto=()=>{try{return JSON.parse(localStorage.getItem('arba-notif')||'
 function avisar(p,st){const m=NOTI[st];if(!m)return;const v=notiVisto();if((v[p]||'recibido')===st)return;v[p]=st;try{localStorage.setItem('arba-notif',JSON.stringify(v))}catch(e){}
   const o=estTodos()[p]||{};const tt=m[0]+(o.t&&(st==='camino'||st==='aceptado'||st==='listo')?' · '+o.t:'');
   if(!document.hidden)toast(tt);
-  if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'badge-96.png',tag:'arba-'+p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
+  if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'badge-96.png?v=2',tag:'arba-'+p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
 const vig={};
 function vigilar(){const F=window.ARBA_FB;if(!F||!F.escuchar)return;const al=estTodos();
   Object.keys(al).forEach(p=>{const o=al[p];if(!o||!o.k||vig[p]||o.s==='entregado'||o.s==='cancelado'||Date.now()-(o.c||o.f||0)>7*864e5)return;
