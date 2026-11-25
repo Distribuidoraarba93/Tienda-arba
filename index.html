@@ -517,9 +517,140 @@ html.l-chica{zoom:.9}html.l-grande{zoom:1.12}
 html.f-chicas .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}html.f-chicas .grid .p h3,html.f-chicas .grid .p .nm{font-size:12px}
 html.f-grandes .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
 @media(min-width:900px){html.f-chicas .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}html.f-grandes .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}}
-html.claro{filter:invert(1) hue-rotate(180deg);background:#fff}
-html.claro img,html.claro video,html.claro picture,html.claro canvas,html.claro iframe,html.claro .img,html.claro [style*="background-image"]{filter:invert(1) hue-rotate(180deg)}
-html.claro .img img{filter:none}
+
+/* ===== MODO CLARO de verdad (colores propios, sin voltear) ===== */
+html.claro{color-scheme:light!important;--bg:#f3f5f8;--card:#ffffff;--ink:#152016;--mute:#5d6b7a;--line:#dde3ea;background:#f3f5f8}
+html.claro body{background:#f3f5f8;color:#152016}
+html.claro header{color:#152016;box-shadow:0 2px 10px #0b152514;border-bottom:1px solid #e3e8ee}
+html.claro .logo small{color:#5d6b7a;opacity:1}
+html.claro .search{border:1.5px solid #d5dde6;background:#fff}
+html.claro .search input{background:#fff;color:#152016}
+html.claro .search span,html.claro .search button{background:#fff;color:#0b6b35}
+/* ===== MODO CLARO GENERADO ===== */
+html.claro .cats button{border:1px solid #0b152555}
+html.claro .sub{color:#1b2433}
+html.claro .p .img{background:light-dark(#eef3e8,#e7efe8)}
+html.claro .li .th{background:light-dark(#eef3e8,#e7efe8)}
+html.claro .seg button.on{background:light-dark(#e3f2e7,#dcefe1)}
+html.claro .box .img{background:light-dark(#eef3e8,#e7efe8)}
+html.claro .box .x{background:#ffffff}
+html.claro .opts button.on{background:light-dark(#e3f2e7,#dcefe1)}
+html.claro header{background:#ffffff}
+html.claro .cats{background:#f3f5f8}
+html.claro .promise{background:#f3f5f8}
+html.claro .price small{color:#9a6b00}
+html.claro .dh{background:#ffffff}
+html.claro .tot span:last-child{color:#9a6b00}
+html.claro .antbox{background:#fff3cc}
+html.claro footer{background:#ffffff}
+html.claro .dots i{background:#dbe2ea}
+html.claro .cats button{color:#3a475a}
+html.claro .cats .ic{background:#ffffff;border:2px solid #dbe2ea}
+html.claro .cats button.on{color:#9a6b00}
+html.claro .cats button.on .ic{background:#fff3cc}
+@media(max-width:760px){html.claro .bnav{background:#ffffff}}
+@media(max-width:760px){html.claro .bnav button,html.claro .bnav a{color:#3a475a}}
+@media(max-width:760px){html.claro .bnav .on{color:#9a6b00}}
+html.claro .gracias>div{background:linear-gradient(135deg,#e7f4ea,#ffffff);color:#1b2433}
+html.claro .gracias h2{color:#9a6b00}
+html.claro .rep{background:linear-gradient(135deg,#2a2208,#ffffff)}
+html.claro .rep b{color:#9a6b00}
+html.claro .rep span{color:#1b2433}
+html.claro .rep small{color:#5d6b7a}
+html.claro .calc>div{background:#f3f5f8;color:#1b2433}
+html.claro .calc h3{color:#9a6b00}
+html.claro .calc .sub{color:#5d6b7a}
+html.claro .calc .pl button{background:#ffffff;border:1px solid #cfd8e3;color:#1b2433}
+html.claro .calc .pl button.on{background:#e7f4ea}
+html.claro .calc .pl small{color:#5d6b7a}
+html.claro .calc .num button{background:#ffffff;border:1px solid #cfd8e3;color:#1b2433}
+html.claro .calc .res{background:#e7f4ea}
+html.claro .calc .res b{color:#9a6b00}
+html.claro .calc .res .note{color:#5d6b7a}
+html.claro .calc .x{background:#ffffff}
+html.claro .cstlk>div{background:#ffffff}
+html.claro .cstlk .vrow{border-bottom:1px solid #0b15251a}
+html.claro .cstlk .vrow b{color:#9a6b00}
+html.claro .rel{background:#ffffff;border:1px solid #0b152514}
+html.claro .rel>b{color:#9a6b00}
+html.claro .rel-c{background:#f3f5f8}
+html.claro .rel-n{color:#1b2433}
+html.claro .rel-p{color:#9a6b00}
+html.claro .box .buy{border-top:1px solid #0b15251a}
+html.claro .vista{border:1px solid #dbe2ea}
+html.claro .vista button{color:#5d6b7a}
+html.claro .dhero{background:linear-gradient(135deg,#e7f4ea,#ffffff)}
+html.claro .tema-strip{background:linear-gradient(90deg,#ffffff,color-mix(in srgb,var(--tc) 55%,#ffffff),#ffffff);color:#1b2433}
+html.claro .share button,html.claro .share a{background:#ffffff;border:1px solid #dbe2ea;color:#1b2433}
+html.claro .thead{background:linear-gradient(135deg,#e7f4ea,#ffffff)}
+html.claro .thead b{color:#9a6b00}
+html.claro .thead span{color:#1b2433}
+html.claro body.dlock #panel{background:#ffffff}
+html.claro body.dueno #panel h3:first-of-type::before{color:#9a6b00}
+html.claro #duBar{background:linear-gradient(90deg,#ffffff,#1a2540)}
+html.claro .invr.po em{color:#9a6b00}
+html.claro #invAdm .vgrid div{background:#0b15250d}
+html.claro #invAdm .vgrid .po b{color:#9a6b00}
+html.claro #duBar b{color:#9a6b00}
+html.claro #duBar a,html.claro #duBar button{background:#0b152510;color:#1b2433}
+html.claro #edProd{background:#ffffff;color:#1b2433}
+html.claro .eden{border:1px solid #0b152525}
+html.claro #edProd .edh{background:#ffffff}
+html.claro #edProd .edh b{color:#9a6b00}
+html.claro #edProd .edh button{background:#ffffff}
+html.claro #edProd input,html.claro #edProd select,html.claro #edProd textarea{background:#ffffff;color:#1b2433;border:1px solid #0b152530}
+html.claro #edProd .edfile{color:#9a6b00}
+html.claro #edProd .edop{border-bottom:1px solid #0b152515}
+html.claro #venAdm .vgrid div{background:#0b15250d}
+html.claro #venAdm .vgrid b{color:#9a6b00}
+html.claro #venAdm .vrow{border-bottom:1px solid #0b152512}
+html.claro body.repa{background:#ffffff}
+html.claro #repaW{color:#1b2433}
+html.claro #repaW .rh{background:#ffffff}
+html.claro #repaW .rh b{color:#9a6b00}
+html.claro #repaW .rh button{border:1px solid #0b152540}
+html.claro #repaW .rc{background:#ffffff;border:1px solid #0b152520}
+html.claro #repaW pre{background:#ffffff}
+html.claro #entAdm .entc{border-bottom:1px solid #0b152515}
+html.claro #entAdm .vgrid div{background:#0b15250d}
+html.claro #entAdm .vgrid b{color:#9a6b00}
+html.claro #entAdm .vrow{border-bottom:1px solid #0b152512}
+html.claro #entAdm .negrow{border-bottom:1px solid #0b152515}
+html.claro #repaW .rtabs button{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #repaW .rsb button{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #repaW .rfc{background:#ffffff}
+html.claro #repaW .rfc input,html.claro #repaW .rfc textarea{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #repaW #rQ{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #repaW .rpr{border-bottom:1px solid #0b152510}
+html.claro #repaW .rpr b{color:#9a6b00}
+@media(max-width:760px){html.claro .bnav{border:1px solid #0b15251f!important}}
+html.claro .promos h2 i{border:1.5px solid #0b152555}
+html.claro .pcard{color:#1b2433}
+html.claro .pcard span.pu{color:#5d6b7a}
+html.claro #pgTxt b{color:#9a6b00}
+html.claro .ajbtn{background:#ffffff;border:1px solid #0b152533}
+html.claro #ajW>div{background:#ffffff;color:#1b2433}
+html.claro #ajW .ajb{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #ajW .ops button{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
+html.claro #ajW .ops button.on{background:#e7f4ea}
+html.claro .ab{background:#f3f5f8;color:#1b2433}
+
+html.claro .hist button{color:#1b2433}
+html.claro .hist .hring img{border-color:#f3f5f8}
+html.claro .cats button{border:0!important}
+html.claro .promos h2{color:#152016}html.claro .promos h2 i{border-color:#0b152533}
+html.claro .pcard{color:#152016}html.claro .pcard span.pu{color:#5d6b7a}
+html.claro .price{color:#9a6b00;background:#fff4cc;border-color:#f4b40088;text-shadow:none}
+html.claro .price small{color:#9a6b00}
+html.claro .dh{color:#152016;border-bottom:1px solid #e3e8ee}html.claro .dh .x{color:#152016}
+html.claro .progbox input[type=date]{color-scheme:light}
+html.claro #pgTxt b{color:#9a6b00}
+html.claro .bnav{background:#ffffffee!important;border-color:#0b15251f!important;box-shadow:0 10px 30px #0b152530!important}
+html.claro .bnav button,html.claro .bnav a{color:#3a475a}
+html.claro .bnav .on{background:#f4b40030;color:#8a5a00}
+html.claro .rep{background:linear-gradient(135deg,#fff4cc,#ffffff)}
+html.claro #duBar{background:#ffffff;border-bottom:1px solid #e3e8ee}
+/* ===== FIN MODO CLARO ===== */
 header .bar{position:relative}
 .ajbtn{position:absolute;top:8px;right:10px;width:40px;height:40px;border-radius:50%;border:1px solid #ffffff33;background:#0b1525;font-size:20px;display:grid;place-items:center;cursor:pointer;z-index:3}
 #ajW{position:fixed;inset:0;background:#000b;z-index:95;display:flex;align-items:flex-end;justify-content:center}
