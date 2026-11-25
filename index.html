@@ -1030,6 +1030,12 @@ $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#for
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
 const panelLink=o=>location.origin+location.pathname+'#panel-arba?'+Object.keys(o).filter(k=>o[k]).map(k=>k+'='+encodeURIComponent(o[k])).join('&');
+/* Campana para que el cliente active los avisos de su pedido */
+function campana(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),app=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(!('Notification' in window)||!navigator.serviceWorker)return ios&&!app?'<p class="note" style="margin-top:10px;padding:10px;border-radius:10px;background:#f4b40018;border:1px solid #f4b40066">🔔 ¿Quieres que te avisemos cuando cambie tu pedido? En iPhone primero agrega la tienda a tu inicio: toca <b>Compartir ⬆️</b> → <b>Agregar a inicio</b>, ábrela desde ahí y vuelve a esta pantalla.</p>':'';
+  if(Notification.permission==='granted')return '<p class="note" style="color:#7ed957;margin-top:10px">🔔 Avisos activados: te avisamos en tu celular cuando cambie tu pedido.</p>';
+  if(Notification.permission==='denied')return '<p class="note" style="margin-top:10px">🔕 Tienes los avisos bloqueados para esta página. Actívalos en los ajustes del navegador si quieres que te avisemos.</p>';
+  return '<button class="go" data-notif style="width:100%;margin-top:12px;background:#f4b400;color:#152016">🔔 Avísame en mi celular cuando cambie</button>'}
 const openWA=(num,msg)=>{const a=document.createElement('a');a.href=`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()};
 $('#form').addEventListener('submit',e=>{
   e.preventDefault();
@@ -1049,7 +1055,7 @@ $('#form').addEventListener('submit',e=>{
   fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(nota?{no:nota.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...refDe()});
   toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;
-  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${pedN(ped)}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button></div>`;
+  $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${pedN(ped)}</b>.<br>Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button>${campana()}</div>`;
 });
 const banco=()=>{try{return (localStorage.getItem('arba-banco')||'').trim()}catch(e){return ''}};
 $('#pBanco').value=banco();
@@ -1160,7 +1166,7 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
     const extra=cls==='ahora'&&o.t?` <br>🕒 ${rec?'Listo en':'Llega en'}: ${o.t}`:'';
     return `<li class="${cls}"><span class="dot">${cls==='hecho'?'✓':lv}</span><div><b>${t}</b>${cls?`<small>${d}${extra}</small>`:''}</div></li>`}).join('')+'</ol>';
   if(n===2&&!o.t)h+='<p class="note">Te avisamos por WhatsApp en cuanto cambie.</p>';
-  const nb=('Notification' in window)&&n<5?(Notification.permission==='granted'?'<p class="note" style="color:#7ed957">🔔 Avisos activados: te avisamos en tu celular cuando cambie tu pedido.</p>':Notification.permission!=='denied'?'<button class="go" data-notif style="width:100%;margin-top:10px;background:#f4b400;color:#152016">🔔 Avísame en mi celular cuando cambie</button>':''):'';
+  const nb=n<5?campana():'';
   return h+nb+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
 /* Avisos en el celular cuando cambia el estatus */
 const NOTI={aceptado:['✅ Pedido aceptado','Ya estamos preparando tu pedido.'],pagado:['💰 Pago recibido','Gracias, ya quedó registrado tu pago.'],camino:['🚚 Tu pedido va en camino','Ya va para allá. ¡Prepárate!'],listo:['📦 Listo para recoger','Tu pedido ya está listo, puedes pasar por él.'],entregado:['🎉 Pedido entregado','¡Gracias por tu compra! Cada pedido tuyo hace crecer a una familia chihuahuense 💛'],cancelado:['❌ Pedido cancelado','Escríbenos si tienes dudas.']};
@@ -2234,7 +2240,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=3';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=4';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
