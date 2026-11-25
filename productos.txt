@@ -620,6 +620,7 @@ descripción: Película plástica Vitafilm de 18 pulgadas para emplayar.
 
 Bolsas de plástico sueltas
 id: bs
+foto: bolsa-natural
 presentación: Por kilo · escoge la medida
 dibujo: bolsa
 descripción: Bolsas de plástico sueltas, se venden por kilo. Escoge la medida que necesitas.
@@ -629,6 +630,8 @@ opción: 70x90 | 76.5 pesos
 
 Bolsas de plástico en rollo
 id: br
+foto: bolsa-rollo
+fotos: bolsa-rollo-reyma
 presentación: Por kilo · escoge la medida
 dibujo: rollo
 descripción: Bolsas de plástico en rollo, se venden por kilo. Escoge la medida que necesitas.
@@ -658,6 +661,7 @@ opción: Camiseta grande poliseda biodegradable | 102.91 pesos
 
 Aluminio grueso 45 cm
 id: x12
+foto: aluminio-rollo
 precio: 441.5 pesos
 presentación: Pieza
 dibujo: rollo
@@ -749,6 +753,7 @@ opción: Pana biodegradable chica blanca · bulto 25 kg | 1800.12 pesos
 
 Bolsa transparente por caja
 id: dp25
+foto: bolsa-natural
 presentación: Caja · baja densidad · escoge medida
 dibujo: bolsa
 descripción: Bolsa transparente de baja densidad por caja cerrada. Escoge medida y tamaño de caja.
