@@ -1397,7 +1397,7 @@ window.ARBA_FB={ADMIN,
   FK,
   docMerge(col,id,d){return fs.setDoc(fs.doc(db,col,id),d,{merge:true})},
   docVer(col,id,cb){return fs.onSnapshot(fs.doc(db,col,id),s=>cb(s.exists()?s.data():null),()=>cb(null))},
-  async invPon(ik,key,q,m){const r=fs.doc(db,'inventario',ik);await fs.setDoc(r,{q:{},m:{}},{merge:true});const u={};
+  async invPon(ik,key,q,m){const r=fs.doc(db,'inventario',ik);await fs.setDoc(r,{},{merge:true});const u={};
     u['q.'+key]=q==null?fs.deleteField():q;u['m.'+key]=m==null?fs.deleteField():m;return fs.updateDoc(r,u)},
   /* Descuenta (quitar=true) o regresa (false) al inventario lo que lleva un pedido. Usa transacción para no descontar dos veces. */
   invPedido(id,quitar,ik,desde){return fs.runTransaction(db,async tx=>{const pr=fs.doc(db,'pedidos_priv',id),iv=fs.doc(db,'inventario',ik);
@@ -2203,7 +2203,7 @@ sol.addEventListener('click',async e=>{const b=e.target.closest('[data-sok],[dat
 async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok())||!F.invPedido)return;
   agoVigila();envuelve();
   try{let d=await F.docGet('dueno','inv');if(!d||!d.ik){d={ik:rnd(24),desde:Date.now()};await F.docSet('dueno','inv',d)}IK=d.ik;DESDE=d.desde||0;window.ARBA_IKV=IK;
-    await F.docMerge('inventario',IK,{q:{},m:{}})}catch(e){console.warn('inv',e);inv.querySelector('#invL').innerHTML='<p class="note">No se pudo abrir el inventario. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
+    await F.docMerge('inventario',IK,{})}catch(e){console.warn('inv',e);inv.querySelector('#invL').innerHTML='<p class="note">No se pudo abrir el inventario. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
   let primero=true;
   un.push(F.docVer('inventario',IK,d=>{INV=d||{q:{},m:{}};pinta();publica();if(primero){primero=false;const c=cuenta();if(c.po+c.ag)T().toast('⚠️ '+(c.ag?c.ag+' agotados':'')+(c.ag&&c.po?' y ':'')+(c.po?c.po+' por acabarse':'')+' en tu inventario')}}));
   un.push(F.negVer('rutas',L=>{const RN={};(L||[]).forEach(r=>{RN[r.id]=r.n;if(r.ik!==IK)F.docMerge('rutas',r.id,{ik:IK}).catch(()=>{})});window.ARBA_RN=RN;window.dispatchEvent(new Event('arba-rn'))}));
