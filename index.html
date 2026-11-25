@@ -433,6 +433,9 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 #entAdm .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}#entAdm .vgrid div{background:#ffffff0d;border:1px solid #f4b40044;border-radius:12px;padding:10px}#entAdm .vgrid small{display:block;opacity:.7;font-size:12px}#entAdm .vgrid b{font:800 20px Poppins,system-ui;color:#f4b400}
 #entAdm .vrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #ffffff12;font-size:14px}
 #entAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #ffffff15}#entAdm .negrow>div{flex:1}#entAdm .negrow span{display:block;font-size:12px;opacity:.75}#entAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}#entAdm .negnew{display:grid;gap:6px;margin-top:8px}
+#repaW .rtabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}#repaW .rtabs button{padding:10px;border-radius:12px;border:1px solid #ffffff30;background:#152036;color:#fff;font:700 14px Poppins,system-ui}#repaW .rtabs button.on{background:#f4b400;color:#152016;border-color:#f4b400}
+#repaW #rQ{width:100%;box-sizing:border-box;padding:12px;border-radius:12px;border:1px solid #ffffff30;background:#152036;color:#fff;font:15px Poppins,system-ui;margin-bottom:6px}
+#repaW .rpr{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid #ffffff10;font-size:14px}#repaW .rpr b{color:#f4b400}
 </style>
 </head>
 <body>
@@ -1494,10 +1497,11 @@ const ESTN={recibido:'🆕 Nuevo',aceptado:'👩‍🍳 Preparando',pagado:'💵
 const itemsTxt=i=>(i||'').split(',').filter(Boolean).map(s=>{const [k,q]=s.split('*'),it=T().item(k);return (q||1)+' x '+(it?it.name:k)}).join('\n');
 
 /* ---------- MODO REPARTIDOR (?r=CODIGO) ---------- */
-const qr=new URLSearchParams(location.search).get('r');let RC='';try{if(qr)localStorage.setItem('arba-repa',qr.toUpperCase());RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){RC=(qr||'').toUpperCase()}
+const qr=new URLSearchParams(location.search).get("r");let RC='';try{if(qr)localStorage.setItem('arba-repa',qr.toUpperCase());RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){RC=(qr||'').toUpperCase()}
 if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   document.title='ARBA Reparto';document.body.classList.add('repa');
-  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-rsal>Salir</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div>';document.body.appendChild(w);
+  {const m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-reparto.json';const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220'}
+  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA Reparto</b><span id="rNom"></span><button type="button" data-rsal>Salir</button></div><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Mis entregas</button><button type="button" data-rtab="p">🔎 Precios</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
   const st={};let ruta=null;const subs={};
   function pinta(){const L=document.getElementById('rLst');if(!ruta){L.innerHTML='<p class="note">Este código de repartidor no existe. Pídele la liga a Distribuidora ARBA.</p>';return}
     document.getElementById('rNom').textContent=ruta.n;
@@ -1510,7 +1514,14 @@ if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
     L.innerHTML=`<p class="note"><b>${pend.length}</b> pendientes · <b>${hech.length}</b> entregados</p>${pend.map(card).join('')||'<p class="note">🎉 No tienes entregas pendientes.</p>'}${hech.length?'<h4 style="margin:16px 0 6px">✅ Entregados</h4>'+hech.slice(-15).map(card).join(''):''}`}
   function vigila(){const F=FB();if(!F)return;F.repaRuta(RC,r=>{ruta=r;(r&&r.ids||[]).forEach(id=>{if(!subs[id])subs[id]=F.escuchar(id,d=>{st[id]=d&&d.s;pinta()})});pinta()})}
   if(FB()&&FB().repaRuta)vigila();else window.addEventListener('arba-fb',vigila,{once:true});
+  const precios=()=>{const {P,fmt,norm}=T();const q=(norm?norm(document.getElementById('rQ').value):document.getElementById('rQ').value.toLowerCase()).trim();
+    const L=P.filter(p=>!q||(norm?norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(o=>o.n).join(' ')):(p.n+' '+p.u).toLowerCase()).includes(q)).slice(0,60);
+    const my=m=>m?` <small>· mayoreo ${fmt(m[1])} desde ${m[0]}</small>`:'';
+    document.getElementById('rPL').innerHTML=L.map(p=>`<div class="rc"><b>${esc(p.n)}</b><br><small>${esc(p.u)} · ${esc(p.cat)}</small>${p.v?p.v.map(o=>`<div class="rpr"><span>${esc(o.n)}</span><b>${o.pr==null?'cotizar':fmt(o.pr)}</b></div>${o.my?`<div class="rpr"><small>mayoreo desde ${o.my[0]}</small><small>${fmt(o.my[1])}</small></div>`:''}`).join(''):`<div class="rpr"><span>Precio</span><b>${p.pr==null?'cotizar':fmt(p.pr)}</b></div>${p.my?`<div class="rpr"><small>mayoreo desde ${p.my[0]}</small><small>${fmt(p.my[1])}</small></div>`:''}`}</div>`).join('')||'<p class="note">No encontré ese producto.</p>'};
+  w.addEventListener('input',e=>{if(e.target.id==='rQ')precios()});
+  if(matchMedia('(display-mode: standalone)').matches||navigator.standalone)document.getElementById('rInst').hidden=true;
   w.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.rtab){w.querySelectorAll('[data-rtab]').forEach(x=>x.classList.toggle('on',x===b));const p=b.dataset.rtab==='p';document.getElementById('rLst').hidden=p;document.getElementById('rPre').hidden=!p;if(p)precios();return}
     if('rsal' in b.dataset){try{localStorage.removeItem('arba-repa')}catch(er){}location.href=location.pathname;return}
     if(b.dataset.rs){if(b.dataset.rs==='entregado'&&!confirm('¿Confirmas que ya entregaste el pedido '+ruta.e[b.dataset.id].p+'?'))return;
       b.disabled=true;try{await FB().repaMarca(b.dataset.id,b.dataset.rs,RC);T().toast(b.dataset.rs==='entregado'?'¡Entregado! ✅':'Marcado en camino 🚚')}catch(er){console.warn(er);T().toast('No se pudo marcar. Revisa tu internet.');b.disabled=false}}});

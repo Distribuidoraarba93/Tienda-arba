@@ -1,0 +1,24 @@
+{
+ "id": "arba-reparto",
+ "name": "ARBA Reparto",
+ "short_name": "ARBA Reparto",
+ "start_url": "./?repa=1",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#0b1220",
+ "theme_color": "#0b1220",
+ "icons": [
+  {
+   "src": "icon-reparto-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-reparto-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
