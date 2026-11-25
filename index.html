@@ -461,7 +461,8 @@ body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
-/* Que al tocar botones no salga 'Tocar para buscar' de Google ni se seleccione texto */
+/* Que al tocar no salga 'Tocar para buscar' de Google ni se seleccione texto (menos en campos para escribir) */
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],.sel{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
 #duBar,#duBar *,.dun,nav,nav *,button,.seg,.opts,.ajbtn,#repaW .rh,#repaW .rtabs,.cats,.chips{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 html.l-chica{zoom:.9}html.l-grande{zoom:1.12}
 html.f-chicas .grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}html.f-chicas .grid .p h3,html.f-chicas .grid .p .nm{font-size:12px}
@@ -1739,7 +1740,15 @@ async function bioCrear(){const id=crypto.getRandomValues(new Uint8Array(16));
 async function bioUsar(){const raw=Uint8Array.from(atob(LS.g('arba-bio')),c=>c.charCodeAt(0));
   await navigator.credentials.get({publicKey:{challenge:crypto.getRandomValues(new Uint8Array(32)),allowCredentials:[{type:'public-key',id:raw}],userVerification:'required',timeout:60000}});return true}
 
-let estado=null,cfg=null,dev=null,sinReglas=false,cargando=false;
+let estado=null,cfg=null,dev=null,sinReglas=false,cargando=false,bioYa=false,bioCorre=false;
+const bioFallos=()=>+(LS.g('arba-biof')||0);
+/* Al abrir la app bloqueada sale sola la huella / Face ID. Si falla 5 veces, ya solo con PIN. */
+async function bioAuto(box){if(!bioSi()||bioFallos()>=5||bioCorre)return;bioCorre=true;const t0=Date.now();
+  try{await bioUsar();LS.d('arba-biof');LS.d('arba-pinf');marca();refrescar()}
+  catch(e){if(Date.now()-t0<600){/* el celular pide un toque primero (iPhone): al tocar la pantalla sale Face ID */
+      const f=ev=>{if(ev.target.closest('input,a,button'))return;document.removeEventListener('click',f,true);bioAuto(document.querySelector('#pFb'))};document.addEventListener('click',f,true)}
+    else{const n=bioFallos()+1;LS.s('arba-biof',n);if(n>=5){T().toast('La huella no te reconoció 5 veces. Entra con tu PIN.');const b=document.querySelector('#pFb');if(b)pantalla(b)}}}
+  finally{bioCorre=false}}
 async function revisar(){const F=FB();cargando=true;sinReglas=false;
   try{cfg=await F.docGet('dueno','config');dev=await F.docGet('dueno_disp',DEV);
     if(!cfg)estado='nuevo';else if(!dev||!dev.ok){estado='pendiente';if(!dev){dev={n:nombreDisp(),f:Date.now(),ok:false};await F.docSet('dueno_disp',DEV,dev)}}
@@ -1761,16 +1770,21 @@ function pantalla(box){const s=estado;let h='';
    <button class="go" data-lk="rescate" style="width:100%;margin-top:8px">Aprobar con código</button>`;
   else if(s==='pin-nuevo')h=`<h4>🔢 Crea el PIN de este celular</h4>${kp('lkP1','PIN de 6 números')}${kp('lkP2','Repite el PIN')}<button class="go" data-lk="pin" style="width:100%;margin-top:8px">Guardar PIN</button>`;
   else if(s==='bloqueado'){const esp=(+LS.g('arba-pinb')||0)-Date.now();
-   h=`<h4>🔒 Panel bloqueado</h4><p class="note">Desbloquea con tu ${bioSi()?'huella o ':''}PIN.</p>${bioSi()?'<button class="go" data-lk="bio" style="width:100%;margin-bottom:8px">👆 Usar huella / Face ID</button>':''}
+   const bOk=bioSi()&&bioFallos()<5;
+   h=`<h4>🔒 Panel bloqueado</h4><p class="note">${bOk?'Pon tu huella o tu cara, o escribe tu PIN.':bioSi()?'La huella no te reconoció 5 veces. Escribe tu PIN.':'Escribe tu PIN.'}</p>${bOk?'<button class="go" data-lk="bio" style="width:100%;margin-bottom:8px">👆 Usar huella / Face ID</button>':''}
    ${esp>0?`<p class="note" style="color:#ff8a80">Muchos intentos. Espera ${Math.ceil(esp/60000)} min.</p>`:kp('lkP','Tu PIN')+'<button class="go" data-lk="abrir" style="width:100%;margin-top:8px">Desbloquear</button>'}`}
   else if(s==='sin-reglas')h=`<p class="note" style="color:#ffd60a">⚠️ La seguridad extra todavía no está activa: falta publicar las reglas nuevas de Firebase. Mientras, tu panel sigue protegido por tu cuenta de Google.</p><button class="go" data-lk="pasar" style="width:100%">Continuar</button>`;
   else if(s==='error')h=`<p class="note">No pudimos revisar la seguridad. Revisa tu internet.</p><button class="sec" data-lk="recheck" style="width:100%">Reintentar</button>`;
   else h='<p class="note">Revisando seguridad…</p>';
   box.innerHTML=`<div class="lkbox">${h}<p class="note" style="margin-top:10px"><a href="#" data-fbout>Salir de la cuenta</a></p></div>`;
-  const f=box.querySelector('.lkpin');if(f)setTimeout(()=>f.focus(),100)}
+  const f=box.querySelector('.lkpin');
+  if(s==='bloqueado'&&bioSi()&&bioFallos()<5&&!bioYa&&!((+LS.g('arba-pinb')||0)>Date.now())){bioYa=true;setTimeout(()=>bioAuto(box),350)}
+  else if(f&&!(s==='bloqueado'&&bioSi()&&bioFallos()<5))setTimeout(()=>f.focus(),100)}
 window.ARBA_LOCK={ok:()=>ok()||estado==='pasar',
   async pinta(box){if(estado==null&&!cargando){pantalla(box);await revisar()}if(!cargando)pantalla(box)},
-  bloquear(){try{sessionStorage.removeItem('arba-unl')}catch(e){}estado=null;refrescar()}};
+  bloquear(){try{sessionStorage.removeItem('arba-unl')}catch(e){}estado=null;bioYa=false;refrescar()}};
+/* Si la app se queda abierta y pasan los 10 minutos, al volver a ella vuelve a salir la huella */
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!ok())bioYa=false});
 const $b=s=>document.querySelector(s);
 document.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]');if(!b)return;e.preventDefault();const F=FB(),a=b.dataset.lk,box=$b('#pFb'),msg=t=>T().toast(t);
  try{
@@ -1787,12 +1801,12 @@ document.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]'
     msg('Celular aprobado ✅ Te quedan '+c2.rc.length+' códigos');estado='pin-nuevo';pantalla(box)}
   else if(a==='pin'){const p1=$b('#lkP1').value,p2=$b('#lkP2').value;if(!/^\d{6}$/.test(p1)){msg('El PIN debe ser de 6 números');return}if(p1!==p2){msg('Los PIN no coinciden');return}
     LS.s('arba-pin',await H(DEV+p1));marca();estado='bloqueado';ofrecerBio()}
-  else if(a==='abrir'){const p=$b('#lkP').value;if((await H(DEV+p))===LS.g('arba-pin')){LS.d('arba-pinf');marca();refrescar()}
+  else if(a==='abrir'){const p=$b('#lkP').value;if((await H(DEV+p))===LS.g('arba-pin')){LS.d('arba-pinf');LS.d('arba-biof');marca();if(!bioSi()&&!LS.g('arba-bion'))ofrecerBio();else refrescar()}
     else{const n=fallos()+1;LS.s('arba-pinf',n);if(n>=5){LS.s('arba-pinb',Date.now()+5*60000);LS.d('arba-pinf')}msg('PIN incorrecto');pantalla(box)}}
-  else if(a==='bio'){if(await bioUsar()){marca();refrescar()}}
+  else if(a==='bio'){try{await bioUsar();LS.d('arba-biof');LS.d('arba-pinf');marca();refrescar()}catch(er){const n=bioFallos()+1;LS.s('arba-biof',n);msg(n>=5?'La huella no te reconoció 5 veces. Entra con tu PIN.':'No te reconoció. Intenta otra vez o usa tu PIN.');pantalla(box)}}
   else if(a==='pasar'){estado='pasar';refrescar()}
  }catch(err){console.warn(err);msg(a==='bio'?'No se pudo con la huella, usa tu PIN':'No se pudo. Revisa tu internet e intenta otra vez.')}});
-async function ofrecerBio(){if(window.PublicKeyCredential&&!LS.g('arba-bio')){try{if(await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()&&confirm('¿Quieres desbloquear también con tu huella o Face ID?'))await bioCrear()}catch(e){}}refrescar()}
+async function ofrecerBio(){if(window.PublicKeyCredential&&!LS.g('arba-bio')){try{if(await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()){if(confirm('¿Quieres entrar con tu huella o Face ID? Así ya no escribes el PIN cada vez.')){await bioCrear();LS.d('arba-biof');T().toast('Listo 👆 La próxima vez entras con tu huella o Face ID')}else LS.s('arba-bion','1')}}catch(e){}}refrescar()}
 
 /* ---------- Sección Seguridad dentro del panel ---------- */
 const pv=document.getElementById('pPriv');if(!pv)return;
