@@ -419,6 +419,7 @@ body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display
 .solc{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid #7ed957;border-radius:10px;margin:6px 0;background:#7ed95712}.solc.av{border-color:#f4b400;background:#f4b40012}.solc.listo{opacity:.6;border-color:var(--line);background:none}
 .solc div{display:grid;gap:2px}.solc span{font-size:12px;opacity:.8}.solc i{font-size:13px}.solc button{padding:8px 12px;border-radius:10px}
 @keyframes parpaAm{0%,100%{background:#f4b400;color:#111;box-shadow:0 0 0 0 #f4b400aa}50%{background:#3a2e05;color:#f4b400;box-shadow:0 0 12px 3px #f4b400aa}}@keyframes parpaRo{0%,100%{background:#e53935;color:#fff;box-shadow:0 0 0 0 #e53935aa}50%{background:#3a0b0b;color:#ff8a80;box-shadow:0 0 14px 4px #e53935aa}}
+@keyframes parpaVe{0%,100%{background:#2e7d32;color:#fff;box-shadow:0 0 0 0 #7ed957aa}50%{background:#0d2a12;color:#7ed957;box-shadow:0 0 14px 4px #7ed957aa}}#duBar [data-dped].parpa-ve{animation:parpaVe 1s ease-in-out infinite;border-color:#7ed957!important}#duBar [data-dped].parpa-ve .dun{background:#111;color:#fff}
 #duBar [data-du=inv].parpa-am{animation:parpaAm 1.2s ease-in-out infinite;border-color:#f4b400!important}#duBar [data-du=inv].parpa-ro{animation:parpaRo .9s ease-in-out infinite;border-color:#e53935!important}#duBar [data-du=inv].parpa-am .dun,#duBar [data-du=inv].parpa-ro .dun{background:#111;color:#fff}
 #duBar .dun{display:inline-block;margin-left:5px;background:#ff3b30;color:#fff;font:800 11px Poppins,system-ui;font-style:normal;border-radius:999px;padding:1px 6px}
 
@@ -2333,7 +2334,11 @@ async function iniciar(){const F=FB();un.forEach(f=>{try{f()}catch(e){}});un=[];
   let primero=true;
   un.push(F.docVer('inventario',IK,d=>{INV=d||{q:{},m:{}};pinta();publica();botonInv()}));
   un.push(F.negVer('rutas',L=>{const RN={};(L||[]).forEach(r=>{RN[r.id]=r.n;if(r.ik!==IK)F.docMerge('rutas',r.id,{ik:IK}).catch(()=>{})});window.ARBA_RN=RN;window.dispatchEvent(new Event('arba-rn'))}));
-  un.push(F.lista(rows=>{(rows||[]).forEach(r=>{const c=r.c&&r.c.toMillis?r.c.toMillis():0;
+  let pedVistos=null;
+  un.push(F.lista(rows=>{const nuevos=(rows||[]).filter(r=>r.s==='recibido');badge('pedN',nuevos.length);
+      const bp=document.querySelector('#duBar [data-dped]');if(bp)bp.classList.toggle('parpa-ve',nuevos.length>0);
+      const ids=new Set(nuevos.map(r=>r.id));if(pedVistos&&[...ids].some(i=>!pedVistos.has(i))){try{navigator.vibrate&&navigator.vibrate([200,100,200,100,200])}catch(e){}}pedVistos=ids;
+      (rows||[]).forEach(r=>{const c=r.c&&r.c.toMillis?r.c.toMillis():0;
       if(DESC.includes(r.s)&&!r.iv&&c>=DESDE)porEstado(r.id,r.s);else if(r.s==='cancelado'&&r.iv)porEstado(r.id,'cancelado');
       if(r.rt&&!r.rf&&!hecho['rt'+r.id]){hecho['rt'+r.id]=1;F.docGet('ligas',r.rt).then(l=>{if(l&&l.u&&l.r)return F.docMerge('pedidos_priv',r.id,{rf:l.r})}).catch(()=>{})}})}));
   un.push(F.solVer(L=>{SOLS=L;if(L){const nuevos=L.filter(x=>x.s==='pendiente'&&visto&&!visto.has(x.id));if(nuevos.length){T().toast('🙋 '+(nuevos[0].n||'Un repartidor')+': '+(nuevos[0].t==='aviso'?'se está acabando ':'ocupa ')+nuevos[0].pn);try{navigator.vibrate&&navigator.vibrate([150,80,150])}catch(e){}}visto=new Set(L.map(x=>x.id))}solPinta()}))}
@@ -2347,7 +2352,7 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba">📋 Pedidos</a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
