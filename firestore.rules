@@ -40,6 +40,11 @@ service cloud.firestore {
       allow write: if esAdmin();
     }
 
+    // Costos de tus productos: privados, solo tú
+    match /costos/{id} {
+      allow read, write: if esAdmin();
+    }
+
     // Seguridad del dueño: celulares aprobados y códigos de rescate (solo tú)
     match /dueno/{d} {
       allow read, write: if esAdmin();

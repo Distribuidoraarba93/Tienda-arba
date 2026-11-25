@@ -415,9 +415,12 @@ body.dueno #panel h3:first-of-type::before{content:"🔐 ARBA Dueño · ";color:
 #edProd textarea{min-height:80px}#edProd .ed2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #edProd .edimg{display:grid;gap:8px;justify-items:center}#edProd .edimg img,#edProd .edph{width:200px;height:200px;border-radius:14px;background:#fff;object-fit:contain;display:grid;place-items:center;color:#555}
 #edProd .edfile{display:inline-block;border:1px solid #f4b400;color:#f4b400;border-radius:999px;padding:8px 16px;cursor:pointer}
-#edProd .edop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:4px}#edProd .edop input{padding:8px;font-size:13px}#edProd .edop button{border:0;background:#b3261e;color:#fff;border-radius:8px;width:32px}
+#edProd .edop{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:4px;padding:6px 0;border-bottom:1px solid #ffffff15}#edProd .edop [data-on]{grid-column:1/-1}#edProd .edop input{padding:8px;font-size:13px}#edProd .edop button{border:0;background:#b3261e;color:#fff;border-radius:8px;width:32px}
 #edProd .edchk{display:flex;gap:8px;align-items:center}#edProd .edchk input{width:auto}
 body.edon{overflow:hidden}
+
+#venAdm .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}#venAdm .vgrid div{background:#ffffff0d;border:1px solid #f4b40044;border-radius:12px;padding:10px}#venAdm .vgrid small{display:block;opacity:.7;font-size:12px}#venAdm .vgrid b{font:800 20px Poppins,system-ui;color:#f4b400}
+#venAdm .vrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #ffffff12;font-size:14px}
 </style>
 </head>
 <body>
@@ -1325,6 +1328,9 @@ window.ARBA_FB={ADMIN,
   async negocio(code){const c=await fs.getDoc(fs.doc(db,'clientes',code));if(!c.exists())return null;const x=c.data();const l=await fs.getDoc(fs.doc(db,'listas',x.l));return l.exists()?{c:code,n:x.n,l:x.l,...l.data(),ln:l.data().n}:null},
   async docGet(col,id){const d=await fs.getDoc(fs.doc(db,col,id));return d.exists()?d.data():null},
   docSet(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
+  async ventas(desde,hasta){const T0=fs.Timestamp.fromMillis(desde),q=[fs.where('c','>=',T0)];if(hasta!==Infinity)q.push(fs.where('c','<',fs.Timestamp.fromMillis(hasta)));
+    const [a,b]=await Promise.all([fs.getDocs(fs.query(fs.collection(db,'pedidos_priv'),...q,fs.orderBy('c','desc'),fs.limit(1000))),fs.getDocs(fs.query(fs.collection(db,'pedidos'),...q,fs.limit(1000)))]);
+    const st={};b.docs.forEach(d=>st[d.id]=d.data().s);return a.docs.map(d=>({id:d.id,...d.data(),s:st[d.id]||'recibido'}))},
   negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
   negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
@@ -1365,10 +1371,10 @@ setInterval(()=>{window.ARBA_EDIT=libre()},1000);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let ed=document.createElement('div');ed.id='edProd';ed.hidden=true;document.body.appendChild(ed);
 let foto=null,cur=null;
-const opRow=(o={})=>`<div class="edop"><input placeholder="Opción (ej. Paquete de 10)" value="${esc(o.n)}" data-on><input type="number" step="0.01" placeholder="Precio" value="${o.pr==null?'':o.pr}" data-op><input type="number" placeholder="Mayoreo desde" value="${o.my?o.my[0]:''}" data-omn><input type="number" step="0.01" placeholder="Precio mayoreo" value="${o.my?o.my[1]:''}" data-omp><button type="button" data-oq>✕</button></div>`;
+const opRow=(o={})=>`<div class="edop"><input placeholder="Opción (ej. Paquete de 10)" value="${esc(o.n)}" data-on><input type="number" step="0.01" placeholder="Precio" value="${o.pr==null?'':o.pr}" data-op><input type="number" placeholder="Mayoreo desde" value="${o.my?o.my[0]:''}" data-omn><input type="number" step="0.01" placeholder="Precio mayoreo" value="${o.my?o.my[1]:''}" data-omp><input type="number" step="0.01" placeholder="🔒 Costo" value="${o._c==null?'':o._c}" data-oc><button type="button" data-oq>✕</button></div>`;
 function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero 🔐');return}
   const {P,CATS}=T();const p=id?(P.find(x=>x.id===id)||(OV[id]&&{id,...OV[id]})):null;cur=id||('n'+Date.now().toString(36));foto=null;
-  const v=p&&p.v||[];const cats=[...new Set([...CATS.filter(c=>c!=='Todos'),p&&p.cat].filter(Boolean))];
+  const CC=window.ARBA_COST&&window.ARBA_COST[cur]||{};const v=(p&&p.v||[]).map((o,i)=>({...o,_c:CC.v&&CC.v[i]!=null?CC.v[i]:null}));const cats=[...new Set([...CATS.filter(c=>c!=='Todos'),p&&p.cat].filter(Boolean))];
   ed.innerHTML=`<div class="edin"><div class="edh"><b>${id?'✏️ Editar producto':'➕ Producto nuevo'}</b><button type="button" data-edx>✕</button></div>
   <div class="edimg">${p&&p.img?`<img src="${esc(/^data:|^https?:/.test(p.img)?p.img:'img/'+(/\.(webp|jpe?g|png)$/i.test(p.img)?p.img:p.img+'.webp'))}" id="edPrev">`:'<div id="edPrev" class="edph">Sin foto</div>'}
    <label class="edfile">📷 ${p&&p.img?'Cambiar foto':'Agregar foto'}<input type="file" accept="image/*" id="edFile" hidden></label></div>
@@ -1380,6 +1386,7 @@ function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero �
   <div class="ed2"><label>Precio (pesos)<input id="edP" type="number" step="0.01" value="${p&&p.pr!=null?p.pr:''}" placeholder="Vacío = cotizar"></label><label>Compra mínima<input id="edMin" type="number" value="${p&&p.min||''}" placeholder="1"></label></div>
   <div class="ed2"><label>Mayoreo desde<input id="edMyN" type="number" value="${p&&p.my?p.my[0]:''}"></label><label>Precio mayoreo<input id="edMyP" type="number" step="0.01" value="${p&&p.my?p.my[1]:''}"></label></div>
   <label>Etiqueta (opcional, ej. Nuevo, Oferta)<input id="edTag" value="${esc(p&&p.tag)}"></label>
+  <label>🔒 Costo tuyo (pesos, privado: los clientes no lo ven)<input id="edCost" type="number" step="0.01" value="${(window.ARBA_COST&&window.ARBA_COST[cur]&&window.ARBA_COST[cur].c!=null)?window.ARBA_COST[cur].c:''}" placeholder="Para calcular tu ganancia"></label>
   <p class="note" style="margin:10px 0 4px"><b>Opciones</b> (tamaños, medidas o sabores). Si tiene opciones, el precio de arriba no se usa.</p>
   <div id="edOps">${v.map(opRow).join('')}</div><button type="button" class="sec" data-oadd style="margin:4px 0 10px">+ Agregar opción</button>
   <label class="edchk"><input type="checkbox" id="edHide" ${p&&p.oculto?'checked':''}> Ocultar de la tienda (agotado o ya no lo vendo)</label>
@@ -1410,12 +1417,55 @@ ed.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)r
    const d={n,cat,u:g('#edU'),d:g('#edD')||'Pídelo y te confirmamos disponibilidad por WhatsApp.',pr:ops.length?null:num(g('#edP')),my:mn&&mp?[mn,mp]:null,v:ops.length?ops:null,
      min:num(g('#edMin'))>1?num(g('#edMin')):null,tag:g('#edTag')||null,oculto:ed.querySelector('#edHide').checked,img:foto||prev.img||null,art:prev.art||'caja',gal:prev.gal||null,f:Date.now()};
    if(!d.v)delete d.v;
-   try{b.disabled=true;b.textContent='Guardando…';await F.docSet('catalogo',cur,JSON.parse(JSON.stringify(d)));msg(d.oculto?'Guardado y oculto de la tienda':'¡Publicado! Ya se ve en la tienda ✅');cerrar()}
+   const cc={c:num(g('#edCost')),v:{}};[...ed.querySelectorAll('.edop')].filter(r=>r.querySelector('[data-on]').value.trim()).forEach((r,i)=>{const x=num(r.querySelector('[data-oc]').value);if(x!=null)cc.v[i]=x});
+   try{b.disabled=true;b.textContent='Guardando…';await F.docSet('catalogo',cur,JSON.parse(JSON.stringify(d)));try{await F.docSet('costos',cur,cc)}catch(e){}msg(d.oculto?'Guardado y oculto de la tienda':'¡Publicado! Ya se ve en la tienda ✅');cerrar()}
    catch(err){console.warn(err);msg('No se pudo guardar. ¿Ya publicaste las reglas de Firebase?');b.disabled=false;b.textContent='💾 Guardar y publicar'}}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-edit]');if(b){e.preventDefault();abrir(b.dataset.edit)}
   const a=e.target.closest('[data-du="nuevo"]');if(a)abrir(null)
   const o=e.target.closest('[data-du="ocultos"]');if(o){const ids=Object.keys(OV).filter(k=>OV[k].oculto);if(!ids.length){T().toast('No tienes productos ocultos');return}
     const nm=prompt('Productos ocultos:\n'+ids.map((k,i)=>(i+1)+'. '+OV[k].n).join('\n')+'\n\nEscribe el número para editarlo:');const i=parseInt(nm)-1;if(ids[i])abrir(ids[i])}});
+})();
+</script>
+<script>
+/* ===== VENTAS, GANANCIA Y COMISIONES (solo dueño) =====
+   costos/{id} = {c: costo, v: {índice opción: costo}} (privado) · dueno/ajustes = {com: % comisión vendedores} */
+(function(){
+const T=()=>window.ARBA_T,FB=()=>window.ARBA_FB;const pv=document.getElementById('pPriv');if(!pv)return;
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=s=>{const m=String(s||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?parseFloat(m[0]):0};
+const r2=x=>Math.round(x*100)/100;
+let COST={},AJ={com:5},per='hoy',un=[];
+const sec=document.createElement('div');sec.id='venAdm';sec.innerHTML=`<h4 style="margin:4px 0 6px">📊 Ventas</h4>
+<div class="opts" role="group" id="venPer"><button type="button" data-per="hoy" class="on">Hoy</button><button type="button" data-per="sem">7 días</button><button type="button" data-per="mes">Este mes</button><button type="button" data-per="ant">Mes pasado</button></div>
+<div id="venRes"><p class="note">Cargando…</p></div>`;
+pv.prepend(sec);
+function rango(){const d=new Date(),h=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  if(per==='hoy')return [h.getTime(),Infinity];if(per==='sem')return [h.getTime()-6*864e5,Infinity];
+  if(per==='mes')return [new Date(d.getFullYear(),d.getMonth(),1).getTime(),Infinity];
+  return [new Date(d.getFullYear(),d.getMonth()-1,1).getTime(),new Date(d.getFullYear(),d.getMonth(),1).getTime()]}
+function costoDe(k){const [id,vi]=k.split(':'),c=COST[id];if(!c)return null;if(vi!=null&&c.v&&c.v[vi]!=null)return +c.v[vi];return c.c!=null&&vi==null?+c.c:(c.v&&c.v[vi]!=null?+c.v[vi]:null)}
+async function pinta(){const F=FB(),box=sec.querySelector('#venRes'),{fmt,item,upI}=T();if(!F||!F.ventas)return;
+  const [a,b]=rango();let L;try{L=await F.ventas(a,b)}catch(e){box.innerHTML='<p class="note">No se pudieron cargar las ventas. ¿Ya publicaste las reglas nuevas de Firebase?</p>';return}
+  const ok=L.filter(x=>x.s!=='cancelado');const tot=ok.reduce((s,x)=>s+num(x.T),0);
+  let gan=0,conC=0,sinC=0;const prod={};
+  ok.forEach(x=>(x.i||'').split(',').filter(Boolean).forEach(s=>{const [k,q]=s.split('*'),n=+q||1,it=item(k);if(!it)return;
+    const pr=upI(it,n)||0,c=costoDe(k);const nm=it.name;prod[nm]=(prod[nm]||0)+n;if(c!=null){gan+=(pr-c)*n;conC++}else sinC++}));
+  const vend={};ok.forEach(x=>{if(x.v){vend[x.v]=vend[x.v]||{n:0,t:0};vend[x.v].n++;vend[x.v].t+=num(x.T)}});
+  const neg={};ok.forEach(x=>{if(x.cn){const k=x.cn.split(' · ')[0];neg[k]=(neg[k]||0)+num(x.T)}});
+  const top=Object.entries(prod).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  box.innerHTML=`<div class="vgrid"><div><small>Pedidos</small><b>${ok.length}</b></div><div><small>Vendido</small><b>${fmt(r2(tot))}</b></div>
+   <div><small>Ganancia</small><b>${conC?fmt(r2(gan)):'—'}</b></div><div><small>Cancelados</small><b>${L.length-ok.length}</b></div></div>
+   ${sinC?`<p class="note">💡 ${sinC} productos vendidos no tienen costo capturado, por eso la ganancia sale incompleta. Captura el costo en ✏️ Editar producto.</p>`:''}
+   ${top.length?`<p class="note" style="margin:10px 0 4px"><b>🏆 Lo más vendido</b></p>${top.map(([n,q])=>`<div class="vrow"><span>${esc(n)}</span><b>${q}</b></div>`).join('')}`:''}
+   <p class="note" style="margin:12px 0 4px"><b>🤝 Comisiones de vendedores</b> · <label style="display:inline">Comisión <input id="venCom" type="number" min="0" max="50" step="0.5" value="${AJ.com}" style="width:64px;display:inline-block;padding:4px"> %</label></p>
+   ${Object.keys(vend).length?Object.entries(vend).sort((a,b)=>b[1].t-a[1].t).map(([n,v])=>`<div class="vrow"><span>${esc(n)} · ${v.n} pedidos · ${fmt(r2(v.t))}</span><b>${fmt(r2(v.t*AJ.com/100))}</b></div>`).join(''):'<p class="note">Sin ventas de vendedores en este periodo.</p>'}
+   ${Object.keys(neg).length?`<p class="note" style="margin:12px 0 4px"><b>🏪 Clientes de negocio</b></p>${Object.entries(neg).sort((a,b)=>b[1]-a[1]).map(([n,t])=>`<div class="vrow"><span>${esc(n)}</span><b>${fmt(r2(t))}</b></div>`).join('')}`:''}`;
+  const ic=box.querySelector('#venCom');ic.onchange=async()=>{AJ.com=Math.max(0,Math.min(50,parseFloat(ic.value)||0));try{await F.docSet('dueno','ajustes',AJ)}catch(e){}pinta()}}
+sec.addEventListener('click',e=>{const b=e.target.closest('[data-per]');if(!b)return;per=b.dataset.per;sec.querySelectorAll('[data-per]').forEach(x=>x.classList.toggle('on',x===b));pinta()});
+async function iniciar(){const F=FB();un.forEach(f=>f());un=[];if(!F||!F.admin||!F.admin()||!(window.ARBA_LOCK&&window.ARBA_LOCK.ok()))return;
+  try{const a=await F.docGet('dueno','ajustes');if(a)AJ=a}catch(e){}
+  un.push(F.negVer('costos',L=>{COST={};(L||[]).forEach(d=>{const {id,...r}=d;COST[id]=r});window.ARBA_COST=COST;pinta()}));pinta()}
+window.addEventListener('arba-auth',()=>setTimeout(iniciar,100));
 })();
 </script>
 <script>
@@ -1506,7 +1556,7 @@ const pv=document.getElementById('pPriv');if(!pv)return;
 const sec=document.createElement('div');sec.id='segAdm';sec.innerHTML=`<h4 style="margin:18px 0 6px">🔐 Seguridad</h4>
 <p class="note">Celulares que pueden abrir tu panel. Si cambias o pierdes uno, bórralo de aquí.</p><div id="segDisp"></div>
 <div class="pbtns" style="margin-top:8px"><button type="button" class="sec" data-sg="bio">👆 Activar huella aquí</button><button type="button" class="sec" data-sg="pin">🔢 Cambiar PIN</button><button type="button" class="sec" data-sg="cod">🧾 Nuevos códigos de rescate</button><button type="button" class="sec" data-sg="lock">🔒 Bloquear ahora</button></div>`;
-pv.prepend(sec);let un=null;
+pv.appendChild(sec);let un=null;
 function verDisp(){if(un){un();un=null}const F=FB();if(!F||!F.admin()||!ok())return;
   un=F.negVer('dueno_disp',L=>{if(!L)return;const box=sec.querySelector('#segDisp');
     if(!L.some(d=>d.id===DEV&&d.ok)){window.ARBA_LOCK.bloquear();return}
@@ -1878,11 +1928,11 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
   if(lk&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
