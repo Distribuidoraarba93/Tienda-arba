@@ -396,14 +396,16 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .lkcod{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}.lkcod span{font:700 16px ui-monospace,monospace;background:#0003;border:1px solid #f4b40088;border-radius:8px;padding:8px;text-align:center;letter-spacing:.08em}
 #segAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #0001}#segAdm .negrow>div{flex:1}#segAdm .negrow span{display:block;font-size:12px;opacity:.75}#segAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}
 
-/* ===== Modo app de dueño: solo el panel, sin la tienda ===== */
-body.dueno>header,body.dueno>section,body.dueno>.hist,body.dueno>nav,body.dueno>.trust,body.dueno>main,body.dueno>footer,body.dueno>.bnav,body.dueno>.cbar,body.dueno #abBtn,body.dueno #ab,body.dueno #negBar,body.dueno #temaStrip,body.dueno #temaFx,body.dueno #instBar{display:none!important}
-body.dueno{background:#0b1220}
-body.dueno #panel{display:block!important;position:fixed;inset:0;background:#0b1220}
-body.dueno #panel .box{max-width:640px;width:100%;height:100%;max-height:none;margin:0 auto;border-radius:0;border:0;box-shadow:none}
-body.dueno #panel [data-closep]{display:none}
+/* ===== Modo app de dueño: toda la tienda + herramientas del dueño, todo bajo llave ===== */
+body.dlock>header,body.dlock>section,body.dlock>.hist,body.dlock>nav,body.dlock>.trust,body.dlock>main,body.dlock>footer,body.dlock>.bnav,body.dlock>.cbar,body.dlock #abBtn,body.dlock #ab,body.dlock #negBar,body.dlock #duBar{display:none!important}
+body.dlock #panel{display:block!important;position:fixed;inset:0;background:#0b1220}
+body.dlock #panel .box{max-width:640px;width:100%;height:100%;max-height:none;margin:0 auto;border-radius:0;border:0;box-shadow:none}
+body.dlock #panel [data-closep],body.dlock #veil{display:none!important}
 body.dueno #panel h3:first-of-type::before{content:"🔐 ARBA Dueño · ";color:#f4b400}
-body.dueno #veil{display:none!important}
+#duBar{position:sticky;top:0;z-index:61;background:linear-gradient(90deg,#0b1220,#1a2540);border-bottom:2px solid #f4b400;padding:8px 10px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+#duBar::-webkit-scrollbar{display:none}
+#duBar b{flex:none;color:#f4b400;font:800 13px Poppins,system-ui;white-space:nowrap;align-self:center;margin-right:4px}
+#duBar a,#duBar button{flex:none;border:1px solid #f4b40066;background:#ffffff10;color:#fff;border-radius:999px;padding:7px 12px;font:600 13px Poppins,system-ui;text-decoration:none;white-space:nowrap;cursor:pointer}
 </style>
 </head>
 <body>
@@ -1776,14 +1778,22 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-hist]');if
 })();
 </script>
 <script>
-/* Si se abre desde la app ARBA Dueño, la página se vuelve solo el panel */
-(function(){var q=new URLSearchParams(location.search),d=q.get('dueno')==='1';try{if(d)sessionStorage.setItem('arba-modo','dueno');d=d||sessionStorage.getItem('arba-modo')==='dueno'}catch(e){}
- if(!d)return;document.documentElement.classList.add('dueno-h');document.title='ARBA Dueño';
+/* App ARBA Dueño: toda la tienda + barra de herramientas del dueño. Nada se ve hasta pasar Google + PIN/huella + celular aprobado. */
+(function(){var q=new URLSearchParams(location.search),d=q.get('dueno')==='1';try{if(d)sessionStorage.setItem('arba-modo','dueno');d=d||sessionStorage.getItem('arba-modo')==='dueno';if(d)localStorage.setItem('arba-modo','dueno');d=d||localStorage.getItem('arba-modo')==='dueno'}catch(e){}
+ if(!d)return;document.title='ARBA Dueño';
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
- var go=function(){document.body.classList.add('dueno');if(location.hash.indexOf('#panel-arba')!==0){location.hash='#panel-arba'}};
- if(document.body)go();else document.addEventListener('DOMContentLoaded',go);
- window.addEventListener('hashchange',function(){if(location.hash.indexOf('#panel-arba')!==0)setTimeout(function(){location.hash='#panel-arba'},50)});
+ function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
+  b.innerHTML='<b>🔐 Dueño</b><a href="#panel-arba">📋 Pedidos</a><a href="https://claude.ai/artifact/Hbi7Xc6pyCCSiRghuohZCK" target="_blank" rel="noopener">📦 Inventario</a><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="lock">🔒 Bloquear</button>';
+  document.body.prepend(b);
+  b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
+   if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},450)})}
+ function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
+ function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
+  if(lk&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
+ if(document.body)revisa();else document.addEventListener('DOMContentLoaded',revisa);
+ window.addEventListener('arba-auth',function(){setTimeout(revisa,50)});setInterval(revisa,1500);
 })();
 </script>
 </body>
