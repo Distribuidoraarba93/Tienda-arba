@@ -313,6 +313,8 @@ opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
 
 Domo para ensalada 17x6 con tapa
 id: dp8
+foto: domo-ensalada
+fotos: domo-ensalada-abierto, domo-ensalada-fresas
 precio: 1149.89 pesos
 presentación: Caja con 150 piezas
 dibujo: contenedorN
@@ -320,6 +322,7 @@ descripción: Domo de plástico transparente para ensalada, 17 x 6 cm, con tapa.
 
 Charola botanera transparente
 id: dp9
+foto: charola-botanera
 precio: 2158.27 pesos
 presentación: Caja con 100 piezas
 dibujo: charola
