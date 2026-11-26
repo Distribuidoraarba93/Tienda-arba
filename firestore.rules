@@ -1,0 +1,188 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solo la cuenta del negocio puede ver la lista y cambiar estatus
+    function esAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'arturo.arba93@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // Estatus público de cada pedido: el cliente solo lo ve si tiene su link (número + clave)
+    match /pedidos/{id} {
+      allow get: if true;
+      allow list: if esAdmin();
+      allow create: if id.size() < 60
+        && request.resource.data.keys().hasOnly(['p', 's', 'e', 'f', 'c'])
+        && request.resource.data.s == 'recibido'
+        && request.resource.data.p is string && request.resource.data.p.size() < 30
+        && request.resource.data.e in ['', 'r', 'd']
+        && request.resource.data.f == request.time
+        && request.resource.data.c == request.time;
+      allow delete: if esAdmin();
+      // Tú cambias todo; el repartidor solo puede marcar "en camino" o "entregado" en pedidos que le asignaste
+      allow update: if esAdmin() || (
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['s', 'f', 'r'])
+        && request.resource.data.s in ['camino', 'entregado']
+        && request.resource.data.f == request.time
+        && request.resource.data.r is string && request.resource.data.r.size() < 40
+        && exists(/databases/$(database)/documents/rutas/$(request.resource.data.r))
+        && id in get(/databases/$(database)/documents/rutas/$(request.resource.data.r)).data.ids);
+    }
+
+    // Datos privados del pedido (nombre, WhatsApp, productos): solo los ves tú
+    match /pedidos_priv/{id} {
+      allow create: if exists(/databases/$(database)/documents/pedidos/$(id))
+        && request.resource.data.keys().hasOnly(['p', 'n', 'tel', 'g', 'T', 'a', 'e', 'i', 'k', 'c', 'v', 'cn', 'd', 'rt', 'no', 'fa', 'pg', 'pf'])
+        // Pedido programado: día AAAA-MM-DD y horario
+        && (!('pg' in request.resource.data) || (request.resource.data.pg is string && request.resource.data.pg.matches('^20[0-9]{2}-[01][0-9]-[0-3][0-9]$')))
+        && (!('pf' in request.resource.data) || (request.resource.data.pf is string && request.resource.data.pf.size() <= 20))
+        && (!('no' in request.resource.data) || request.resource.data.no.size() <= 300)
+        && (!('fa' in request.resource.data) || request.resource.data.fa.size() <= 400)
+        && request.resource.data.n.size() <= 80
+        && request.resource.data.tel.size() <= 15
+        && request.resource.data.i.size() <= 1500
+        && request.resource.data.c == request.time
+        // Si viene de la liga de un repartidor, la liga debe existir y ya haberse abierto
+        && (!('rt' in request.resource.data) || (request.resource.data.rt is string
+            && request.resource.data.rt.size() < 40
+            && exists(/databases/$(database)/documents/ligas/$(request.resource.data.rt))
+            && ('u' in get(/databases/$(database)/documents/ligas/$(request.resource.data.rt)).data)));
+      allow read, update, delete: if esAdmin();
+    }
+
+    // Repartidores: cada uno ve sus entregas solo con su código; solo tú las asignas
+    match /rutas/{codigo} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+
+    // Catálogo: los cambios que haces desde la app de dueño. Todos lo leen, solo tú escribes.
+    match /catalogo/{id} {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+
+    // Costos de tus productos: privados, solo tú
+    match /costos/{id} {
+      allow read, write: if esAdmin();
+    }
+
+    // Seguridad del dueño: celulares aprobados y códigos de rescate (solo tú)
+    match /dueno/{d} {
+      allow read, write: if esAdmin();
+    }
+    match /dueno_disp/{d} {
+      allow read, write: if esAdmin();
+    }
+
+    // Precios de negocio: el cliente solo puede leer su ficha si conoce su código exacto
+    match /clientes/{codigo} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+    match /listas/{id} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+
+    // Inventario: solo tú lo cambias; lo leen tú y tus repartidores (con la llave secreta que va en su ruta)
+    match /inventario/{k} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+
+    // Lista pública de agotados (sin cantidades)
+    // Patrocinios: todos los ven; solo tú los publicas
+    match /patrocinios/{id} {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+    // Vistas y clics de cada patrocinio: cualquiera suma 1, solo tú los ves
+    match /pstats/{id} {
+      allow read, create, delete: if esAdmin();
+      allow update: if esAdmin()
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['v']) && request.resource.data.v == resource.data.v + 1)
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['c']) && request.resource.data.c == resource.data.c + 1);
+    }
+    match /estado/{d} {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+
+    // Ligas de repartidor: él la crea; solo cuenta para el primer celular que la abre
+    match /ligas/{t} {
+      allow get, list, delete: if esAdmin();
+      allow create: if t.size() >= 10 && t.size() < 40
+        && request.resource.data.keys().hasOnly(['r', 'c'])
+        && request.resource.data.r is string && request.resource.data.r.size() < 40
+        && exists(/databases/$(database)/documents/rutas/$(request.resource.data.r))
+        && request.resource.data.c == request.time;
+      allow update: if !('u' in resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['u', 'uf'])
+        && request.resource.data.u is string && request.resource.data.u.size() < 40
+        && request.resource.data.uf == request.time;
+    }
+
+    // Solicitudes de repartidores ("Ocupo esto" y avisos de que algo se acaba)
+    match /solicitudes/{id} {
+      allow get: if true;
+      allow list, update, delete: if esAdmin();
+      allow create: if request.resource.data.keys().hasOnly(['r', 'n', 't', 'k', 'pn', 'q', 'nota', 's', 'f'])
+        && request.resource.data.r is string && request.resource.data.r.size() < 40
+        && exists(/databases/$(database)/documents/rutas/$(request.resource.data.r))
+        && request.resource.data.n is string && request.resource.data.n.size() <= 40
+        && request.resource.data.t in ['ocupo', 'aviso']
+        && request.resource.data.k is string && request.resource.data.k.size() <= 60
+        && request.resource.data.pn is string && request.resource.data.pn.size() > 0 && request.resource.data.pn.size() <= 120
+        && request.resource.data.q is int && request.resource.data.q >= 0 && request.resource.data.q <= 10000
+        && request.resource.data.nota is string && request.resource.data.nota.size() <= 300
+        && request.resource.data.s == 'pendiente'
+        && request.resource.data.f == request.time;
+    }
+
+    // Número de pedido consecutivo (empieza en 777 y se brinca cualquier número con 666)
+    match /contador/{d} {
+      allow get: if true;
+      allow create: if d == 'pedidos' && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == 777;
+      allow update: if esAdmin() || (d == 'pedidos'
+        && request.resource.data.keys().hasOnly(['n'])
+        && request.resource.data.n is int
+        && request.resource.data.n > resource.data.n
+        && request.resource.data.n <= resource.data.n + 1200);
+    }
+
+    // Notificaciones: cada celular guarda su token (dueño, repartidor o cliente de un pedido)
+    match /push/{id} {
+      allow get, list, delete: if esAdmin();
+      allow create, update: if request.resource.data.keys().hasOnly(['t', 'rol', 'p', 'r', 'n', 'f'])
+        && request.resource.data.t is string && request.resource.data.t.size() < 400
+        && request.resource.data.f == request.time
+        && ((request.resource.data.rol == 'dueno' && esAdmin())
+          || (request.resource.data.rol == 'repa' && request.resource.data.r is string && request.resource.data.r.size() < 40
+              && exists(/databases/$(database)/documents/rutas/$(request.resource.data.r)))
+          || (request.resource.data.rol == 'cliente' && request.resource.data.p is string && request.resource.data.p.size() < 60
+              && exists(/databases/$(database)/documents/pedidos/$(request.resource.data.p))));
+    }
+
+    // Clientes registrados en la bienvenida (nombre, WhatsApp, si aceptó ofertas y la versión de términos que aceptó). Cualquiera se registra; solo tú ves la lista
+    match /registros/{tel} {
+      allow get, list, delete: if esAdmin();
+      allow create, update: if tel.matches('^[0-9]{10}$')
+        && request.resource.data.keys().hasOnly(['n', 'tel', 'i', 'f', 'o', 'tc', 'tf'])
+        && (!('o' in request.resource.data) || request.resource.data.o is bool)
+        && (!('tc' in request.resource.data) || (request.resource.data.tc is string && request.resource.data.tc.size() <= 20))
+        && (!('tf' in request.resource.data) || request.resource.data.tf is number)
+        && request.resource.data.tel == tel
+        && request.resource.data.n is string && request.resource.data.n.size() > 0 && request.resource.data.n.size() <= 80
+        && request.resource.data.i in ['es', 'en']
+        && request.resource.data.f is number;
+    }
+
+    // Todo lo demás cerrado
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
