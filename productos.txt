@@ -478,12 +478,12 @@ opción: Para vasito 2 oz · 2,500 piezas (20/125) | 619.24 pesos
 Envase de plástico Reyma
 id: dp15
 presentación: Caja 20/25 (500 piezas)
-foto: envase-reyma
+foto: envase-plastico-12
 dibujo: envase
 descripción: Envases de plástico para sopa, frijoles, salsas y postres. La tapa se vende aparte (Tapas plásticas).
-opción: 1/4 litro | 789.31 pesos
-opción: 1/2 litro | 1012.78 pesos
-opción: 1 litro | 1417.89 pesos
+opción: 1/4 litro | 789.31 pesos | foto envase-plastico-14
+opción: 1/2 litro | 1012.78 pesos | foto envase-plastico-12
+opción: 1 litro | 1417.89 pesos | foto envase-plastico-1l
 
 Vaso y envase térmico Dart
 id: dp16
