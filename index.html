@@ -563,6 +563,32 @@ html.f-chicas .grid .p .price small{font-size:10px!important}
 html.f-chicas .grid .p h3{font-size:12.5px!important}
 html.f-chicas .plus{width:34px!important;height:34px!important;font-size:20px!important;top:-17px!important;right:6px!important;border-width:2px!important}
 html.f-chicas .plus.ver{width:auto!important;padding:0 10px!important;font-size:12.5px!important;height:30px!important;top:-15px!important}
+
+/* Pedidos del dueño por secciones */
+#panel .tx>h3{padding-right:58px}
+.ptabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 10px;position:sticky;top:-2px;z-index:3;background:var(--card);padding:6px 0}
+.ptabs button{display:grid;justify-items:center;gap:4px;white-space:nowrap;border:1px solid var(--line);background:none;color:inherit;border-radius:12px;padding:10px 2px;font:700 12px Poppins,sans-serif;line-height:1}
+.ptabs button.on{background:#f4b400;color:#152016;border-color:#f4b400}.ptabs b{font-size:18px}.ptabs span{font-size:12px}
+.ptabs i,.psec h4 i{font-style:normal;display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:#0003;font-size:11.5px;margin-left:2px}
+.psec h4{margin:12px 0 6px;font-size:15px}
+.pcd{position:relative;display:grid;gap:5px;padding:12px 12px 12px 16px;margin:0 0 10px;border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
+.pcd::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:#888}
+.pcd.por::before{background:#e53935}.pcd.prep::before{background:#f4b400}.pcd.cam::before{background:#4f8cff}.pcd.fin::before{background:#2e8b2e}.pcd.can::before{background:#777}
+.pcd.por{border-color:#e5393566;background:linear-gradient(90deg,#e5393512,transparent 60%)}
+.pcd.tarde{animation:pTarde 1.6s infinite}@keyframes pTarde{50%{box-shadow:0 0 0 3px #e5393566}}
+.pcd.fin,.pcd.can{opacity:.75}
+.pct{display:flex;justify-content:space-between;align-items:center;gap:8px}.pct b{font-size:19px}
+.pst{font-size:12px;font-weight:800;padding:4px 10px;border-radius:99px;white-space:nowrap;color:#fff;background:#777}
+.pst.por{background:#e53935}.pst.prep{background:#f4b400;color:#152016}.pst.cam{background:#4f8cff}.pst.fin{background:#2e8b2e}
+.pcn{font-weight:700;font-size:15px}.pci{font-size:13.5px;line-height:1.4}.pcm{font-size:12.5px;opacity:.85}.pcw{font-size:12px;opacity:.7}
+.pcd.tarde .pcw{color:#e53935;opacity:1;font-weight:700}
+.pchipx{justify-self:start;font-size:12px;font-weight:800;padding:3px 9px;border-radius:8px;background:#4f8cff;color:#fff}.pchipx.hoy{background:#e53935}
+.pcb{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:4px}
+.pcb .go{grid-column:1/-1;min-height:48px;font:800 16px Poppins,sans-serif;border-radius:12px;border:0!important;background:#2e8b2e!important;background-image:none!important;color:#fff!important}
+.pcd.por .pcb .go{background:#e53935!important}.pcd.prep .pcb .go{background:#f4b400!important;color:#152016!important}.pcd.cam .pcb .go{background:#4f8cff!important}
+.pcb .sec{padding:0 14px;min-height:40px;border-radius:10px}
+.pcb select{min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 8px;font-size:13.5px}
+.pcb .sec{order:2}.pcb select{order:1}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -1489,13 +1515,43 @@ function fbPanel(){const box=$('#pFb');if(!box)return;const F=window.ARBA_FB;con
   if(!F.admin()){box.innerHTML='<p class="note">Entraste con '+F.usuario()+', pero esa cuenta no es la del negocio.</p><button class="sec" data-fbout style="width:100%">Salir y entrar con otra cuenta</button>';return}
   if(window.ARBA_LOCK&&!window.ARBA_LOCK.ok()){if(pv)pv.hidden=true;if(fbLista){fbLista();fbLista=null}window.ARBA_LOCK.pinta(box);return}
   box.innerHTML='<p class="note" style="margin:0 0 6px">Conectado como '+F.usuario()+' · <a href="#" data-fbout>Salir</a></p><div id="pLista" class="estlist"><p class="note">Cargando…</p></div>';
-  if(fbLista)fbLista();fbLista=F.lista(rows=>{const L=$('#pLista');if(!L)return;
-    if(!rows.length){L.innerHTML='<p class="note">Todavía no hay pedidos en línea.</p>';return}
-    L.innerHTML=rows.map(r=>{const fe=r.c&&r.c.toDate?r.c.toDate().toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
-      return `<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:6px"><div><b>${esc(pedN(r.p||''))}</b> · ${esc(r.n||'')}${r.d?`<br><small>📍 ${esc(r.d)}</small>`:''}${r.no?`<br><small>📝 ${esc(r.no)}</small>`:''}${r.fa?`<br><small>🧾 Factura: ${esc(r.fa)}</small>`:''}${r.v?`<br><span style="color:#7ed957;font-weight:700">🤝 Vendedor: ${esc(r.v)}</span>`:''}${r.rf?`<br><span style="color:#7ed957;font-weight:700">🚚 Liga del repartidor ${esc((window.ARBA_RN||{})[r.rf]||r.rf)}</span>`:''}<br><small class="note">${fe}${r.T?' · '+esc(r.T):''}${r.g?' · '+esc(r.g):''}</small></div>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:8px"><select data-fbst="${esc(r.id)}" style="min-height:40px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 8px">${Object.keys(EST_NOM).map(k=>`<option value="${k}"${k===r.s?' selected':''}>${EST_NOM[k]}</option>`).join('')}</select>
-      <button class="sec" style="padding:0 12px" data-fbabre="${esc(r.id)}">Abrir</button></div></div>`}).join('');
-    window._fbRows=rows})}
+  if(fbLista)fbLista();fbLista=F.lista(rows=>{window._fbRows=rows||[];pedPinta()})}
+/* Pedidos del dueño por secciones: qué falta, qué urge y qué ya se entregó */
+let pedTab='pend';
+const hoyStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const hace=ms=>{const m=Math.round((Date.now()-ms)/60000);if(m<1)return 'ahorita';if(m<60)return 'hace '+m+' min';const h=Math.floor(m/60);if(h<24)return 'hace '+h+' h'+(m%60?' '+m%60+' min':'');const d=Math.floor(h/24);return 'hace '+d+(d>1?' días':' día')};
+const resu=i=>(i||'').split(',').filter(Boolean).map(x=>{const [k,c]=x.split('*');const [id,vi]=k.split(':');const p=P.find(q=>q.id===id);return c+' × '+(p?p.n+(vi!=null&&p.v&&p.v[+vi]?' ('+p.v[+vi].n+')':''):id)}).join(' · ');
+const SIG=r=>({recibido:['aceptado','✅ Aceptar pedido'],aceptado:['pagado','💵 Ya pagó'],pagado:r.e==='Paso a recoger'?['listo','📦 Listo para recoger']:['camino','🚚 Va en camino'],camino:['entregado','🎉 Entregado'],listo:['entregado','🎉 Ya lo recogió']})[r.s];
+const ESTC={recibido:['por','🆕 Por aceptar'],aceptado:['prep','👩‍🍳 Preparando'],pagado:['prep','💵 Pagado'],camino:['cam','🚚 En camino'],listo:['cam','📦 Listo'],entregado:['fin','✅ Entregado'],cancelado:['can','❌ Cancelado']};
+function pedCard(r){const ms=r.c&&r.c.toMillis?r.c.toMillis():0,[cl,nom]=ESTC[r.s]||ESTC.recibido,sg=SIG(r),hoy=hoyStr();
+  const ent=r.e==='Paso a recoger'?'🏠 Pasa a recoger':r.e==='Punto medio'?'📍 Punto medio':'🚚 A domicilio';
+  const prog=r.pg?(r.pg===hoy?'<span class="pchipx hoy">📅 Es para HOY'+(r.pf?' · '+esc(r.pf):'')+'</span>':r.pg>hoy?'<span class="pchipx prg">📅 '+esc(new Date(r.pg+'T12:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}))+(r.pf?' · '+esc(r.pf):'')+'</span>':''):'';
+  const tarde=r.s==='recibido'&&ms&&Date.now()-ms>30*60000&&!(r.pg&&r.pg>hoy);
+  return `<div class="pcd ${cl}${tarde?' tarde':''}"><div class="pct"><b>${esc(pedN(r.p||''))}</b><span class="pst ${cl}">${nom}</span></div>
+  <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>
+  ${prog}<div class="pci">🛒 ${esc(resu(r.i))||'—'}</div>
+  <div class="pcm"><b>${esc(r.T||'')}</b> · ${esc(r.g||'')} · ${ent}${r.fa?' · 🧾 Factura':''}</div>
+  ${r.d?`<div class="pcm">📍 ${esc(r.d)}</div>`:''}${r.no?`<div class="pcm">📝 ${esc(r.no)}</div>`:''}
+  ${r.v?`<div class="pcm" style="color:#7ed957;font-weight:700">🤝 Vendedor: ${esc(r.v)}</div>`:''}${r.rf?`<div class="pcm" style="color:#7ed957;font-weight:700">🚚 Liga de ${esc((window.ARBA_RN||{})[r.rf]||r.rf)}</div>`:''}
+  <div class="pcw">${tarde?'⏰ ':'🕒 '}${ms?hace(ms):''}</div>
+  <div class="pcb">${sg?`<button type="button" class="go" data-psig="${esc(r.id)}" data-to="${sg[0]}">${sg[1]}</button>`:''}<button type="button" class="sec" data-fbabre="${esc(r.id)}">Abrir</button>
+  <select data-fbst="${esc(r.id)}" aria-label="Cambiar estatus">${Object.keys(EST_NOM).map(k=>`<option value="${k}"${k===r.s?' selected':''}>${EST_NOM[k]}</option>`).join('')}</select></div></div>`}
+function pedPinta(){const L=$('#pLista');if(!L)return;const rows=window._fbRows||[];const hoy=hoyStr();
+  if(!rows.length){L.innerHTML='<p class="note">Todavía no hay pedidos en línea.</p>';return}
+  const ms=r=>r.c&&r.c.toMillis?r.c.toMillis():0,fut=r=>r.pg&&r.pg>hoy;
+  const act=rows.filter(r=>!['entregado','cancelado'].includes(r.s));
+  const por=act.filter(r=>r.s==='recibido'&&!fut(r)),prep=act.filter(r=>['aceptado','pagado'].includes(r.s)&&!fut(r)),cam=act.filter(r=>['camino','listo'].includes(r.s)),prg=act.filter(r=>fut(r)&&!['camino','listo'].includes(r.s));
+  const fin=rows.filter(r=>['entregado','cancelado'].includes(r.s)).sort((a,b)=>ms(b)-ms(a)).slice(0,40);
+  const urg=a=>a.sort((x,y)=>((y.pg===hoy)-(x.pg===hoy))||ms(x)-ms(y));urg(por);urg(prep);urg(cam);prg.sort((a,b)=>a.pg<b.pg?-1:1);
+  const nAct=por.length+prep.length+cam.length;
+  const sec=(t,cl,a,vac)=>`<div class="psec ${cl}"><h4>${t} <i>${a.length}</i></h4>${a.length?a.map(pedCard).join(''):`<p class="note">${vac}</p>`}</div>`;
+  L.innerHTML=`<div class="ptabs"><button type="button" data-ptab="pend" class="${pedTab==='pend'?'on':''}"><b>🔥 ${nAct}</b><span>Por hacer</span></button><button type="button" data-ptab="prg" class="${pedTab==='prg'?'on':''}"><b>📅 ${prg.length}</b><span>Programados</span></button><button type="button" data-ptab="fin" class="${pedTab==='fin'?'on':''}"><b>✅ ${fin.length}</b><span>Terminados</span></button></div>`+
+   (pedTab==='pend'?(nAct?'':'<p class="note" style="text-align:center;font-size:15px;padding:14px 0">🎉 No hay pedidos pendientes. ¡Todo al día!</p>')+(por.length?sec('🆕 Por aceptar','por',por,''):'')+(prep.length?sec('👩‍🍳 Preparando','prep',prep,''):'')+(cam.length?sec('🚚 En camino o listos para recoger','cam',cam,''):'')
+   :pedTab==='prg'?sec('📅 Programados para otro día','prg',prg,'No hay pedidos programados.')
+   :sec('✅ Entregados y cancelados','fin',fin,'Todavía no hay pedidos terminados.'))}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-ptab]');if(t){pedTab=t.dataset.ptab;pedPinta();return}
+  const b=e.target.closest('[data-psig]');if(b){const sel=document.querySelector('[data-fbst="'+CSS.escape(b.dataset.psig)+'"]');if(!sel)return;sel.value=b.dataset.to;b.disabled=true;sel.dispatchEvent(new Event('change',{bubbles:true}))}});
+setInterval(()=>{if(document.getElementById('pLista')&&document.getElementById('panel').classList.contains('on'))pedPinta()},60000);
 function esc(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 document.addEventListener('click',e=>{const r=e.target.closest('[data-repetir]');if(r){const u=repUlt();if(u){u.ks.forEach(k=>{cart[k]=u.c[k]});save();renderCart();openDrawer();toast('Listo: te puse tu pedido anterior. Revísalo y envíalo 👍')}return}});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fbin],[data-fbout],[data-fbabre]');if(!t)return;e.preventDefault();const F=window.ARBA_FB;if(!F)return;
