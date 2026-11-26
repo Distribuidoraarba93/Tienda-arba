@@ -313,7 +313,7 @@ opción: 1312-44 · 250 piezas | 538.68 pesos
 opción: 1414-A para hamburguesa · 500 piezas | 1611.51 pesos
 opción: 1414-B · 500 piezas | 1514.07 pesos
 opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
-opción: RB-180 14x14 para hamburguesa · 250 piezas | 734.44 pesos
+opción: RB-180 14x14 para hamburguesa · 250 piezas | 595.59 pesos
 
 Domo para ensalada 17x6 con tapa
 id: dp8
