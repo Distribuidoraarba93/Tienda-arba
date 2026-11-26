@@ -15,6 +15,9 @@
 #    descripción: Texto que ve el cliente al abrir el producto.
 #    opción: Chica | 20 pesos        (si el producto tiene tamaños o tipos;
 #    opción: Grande | 28 pesos        cada opción con su precio)
+#    iva: 16                         (opcional: 0 o 16. Si no lo pones, se toma
+#                                     el de su categoría. El precio siempre va CON IVA;
+#                                     esto solo sirve para desglosar el IVA)
 #
 #  En una opción también puedes poner mayoreo y foto, separados con | :
 #    opción: Paquete de 10 piezas | 25 pesos | mayoreo desde 5, 22 pesos | foto tortilla-harina
