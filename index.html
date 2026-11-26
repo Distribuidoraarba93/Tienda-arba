@@ -3197,9 +3197,9 @@ window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.fa
 window.ARBA_FACIL=abre;
 /* Entradas: botón grande en la tienda y opción en Ajustes */
 function boton(){if(document.querySelector('.fzent'))return;const h=document.querySelector('section.hero');if(!h)return;
-  h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>👵👴</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`)}
+  h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>🔍</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`)}
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
-  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">👵👴 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
+  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
 function inicio(){boton();const h=location.hash;if(LS('arba-facil')==='1'&&esCliente()&&!/^#(panel|estatus)/.test(h))abre()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inicio,300));else setTimeout(inicio,300);
