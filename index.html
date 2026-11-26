@@ -675,6 +675,25 @@ body.dueno #rep{display:none!important}
 #panel.solo .dsolo-x{display:none!important}
 #duBar .duon{background:#f4b400!important;color:#152016!important;border-color:#f4b400!important}
 #soloTit{display:none}#panel.solo.conTit #soloTit{display:block!important}
+
+/* Patrocinios */
+.slide.spon{background-size:cover!important;background-position:center!important;grid-template-columns:1fr!important}
+.slide.spon>div{max-width:70%}.slide.spon h2{color:#fff}.slide.spon p{color:#f1f1f1}
+.chip.pspon{background:#ffffffdd!important;color:#152016!important;font-size:11px!important;letter-spacing:.3px}
+.amigos{margin:16px 0 4px}.amigos h2{font:800 19px Poppins,sans-serif;margin:0 0 8px}
+.arow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}.arow::-webkit-scrollbar{display:none}
+.acard{flex:none;width:150px;display:grid;justify-items:center;gap:4px;padding:12px 8px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:inherit;text-align:center;font-family:Poppins,sans-serif;position:relative}
+.acard::after{content:"Patrocinado";position:absolute;top:6px;right:8px;font-size:9px;opacity:.6}
+.acard img{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#fff}.acard b{font-size:13.5px;line-height:1.2}.acard span{font-size:11.5px;opacity:.8;line-height:1.3}
+.acard em{font-style:normal;font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px;background:#f4b400;color:#152016;margin-top:2px}
+body.encat .amigos,body.dueno .amigos .x{display:none!important}
+.patnew{border:1px dashed #f4b40088;border-radius:14px;padding:10px 12px;margin:8px 0 12px}.patnew summary{cursor:pointer;font-weight:800;color:#f4b400}
+.patnew .avf{margin-top:10px}#paPv{max-width:100%;border-radius:12px}
+.patc{display:grid;grid-template-columns:80px 1fr;gap:10px;padding:10px;border:1px solid var(--line);border-left:5px solid #2e8b2e;border-radius:14px;margin:0 0 10px}
+.patc.pau{border-left-color:#888;opacity:.8}.patc.ven{border-left-color:#e53935;opacity:.75}.patc.pro{border-left-color:#4f8cff}
+.patc>img{width:80px;height:80px;object-fit:cover;border-radius:10px;background:#fff}.patc>div{display:grid;gap:3px;min-width:0}.patc small{opacity:.8;font-size:12px}
+.pst2{font-size:12px;font-weight:800}.pnum{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin:2px 0}
+.pbt{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}.pbt button{padding:8px 6px;font-size:12.5px;border-radius:10px;min-height:0}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -906,6 +925,7 @@ header .bar{position:relative}
 
 <main>
   <section class="promos" id="promos" hidden><h2>🔥 Lo más pedido <i data-pmas role="button" aria-label="Ver más">›</i></h2><div class="prow" id="prow"></div></section>
+  <section class="amigos" id="amigos" hidden><h2>🤝 Negocios amigos</h2><div class="arow" id="aRow"></div></section>
   <div class="ctips htips" id="hTips"><button type="button" class="hduen" data-hduen><i>📅</i><span><b>Pedidos programados pendientes</b><span id="hProgN">Revisa y confirma con tus clientes</span></span><em>Ver</em></button><button type="button" data-hprog><i>📅</i><span><b>¿Pedido para otro día?</b>Prográmalo y nosotros te lo recordamos. Un pendiente menos.</span><em>Programar</em></button><a href="https://wa.me/526141077999?text=Hola%2C%20busco%3A%20" target="_blank" rel="noopener"><i>🔎</i><span><b>¿No lo ves?</b>Pregúntanos y te lo conseguimos.</span><em>Preguntar</em></a></div>
   <div class="rep" id="rep" hidden></div>
   <div class="head"><button type="button" class="back" data-back aria-label="Regresar">←</button><h2 id="title">Todos los productos</h2><span class="hr"><span id="n"></span></span></div>
@@ -1912,6 +1932,7 @@ window.ARBA_FB={ADMIN,
   negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
   negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
+  patSuma(id,k){return fs.updateDoc(fs.doc(db,'pstats',id),{[k]:fs.increment(1)})},
   lista(cb){let pub={},priv=[];const pinta=()=>cb(priv.map(r=>({...r,...(pub[r.id]||{}),id:r.id,c:r.c})));
     const a=fs.onSnapshot(fs.query(fs.collection(db,'pedidos_priv'),fs.orderBy('c','desc'),fs.limit(40)),q=>{priv=q.docs.map(d=>({id:d.id,...d.data()}));pinta()},()=>cb([]));
     const b=fs.onSnapshot(fs.query(fs.collection(db,'pedidos'),fs.orderBy('c','desc'),fs.limit(60)),q=>{pub={};q.docs.forEach(d=>{const x=d.data();pub[d.id]={s:x.s,t:x.t}});pinta()},()=>{});
@@ -2707,7 +2728,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=13';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=14';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
@@ -2891,20 +2912,89 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
 })();
 </script>
 <script>
+/* ===== PATROCINIOS: banners en el carrusel y "Negocios amigos", con conteo de vistas y clics ===== */
+(function(){
+const $=s=>document.querySelector(s),FB=()=>window.ARBA_FB,toast=m=>{try{window.ARBA_T.toast(m)}catch(e){}};
+const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hoy=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const vivo=p=>p&&p.on!==false&&p.img&&(!p.desde||p.desde<=hoy())&&(!p.hasta||p.hasta>=hoy());
+const liga=u=>{u=String(u||'').trim();const d=u.replace(/\D/g,'');if(/^\+?\d[\d\s-]{8,}$/.test(u))return 'https://wa.me/'+(d.length===10?'52'+d:d);if(!u)return '';return /^https?:\/\//i.test(u)?u:'https://'+u};
+let PAT=[],io=null;const ya=k=>{try{const s=JSON.parse(sessionStorage.getItem('arba-patv')||'{}');if(s[k])return true;s[k]=1;sessionStorage.setItem('arba-patv',JSON.stringify(s))}catch(e){}return false};
+const suma=(id,k)=>{if(document.body.classList.contains('dueno'))return;if(ya(k+id))return;const F=FB();if(F&&F.patSuma)F.patSuma(id,k).catch(()=>{})};
+function pinta(){const sl=$('#slides'),ds=$('#dots');if(!sl)return;
+  sl.querySelectorAll('.slide.spon').forEach(e=>e.remove());
+  const B=PAT.filter(p=>vivo(p)&&p.tipo!=='amigo'),vis=[...sl.querySelectorAll('.slide:not([hidden])')];
+  B.forEach((p,k)=>{const b=document.createElement('button');b.className='slide spon';b.dataset.pat=p.id;b.type='button';
+    b.style.backgroundImage='linear-gradient(90deg,#000d 0%,#0009 45%,#0000 80%),url("'+p.img+'")';
+    b.innerHTML='<div><span class="chip pspon">Patrocinado</span><h2>'+esc(p.t)+'</h2>'+(p.d?'<p>'+esc(p.d)+'</p>':'')+'<span class="pill">'+esc(p.b||'Ver más')+' →</span></div>';
+    const ref=vis[Math.min(1+k*2,vis.length)]||null;sl.insertBefore(b,ref&&ref.parentNode===sl?ref:null)});
+  if(ds){const n=sl.querySelectorAll('.slide:not([hidden])').length;if(ds.children.length!==n)ds.innerHTML='<i class="on"></i>'+'<i></i>'.repeat(Math.max(0,n-1))}
+  const A=PAT.filter(p=>vivo(p)&&p.tipo==='amigo'),sec=$('#amigos');
+  if(sec){sec.hidden=!A.length;$('#aRow').innerHTML=A.map(p=>'<button type="button" class="acard" data-pat="'+esc(p.id)+'"><img src="'+p.img+'" alt="" loading="lazy"><b>'+esc(p.t)+'</b>'+(p.d?'<span>'+esc(p.d)+'</span>':'')+'<em>'+esc(p.b||'Ver')+'</em></button>').join('')}
+  if(io)io.disconnect();if('IntersectionObserver' in window){io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>=.6)suma(e.target.dataset.pat,'v')}),{threshold:[.6]});
+    document.querySelectorAll('.spon[data-pat],.acard[data-pat]').forEach(e=>io.observe(e))}}
+document.addEventListener('click',e=>{const b=e.target.closest('.spon[data-pat],.acard[data-pat]');if(!b)return;e.preventDefault();e.stopPropagation();const p=PAT.find(x=>x.id===b.dataset.pat);if(!p)return;suma(p.id,'c');const u=liga(p.url);if(u)window.open(u,'_blank','noopener')},true);
+let on=false;function arranca(){const F=FB();if(on||!F||!F.negVer)return;on=true;F.negVer('patrocinios',L=>{PAT=(L||[]);pinta();try{adm()}catch(e){}});}
+const t0=setInterval(()=>{if(FB()&&FB().negVer){clearInterval(t0);arranca()}},400);
+
+/* ---- App de dueño: sección Patrocinios ---- */
+let ST={},stOn=false,tipo='banner',foto='';
+function crea(){if($('#patAdm'))return $('#patAdm');const pv=$('#pPriv');if(!pv)return null;const d=document.createElement('div');d.id='patAdm';
+  d.innerHTML=`<h4 style="margin:18px 0 6px">📣 Patrocinios</h4><p class="note">Anuncios de otros negocios dentro de tu tienda. Siempre salen con la etiqueta <b>Patrocinado</b>, se quitan solos al vencer y aquí ves cuántas veces se vieron y cuántos les picaron, para que tengas con qué cobrar.</p>
+  <details class="patnew"><summary>➕ Nuevo patrocinio</summary><div class="avf">
+  <div class="opts" role="group"><button type="button" data-ptipo="banner" class="on">🖼️ Banner grande arriba</button><button type="button" data-ptipo="amigo">🤝 Negocio amigo</button></div>
+  <label>Anunciante (solo tú lo ves)<input id="paN" maxlength="60" placeholder="Ej. Taquería El Güero"></label>
+  <label>Título que se ve<input id="paT" maxlength="50" placeholder="Ej. Los mejores tacos de Chihuahua"></label>
+  <label>Texto corto (opcional)<input id="paD" maxlength="90" placeholder="Ej. Hechos con tortillas Los 2 Carnales 🌮"></label>
+  <div class="ed2"><label>Texto del botón<input id="paB" maxlength="20" placeholder="Ver más"></label><label>WhatsApp o página<input id="paU" maxlength="200" placeholder="614 123 4567"></label></div>
+  <label>Foto o logo<input id="paF" type="file" accept="image/*"></label><img id="paPv" alt="" hidden>
+  <div class="ed2"><label>Desde<input id="paDe" type="date"></label><label>Hasta<input id="paHa" type="date"></label></div>
+  <button type="button" class="go" data-ppub>📣 Publicar patrocinio</button></div></details><div id="patL"></div>`;
+  pv.insertBefore(d,pv.firstChild);
+  d.addEventListener('click',async e=>{const t=e.target.closest('[data-ptipo]');if(t){tipo=t.dataset.ptipo;d.querySelectorAll('[data-ptipo]').forEach(x=>x.classList.toggle('on',x===t));return}
+    if(e.target.closest('[data-ppub]'))return publica(e.target.closest('[data-ppub]'));
+    const a=e.target.closest('[data-pact]');if(a){const p=PAT.find(x=>x.id===a.dataset.pact);if(!p)return;a.disabled=true;try{const {id,...r}=p;await FB().docSet('patrocinios',id,{...r,on:p.on===false})}catch(er){toast('No se pudo cambiar')}return}
+    const x=e.target.closest('[data-pdel]');if(x){if(!confirm('¿Borrar este patrocinio?'))return;try{await FB().negBorrar('patrocinios',x.dataset.pdel);await FB().negBorrar('pstats',x.dataset.pdel)}catch(er){}toast('Patrocinio borrado');return}
+    const r=e.target.closest('[data-prep]');if(r){const p=PAT.find(q=>q.id===r.dataset.prep),s=ST[r.dataset.prep]||{};if(!p)return;const pc=s.v?Math.round((s.c||0)*1000/s.v)/10:0;
+      const m='📣 Reporte de tu anuncio en Distribuidora ARBA\n'+p.t+'\n'+(p.desde?'Del '+p.desde:'')+(p.hasta?' al '+p.hasta:'')+'\n👁️ Lo vieron: '+(s.v||0)+' veces\n👆 Le picaron: '+(s.c||0)+' veces ('+pc+'%)\n¡Gracias por anunciarte con nosotros! 🙌';
+      window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank')}});
+  d.querySelector('#paF').onchange=async e=>{const f=e.target.files[0];if(!f)return;foto=await chica(f);const i=d.querySelector('#paPv');i.src=foto;i.hidden=false};
+  const h=hoy();d.querySelector('#paDe').value=h;const x=new Date();x.setDate(x.getDate()+30);d.querySelector('#paHa').value=x.toISOString().slice(0,10);
+  return d}
+function chica(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const W=Math.min(1000,im.width),k=W/im.width,c=document.createElement('canvas');c.width=W;c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+  let q=.8,u=c.toDataURL('image/webp',q);while(u.length>300000&&q>.35){q-=.1;u=c.toDataURL('image/webp',q)}if(!/^data:image\/webp/.test(u))u=c.toDataURL('image/jpeg',.75);ok(u)};im.onerror=no;im.src=URL.createObjectURL(f)})}
+async function publica(b){const d=$('#patAdm'),v=s=>d.querySelector(s).value.trim();
+  if(!v('#paT')){toast('Ponle un título');return}if(!foto){toast('Sube la foto o el logo');return}if(v('#paHa')&&v('#paDe')&&v('#paHa')<v('#paDe')){toast('"Hasta" debe ser después de "Desde"');return}
+  const id='p'+Date.now().toString(36);b.disabled=true;b.textContent='Publicando…';
+  try{await FB().docSet('pstats',id,{v:0,c:0});await FB().docSet('patrocinios',id,{tipo,n:v('#paN'),t:v('#paT'),d:v('#paD'),b:v('#paB'),url:v('#paU'),img:foto,desde:v('#paDe'),hasta:v('#paHa'),on:true,f:Date.now()});
+    ['#paN','#paT','#paD','#paB','#paU'].forEach(s=>d.querySelector(s).value='');foto='';d.querySelector('#paPv').hidden=true;d.querySelector('#paF').value='';d.querySelector('.patnew').open=false;toast('📣 Patrocinio publicado')}
+  catch(er){console.warn(er);toast('No se pudo publicar. ¿Ya subiste las reglas nuevas?')}b.disabled=false;b.textContent='📣 Publicar patrocinio'}
+function adm(){const F=FB();if(!F||!F.admin||!F.admin()||!document.body.classList.contains('dueno'))return;const d=crea();if(!d)return;
+  if(!stOn){stOn=true;F.negVer('pstats',L=>{ST={};(L||[]).forEach(x=>ST[x.id]=x);adm()})}
+  const L=[...PAT].sort((a,b)=>(b.f||0)-(a.f||0)),h=hoy();
+  d.querySelector('#patL').innerHTML=L.length?L.map(p=>{const s=ST[p.id]||{},pc=s.v?Math.round((s.c||0)*1000/s.v)/10:0,venc=p.hasta&&p.hasta<h,fal=p.hasta?Math.round((new Date(p.hasta+'T12:00')-new Date(h+'T12:00'))/864e5):null;
+    const est=p.on===false?['pau','⏸️ Pausado']:venc?['ven','⏱️ Vencido']:p.desde&&p.desde>h?['pro','🕒 Empieza '+p.desde]:['act','✅ Activo'+(fal!=null?' · quedan '+fal+(fal===1?' día':' días'):'')];
+    return `<div class="patc ${est[0]}"><img src="${p.img}" alt=""><div><b>${esc(p.t)}</b><small>${p.tipo==='amigo'?'🤝 Negocio amigo':'🖼️ Banner'}${p.n?' · '+esc(p.n):''}</small><small>${p.desde?esc(p.desde):''}${p.hasta?' → '+esc(p.hasta):''}</small><span class="pst2">${est[1]}</span>
+    <div class="pnum"><span>👁️ <b>${s.v||0}</b> vistas</span><span>👆 <b>${s.c||0}</b> clics</span><span><b>${pc}%</b></span></div>
+    <div class="pbt"><button type="button" class="sec" data-prep="${p.id}">📤 Reporte</button><button type="button" class="sec" data-pact="${p.id}">${p.on===false?'▶️ Activar':'⏸️ Pausar'}</button><button type="button" class="sec" data-pdel="${p.id}">🗑️</button></div></div></div>`}).join(''):'<p class="note">Todavía no tienes patrocinios.</p>'}
+window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));setInterval(()=>{if(!$('#patAdm'))adm()},2500);
+})();
+</script>
+<script>
 /* App ARBA Dueño: toda la tienda + barra de herramientas del dueño. Nada se ve hasta pasar Google + PIN/huella + celular aprobado. */
 (function(){var q=new URLSearchParams(location.search),d=q.get('dueno')==='1';try{if(d)sessionStorage.setItem('arba-modo','dueno');d=d||sessionStorage.getItem('arba-modo')==='dueno';if(d)localStorage.setItem('arba-modo','dueno');d=d||localStorage.getItem('arba-modo')==='dueno'}catch(e){}
  if(!d)return;document.title='ARBA Dueño';
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='aj'||k==='nuevo'||k==='ocultos')return;
    if(k==='lock'){abrir=false;window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();cierraPanel();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':k==='pat'?'patAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
  /* Cada botón de la barra muestra SOLO su sección del panel */
  function soloQuita(){document.querySelectorAll('.dsolo-x').forEach(function(e){e.classList.remove('dsolo-x')});document.querySelectorAll('#duBar .duon').forEach(function(e){e.classList.remove('duon')});var p=document.getElementById('panel');if(p)p.classList.remove('solo','conTit')}
  window.ARBA_SOLO=function(el,btn){soloQuita();var tx=document.querySelector('#panel .tx'),p=document.getElementById('panel');if(!el||!tx||!tx.contains(el))return;

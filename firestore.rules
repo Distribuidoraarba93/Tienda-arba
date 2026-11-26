@@ -94,6 +94,18 @@ service cloud.firestore {
     }
 
     // Lista pública de agotados (sin cantidades)
+    // Patrocinios: todos los ven; solo tú los publicas
+    match /patrocinios/{id} {
+      allow read: if true;
+      allow write: if esAdmin();
+    }
+    // Vistas y clics de cada patrocinio: cualquiera suma 1, solo tú los ves
+    match /pstats/{id} {
+      allow read, create, delete: if esAdmin();
+      allow update: if esAdmin()
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['v']) && request.resource.data.v == resource.data.v + 1)
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['c']) && request.resource.data.c == resource.data.c + 1);
+    }
     match /estado/{d} {
       allow read: if true;
       allow write: if esAdmin();
