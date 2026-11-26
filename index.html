@@ -671,6 +671,10 @@ body.dueno .htips .hduen{display:grid;border-color:#4f8cff88;background:#4f8cff1
 body.dueno .htips .hduen.pend{border-color:#e53935;background:#e5393518}
 body.dueno .htips .hduen.pend em{background:#e53935;color:#fff}
 body.dueno #rep{display:none!important}
+
+#panel.solo .dsolo-x{display:none!important}
+#duBar .duon{background:#f4b400!important;color:#152016!important;border-color:#f4b400!important}
+#soloTit{display:none}#panel.solo.conTit #soloTit{display:block!important}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -2897,10 +2901,18 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
-   if(k==='aj')return;
+   if(k==='aj'||k==='nuevo'||k==='ocultos')return;
    if(k==='lock'){abrir=false;window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();cierraPanel();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+ /* Cada botón de la barra muestra SOLO su sección del panel */
+ function soloQuita(){document.querySelectorAll('.dsolo-x').forEach(function(e){e.classList.remove('dsolo-x')});document.querySelectorAll('#duBar .duon').forEach(function(e){e.classList.remove('duon')});var p=document.getElementById('panel');if(p)p.classList.remove('solo','conTit')}
+ window.ARBA_SOLO=function(el,btn){soloQuita();var tx=document.querySelector('#panel .tx'),p=document.getElementById('panel');if(!el||!tx||!tx.contains(el))return;
+  var n=el;while(n&&n!==tx){var par=n.parentElement;if(!par)break;Array.prototype.forEach.call(par.children,function(c){if(c!==n)c.classList.add('dsolo-x')});n=par}
+  p.classList.add('solo');if(btn)btn.classList.add('duon');var bx=p.querySelector('.box');if(bx)bx.scrollTop=0};
+ document.addEventListener('click',function(e){if(e.target.closest('#duBar [data-dped]')){setTimeout(function(){var l=document.getElementById('pLista');if(l){window.ARBA_SOLO(l,e.target.closest('[data-dped]'));var tx=document.querySelector('#panel .tx'),t=document.getElementById('soloTit');if(!t){t=document.createElement('h4');t.id='soloTit';t.style.margin='4px 0 6px';tx.insertBefore(t,tx.firstChild)}t.textContent='📋 Pedidos';t.classList.remove('dsolo-x');document.getElementById('panel').classList.add('conTit')}},350);return}
+  if(e.target.closest('[data-fbabre],[data-pgab],[data-closep]'))soloQuita()},true);
+ window.addEventListener('hashchange',function(){if(location.hash.indexOf('#panel-arba?')===0||location.hash.indexOf('#panel-arba')!==0)soloQuita()});
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  /* Al abrir la app sale la tienda normal con un solo botón "Panel". El candado (PIN/huella) se pide al tocarlo. */
  var abrir=false,destino='';
@@ -2909,7 +2921,7 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
   b.addEventListener('click',function(){abrirPanel('')});document.body.appendChild(b);
   var v=document.createElement('button');v.type='button';v.id='duVolver';v.textContent='← Volver a la tienda';v.addEventListener('click',function(){abrir=false;destino='';cierraPanel();revisa()});document.body.appendChild(v)}
  function abrirPanel(k){destino=k||'';if(libre()){irA(destino);return}abrir=true;revisa();location.hash='#panel-arba'}
- function irA(k){if(!k)return;var b=document.querySelector('#duBar [data-du="'+k+'"]');if(b)b.click()}
+ function irA(k){var b=k?document.querySelector('#duBar [data-du="'+k+'"]'):document.querySelector('#duBar [data-dped]');if(b)b.click()}
  window.ARBA_ABREPANEL=abrirPanel;
  /* Pendientes aunque el panel esté cerrado: pedidos por aceptar, programados sin confirmar y solicitudes */
  var vig=null,PN={p:0,g:0,s:0};
@@ -2922,7 +2934,7 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
   try{if(F.prgVer)vig.push(F.prgVer(hoy(),function(L){PN.g=(L||[]).filter(function(x){return !x.pc}).length;pinta()}))}catch(e){}
   try{if(F.solVer)vig.push(F.solVer(function(L){PN.s=(L||[]).filter(function(x){return x.s==='pendiente'}).length;pinta()}))}catch(e){}}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();botonPanel();vigila();var ok=libre();
-  if(ok){var era=b.classList.contains('dlock')||b.classList.contains('dcerr');b.classList.remove('dlock','dcerr');if(abrir){abrir=false;var k=destino;destino='';setTimeout(function(){if(k)irA(k)},400)}else if(era&&!b._yaAbierto){}b._yaAbierto=1}
+  if(ok){var era=b.classList.contains('dlock')||b.classList.contains('dcerr');b.classList.remove('dlock','dcerr');if(abrir){abrir=false;var k=destino;destino='';setTimeout(function(){irA(k)},400)}else if(era&&!b._yaAbierto){}b._yaAbierto=1}
   else{b._yaAbierto=0;b.classList.toggle('dlock',abrir);b.classList.toggle('dcerr',!abrir);if(!abrir){var pp=document.getElementById('panel');if(pp&&pp.classList.contains('on'))cierraPanel()}if(abrir&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
   var al=document.documentElement;al.style.setProperty('--duh',b.classList.contains('dcerr')?'0px':((document.getElementById('duBar')||{}).offsetHeight||60)+'px')}
  if(document.body)revisa();else document.addEventListener('DOMContentLoaded',revisa);
