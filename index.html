@@ -3102,6 +3102,10 @@ const ORDEN=['Tortillas','Combos','Repostería','Abarrotes','Botanas','Bebidas',
 const IC={'Combos':'🎁','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍬','Repostería':'🥧'};
 const NOMC={'Tortillas':'Tortillas Los 2 Carnales','Repostería':'Pays y postres','Servilletas y empaque':'Servilletas y bolsas','Higiene y varios':'Guantes y cubiertos'};
 let fz=null,pant='home',ent='Entrega a domicilio',D={};
+const EN=(()=>{try{return (JSON.parse(LS('arba-aj')||'{}').i)==='en'}catch(e){return false}})();
+const L=(es,en)=>EN?en:es;
+const CEN={'Tortillas':'Los 2 Carnales Tortillas','Combos':'Combos','Repostería':'Pies and desserts','Abarrotes':'Groceries','Botanas':'Snacks','Bebidas':'Drinks','Dulces':'Candy','Limpieza':'Cleaning','Contenedores':'Food containers','Vasos':'Cups','Bowls y envases':'Bowls and containers','Servilletas y empaque':'Napkins and bags','Higiene y varios':'Gloves and cutlery'};
+const cN=c=>EN?(CEN[c]||c):(NOMC[c]||c);
 const T=()=>window.ARBA_T;
 const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cartLee=()=>{try{return JSON.parse(LS('arba-cart')||'{}')}catch(e){return {}}};
@@ -3109,47 +3113,47 @@ const antic=p=>['Repostería','Combos'].includes(p.cat)||(p.cat==='Tortillas'&&p
 const esCliente=()=>{const b=document.body.classList,q=new URLSearchParams(location.search);return !b.contains('dueno')&&!b.contains('repa')&&!LS('arba-repa')&&LS('arba-modo')!=='dueno'&&!q.get('r')&&!q.get('dueno')&&!q.get('app')};
 /* Todos los renglones que se pueden pedir: cada opción de un producto es su propio renglón (más fácil de entender) */
 function renglones(cat){const t=T(),out=[];t.P.forEach(p=>{if(p.cat!==cat)return;
-  if(p.v&&p.v.length)p.v.forEach((o,i)=>{const k=p.id+':'+i;if(o.pr!=null&&!t.agot(k))out.push({k,p,vi:i,n:p.n+' — '+o.n,u:p.v.length>1?'':p.u,pr:o.pr,my:o.my})});
+  if(p.v&&p.v.length)p.v.forEach((o,i)=>{const k=p.id+':'+i;if(o.pr!=null&&!t.agot(k))out.push({k,p,vi:i,n:p.n+' · '+o.n,u:p.v.length>1?'':p.u,pr:o.pr,my:o.my})});
   else if(p.pr!=null&&!t.agot(p.id))out.push({k:p.id,p,vi:null,n:p.n,u:p.u,pr:p.pr,my:p.my})});return out}
 function cats(){const t=T();return ORDEN.filter(c=>t.CATS.includes(c)&&renglones(c).length)}
 function resumen(){const t=T(),c=cartLee();let n=0,tot=0,cot=0;const ks=Object.keys(c).filter(k=>c[k]>0&&t.item(k));
   ks.forEach(k=>{const it=t.item(k);n+=c[k];if(it.pr==null)cot++;else tot+=t.upI(it,c[k])*c[k]});return {ks,c,n,tot:Math.round(tot*100)/100,cot}}
-function qtyHTML(k,c){return c>0?`<div class="fq"><button type="button" class="m" data-fm="${k}" aria-label="Uno menos">−</button><span>${c}<small>en tu pedido</small></span><button type="button" class="p" data-fp="${k}" aria-label="Uno más">+</button></div>`
-  :`<button type="button" class="fb v" data-fp="${k}" style="margin:0">➕ Agregar</button>`}
-function prodHTML(r,c){const t=T();return `<div class="fp${c?' en':''}"><div class="ft">${t.pic(r.p,r.vi)}</div><div><h3>${esc(r.n)}</h3>${r.u?`<span class="fu">${esc(r.u)}</span>`:''}<span class="fpr">${t.fmt(r.pr)}</span>${r.my?`<span class="fn">Llevando <b>${r.my[0]} o más</b>: ${t.fmt(r.my[1])} cada uno</span>`:''}${antic(r.p)?'<span class="fn">📅 Se pide <b>un día antes</b></span>':''}</div><div class="fac">${qtyHTML(r.k,c)}</div></div>`}
+function qtyHTML(k,c){return c>0?`<div class="fq"><button type="button" class="m" data-fm="${k}" aria-label="${L('Uno menos','One less')}">−</button><span>${c}<small>${L('en tu pedido','in your order')}</small></span><button type="button" class="p" data-fp="${k}" aria-label="${L('Uno más','One more')}">+</button></div>`
+  :`<button type="button" class="fb v" data-fp="${k}" style="margin:0">➕ ${L('Agregar','Add')}</button>`}
+function prodHTML(r,c){const t=T();return `<div class="fp${c?' en':''}"><div class="ft">${t.pic(r.p,r.vi)}</div><div><h3>${esc(r.n)}</h3>${r.u?`<span class="fu">${esc(r.u)}</span>`:''}<span class="fpr">${t.fmt(r.pr)}</span>${r.my?`<span class="fn">${L('Llevando','Buying')} <b>${r.my[0]} ${L('o más','or more')}</b>: ${t.fmt(r.my[1])} ${L('cada uno','each')}</span>`:''}${antic(r.p)?`<span class="fn">📅 ${L('Se pide <b>un día antes</b>','Order <b>one day ahead</b>')}</span>`:''}</div><div class="fac">${qtyHTML(r.k,c)}</div></div>`}
 function barra(sig){const r=resumen();if(!r.n)return '';const t=T();
-  return `<div class="fbar"><button type="button" class="fb" data-fgo="${sig||'carrito'}"><span>🛒 Tu pedido: ${r.n} ${r.n===1?'cosa':'cosas'}<b>${t.fmt(r.tot)}${r.cot?' + precio por confirmar':''}</b></span>Siguiente ➜</button></div>`}
-const ayuda=()=>`<div class="fayu"><p>¿Necesitas ayuda? Con gusto te atendemos:</p><a class="fb s" href="tel:${TEL}">📞 Llamar a la tienda</a><button type="button" class="fb s" data-fgo="llamar" style="margin:0">🙋 Mejor que me llamen</button></div>`;
+  return `<div class="fbar"><button type="button" class="fb" data-fgo="${sig||'carrito'}"><span>🛒 ${L('Tu pedido','Your order')}: ${r.n} ${r.n===1?L('cosa','item'):L('cosas','items')}<b>${t.fmt(r.tot)}${r.cot?L(' + precio por confirmar',' + price to confirm'):''}</b></span>${L('Siguiente','Next')} ➜</button></div>`}
+const ayuda=()=>`<div class="fayu"><p>${L('¿Necesitas ayuda? Con gusto te atendemos:','Need help? We are happy to help you:')}</p><a class="fb s" href="tel:${TEL}">📞 ${L('Llamar a la tienda','Call the store')}</a><button type="button" class="fb s" data-fgo="llamar" style="margin:0">🙋 ${L('Mejor que me llamen','Please call me')}</button></div>`;
 function pinta(){if(!fz)return;const t=T(),m=fz.querySelector('.fm'),r=resumen();let h='',bar='';
   if(pant==='home'){
-    h=`<span class="fpaso">Paso 1 de 3</span><h2>¿Qué quieres pedir?</h2><p class="fsub">Toca lo que buscas.</p><div class="fcats">${cats().map((c,i)=>`<button type="button" class="fcat${i===0&&c==='Tortillas'?' big':''}" data-fcat="${esc(c)}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':`<i>${IC[c]||'🛍️'}</i>`}${esc(NOMC[c]||c)}</button>`).join('')}</div>${ayuda()}`;bar=barra()}
-  else if(pant.indexOf('cat:')===0){const c=pant.slice(4),L=renglones(c),cc=r.c;
-    h=`<button type="button" class="fatras" data-fatras>← Regresar</button><span class="fpaso">Paso 1 de 3</span><h2>${esc(NOMC[c]||c)}</h2><p class="fsub">Toca <b>➕ Agregar</b> en lo que quieras.</p>${L.map(x=>prodHTML(x,cc[x.k]||0)).join('')}<button type="button" class="fb s" data-fatras>← Ver otras cosas</button>`;bar=barra()}
+    h=`<span class="fpaso">${L('Paso 1 de 3','Step 1 of 3')}</span><h2>${L('¿Qué quieres pedir?','What would you like?')}</h2><p class="fsub">${L('Toca lo que buscas.','Tap what you are looking for.')}</p><div class="fcats">${cats().map((c,i)=>`<button type="button" class="fcat${i===0&&c==='Tortillas'?' big':''}" data-fcat="${esc(c)}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':`<i>${IC[c]||'🛍️'}</i>`}${esc(cN(c))}</button>`).join('')}</div>${ayuda()}`;bar=barra()}
+  else if(pant.indexOf('cat:')===0){const c=pant.slice(4),LL=renglones(c),cc=r.c;
+    h=`<button type="button" class="fatras" data-fatras>← ${L('Regresar','Back')}</button><span class="fpaso">${L('Paso 1 de 3','Step 1 of 3')}</span><h2>${esc(cN(c))}</h2><p class="fsub">${L('Toca <b>➕ Agregar</b> en lo que quieras.','Tap <b>➕ Add</b> on what you want.')}</p>${LL.map(x=>prodHTML(x,cc[x.k]||0)).join('')}<button type="button" class="fb s" data-fatras>← ${L('Ver otras cosas','See other things')}</button>`;bar=barra()}
   else if(pant==='carrito'){
-    h=`<button type="button" class="fatras" data-fatras>← Seguir escogiendo</button><span class="fpaso">Paso 2 de 3</span><h2>Revisa tu pedido</h2>`;
-    if(!r.n)h+=`<div class="fvacio">🛒<br>Tu pedido está vacío.</div><button type="button" class="fb v" data-fgo="home">Escoger productos</button>`;
-    else{h+=`<p class="fsub">Con <b>+</b> y <b>−</b> cambias cuántos quieres.</p>`+r.ks.map(k=>{const it=t.item(k),c=r.c[k];return `<div class="fp en"><div class="ft">${t.pic(it.p,it.vi)}</div><div><h3>${esc(it.name)}</h3><span class="fpr">${it.pr==null?'Precio por confirmar':t.fmt(Math.round(t.upI(it,c)*c*100)/100)}</span>${c>1&&it.pr!=null?`<span class="fn">${t.fmt(t.upI(it,c))} cada uno</span>`:''}</div><div class="fac">${qtyHTML(k,c)}</div></div>`}).join('')
-      +`<div class="ftot"><span>Total</span><b>${t.fmt(r.tot)}</b></div>${r.cot?'<p class="fsub">Algunos productos no tienen precio todavía: te lo confirmamos por WhatsApp.</p>':''}<button type="button" class="fb s" data-fgo="home">➕ Agregar más cosas</button>`;
-      bar=`<div class="fbar"><button type="button" class="fb a" data-fgo="datos" style="justify-content:center">Siguiente: tus datos ➜</button></div>`}}
+    h=`<button type="button" class="fatras" data-fatras>← ${L('Seguir escogiendo','Keep shopping')}</button><span class="fpaso">${L('Paso 2 de 3','Step 2 of 3')}</span><h2>${L('Revisa tu pedido','Check your order')}</h2>`;
+    if(!r.n)h+=`<div class="fvacio">🛒<br>${L('Tu pedido está vacío.','Your order is empty.')}</div><button type="button" class="fb v" data-fgo="home">${L('Escoger productos','Choose products')}</button>`;
+    else{h+=`<p class="fsub">${L('Con <b>+</b> y <b>−</b> cambias cuántos quieres.','Use <b>+</b> and <b>−</b> to change how many.')}</p>`+r.ks.map(k=>{const it=t.item(k),c=r.c[k];return `<div class="fp en"><div class="ft">${t.pic(it.p,it.vi)}</div><div><h3>${esc(it.name)}</h3><span class="fpr">${it.pr==null?L('Precio por confirmar','Price to confirm'):t.fmt(Math.round(t.upI(it,c)*c*100)/100)}</span>${c>1&&it.pr!=null?`<span class="fn">${t.fmt(t.upI(it,c))} ${L('cada uno','each')}</span>`:''}</div><div class="fac">${qtyHTML(k,c)}</div></div>`}).join('')
+      +`<div class="ftot"><span>Total</span><b>${t.fmt(r.tot)}</b></div>${r.cot?`<p class="fsub">${L('Algunos productos no tienen precio todavía: te lo confirmamos por WhatsApp.','Some products have no price yet: we will confirm it on WhatsApp.')}</p>`:''}<button type="button" class="fb s" data-fgo="home">➕ ${L('Agregar más cosas','Add more things')}</button>`;
+      bar=`<div class="fbar"><button type="button" class="fb a" data-fgo="datos" style="justify-content:center">${L('Siguiente: tus datos','Next: your details')} ➜</button></div>`}}
   else if(pant==='datos'){if(!r.n){pant='carrito';return pinta()}
     const dom=ent==='Entrega a domicilio',falta=dom&&!r.cot?Math.max(0,Math.round((130-r.tot)*100)/100):0,ant=r.tot>=500;
-    h=`<button type="button" class="fatras" data-fatras>← Regresar</button><span class="fpaso">Paso 3 de 3</span><h2>Tus datos</h2><p class="fsub">Para saber a quién llevarle el pedido.</p>
-    <label class="fl" for="fzN">Tu nombre</label><input class="fin" id="fzN" autocomplete="name" value="${esc(D.n)}">
-    <label class="fl" for="fzT">Tu número de WhatsApp</label><input class="fin" id="fzT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(D.t)}">
-    <label class="fl">¿Cómo lo quieres recibir?</label><div class="fdos"><button type="button" class="fop${dom?' on':''}" data-fent="Entrega a domicilio"><i>🚚</i>Que me lo lleven</button><button type="button" class="fop${dom?'':' on'}" data-fent="Paso a recoger"><i>🏠</i>Yo paso por él</button></div>
-    ${dom?`<label class="fl" for="fzD">¿A dónde te lo llevamos?</label><textarea class="fin" id="fzD" autocomplete="street-address" placeholder="Calle, número y colonia">${esc(D.d)}</textarea>`:'<p class="fav">🏠 Al confirmar tu pedido te mandamos la ubicación por WhatsApp.</p>'}
-    ${falta?`<div class="fav r">🚚 Para llevártelo a domicilio el pedido debe ser de <b>130 pesos o más</b>. Te faltan <b>${t.fmt(falta)}</b>.<button type="button" class="fb s" data-fgo="home">➕ Agregar más cosas</button>o toca <b>"Yo paso por él"</b>.</div>`:''}
-    <p class="fav">💵 Pagas <b>en efectivo</b> cuando lo recibes. Si quieres pagar de otra forma, dínoslo por WhatsApp.</p>
-    ${ant?`<div class="fav"><b>Tu pedido es de 500 pesos o más.</b> Para empezar a prepararlo se pide un anticipo de ${t.fmt(Math.round(r.tot*0.35*100)/100)} por transferencia. El resto lo pagas al recibir. Si cancelas cuando ya está preparado, el anticipo no se devuelve.<label class="fchk"><input type="checkbox" id="fzA"${D.a?' checked':''}> Sí, estoy de acuerdo</label></div>`:''}
+    h=`<button type="button" class="fatras" data-fatras>← ${L('Regresar','Back')}</button><span class="fpaso">${L('Paso 3 de 3','Step 3 of 3')}</span><h2>${L('Tus datos','Your details')}</h2><p class="fsub">${L('Para saber a quién llevarle el pedido.','So we know who the order is for.')}</p>
+    <label class="fl" for="fzN">${L('Tu nombre','Your name')}</label><input class="fin" id="fzN" autocomplete="name" value="${esc(D.n)}">
+    <label class="fl" for="fzT">${L('Tu número de WhatsApp','Your WhatsApp number')}</label><input class="fin" id="fzT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(D.t)}">
+    <label class="fl">${L('¿Cómo lo quieres recibir?','How do you want to get it?')}</label><div class="fdos"><button type="button" class="fop${dom?' on':''}" data-fent="Entrega a domicilio"><i>🚚</i>${L('Que me lo lleven','Deliver it to me')}</button><button type="button" class="fop${dom?'':' on'}" data-fent="Paso a recoger"><i>🏠</i>${L('Yo paso por él','I will pick it up')}</button></div>
+    ${dom?`<label class="fl" for="fzD">${L('¿A dónde te lo llevamos?','Where should we deliver it?')}</label><textarea class="fin" id="fzD" autocomplete="street-address" placeholder="${L('Calle, número y colonia','Street, number and neighborhood')}">${esc(D.d)}</textarea>`:`<p class="fav">🏠 ${L('Al confirmar tu pedido te mandamos la ubicación por WhatsApp.','When we confirm your order we will send you our location on WhatsApp.')}</p>`}
+    ${falta?`<div class="fav r">🚚 ${L('Para llevártelo a domicilio el pedido debe ser de <b>130 pesos o más</b>. Te faltan','For home delivery the order must be <b>130 pesos or more</b>. You need')} <b>${t.fmt(falta)}</b>${L('.',' more.')}<button type="button" class="fb s" data-fgo="home">➕ ${L('Agregar más cosas','Add more things')}</button>${L('o toca <b>"Yo paso por él"</b>.','or tap <b>"I will pick it up"</b>.')}</div>`:''}
+    <p class="fav">💵 ${L('Pagas <b>en efectivo</b> cuando lo recibes. Si quieres pagar de otra forma, dínoslo por WhatsApp.','You pay <b>in cash</b> when you get it. If you want to pay another way, tell us on WhatsApp.')}</p>
+    ${ant?`<div class="fav">${L('<b>Tu pedido es de 500 pesos o más.</b> Para empezar a prepararlo se pide un anticipo de','<b>Your order is 500 pesos or more.</b> To start preparing it we ask for a deposit of')} ${t.fmt(Math.round(r.tot*0.35*100)/100)} ${L('por transferencia. El resto lo pagas al recibir. Si cancelas cuando ya está preparado, el anticipo no se devuelve.','by bank transfer. You pay the rest when you get it. If you cancel once it is ready, the deposit is not refunded.')}<label class="fchk"><input type="checkbox" id="fzA"${D.a?' checked':''}> ${L('Sí, estoy de acuerdo','Yes, I agree')}</label></div>`:''}
     <div class="ftot"><span>Total</span><b>${t.fmt(r.tot)}</b></div>`;
-    bar=`<div class="fbar"><button type="button" class="fb v" data-fmanda style="justify-content:center"${falta?' disabled':''}>✅ Mandar mi pedido</button></div>`}
+    bar=`<div class="fbar"><button type="button" class="fb v" data-fmanda style="justify-content:center"${falta?' disabled':''}>✅ ${L('Mandar mi pedido','Send my order')}</button></div>`}
   else if(pant==='llamar'){
-    h=`<button type="button" class="fatras" data-fatras>← Regresar</button><h2>Te llamamos 📞</h2><p class="fsub">Déjanos tu nombre y número. Te marcamos para tomarte el pedido por teléfono.</p>
-    <label class="fl" for="fzN">Tu nombre</label><input class="fin" id="fzN" autocomplete="name" value="${esc(D.n)}">
-    <label class="fl" for="fzT">Tu número de teléfono</label><input class="fin" id="fzT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(D.t)}">
-    <button type="button" class="fb v" data-fllama style="margin-top:20px">📞 Que me llamen</button><p class="fsub">Se abre WhatsApp con el mensaje listo: solo dale <b>Enviar</b>.</p><a class="fb s" href="tel:${TEL}">O llama tú a la tienda</a>`}
+    h=`<button type="button" class="fatras" data-fatras>← ${L('Regresar','Back')}</button><h2>${L('Te llamamos','We will call you')} 📞</h2><p class="fsub">${L('Déjanos tu nombre y número. Te marcamos para tomarte el pedido por teléfono.','Leave your name and number. We will call you to take your order by phone.')}</p>
+    <label class="fl" for="fzN">${L('Tu nombre','Your name')}</label><input class="fin" id="fzN" autocomplete="name" value="${esc(D.n)}">
+    <label class="fl" for="fzT">${L('Tu número de teléfono','Your phone number')}</label><input class="fin" id="fzT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(D.t)}">
+    <button type="button" class="fb v" data-fllama style="margin-top:20px">📞 ${L('Que me llamen','Call me')}</button><p class="fsub">${L('Se abre WhatsApp con el mensaje listo: solo dale <b>Enviar</b>.','WhatsApp opens with the message ready: just tap <b>Send</b>.')}</p><a class="fb s" href="tel:${TEL}">${L('O llama tú a la tienda','Or call the store yourself')}</a>`}
   else if(pant==='listo'){
-    h=`<div class="fok"><div class="fe">✅</div><h2>¡Listo!</h2><p>Se abrió WhatsApp con tu pedido${D.ped?' <b>'+esc(D.ped)+'</b>':''}.</p><p>Solo dale <b>Enviar</b> ➤ y te lo confirmamos por ahí.</p>${D.wa?`<a class="fb a" href="${esc(D.wa)}" target="_blank" rel="noopener">¿No se abrió WhatsApp? Toca aquí</a>`:''}${D.ped?`<button type="button" class="fb s" data-festado>📍 Ver cómo va mi pedido</button>`:''}<button type="button" class="fb v" data-fgo="home">Hacer otro pedido</button></div>`}
+    h=`<div class="fok"><div class="fe">✅</div><h2>${L('¡Listo!','All set!')}</h2><p>${L('Se abrió WhatsApp con tu pedido','WhatsApp opened with your order')}${D.ped?' <b>'+esc(D.ped)+'</b>':''}.</p><p>${L('Solo dale <b>Enviar</b> ➤ y te lo confirmamos por ahí.','Just tap <b>Send</b> ➤ and we will confirm it there.')}</p>${D.wa?`<a class="fb a" href="${esc(D.wa)}" target="_blank" rel="noopener">${L('¿No se abrió WhatsApp? Toca aquí','WhatsApp did not open? Tap here')}</a>`:''}${D.ped?`<button type="button" class="fb s" data-festado>📍 ${L('Ver cómo va mi pedido','See my order status')}</button>`:''}<button type="button" class="fb v" data-fgo="home">${L('Hacer otro pedido','Place another order')}</button></div>`}
   m.innerHTML=h;fz.querySelector('.fbw').innerHTML=bar}
 function guardaD(){const n=fz.querySelector('#fzN'),tl=fz.querySelector('#fzT'),d=fz.querySelector('#fzD'),a=fz.querySelector('#fzA');if(n)D.n=n.value;if(tl)D.t=tl.value;if(d)D.d=d.value;if(a)D.a=a.checked}
 function ve(p,push){if(fz)guardaD();pant=p;if(push!==false&&p!=='home')try{history.pushState({facil:p},'')}catch(e){}if(fz){pinta();fz.querySelector('.fm').scrollTop=0}}
@@ -3157,10 +3161,10 @@ function atras(){if(history.state&&history.state.facil)history.back();else ve('h
 function datosPrevios(){try{const m=JSON.parse(LS('arba-mis')||'{}');if(!D.n&&m.n)D.n=m.n;if(!D.t&&m.tel)D.t=m.tel;if(!D.d&&m.dirs&&m.dirs[0])D.d=m.dirs[0]}catch(e){}}
 function falla(t,el){T().toast(t);if(el){el.focus();el.scrollIntoView({block:'center',behavior:'smooth'})}}
 function manda(){guardaD();const t=T(),r=resumen(),dig=String(D.t||'').replace(/\D/g,'').slice(-10),dom=ent==='Entrega a domicilio';
-  if(!String(D.n||'').trim())return falla('Escribe tu nombre',fz.querySelector('#fzN'));
-  if(dig.length<10)return falla('Escribe tu número de WhatsApp de 10 dígitos',fz.querySelector('#fzT'));
-  if(dom&&String(D.d||'').trim().length<5)return falla('Escribe a dónde te lo llevamos',fz.querySelector('#fzD'));
-  if(r.tot>=500&&!D.a)return falla('Marca "Sí, estoy de acuerdo" para el anticipo',fz.querySelector('#fzA'));
+  if(!String(D.n||'').trim())return falla(L('Escribe tu nombre','Write your name'),fz.querySelector('#fzN'));
+  if(dig.length<10)return falla(L('Escribe tu número de WhatsApp de 10 dígitos','Write your 10-digit WhatsApp number'),fz.querySelector('#fzT'));
+  if(dom&&String(D.d||'').trim().length<5)return falla(L('Escribe a dónde te lo llevamos','Write where we should deliver it'),fz.querySelector('#fzD'));
+  if(r.tot>=500&&!D.a)return falla(L('Marca "Sí, estoy de acuerdo" para el anticipo','Check "Yes, I agree" for the deposit'),fz.querySelector('#fzA'));
   /* Se llena el formulario normal de la tienda y se manda igual que siempre (mismo folio, mismo mensaje, mismo estatus) */
   const q=s=>document.querySelector(s);{const y=q('[data-cu="ya"]');if(y)y.click()}const eb=q('#form [data-e="'+ent+'"]');if(eb)eb.click();
   q('#next').click();q('#nom').value=String(D.n).trim();q('#tel').value=dig;q('#dir').value=dom?String(D.d).trim():'';
@@ -3169,15 +3173,15 @@ function manda(){guardaD();const t=T(),r=resumen(),dig=String(D.t||'').replace(/
   const f=q('#form');try{f.requestSubmit?f.requestSubmit():f.dispatchEvent(new Event('submit',{cancelable:true}))}catch(e){}
   setTimeout(()=>{if(resumen().n){q('#back').click();return}const a=q('#items a.wa'),b=q('#items [data-estver]');D.wa=a?a.href:'';D.pedK=b?b.dataset.estver:'';D.ped=D.pedK?t.pedN(D.pedK):'';D.a=false;ve('listo')},350)}
 function llama(){guardaD();const dig=String(D.t||'').replace(/\D/g,'').slice(-10);
-  if(!String(D.n||'').trim())return falla('Escribe tu nombre',fz.querySelector('#fzN'));if(dig.length<10)return falla('Escribe tu número de 10 dígitos',fz.querySelector('#fzT'));
-  const msg=`Hola, soy ${String(D.n).trim()}. Quiero hacer un pedido. ¿Me pueden llamar al ${dig}? 📞`;
-  const a=document.createElement('a');a.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();T().toast('Abriendo WhatsApp… dale Enviar y te llamamos')}
+  if(!String(D.n||'').trim())return falla(L('Escribe tu nombre','Write your name'),fz.querySelector('#fzN'));if(dig.length<10)return falla(L('Escribe tu número de 10 dígitos','Write your 10-digit number'),fz.querySelector('#fzT'));
+  const msg=`Hola, soy ${String(D.n).trim()}. Quiero hacer un pedido. ¿Me pueden llamar al ${dig}? 📞${EN?' (cliente en inglés)':''}`;
+  const a=document.createElement('a');a.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();T().toast(L('Abriendo WhatsApp… dale Enviar y te llamamos','Opening WhatsApp… tap Send and we will call you'))}
 function abre(){if(!T()){setTimeout(abre,150);return}LSet('arba-facil','1');datosPrevios();
-  if(!fz){fz=document.createElement('div');fz.id='fz';fz.setAttribute('role','dialog');fz.setAttribute('aria-label','Modo fácil');
-    fz.innerHTML=`<div class="fh"><img src="img/logo.webp" alt=""><b>Distribuidora ARBA<small>Modo fácil</small></b><button type="button" class="fsal" data-fsal>Salir del<br>modo fácil</button></div><div class="fm"></div><div class="fbw"></div>`;
+  if(!fz){fz=document.createElement('div');fz.id='fz';fz.setAttribute('role','dialog');fz.setAttribute('aria-label',L('Modo fácil','Easy mode'));
+    fz.innerHTML=`<div class="fh"><img src="img/logo.webp" alt=""><b>Distribuidora ARBA<small>${L('Modo fácil','Easy mode')}</small></b><button type="button" class="fsal" data-fsal>${L('Salir del<br>modo fácil','Exit<br>easy mode')}</button></div><div class="fm"></div><div class="fbw"></div>`;
     document.body.appendChild(fz);fz.addEventListener('click',clic)}
   document.body.classList.add('fzon');pant='home';pinta()}
-function cierra(){LSet('arba-facil','0');if(fz){fz.remove();fz=null}document.body.classList.remove('fzon');try{T().renderCart();T().toast(resumen().n?'Regresaste a la tienda normal. Tu pedido sigue en el carrito 🛒':'Regresaste a la tienda normal')}catch(e){}}
+function cierra(){LSet('arba-facil','0');if(fz){fz.remove();fz=null}document.body.classList.remove('fzon');try{T().renderCart();T().toast(resumen().n?L('Regresaste a la tienda normal. Tu pedido sigue en el carrito 🛒','Back to the regular store. Your order is still in the cart 🛒'):L('Regresaste a la tienda normal','Back to the regular store'))}catch(e){}}
 function clic(e){const g=s=>e.target.closest(s),t=T();let b;
   if(g('[data-fsal]'))return cierra();
   if(b=g('[data-fcat]'))return ve('cat:'+b.dataset.fcat);
@@ -3193,9 +3197,9 @@ window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.fa
 window.ARBA_FACIL=abre;
 /* Entradas: botón grande en la tienda y opción en Ajustes */
 function boton(){if(document.querySelector('.fzent'))return;const h=document.querySelector('section.hero');if(!h)return;
-  h.insertAdjacentHTML('beforebegin','<button type="button" class="fzent" data-fzon><i>👵👴</i><span><b>Modo fácil</b>Letras grandes y pides en 3 pasos</span><em>Usar</em></button>')}
+  h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>👵👴</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`)}
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
-  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend','<button type="button" class="ajb on" data-fzaj data-fzon style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">👵👴 Usar modo fácil (letras grandes)</button>')},0);
+  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">👵👴 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
 function inicio(){boton();const h=location.hash;if(LS('arba-facil')==='1'&&esCliente()&&!/^#(panel|estatus)/.test(h))abre()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inicio,300));else setTimeout(inicio,300);
