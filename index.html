@@ -1667,7 +1667,7 @@ function pedCard(r){const ms=r.c&&r.c.toMillis?r.c.toMillis():0,[cl,nom]=ESTC[r.
   const prog=r.pg?(r.pg===hoy?'<span class="pchipx hoy">📅 Es para HOY'+(r.pf?' · '+esc(r.pf):'')+'</span>':r.pg>hoy?'<span class="pchipx prg">📅 '+esc(new Date(r.pg+'T12:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}))+(r.pf?' · '+esc(r.pf):'')+'</span>':''):'';
   const tarde=r.s==='recibido'&&ms&&Date.now()-ms>30*60000&&!(r.pg&&r.pg>hoy);
   return `<div class="pcd ${cl}${tarde?' tarde':''}"><div class="pct"><b>${esc(pedN(r.p||''))}</b><span class="pst ${cl}">${nom}</span></div>
-  <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>
+  <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>${regBadge(r)}
   ${prog}<div class="pci">🛒 ${esc(resu(r.i))||'—'}</div>
   <div class="pcm"><b>${esc(r.T||'')}</b> · ${esc(r.g||'')} · ${ent}${r.fa?' · 🧾 Factura':''}</div>
   ${r.d?`<div class="pcm">📍 ${esc(r.d)}</div>`:''}${r.no?`<div class="pcm">📝 ${esc(r.no)}</div>`:''}
@@ -1675,6 +1675,12 @@ function pedCard(r){const ms=r.c&&r.c.toMillis?r.c.toMillis():0,[cl,nom]=ESTC[r.
   <div class="pcw">${tarde?'⏰ ':'🕒 '}${ms?hace(ms):''}</div>
   <div class="pcb">${sg?`<button type="button" class="go" data-psig="${esc(r.id)}" data-to="${sg[0]}">${sg[1]}</button>`:''}<button type="button" class="sec" data-fbabre="${esc(r.id)}">Abrir</button>
   <select data-fbst="${esc(r.id)}" aria-label="Cambiar estatus">${Object.keys(EST_NOM).map(k=>`<option value="${k}"${k===r.s?' selected':''}>${EST_NOM[k]}</option>`).join('')}</select></div></div>`}
+/* Contra pedidos falsos: ¿el WhatsApp del pedido es de un cliente registrado? */
+function regBadge(r){const R=window.ARBA_REGS;if(!R)return '';const t=String(r.tel||'').replace(/\D/g,'').slice(-10);if(t.length<10)return '';const x=R[t];
+  if(x){const mismo=norm(String(x).trim())===norm(String(r.n||'').trim());return `<div class="pcm" style="color:#7ed957;font-weight:700">✅ Cliente registrado${mismo?'':' como '+esc(x)}</div>`}
+  const tot=parseFloat(String(r.T||'').replace(/,/g,''))||0;
+  return `<div class="pcm" style="color:#f4b400;font-weight:700">⚠️ Sin registro${tot>=500?' · pedido grande: llámale antes de prepararlo':''}</div>`}
+window.ARBA_PEDPINTA=()=>pedPinta();
 function pedPinta(){const L=$('#pLista');if(!L)return;const rows=window._fbRows||[];const hoy=hoyStr();
   if(!rows.length){L.innerHTML='<p class="note">Todavía no hay pedidos en línea.</p>';return}
   const ms=r=>r.c&&r.c.toMillis?r.c.toMillis():0,fut=r=>r.pg&&r.pg>hoy;
@@ -3110,6 +3116,14 @@ html.claro #bw{background:#f4f6f1;color:#111;--fc:#fff;--fi:#111;--fm:#3d4a3f;--
 #bw .fin:focus{outline:3px solid #f4b400;border-color:#f4b400}
 #bw .fchk{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:700;margin-top:16px}#bw .fchk input{width:30px;height:30px;flex:none;margin:0;accent-color:#25a244}
 #bw .bwpriv{font-size:15px;color:var(--fm);text-align:center;margin:6px 0 0}
+#avp{position:fixed;inset:0;z-index:96;background:#0b1525;color:#eef3ea;display:flex;flex-direction:column;font:17px/1.5 Poppins,system-ui,sans-serif}
+html.claro #avp{background:#f4f6f1;color:#152016}
+#avp .avh{display:flex;align-items:center;gap:10px;padding:max(12px,env(safe-area-inset-top)) 14px 12px;background:#0b6b35;color:#fff;flex:none}
+#avp .avh b{flex:1;font-size:20px}#avp .avh button{background:transparent;border:2px solid #fff;color:#fff;border-radius:999px;width:44px;height:44px;font-size:18px}
+#avp .avb{flex:1;overflow-y:auto;padding:8px 18px max(28px,env(safe-area-inset-bottom));max-width:640px;width:100%;margin:0 auto}
+#avp h3{font-size:19px;margin:18px 0 4px;color:#f4b400}html.claro #avp h3{color:#0b6b35}
+#avp ul{margin:4px 0;padding-left:22px}#avp p{margin:6px 0}#avp .avf{opacity:.7;font-size:14px}
+#avp .avbtn{width:100%;min-height:54px;border-radius:14px;border:2px solid #d62828;background:#d6282822;color:inherit;font:700 17px Poppins,system-ui,sans-serif;margin-top:8px}
 /* Botón para entrar al modo fácil (solo en la tienda de clientes) */
 .fzent{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);max-width:1216px;margin:12px auto 0;border:2px solid #f4b400;background:#f4b40018;color:var(--ink);border-radius:16px;padding:12px 14px;text-align:left;font:600 15px/1.3 Poppins,system-ui,sans-serif}
 .fzent i{font-style:normal;font-size:34px;line-height:1}.fzent b{display:block;font-size:18px}.fzent em{margin-left:auto;font-style:normal;background:#f4b400;color:#152016;font-weight:800;border-radius:999px;padding:8px 14px;white-space:nowrap}
@@ -3230,7 +3244,7 @@ function bPinta(paso,solo){if(!bw)return;const b=bw.querySelector('.bwb');
     <label class="fl" for="bwT">${L('Tu WhatsApp','Your WhatsApp')}</label><input class="fin" id="bwT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(m.tel||'')}">
     <label class="fchk"><input type="checkbox" id="bwF"> ${L('Quiero letras grandes (modo fácil)','I want big letters (easy mode)')}</label>
     <button type="button" class="fb v" data-bok>✅ ${L('Listo','Done')}</button><button type="button" class="bwl" data-bdesp>${L('Después','Later')}</button>
-    <p class="bwpriv">🔒 ${L('Tus datos son privados: solo los ves tú y Distribuidora ARBA, para confirmar tus pedidos y cuidarte de pedidos falsos. No los compartimos con nadie.','Your details are private: only you and Distribuidora ARBA see them, to confirm your orders and protect you from fake orders. We never share them.')}</p>`}
+    <p class="bwpriv">🔒 ${L('Tus datos son privados: solo los ves tú y Distribuidora ARBA, para confirmar tus pedidos y cuidarte de pedidos falsos. No los compartimos con nadie.','Your details are private: only you and Distribuidora ARBA see them, to confirm your orders and protect you from fake orders. We never share them.')} <a href="#" data-avp style="color:inherit;text-decoration:underline">${L('Aviso de privacidad','Privacy notice')}</a></p>`}
   b.scrollTop=0}
 function bAbre(solo){hayVideo().then(()=>{if(bw)bw.remove();bw=document.createElement('div');bw.id='bw';bw.className='fzlike';bw.setAttribute('role','dialog');bw.setAttribute('aria-label',L('Bienvenida','Welcome'));
   bw.innerHTML=`<div class="bwh">${solo?'':`<button type="button" class="bwsk" data-bdesp>${L('Saltar','Skip')} ✕</button>`}${solo?`<button type="button" class="bwsk" data-bx>✕</button>`:''}</div><div class="bwb"></div>`;
@@ -3253,7 +3267,32 @@ function bClic(e){const g=s=>e.target.closest(s);
     T().toast(L('¡Gracias, ','Thanks, ')+n.split(' ')[0]+'! 💛');bCierra(fac())}}
 window.ARBA_COMO=()=>bAbre(true);
 document.addEventListener('click',e=>{if(e.target.closest('[data-como]')){const w=document.getElementById('ajW');if(w)w.remove();bAbre(true)}
-  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-como]')||!esCliente())return;const z=w.querySelector('[data-fzaj]')||w.querySelector('h3');if(z)z.insertAdjacentHTML('afterend',`<button type="button" class="ajb" data-como data-noen style="width:100%;margin:0 0 8px;font-size:16px;font-weight:700">▶️ ${L('¿Cómo se usa la app?','How to use the app')}</button>`)},5)});
+  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-como]')||!esCliente())return;const z=w.querySelector('[data-fzaj]')||w.querySelector('h3');if(z)z.insertAdjacentHTML('afterend',`<button type="button" class="ajb" data-como data-noen style="width:100%;margin:0 0 8px;font-size:16px;font-weight:700">▶️ ${L('¿Cómo se usa la app?','How to use the app')}</button>`);const pz=w.querySelector('p:last-child');if(pz&&!w.querySelector('[data-avp]'))pz.insertAdjacentHTML('beforeend',` · <a href="#" data-avp data-noen style="color:inherit;text-decoration:underline">🔒 ${L('Aviso de privacidad','Privacy notice')}</a>`)},5)});
+/* ===== AVISO DE PRIVACIDAD ===== */
+function avpAbre(){let w=document.getElementById('avp');if(w)w.remove();w=document.createElement('div');w.id='avp';w.setAttribute('role','dialog');w.setAttribute('aria-label',L('Aviso de privacidad','Privacy notice'));w.setAttribute('data-noen','');
+  const S=(t,x)=>`<h3>${t}</h3>${x}`;
+  w.innerHTML=`<div class="avh"><b>🔒 ${L('Aviso de privacidad','Privacy notice')}</b><button type="button" data-avpx aria-label="${L('Cerrar','Close')}">✕</button></div><div class="avb">`+(EN?
+   S('Who is responsible','<p><b>Distribuidora ARBA</b> (including Tortillería Los 2 Carnales), in Chihuahua, Chihuahua, Mexico, is responsible for your personal data. Contact: WhatsApp 614 107 7999.</p>')
+  +S('What data we collect','<ul><li>Your name and WhatsApp number.</li><li>Your delivery address or meeting point.</li><li>Your tax details, only if you ask for an invoice.</li><li>What you order and how you pay.</li></ul><p>We do not ask for card numbers or bank passwords.</p>')
+  +S('What we use it for','<ul><li>To receive, confirm, prepare and deliver your orders.</li><li>To check that orders are real and protect you and us from fraud and fake orders.</li><li>To issue your invoice if you ask for one.</li><li>To fill in your details so you do not type them again.</li></ul><p>We may also send you deals and season news on WhatsApp. If you do not want them, just tell us and we will stop.</p>')
+  +S('Who we share it with','<p>We do not sell or share your data. It is stored securely with Google (Firebase), which we use to run the app. We only give it to authorities if the law requires it.</p>')
+  +S('Your rights','<p>You can ask to see, correct or delete your data, or object to its use, at any time. Send us a WhatsApp and we will answer within 20 business days.</p><button type="button" class="avbtn" data-avpborra>🗑️ Ask to delete my data</button>')
+  +S('Changes','<p>Any change to this notice will be published here in the app.</p><p class="avf">Last updated: November 2026.</p>')
+  :
+   S('Quién es responsable','<p><b>Distribuidora ARBA</b> (incluye a Tortillería Los 2 Carnales), en Chihuahua, Chihuahua, México, es responsable de tus datos personales. Contacto: WhatsApp 614 107 7999.</p>')
+  +S('Qué datos guardamos','<ul><li>Tu nombre y tu número de WhatsApp.</li><li>Tu dirección de entrega o punto de encuentro.</li><li>Tus datos fiscales, solo si pides factura.</li><li>Lo que pides y cómo pagas.</li></ul><p>Nunca te pedimos números de tarjeta ni contraseñas del banco.</p>')
+  +S('Para qué los usamos','<ul><li>Para recibir, confirmar, preparar y entregar tus pedidos.</li><li>Para revisar que los pedidos sean reales y cuidarte a ti y a nosotros de fraudes y pedidos falsos.</li><li>Para hacer tu factura si la pides.</li><li>Para llenar tus datos y que no los vuelvas a escribir.</li></ul><p>También te podemos mandar ofertas y avisos de temporada por WhatsApp. Si no los quieres, solo dínoslo y dejamos de mandarlos.</p>')
+  +S('Con quién los compartimos','<p>No vendemos ni compartimos tus datos. Se guardan de forma segura en Google (Firebase), que usamos para que funcione la app. Solo los daríamos a una autoridad si la ley lo pide.</p>')
+  +S('Tus derechos','<p>Puedes pedir ver, corregir o borrar tus datos, u oponerte a que los usemos, cuando quieras. Mándanos un WhatsApp y te respondemos en un máximo de 20 días hábiles.</p><button type="button" class="avbtn" data-avpborra>🗑️ Pedir que borren mis datos</button>')
+  +S('Cambios','<p>Cualquier cambio a este aviso lo publicamos aquí en la app.</p><p class="avf">Última actualización: noviembre de 2026.</p>'))+`</div>`;
+  document.body.appendChild(w)}
+document.addEventListener('click',e=>{
+  if(e.target.closest('[data-avp]')){e.preventDefault();const a=document.getElementById('ajW');if(a)a.remove();avpAbre();return}
+  if(e.target.closest('[data-avpx]')){const w=document.getElementById('avp');if(w)w.remove();return}
+  if(e.target.closest('[data-avpborra]')){let m={};try{m=JSON.parse(LS('arba-mis')||'{}')}catch(er){}
+    const msg=`Hola, quiero que borren mis datos personales de Distribuidora ARBA.${m.n?' Nombre: '+m.n+'.':''}${m.tel?' WhatsApp: '+m.tel+'.':''}`;
+    const a=document.createElement('a');a.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}});
+function avpLinks(){const f=document.querySelector('footer');if(f&&!f.querySelector('[data-avp]'))f.insertAdjacentHTML('beforeend',`<br><a href="#" data-avp data-noen style="color:inherit;text-decoration:underline">🔒 ${L('Aviso de privacidad','Privacy notice')}</a>`)}
 window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.facil;pant=p||'home';pinta()});
 window.ARBA_FACIL=abre;
 /* Entradas: botón grande en la tienda y opción en Ajustes */
@@ -3262,7 +3301,7 @@ function boton(){if(document.querySelector('.fzent'))return;const h=document.que
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
   if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
-function inicio(){boton();regSube();const h=location.hash;if(!esCliente()||/^#(panel|estatus)/.test(h))return;if(LS('arba-bienv')!=='1'){bAbre(false);return}if(LS('arba-facil')==='1')abre()}
+function inicio(){boton();regSube();avpLinks();const h=location.hash;if(!esCliente()||/^#(panel|estatus)/.test(h))return;if(LS('arba-bienv')!=='1'){bAbre(false);return}if(LS('arba-facil')==='1')abre()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inicio,300));else setTimeout(inicio,300);
 })();
 </script>
@@ -3282,7 +3321,7 @@ function pinta(){const box=document.getElementById('cliL'),top=document.getEleme
   const q=qq.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''),V=L.filter(x=>!q||(x.n||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(q)||(x.tel||'').includes(q.replace(/\D/g,'')||'@'));
   box.innerHTML=V.length?V.map(x=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><div style="flex:1"><b>${esc(x.n)}</b>${x.i==='en'?' <small>🇺🇸</small>':''}<br><span class="note">${esc((x.tel||'').replace(/(\d{3})(\d{3})(\d{4})/,'$1 $2 $3'))} · ${x.f?new Date(x.f).toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}):''}</span></div><a class="sec" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;text-decoration:none;white-space:nowrap" href="https://wa.me/52${esc(x.tel)}" target="_blank" rel="noopener">💬 WhatsApp</a></div>`).join(''):'<p class="note">Todavía no hay clientes registrados.</p>'}
 function escucha(){const F=window.ARBA_FB;if(un||!F||!F.admin||!F.admin()||!F.negVer)return;caja();
-  un=F.negVer('registros',r=>{L=r?r.map(x=>({...x,f:+x.f||0})).sort((a,b)=>b.f-a.f):null;pinta()})}
+  un=F.negVer('registros',r=>{L=r?r.map(x=>({...x,f:+x.f||0})).sort((a,b)=>b.f-a.f):null;if(L){const M={};L.forEach(x=>{if(x.tel)M[x.tel]=x.n||''});window.ARBA_REGS=M;window.ARBA_PEDPINTA&&window.ARBA_PEDPINTA()}pinta()})}
 document.addEventListener('input',e=>{if(e.target.id==='cliQ'){qq=e.target.value;pinta()}});
 document.addEventListener('click',e=>{if(e.target.closest('[data-clicopia]')&&L){const t=L.map(x=>x.tel).join('\n');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>window.ARBA_T.toast(L.length+' números copiados'),()=>window.ARBA_T.toast('No se pudo copiar'))}
   if(e.target.closest('#duBar [data-du="cli"]')){caja();escucha()}});
