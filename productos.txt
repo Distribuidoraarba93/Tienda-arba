@@ -62,7 +62,7 @@ Tortillas de harina para burrito
 id: t6
 precio: 23 pesos
 presentación: Paquete de 10 piezas · 25 a 26 cm aprox. · todas del mismo tamaño
-foto: tortilla-burrito
+foto: burrito
 dibujo: tortilla
 descripción: Tortillas de harina parejitas, todas del mismo tamaño, de 25 a 26 cm aprox., ideales para burritos. Tortillería Los 2 Carnales.
 
@@ -118,7 +118,7 @@ Tortillas para burro jumbo
 id: t8
 precio: 35 pesos
 presentación: Paquete de 10 piezas · 28 cm aprox.
-dibujo: tortilla
+foto: burro-jumbo
 descripción: Tortillas de harina grandes de 28 cm aprox., para burros jumbo bien servidos. Tortillería Los 2 Carnales.
 
 Tortillas para quesibirrias
