@@ -294,7 +294,6 @@ opción: RB-120 · 250 piezas | 1369.55 pesos
 opción: RB-130 · 250 piezas | 1391.76 pesos
 opción: RB-140 · 250 piezas | 1380 pesos
 opción: RB-170 · 250 piezas | 1380 pesos
-opción: RB-180 · 250 piezas | 734.44 pesos
 opción: R-10 · 100 piezas (4/25) | 581.53 pesos
 opción: R-500 con base negra · 100 piezas (2/50) | 1063.75 pesos
 opción: R-520 con base negra · 100 piezas (2/50) | 1204.89 pesos
@@ -314,6 +313,7 @@ opción: 1312-44 · 250 piezas | 538.68 pesos
 opción: 1414-A para hamburguesa · 500 piezas | 1611.51 pesos
 opción: 1414-B · 500 piezas | 1514.07 pesos
 opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
+opción: RB-180 14x14 para hamburguesa · 250 piezas | 734.44 pesos
 
 Domo para ensalada 17x6 con tapa
 id: dp8
