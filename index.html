@@ -590,6 +590,14 @@ html.f-chicas .plus.ver{width:auto!important;padding:0 10px!important;font-size:
 .pcb .sec{padding:0 14px;min-height:40px;border-radius:10px}
 .pcb select{min-height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:inherit;padding:0 8px;font-size:13.5px}
 .pcb .sec{order:2}.pcb select{order:1}
+
+.dirsg{display:grid;gap:6px;margin:-2px 0 4px}
+.dirb{display:flex;gap:8px;align-items:center;text-align:left;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:inherit;font:600 14px Poppins,sans-serif}
+.dirb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dirb.on{border-color:#7ed957;background:#7ed95718}
+.dirnew{border:0;background:none;color:#7ed957;font:700 13px Poppins,sans-serif;text-align:left;padding:2px 2px;justify-self:start}
+.dirnew[data-dirolv]{color:var(--mute);font-weight:500;font-size:12px}
+html.claro .dirnew{color:#0b6b35}html.claro .dirnew[data-dirolv]{color:#5d6b7a}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -877,7 +885,7 @@ header .bar{position:relative}
     <div id="minBox" class="minbox" hidden></div>
     <label id="pmL" hidden>¿Dónde nos vemos? (colonia, tienda o calle)<input id="pm" maxlength="200" placeholder="Ej. Oxxo de la Pacheco y Av. Tecnológico"></label>
     <p class="note" id="pmNote" hidden style="margin:-4px 0 4px;padding:8px 10px;border-radius:8px;background:#f4b40018;border:1px solid #f4b40055">📍 Propón un lugar y te confirmamos por WhatsApp si nos queda en ruta.</p>
-    <label id="dirL">Dirección<input id="dir" required autocomplete="street-address"></label>
+    <div id="dirsG" class="dirsg" hidden></div><label id="dirL">Dirección<input id="dir" required autocomplete="street-address"></label>
     <p class="note" id="envNote" style="margin:-4px 0 4px;padding:8px 10px;border-radius:8px;background:#7ed95718;border:1px solid #7ed95755">📍 Revisamos tu pedido y ubicación antes de confirmar el envío. Si no te queda en ruta, te ofrecemos pasar a recoger.</p>
     <span class="lbl">¿Cómo vas a pagar?</span>
     <div class="seg seg3" role="group" aria-label="Forma de pago"><button type="button" class="on" data-pay="Efectivo">Efectivo</button><button type="button" data-pay="Transferencia">Transferencia</button><button type="button" data-pay="Tarjeta">Tarjeta</button></div>
@@ -1250,7 +1258,7 @@ function refDe(){try{const r=JSON.parse(localStorage.getItem('arba-ref')||'null'
 /* Entrega: a domicilio (mínimo 130 pesos), paso a recoger o punto medio */
 const MIN_DOM=130;
 function ponEntrega(e){entrega=e;document.querySelectorAll('[data-e]').forEach(b=>b.classList.toggle('on',b.dataset.e===e));const dom=e==='Entrega a domicilio',pm=e==='Punto medio';
-  $('#dirL').hidden=!dom;$('#envNote').hidden=!dom;$('#dir').required=dom;$('#pmL').hidden=!pm;$('#pmNote').hidden=!pm;$('#pm').required=pm;minPinta()}
+  $('#dirL').hidden=!dom;$('#envNote').hidden=!dom;$('#dir').required=dom;$('#pmL').hidden=!pm;$('#pmNote').hidden=!pm;$('#pm').required=pm;{const g=$('#dirsG');if(g)g.style.display=dom?'':'none'}minPinta()}
 function faltaMin(){const ks=Object.keys(cart).filter(k=>cart[k]>0&&item(k));if(ks.some(k=>item(k).pr==null))return 0;return Math.max(0,Math.round((MIN_DOM-cTot)*100)/100)}
 function minPinta(){const b=$('#minBox');if(!b)return;const f=faltaMin();if(entrega!=='Entrega a domicilio'||!f||!Object.keys(cart).length){b.hidden=true;return}
   const en=new Set(Object.keys(cart).map(k=>k.split(':')[0]));
@@ -1312,7 +1320,7 @@ $('#openCart').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim();renderGrid()});
 document.addEventListener('click',e=>{if(e.target.closest('[data-back]')){if(history.state&&history.state.arbaCat)history.back();else irInicio()}});
-$('#next').onclick=()=>{pideFolio();const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
+$('#next').onclick=()=>{pideFolio();misLlena();const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
 /* Pedido programado: el cliente elige día y horario */
 let cuando='ya',franja='6 a 9 am';
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -1323,6 +1331,16 @@ document.addEventListener('click',e=>{const c=e.target.closest('[data-cu]');if(c
   const f=e.target.closest('[data-pf]');if(f){franja=f.dataset.pf;document.querySelectorAll('[data-pf]').forEach(b=>b.classList.toggle('on',b===f));pgPinta()}});
 $('#pgD').addEventListener('change',e=>{const v=e.target.value;if(v){const [y,m,d]=v.split('-').map(Number);if(new Date(y,m-1,d).getDay()===0){toast('Los domingos no entregamos. Elige otro día 🙏');const x=new Date(y,m-1,d+1);e.target.value=ymd(x)}}pgPinta()});
 window.ARBA_PROG=()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()};
+/* Datos del cliente guardados en su celular: nombre, WhatsApp y direcciones (sin contraseñas) */
+const misLee=()=>{try{return JSON.parse(localStorage.getItem('arba-mis')||'null')||{}}catch(e){return {}}};
+function misLlena(){const m=misLee();if(m.n&&!$('#nom').value)$('#nom').value=m.n;if(m.tel&&!$('#tel').value)$('#tel').value=m.tel;
+  const D=(m.dirs||[]).filter(Boolean);if(D.length&&!$('#dir').value)$('#dir').value=D[0];if(m.pm&&!$('#pm').value)$('#pm').value=m.pm;
+  const g=$('#dirsG');if(D.length){g.hidden=false;g.innerHTML='<span class="lbl">📍 Tus direcciones guardadas</span>'+D.map((d,i)=>`<button type="button" class="dirb${$('#dir').value===d?' on':''}" data-dirg="${i}"><b>${i?'📍':'🏠'}</b><span>${esc(d)}</span></button>`).join('')+'<button type="button" class="dirnew" data-dirnew>➕ Otra dirección</button> <button type="button" class="dirnew" data-dirolv>Olvidar mis datos</button>'}else{g.hidden=true;g.innerHTML=''}
+  if(m.n&&!misLlena.dijo){misLlena.dijo=1;toast('👋 ¡Hola de nuevo, '+m.n.split(' ')[0]+'! Ya pusimos tus datos')}}
+function misGuarda(n,tel,dir,pm){const m=misLee();m.n=n;m.tel=tel;if(dir){m.dirs=[dir,...(m.dirs||[]).filter(x=>x&&x!==dir)].slice(0,3)}if(pm)m.pm=pm;try{localStorage.setItem('arba-mis',JSON.stringify(m))}catch(e){}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dirg]');if(b){const m=misLee();$('#dir').value=(m.dirs||[])[+b.dataset.dirg]||'';document.querySelectorAll('[data-dirg]').forEach(x=>x.classList.toggle('on',x===b));return}
+  if(e.target.closest('[data-dirnew]')){$('#dir').value='';document.querySelectorAll('[data-dirg]').forEach(x=>x.classList.remove('on'));$('#dir').focus();return}
+  if(e.target.closest('[data-dirolv]')){if(!confirm('¿Borrar tu nombre, WhatsApp y direcciones guardadas en este celular?'))return;try{localStorage.removeItem('arba-mis')}catch(er){}$('#nom').value='';$('#tel').value='';$('#dir').value='';$('#pm').value='';misLlena();toast('Listo, borramos tus datos de este celular')}});
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
@@ -1344,6 +1362,7 @@ $('#form').addEventListener('submit',e=>{
   const kk=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');const d=new Date();
   const ped=typeof FOLIO==='number'?'ARBA-'+FOLIO:`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;FOLIO=null;
   const tel=digits($('#tel').value),nom=$('#nom').value.trim(),dir=$('#dir').value.trim(),pmv=$('#pm').value.trim(),nota=$('#nota').value.trim();
+  misGuarda(nom,$('#tel').value.trim(),entrega==='Entrega a domicilio'?dir:'',entrega==='Punto medio'?pmv:'');
   const fa=$('#fac').checked?`RFC ${$('#rfc').value.trim().toUpperCase()} · ${$('#rs').value.trim()} · CP ${$('#cp').value.trim()} · ${$('#reg').value} · ${$('#uso').value} · ${$('#mail').value.trim()}`:'';
   const ent=entrega==='Paso a recoger'?'🏠 Paso a recoger':entrega==='Punto medio'?'📍 Punto medio: '+pmv:'🚚 Domicilio: '+dir;
   const lines=ks.map(k=>{const it=item(k),c=cart[k];if(it.pr==null)quote=true;else tot+=upI(it,c)*c;return `• ${c} x ${it.name}`});
@@ -2590,7 +2609,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=8';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=9';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
