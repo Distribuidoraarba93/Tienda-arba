@@ -315,13 +315,13 @@ opción: 1414-B · 500 piezas | 1514.07 pesos
 opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
 opción: RB-180 14x14 para hamburguesa · 250 piezas | 595.59 pesos
 
-Bisagra para ensalada 17x6 base negra
+Bisagra redonda para ensalada 17 cm base negra
 id: dp8
 foto: bisagra-ensalada-negra
 precio: 1124.68 pesos
 presentación: Caja con 150 piezas
 dibujo: contenedorN
-descripción: Contenedor de bisagra para ensalada de 17 x 6 cm, con tapa de plástico transparente y base negra.
+descripción: Contenedor redondo de bisagra para ensalada, de 17 cm de diámetro y 6 cm de alto, con tapa de plástico transparente y base negra.
 
 Charola botanera transparente
 id: dp9
