@@ -496,7 +496,7 @@ opción: Vaso 10J10 · 40/25 piezas | 668.7 pesos | foto vaso-dart
 opción: Vaso 16J16 · 25/20 piezas | 566.79 pesos
 opción: Envase 16MJ32 · 20/25 piezas | 549.31 pesos
 opción: Envase 32J32 · 20/15 piezas | 642.16 pesos
-opción: Envase 60 oz · 30/10 piezas | 940.39 pesos
+opción: Envase 60 oz · 30/10 piezas | 940.39 pesos | foto envase-dart-60
 
 Tapas Dart
 id: dp17
