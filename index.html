@@ -630,6 +630,13 @@ html.claro [data-negcod]{color:#8a5a00!important;border-color:#d9a400!important}
 body.repa .avisob{display:none!important}
 .avf{display:grid;gap:8px}.avf .opts{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px}.avf .opts button{padding:10px 4px;font-size:13px;text-align:center}.avf .ed2{display:grid;grid-template-columns:1fr 1fr;gap:8px}body.dlock .avisob{display:none!important}.avf textarea{min-height:70px}.avbtns{display:grid;grid-template-columns:1fr auto;gap:8px}.avbtns .sec{padding:0 16px}
 .histv{display:block;width:min(100%,300px);aspect-ratio:9/16;margin:6px auto 12px;border-radius:16px;background:#000;box-shadow:0 10px 24px #0007}
+
+.ctile .cti.fot{position:relative;width:78px;height:78px;background:#fff;overflow:hidden;box-shadow:0 0 0 2px #f4b40066}
+.ctile .cti.fot img.cf{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease,transform 3s ease;transform:scale(1.08)}
+.ctile .cti.fot img.cf.on{opacity:1;transform:scale(1)}
+.ctile .cti.fot .cem{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:15px;font-style:normal;box-shadow:0 2px 6px #0006;z-index:2;overflow:hidden}
+.ctile .cti.fot .cem img{width:100%;height:100%;object-fit:cover;background:#fff}
+.ctile .ctag{z-index:3}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -1222,8 +1229,16 @@ addEventListener('resize',altoHead);addEventListener('scroll',()=>{if(document.b
 function modo(){const home=inicio&&!q;setTimeout(altoHead,0);document.body.classList.toggle('home',home);document.body.classList.toggle('encat',!home);return home}
 function renderCatHome(){const g=document.getElementById('cgrid');if(!g)return;
   const n=c=>P.filter(p=>p.cat===c).length;
-  g.innerHTML=CATS.filter(c=>c!=='Todos'&&n(c)).map(c=>`<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag">${CTAG(c)}</span>`:''}<span class="cti${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${n(c)} productos</small></button>`).join('')+
+  const fotos=c=>[...new Set(P.filter(p=>p.cat===c&&p.img&&!agot(p.id)).map(p=>SRC(p.img)))];
+  window._catFotos={};
+  g.innerHTML=CATS.filter(c=>c!=='Todos'&&n(c)).map(c=>{const F=fotos(c);window._catFotos[c]=F;const f0=F.length?F[Math.floor(Math.random()*F.length)]:'';
+   return `<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag">${CTAG(c)}</span>`:''}<span class="cti${F.length?' fot':c==='Tortillas'?' ic2c':''}">${F.length?`<img class="cf on" src="${f0}" alt="" loading="lazy"><img class="cf" alt=""><i class="cem">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</i>`:c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${n(c)} productos</small></button>`}).join('')+
   `<button type="button" class="ctile todo" data-cat="Todos"><span class="cti">🛍️</span><b>Ver todo</b><small>${P.length} productos</small></button>`}
+/* Fotos de productos que van cambiando al azar en los cuadros de categorías */
+setInterval(()=>{if(!document.body.classList.contains('home')||document.hidden)return;const T=[...document.querySelectorAll('#cgrid .cti.fot')].filter(t=>{const r=t.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight});if(!T.length)return;
+  for(let k=0;k<2;k++){const t=T[Math.floor(Math.random()*T.length)],c=t.closest('[data-cat]').dataset.cat,F=(window._catFotos||{})[c]||[];if(F.length<2)continue;
+    const [a,b]=t.querySelectorAll('img.cf'),on=a.classList.contains('on')?a:b,off=on===a?b:a;let nx;do{nx=F[Math.floor(Math.random()*F.length)]}while(nx===on.getAttribute('src')&&F.length>1);
+    off.onload=()=>{off.classList.add('on');on.classList.remove('on')};off.src=nx}},1400);
 function irInicio(arriba){inicio=true;cat='Todos';q='';const i=document.getElementById('q');if(i)i.value='';renderCats();renderGrid();if(arriba!==false)window.scrollTo({top:0})}
 window.ARBA_INICIO=irInicio;
 window.addEventListener('popstate',e=>{if(!inicio&&!(e.state&&e.state.arbaCat)&&!location.hash)irInicio()});
