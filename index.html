@@ -3109,7 +3109,7 @@ html.claro #bw{background:#f4f6f1;color:#111;--fc:#fff;--fi:#111;--fm:#3d4a3f;--
 #bw .fin{width:100%;min-height:60px;border-radius:14px;border:2px solid var(--fl);background:var(--fc);color:var(--fi);font-size:21px;padding:10px 14px}
 #bw .fin:focus{outline:3px solid #f4b400;border-color:#f4b400}
 #bw .fchk{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:700;margin-top:16px}#bw .fchk input{width:30px;height:30px;flex:none;margin:0;accent-color:#25a244}
-#bw .bwpriv{font-size:14px;color:var(--fm);text-align:center;margin:6px 0 0}
+#bw .bwpriv{font-size:15px;color:var(--fm);text-align:center;margin:6px 0 0}
 /* Botón para entrar al modo fácil (solo en la tienda de clientes) */
 .fzent{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);max-width:1216px;margin:12px auto 0;border:2px solid #f4b400;background:#f4b40018;color:var(--ink);border-radius:16px;padding:12px 14px;text-align:left;font:600 15px/1.3 Poppins,system-ui,sans-serif}
 .fzent i{font-style:normal;font-size:34px;line-height:1}.fzent b{display:block;font-size:18px}.fzent em{margin-left:auto;font-style:normal;background:#f4b400;color:#152016;font-weight:800;border-radius:999px;padding:8px 14px;white-space:nowrap}
@@ -3225,12 +3225,12 @@ function bPinta(paso,solo){if(!bw)return;const b=bw.querySelector('.bwb');
     <div class="bwp">${PASOS().map((x,i)=>`<div><i>${x[0]}</i><span><b>${i+1}. ${x[1]}</b>${x[2]}</span></div>`).join('')}</div>
     ${solo?`<button type="button" class="fb v" data-bx>${L('Entendido','Got it')}</button>`:`<button type="button" class="fb v" data-bs>${L('Siguiente','Next')} ➜</button><button type="button" class="bwl" data-blang>${EN?'🇲🇽 Ver en español':'🇺🇸 View in English'}</button>`}`}
   else{let m={};try{m=JSON.parse(LS('arba-mis')||'{}')}catch(e){}
-    b.innerHTML=`<h2>${L('¿Cómo te llamas?','What is your name?')}</h2><p class="fsub">${L('Así ya no los escribes en cada pedido y te avisamos de ofertas por WhatsApp.','So you do not have to type them on every order, and we can tell you about deals on WhatsApp.')}</p>
+    b.innerHTML=`<h2>${L('¿Cómo te llamas?','What is your name?')}</h2><p class="fsub">${L('Se guardan en tu celular para que, cuando hagas un pedido, ya no vuelvas a llenar las casillas.','They are saved on your phone so you do not have to fill in the boxes again when you order.')}</p>
     <label class="fl" for="bwN">${L('Tu nombre','Your name')}</label><input class="fin" id="bwN" autocomplete="name" value="${esc(m.n||'')}">
     <label class="fl" for="bwT">${L('Tu WhatsApp','Your WhatsApp')}</label><input class="fin" id="bwT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(m.tel||'')}">
     <label class="fchk"><input type="checkbox" id="bwF"> ${L('Quiero letras grandes (modo fácil)','I want big letters (easy mode)')}</label>
     <button type="button" class="fb v" data-bok>✅ ${L('Listo','Done')}</button><button type="button" class="bwl" data-bdesp>${L('Después','Later')}</button>
-    <p class="bwpriv">🔒 ${L('Tus datos solo los ve Distribuidora ARBA. No los compartimos con nadie.','Only Distribuidora ARBA sees your details. We never share them.')}</p>`}
+    <p class="bwpriv">🔒 ${L('Tus datos son privados: solo los ves tú y Distribuidora ARBA, para confirmar tus pedidos y cuidarte de pedidos falsos. No los compartimos con nadie.','Your details are private: only you and Distribuidora ARBA see them, to confirm your orders and protect you from fake orders. We never share them.')}</p>`}
   b.scrollTop=0}
 function bAbre(solo){hayVideo().then(()=>{if(bw)bw.remove();bw=document.createElement('div');bw.id='bw';bw.className='fzlike';bw.setAttribute('role','dialog');bw.setAttribute('aria-label',L('Bienvenida','Welcome'));
   bw.innerHTML=`<div class="bwh">${solo?'':`<button type="button" class="bwsk" data-bdesp>${L('Saltar','Skip')} ✕</button>`}${solo?`<button type="button" class="bwsk" data-bx>✕</button>`:''}</div><div class="bwb"></div>`;
