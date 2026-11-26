@@ -188,7 +188,7 @@ descripción: Charola de unicel para comida.
 
 Bisagra NTR 22x14
 id: x1
-precio: 1019 pesos
+precio: 1030.33 pesos
 presentación: Caja con 250 piezas
 foto: bisagra-ntr
 dibujo: contenedor
@@ -196,7 +196,7 @@ descripción: Contenedor de bisagra 22x14 para comida para llevar. Cierra firme 
 
 Botanero base y domo 31 cm
 id: x2
-precio: 1271.51 pesos
+precio: 1206.71 pesos
 presentación: Caja con 50 piezas (base con domo)
 foto: botanero
 dibujo: contenedor
@@ -796,6 +796,13 @@ opción: 14 a la 90 · caja 25 kg | 1923.69 pesos
 opción: 8 a la 10 · caja 10 kg | 865.69 pesos
 opción: 10 a la 12 · caja 10 kg | 839.32 pesos
 opción: 14 a la 90 · caja 10 kg | 799.77 pesos
+
+Bolsa pana natural kileada 35x35
+id: dp32
+precio: 1868.63 pesos
+presentación: Bulto de 25 kg
+dibujo: bolsa
+descripción: Bolsa pana natural kileada de 35 x 35 cm, ideal para empacar tortillas por kilo, pan y comida. Bulto de 25 kg.
 
 Bolsa para basura
 id: dp26
