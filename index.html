@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<script>/* App de dueño: nunca abrir el panel solo al arrancar; se abre con el botón "Panel" */
+(function(){try{var q=new URLSearchParams(location.search),d=q.get('dueno')==='1'||q.get('app')==='dueno'||localStorage.getItem('arba-modo')==='dueno';if(d&&location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="only dark">
 <meta name="darkreader-lock">
@@ -2920,7 +2922,7 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
   try{if(F.solVer)vig.push(F.solVer(function(L){PN.s=(L||[]).filter(function(x){return x.s==='pendiente'}).length;pinta()}))}catch(e){}}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();botonPanel();vigila();var ok=libre();
   if(ok){var era=b.classList.contains('dlock')||b.classList.contains('dcerr');b.classList.remove('dlock','dcerr');if(abrir){abrir=false;var k=destino;destino='';setTimeout(function(){if(k)irA(k)},400)}else if(era&&!b._yaAbierto){}b._yaAbierto=1}
-  else{b._yaAbierto=0;b.classList.toggle('dlock',abrir);b.classList.toggle('dcerr',!abrir);if(abrir&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
+  else{b._yaAbierto=0;b.classList.toggle('dlock',abrir);b.classList.toggle('dcerr',!abrir);if(!abrir){var pp=document.getElementById('panel');if(pp&&pp.classList.contains('on'))cierraPanel()}if(abrir&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
   var al=document.documentElement;al.style.setProperty('--duh',b.classList.contains('dcerr')?'0px':((document.getElementById('duBar')||{}).offsetHeight||60)+'px')}
  if(document.body)revisa();else document.addEventListener('DOMContentLoaded',revisa);
  window.addEventListener('arba-auth',function(){setTimeout(revisa,50)});setInterval(revisa,1500);

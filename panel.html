@@ -21,12 +21,12 @@
 <b>Para instalarla en este celular:</b><br>
 • <b>Android (Chrome):</b> toca ⋮ arriba a la derecha → <b>Agregar a pantalla principal</b> o <b>Instalar app</b>.<br>
 • <b>iPhone (Safari):</b> toca el botón compartir ⬆️ → <b>Agregar a inicio</b>.</div>
-<p><a href="./?dueno=1#panel-arba" style="display:inline-block;margin-top:14px;padding:12px 22px;border-radius:999px;background:#f4b400;color:#152016;font-weight:700;text-decoration:none">🔐 Abrir panel</a></p>
+<p><a href="./?dueno=1" style="display:inline-block;margin-top:14px;padding:12px 22px;border-radius:999px;background:#f4b400;color:#152016;font-weight:700;text-decoration:none">🔐 Abrir panel</a></p>
 </div>
 <script>
 /* Instalada como app: abre directo el panel (que pide Google + PIN/huella). En el navegador: muestra cómo instalarla. */
 var app=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-if(app){document.getElementById('msg').textContent='🔐 Abriendo…';setTimeout(function(){location.replace('./?dueno=1#panel-arba')},300)}
+if(app){document.getElementById('msg').textContent='🔐 Abriendo…';setTimeout(function(){location.replace('./?dueno=1')},300)}
 else document.getElementById('inst').hidden=false;
 </script>
 </body>
