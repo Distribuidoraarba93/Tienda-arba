@@ -238,7 +238,7 @@ foto: hotdog
 dibujo: contenedor
 descripción: Contenedores de unicel para hot dog, hoagie (sándwich largo) y #965.
 opción: Hot dog · 500 piezas (4/125) | 444.31 pesos
-opción: Hoagie · 200 piezas (2/100) | 277.69 pesos
+opción: Hoagie · 200 piezas (2/100) | 277.69 pesos | foto contenedor-hoagie
 opción: #965 · 200 piezas (2/100) | 298.85 pesos
 
 Charola #855
