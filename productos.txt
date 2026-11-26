@@ -348,10 +348,10 @@ id: dp11
 presentación: Caja
 foto: aluminio-pay
 dibujo: charola
-descripción: Platos y moldes de aluminio desechables.
-opción: Plato para pay 9" · 300 piezas | 2775.95 pesos
+descripción: Platos y moldes de aluminio desechables. Los moldes para pay se venden en paquetes de 50 piezas (mínimo 50).
+opción: Molde para pay 9" AL-20-C · paquete de 50 piezas | 351.67 pesos
 opción: Domo para plato de pay 9" · 300 piezas | 1043.29 pesos
-opción: Molde para tartaleta AL-09 · 1,000 piezas | 1402.49 pesos
+opción: Molde para pay 4" AL-09 · paquete de 50 piezas | 80.47 pesos
 
 ==================== Vasos ====================
 
@@ -371,7 +371,7 @@ dibujo: vaso
 descripción: Vaso térmico para café y bebidas calientes. Escoge el número.
 opción: #4 · 40/25 piezas | 458.69 pesos
 opción: #6 · 40/25 piezas | 476.99 pesos
-opción: #8 · 40/25 piezas | 544.94 pesos
+opción: #8 · 40/25 piezas | 498.78 pesos
 opción: #10 · 40/25 piezas | 632.5 pesos
 opción: #12 · 40/25 piezas | 640.34 pesos
 opción: #14 · 20/25 piezas | 457.39 pesos
@@ -413,7 +413,7 @@ presentación: Escoge para qué vaso o envase
 foto: tapa-4a8
 dibujo: tapa
 descripción: Tapas plásticas para vasos y envases. Escoge la opción según el vaso o envase que usas. Pídelo y te confirmamos disponibilidad por WhatsApp.
-opción: Para vaso térmico #8 · caja completa | 452.16 pesos
+opción: Lisa para vaso térmico #8 · caja 20/50 | 359.31 pesos
 opción: Lisa Reyma para vaso PL 4A/8 · caja 1,000 piezas | 475.69 pesos
 opción: Para vaso PL #7, 8, 10 y 12 · caja 20/50 | 571.54 pesos
 opción: Lisa para vaso PL 5.5 y 4CH · caja 20/50 | 416.88 pesos
