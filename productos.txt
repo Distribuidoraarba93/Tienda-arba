@@ -2041,6 +2041,20 @@ foto: chechi-fresco
 dibujo: caja
 descripción: Chechi Fresco Gonac de 140 ml, caja con 24 piezas.
 
+Churro Loko La Orquídea 400 g
+id: b13
+precio: 41.52 pesos
+presentación: Bolsa de 400 g
+dibujo: caja
+descripción: Churro Loko de La Orquídea, bolsa de 400 g.
+
+Serpentina de tamarindo La Orquídea Mega
+id: b14
+precio: 38.53 pesos
+presentación: Bolsa con 20 piezas
+dibujo: caja
+descripción: Serpentina Mega de tamarindo La Orquídea, bolsa con 20 piezas.
+
 ==================== Repostería ====================
 
 Pay de manzana
