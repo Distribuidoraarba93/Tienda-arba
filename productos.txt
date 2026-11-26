@@ -146,7 +146,7 @@ presentación: Liso o con división · 200 piezas
 foto: cont-blanco
 dibujo: contenedor
 descripción: Contenedor blanco con bisagra para comida para llevar. Pídelo liso o con división.
-opción: 7x7 | 394.66 pesos
+opción: 7x7 | 361.17 pesos
 opción: 8x8 | 500.51 pesos
 opción: 9x9 | 555.39 pesos
 
