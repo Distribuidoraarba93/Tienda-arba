@@ -620,6 +620,15 @@ footer{font-size:12px!important;opacity:.8}
 body.home main{padding-bottom:0!important;min-height:0!important}
 html.claro footer{color:#3a475a!important;background:#f3f5f8!important}
 html.claro [data-negcod]{color:#8a5a00!important;border-color:#d9a400!important}
+
+/* Comunicado para clientes */
+.avisob{display:flex;gap:10px;align-items:flex-start;max-width:1240px;margin:10px max(3vw,12px) 0;padding:12px 12px 12px 14px;border-radius:14px;background:#4f8cff22;border:1px solid #4f8cff88;color:inherit}
+@media(min-width:1264px){.avisob{margin:10px auto 0}}
+.avisob.cierre{background:#e5393522;border-color:#e53935aa}.avisob.promo{background:#7ed95722;border-color:#7ed957aa}
+.avisob .avi{font-size:22px;line-height:1.2}.avisob div{flex:1;display:grid;gap:2px}.avisob b{font-size:14.5px;line-height:1.3}.avisob b:first-letter{text-transform:uppercase}.avisob div span{font-size:13.5px;line-height:1.4;opacity:.92}
+.avisob button{border:0;background:none;color:inherit;font-size:16px;opacity:.6;padding:2px 4px}
+body.repa .avisob{display:none!important}
+.avf{display:grid;gap:8px}.avf .opts{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px}.avf .opts button{padding:10px 4px;font-size:13px;text-align:center}.avf .ed2{display:grid;grid-template-columns:1fr 1fr;gap:8px}body.dlock .avisob{display:none!important}.avf textarea{min-height:70px}.avbtns{display:grid;grid-template-columns:1fr auto;gap:8px}.avbtns .sec{padding:0 16px}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -788,6 +797,7 @@ header .bar{position:relative}
   </div>
 </header>
 
+<div class="avisob" id="avisoBar" hidden></div>
 <section class="hero"><div>
   <div class="htx">
     <p class="kick">Distribuidora ARBA · Chihuahua</p>
@@ -1334,16 +1344,16 @@ $('#openCart').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim();renderGrid()});
 document.addEventListener('click',e=>{if(e.target.closest('[data-back]')){if(history.state&&history.state.arbaCat)history.back();else irInicio()}});
-$('#next').onclick=()=>{pideFolio();misLlena();const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
+$('#next').onclick=()=>{pideFolio();misLlena();if(cerradoEl(ymd(new Date())))toast('🔴 Hoy estamos cerrados. Recibimos tu pedido y te lo atendemos al volver 🙏');const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
 /* Pedido programado: el cliente elige día y horario */
 let cuando='ya',franja='6 a 9 am';
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const pgBonito=v=>{if(!v)return '';const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'})};
-function pgLimites(){const h=new Date(),mi=new Date(h);mi.setDate(h.getDate()+(h.getHours()>=20?2:1));if(mi.getDay()===0)mi.setDate(mi.getDate()+1);const ma=new Date(h);ma.setDate(h.getDate()+90);const i=$('#pgD');i.min=ymd(mi);i.max=ymd(ma);if(!i.value||i.value<i.min)i.value=i.min;pgPinta()}
+function pgLimites(){const h=new Date(),mi=new Date(h);mi.setDate(h.getDate()+(h.getHours()>=20?2:1));if(mi.getDay()===0)mi.setDate(mi.getDate()+1);const ma=new Date(h);ma.setDate(h.getDate()+90);const i=$('#pgD');i.min=ymd(mi);i.max=ymd(ma);if(!i.value||i.value<i.min)i.value=i.min;while(cerradoEl(i.value)){const [y,m,d]=i.value.split('-').map(Number);const x=new Date(y,m-1,d+1);if(x.getDay()===0)x.setDate(x.getDate()+1);i.value=ymd(x)}pgPinta()}
 function pgPinta(){const v=$('#pgD').value;$('#pgTxt').innerHTML=v?`📅 Para el <b>${pgBonito(v)}</b>, de ${franja}. Te escribimos antes de prepararlo para confirmar tu pedido.`:'📅 Elige el día. Entregamos de lunes a sábado.'}
 document.addEventListener('click',e=>{const c=e.target.closest('[data-cu]');if(c){cuando=c.dataset.cu;document.querySelectorAll('[data-cu]').forEach(b=>b.classList.toggle('on',b===c));$('#progBox').hidden=cuando!=='prog';$('#pgD').required=cuando==='prog';if(cuando==='prog')pgLimites();return}
   const f=e.target.closest('[data-pf]');if(f){franja=f.dataset.pf;document.querySelectorAll('[data-pf]').forEach(b=>b.classList.toggle('on',b===f));pgPinta()}});
-$('#pgD').addEventListener('change',e=>{const v=e.target.value;if(v){const [y,m,d]=v.split('-').map(Number);if(new Date(y,m-1,d).getDay()===0){toast('Los domingos no entregamos. Elige otro día 🙏');const x=new Date(y,m-1,d+1);e.target.value=ymd(x)}}pgPinta()});
+$('#pgD').addEventListener('change',e=>{const v=e.target.value;if(v&&cerradoEl(v)){const a=avVivo(),[y,m,d]=(a.hasta||a.desde).split('-').map(Number);toast('Ese día estamos cerrados 🙏 Elige otro día');e.target.value=ymd(new Date(y,m-1,d+1));pgPinta();return}if(v){const [y,m,d]=v.split('-').map(Number);if(new Date(y,m-1,d).getDay()===0){toast('Los domingos no entregamos. Elige otro día 🙏');const x=new Date(y,m-1,d+1);e.target.value=ymd(x)}}pgPinta()});
 window.ARBA_PROG=()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()};
 /* Datos del cliente guardados en su celular: nombre, WhatsApp y direcciones (sin contraseñas) */
 const misLee=()=>{try{return JSON.parse(localStorage.getItem('arba-mis')||'null')||{}}catch(e){return {}}};
@@ -1356,6 +1366,17 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-dirg]');if
   if(e.target.closest('[data-dirnew]')){$('#dir').value='';document.querySelectorAll('[data-dirg]').forEach(x=>x.classList.remove('on'));$('#dir').focus();return}
   if(e.target.closest('[data-dirolv]')){if(!confirm('¿Borrar tu nombre, WhatsApp y direcciones guardadas en este celular?'))return;try{localStorage.removeItem('arba-mis')}catch(er){}$('#nom').value='';$('#tel').value='';$('#dir').value='';$('#pm').value='';misLlena();toast('Listo, borramos tus datos de este celular')}});
 document.addEventListener('click',e=>{const a=e.target.closest('a[href="#condiciones"]');if(a){e.preventDefault();const d=document.getElementById('masD');if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}});
+/* Comunicados del dueño (cierres, avisos, promociones) */
+const AVT={cierre:['🔴','Cerramos'],aviso:['📢','Aviso'],promo:['🎉','Promoción']};
+const fBon=v=>{const [y,m,d]=v.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}).replace(/\./g,'')};
+const avRango=a=>a.desde&&a.hasta?(a.desde===a.hasta?'el '+fBon(a.desde):'del '+fBon(a.desde)+' al '+fBon(a.hasta)):a.desde?'desde el '+fBon(a.desde):a.hasta?'hasta el '+fBon(a.hasta):'';
+const avVivo=()=>{const a=window.ARBA_AVISO;if(!a||!a.t||a.off)return null;const h=ymd(new Date());if(a.hasta&&h>a.hasta)return null;return a};
+const cerradoEl=v=>{const a=avVivo();return !!(a&&a.tipo==='cierre'&&a.desde&&v>=a.desde&&v<=(a.hasta||a.desde))};
+function avPinta(){const b=document.getElementById('avisoBar');if(!b)return;const a=avVivo();let visto='';try{visto=localStorage.getItem('arba-aviso-visto')||''}catch(e){}
+  if(!a||visto===String(a.f)){b.hidden=true;return}const [ic,ti]=AVT[a.tipo]||AVT.aviso,r=avRango(a);
+  b.className='avisob '+(a.tipo||'aviso');b.innerHTML=`<span class="avi">${ic}</span><div><b>${a.tipo==='cierre'?ti+(r?' '+esc(r):''):ti+(r?' · '+esc(r):'')}</b><span>${esc(a.t)}</span></div><button type="button" data-avx aria-label="Cerrar aviso">✕</button>`;b.hidden=false}
+window.ARBA_AVPINTA=avPinta;
+document.addEventListener('click',e=>{if(e.target.closest('[data-avx]')){const a=avVivo();try{if(a)localStorage.setItem('arba-aviso-visto',String(a.f))}catch(er){}avPinta()}});
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
@@ -2624,7 +2645,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=10';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=11';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
@@ -2666,6 +2687,7 @@ const esRepa=()=>document.body.classList.contains('repa')||!!LS.g('arba-repa');
 /* ---------- 1) Agotados: lo ven todos ---------- */
 let AGO_PUB=null;
 function agoVigila(){const F=FB();if(!F||!F.docVer||agoVigila.on)return;agoVigila.on=1;
+  F.docVer('estado','aviso',d=>{window.ARBA_AVISO=d;try{window.ARBA_AVPINTA&&window.ARBA_AVPINTA()}catch(e){}try{avFill(d)}catch(e){}});
   F.docVer('estado','agotados',d=>{AGO_PUB=d&&d.ids||[];window.ARBA_AGO=new Set(AGO_PUB);try{T().renderGrid();T().renderCart()}catch(e){}})}
 
 /* ---------- 2) Liga de repartidor: se guarda y se borra de la dirección ---------- */
@@ -2687,9 +2709,24 @@ const inv=document.createElement('div');inv.id='invAdm';inv.innerHTML=`<h4 style
 <p class="note">Pon cuántas piezas tienes. Se descuenta solo cuando <b>aceptas</b> un pedido (y regresa si lo cancelas). Lo que dejes <b>vacío</b> no se controla, por ejemplo lo que haces al momento. Al llegar a 0, tus clientes lo ven como <b>Agotado</b>.</p>
 <div id="invRes"></div><div class="opts" role="group" id="invF"><button type="button" data-if="todo" class="on">Todos</button><button type="button" data-if="po">⚠️ Por acabarse</button><button type="button" data-if="ag">❌ Agotados</button><button type="button" data-if="con">Con inventario</button></div>
 <input id="invQ" class="invq" placeholder="🔎 Busca un producto" autocomplete="off"><div id="invL"><p class="note">Cargando…</p></div>`;
+const avd=document.createElement('div');avd.id='avAdm';avd.innerHTML=`<h4 style="margin:18px 0 6px">📢 Comunicado para tus clientes</h4><p class="note">Sale arriba de la tienda para todos. Úsalo para días de cierre, cambios de horario o promociones. Si es <b>cierre</b>, el calendario de pedidos programados no deja elegir esos días.</p>
+<div class="avf"><div class="opts" role="group" id="avTipo"><button type="button" data-avt="cierre" class="on">🔴 Cierre</button><button type="button" data-avt="aviso">📢 Aviso</button><button type="button" data-avt="promo">🎉 Promoción</button></div>
+<label>Mensaje<textarea id="avTxt" maxlength="220" placeholder="Ej. Cerramos por Navidad. Haz tu pedido antes del 23 🎄"></textarea></label>
+<div class="ed2"><label>Desde (opcional)<input id="avDe" type="date"></label><label>Hasta (opcional)<input id="avHa" type="date"></label></div>
+<div class="avbtns"><button type="button" class="go" data-avpub>📢 Publicar comunicado</button><button type="button" class="sec" data-avoff>Quitar</button></div><div id="avEst" class="note"></div></div>`;
+let avTipo='cierre';
+const avFill=a=>{if(!a)return;avTipo=a.tipo||'aviso';avd.querySelectorAll('[data-avt]').forEach(x=>x.classList.toggle('on',x.dataset.avt===avTipo));avd.querySelector('#avTxt').value=a.t||'';avd.querySelector('#avDe').value=a.desde||'';avd.querySelector('#avHa').value=a.hasta||'';
+  const hoy=new Date(),h=hoy.getFullYear()+'-'+String(hoy.getMonth()+1).padStart(2,'0')+'-'+String(hoy.getDate()).padStart(2,'0');
+  avd.querySelector('#avEst').innerHTML=a.off||!a.t?'Sin comunicado publicado.':a.hasta&&h>a.hasta?'⏱️ El comunicado ya venció y no se muestra.':'✅ <b>Publicado:</b> tus clientes lo están viendo.'};
+avd.addEventListener('click',async e=>{const t=e.target.closest('[data-avt]');if(t){avTipo=t.dataset.avt;avd.querySelectorAll('[data-avt]').forEach(x=>x.classList.toggle('on',x===t));return}
+  const pb=e.target.closest('[data-avpub]'),of=e.target.closest('[data-avoff]');if(!pb&&!of)return;
+  const txt=avd.querySelector('#avTxt').value.trim(),de=avd.querySelector('#avDe').value,ha=avd.querySelector('#avHa').value;
+  if(pb&&!txt){T().toast('Escribe el mensaje del comunicado');return}if(pb&&de&&ha&&ha<de){T().toast('La fecha "hasta" debe ser después de "desde"');return}
+  const d=of?{off:true,f:Date.now()}:{t:txt.slice(0,220),tipo:avTipo,desde:de||'',hasta:ha||(avTipo==='cierre'?de:'')||'',f:Date.now()};
+  (pb||of).disabled=true;try{await FB().docSet('estado','aviso',d);T().toast(of?'Comunicado quitado':'📢 Comunicado publicado')}catch(er){console.warn(er);T().toast('No se pudo guardar. Revisa tu internet.')}(pb||of).disabled=false});
 const prg=document.createElement('div');prg.id='prgAdm';prg.innerHTML=`<h4 style="margin:18px 0 6px">📅 Pedidos programados</h4><p class="note">Pedidos que tus clientes apartaron para otro día. Te llega un aviso al recibirlo y otro <b>un día antes a las 8 am</b>. Confírmalo con el cliente antes de prepararlo.</p><div id="prgL"><p class="note">Cargando…</p></div>`;
 const sol=document.createElement('div');sol.id='solAdm';sol.innerHTML=`<h4 style="margin:18px 0 6px">🙋 Solicitudes de repartidores</h4><p class="note">Lo que tus repartidores te piden con <b>“Ocupo esto”</b> y sus avisos de que algo se está acabando.</p><div id="solL"><p class="note">Cargando…</p></div>`;
-{const anc=document.getElementById('entAdm')||document.getElementById('venAdm');if(anc&&anc.parentNode===pv){pv.insertBefore(sol,anc.nextSibling);pv.insertBefore(inv,anc.nextSibling);pv.insertBefore(prg,anc.nextSibling)}else{pv.prepend(sol);pv.prepend(inv);pv.prepend(prg)}}
+{const anc=document.getElementById('entAdm')||document.getElementById('venAdm');if(anc&&anc.parentNode===pv){pv.insertBefore(avd,anc.nextSibling);pv.insertBefore(sol,anc.nextSibling);pv.insertBefore(inv,anc.nextSibling);pv.insertBefore(prg,anc.nextSibling)}else{pv.prepend(avd);pv.prepend(sol);pv.prepend(inv);pv.prepend(prg)}}
 let IK='',DESDE=0,INV={q:{},m:{}},filtro='todo',un=[],SOLS=null,visto=null,pend=false;
 const DESC=['aceptado','pagado','camino','listo','entregado'];
 const claves=()=>{const L=[];T().P.forEach(p=>{if(p.v&&p.v.length)p.v.forEach((o,i)=>L.push({k:p.id+':'+i,n:p.n,o:o.n,u:p.u,c:p.cat}));else L.push({k:p.id,n:p.n,o:'',u:p.u,c:p.cat})});return L};
@@ -2798,14 +2835,14 @@ window.addEventListener('arba-auth',()=>setTimeout(iniciar,200));
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='aj')return;
    if(k==='lock'){window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':'segAdm');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
  function libre(){var F=window.ARBA_FB,L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())}
  function revisa(){var b=document.body;if(!b)return;b.classList.add('dueno');barra();var lk=!libre();b.classList.toggle('dlock',lk);
   if(lk&&location.hash.indexOf('#panel-arba')!==0)location.hash='#panel-arba'}
