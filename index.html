@@ -637,6 +637,15 @@ body.repa .avisob{display:none!important}
 .ctile .cti.fot .cem{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:15px;font-style:normal;box-shadow:0 2px 6px #0006;z-index:2;overflow:hidden}
 .ctile .cti.fot .cem img{width:100%;height:100%;object-fit:cover;background:#fff}
 .ctile .ctag{z-index:3}
+
+.ctips{display:grid;gap:8px;margin:14px 0 4px}
+.ctips>*{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:inherit;text-decoration:none;font:500 12.5px/1.35 Poppins,sans-serif;cursor:pointer}
+.ctips i{font-style:normal;font-size:22px}
+.ctips b{display:block;font-size:14px;font-weight:700}
+.ctips span{opacity:.85}
+.ctips em{font-style:normal;font-weight:800;font-size:12.5px;padding:7px 11px;border-radius:99px;background:#f4b400;color:#152016;white-space:nowrap}
+.ctips [data-ctprog]{border-color:#4f8cff88;background:#4f8cff14}
+.ctips a em{background:#25a244;color:#fff}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -1291,6 +1300,7 @@ function renderCart(){
   cTot=Math.round(tot*100)/100;setTimeout(minPinta,0);
   {const n=ks.reduce((a,k)=>a+cart[k],0);$('#cbN').textContent=n;$('#cbT').textContent=fmt(cTot)+(quote?' + cotización':'');}
   $('#items').insertAdjacentHTML('beforeend',relHTML([...new Set(ks.map(k=>k.split(':')[0]))],'🛒 ¿No te falta algo? Clientes también llevan'));
+  $('#items').insertAdjacentHTML('beforeend',`<div class="ctips"><button type="button" data-ctprog><i>📅</i><span><b>¿Lo quieres para otro día?</b>Prográmalo y nosotros te lo recordamos. Un pendiente menos.</span><em>Programar</em></button><button type="button" data-ctseg><i>🛒</i><span><b>¿Te falta algo?</b>Sigue agregando para que no se te pase nada.</span><em>Seguir</em></button><a href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: ')}" target="_blank" rel="noopener"><i>🔎</i><span><b>¿No lo ves?</b>Pregúntanos y te lo conseguimos.</span><em>Preguntar</em></a></div>`);
   $('#qnote').textContent=(ks.some(k=>ANTIC(item(k).p))?'📅 Tu pedido lleva productos que preparamos al momento. '+T_ANT+' ':'🚚 '+T_HOY+' ')+(quote?`${quote} producto${quote>1?'s':''} sin precio: te confirmamos el precio por WhatsApp.`:'Precios con IVA incluido.')+(cTot>=500?` Este pedido requiere 35% de anticipo: ${fmt(Math.round(cTot*0.35*100)/100)}.`:'');
 }
 /* Liga de repartidor: si este cliente llegó por la liga de un repartidor (válida 30 días), el pedido cuenta para su comisión */
@@ -1393,6 +1403,8 @@ function avPinta(){const b=document.getElementById('avisoBar');if(!b)return;cons
   b.className='avisob '+(a.tipo||'aviso');b.innerHTML=`<span class="avi">${ic}</span><div><b>${a.tipo==='cierre'?ti+(r?' '+esc(r):''):ti+(r?' · '+esc(r):'')}</b><span>${esc(a.t)}</span></div><button type="button" data-avx aria-label="Cerrar aviso">✕</button>`;b.hidden=false}
 window.ARBA_AVPINTA=avPinta;
 document.addEventListener('click',e=>{if(e.target.closest('[data-avx]')){const a=avVivo();try{if(a)localStorage.setItem('arba-aviso-visto',String(a.f))}catch(er){}avPinta()}});
+document.addEventListener('click',e=>{if(e.target.closest('[data-ctprog]')){$('#next').click();setTimeout(()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()},50);return}
+  if(e.target.closest('[data-ctseg]')){const x=document.querySelector('#drawer [data-close]');if(x)x.click()}});
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
@@ -2661,7 +2673,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=11';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=12';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
