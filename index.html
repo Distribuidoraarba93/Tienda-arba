@@ -646,6 +646,7 @@ body.repa .avisob{display:none!important}
 .ctips em{font-style:normal;font-weight:800;font-size:12.5px;padding:7px 11px;border-radius:99px;background:#f4b400;color:#152016;white-space:nowrap}
 .ctips [data-ctprog]{border-color:#4f8cff88;background:#4f8cff14}
 .ctips a em{background:#25a244;color:#fff}
+.htips{max-width:1240px;margin:14px auto 4px!important;padding:0}body.encat .htips{display:none!important}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -877,6 +878,7 @@ header .bar{position:relative}
 
 <main>
   <section class="promos" id="promos" hidden><h2>🔥 Lo más pedido <i data-pmas role="button" aria-label="Ver más">›</i></h2><div class="prow" id="prow"></div></section>
+  <div class="ctips htips" id="hTips"><button type="button" data-hprog><i>📅</i><span><b>¿Pedido para otro día?</b>Prográmalo y nosotros te lo recordamos. Un pendiente menos.</span><em>Programar</em></button><a href="https://wa.me/526141077999?text=Hola%2C%20busco%3A%20" target="_blank" rel="noopener"><i>🔎</i><span><b>¿No lo ves?</b>Pregúntanos y te lo conseguimos.</span><em>Preguntar</em></a></div>
   <div class="rep" id="rep" hidden></div>
   <div class="head"><button type="button" class="back" data-back aria-label="Regresar">←</button><h2 id="title">Todos los productos</h2><span class="hr"><span id="n"></span></span></div>
   <div class="thead" id="tortHead" hidden><img src="img/logo-2c.webp" alt="Tortillería Los 2 Carnales"><div><b>Tortillería Los 2 Carnales</b><span>Tortillas de harina recién hechas aquí en Chihuahua, normales y sabor mantequilla.</span><span class="tg">🔥 Recién hechas · 💰 Mayoreo desde 5 paquetes</span><button class="calcbtn" data-calc>🧮 ¿Haces fiesta? Calcula tus tortillas</button></div></div>
@@ -1370,7 +1372,7 @@ $('#openCart').onclick=openDrawer;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 $('#q').addEventListener('input',e=>{q=e.target.value.trim();renderGrid()});
 document.addEventListener('click',e=>{if(e.target.closest('[data-back]')){if(history.state&&history.state.arbaCat)history.back();else irInicio()}});
-$('#next').onclick=()=>{pideFolio();misLlena();if(cerradoEl(ymd(new Date())))toast('🔴 Hoy estamos cerrados. Recibimos tu pedido y te lo atendemos al volver 🙏');const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
+$('#next').onclick=()=>{pideFolio();misLlena();if(window._progPend){window._progPend=false;setTimeout(()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()},30)}if(cerradoEl(ymd(new Date())))toast('🔴 Hoy estamos cerrados. Recibimos tu pedido y te lo atendemos al volver 🙏');const a=cTot>=500;$('#antBox').hidden=!a;$('#acepto').required=a;$('#antAmt').textContent=fmt(Math.round(cTot*0.35*100)/100);$('#foot').hidden=true;$('#items').hidden=true;$('#form').hidden=false;$('#form').scrollTop=0};
 /* Pedido programado: el cliente elige día y horario */
 let cuando='ya',franja='6 a 9 am';
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -1403,6 +1405,9 @@ function avPinta(){const b=document.getElementById('avisoBar');if(!b)return;cons
   b.className='avisob '+(a.tipo||'aviso');b.innerHTML=`<span class="avi">${ic}</span><div><b>${a.tipo==='cierre'?ti+(r?' '+esc(r):''):ti+(r?' · '+esc(r):'')}</b><span>${esc(a.t)}</span></div><button type="button" data-avx aria-label="Cerrar aviso">✕</button>`;b.hidden=false}
 window.ARBA_AVPINTA=avPinta;
 document.addEventListener('click',e=>{if(e.target.closest('[data-avx]')){const a=avVivo();try{if(a)localStorage.setItem('arba-aviso-visto',String(a.f))}catch(er){}avPinta()}});
+document.addEventListener('click',e=>{if(!e.target.closest('[data-hprog]'))return;
+  if(Object.keys(cart).some(k=>cart[k]>0)){openDrawer();setTimeout(()=>{$('#next').click();const b=document.querySelector('[data-cu="prog"]');if(b)b.click()},250)}
+  else{window._progPend=true;toast('📅 Arma tu pedido y al continuar te sale el calendario para elegir el día');document.getElementById('catHome').scrollIntoView({behavior:'smooth',block:'start'})}});
 document.addEventListener('click',e=>{if(e.target.closest('[data-ctprog]')){$('#next').click();setTimeout(()=>{const b=document.querySelector('[data-cu="prog"]');if(b)b.click()},50);return}
   if(e.target.closest('[data-ctseg]')){const x=document.querySelector('#drawer [data-close]');if(x)x.click()}});
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
@@ -2673,7 +2678,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=12';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=13';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
