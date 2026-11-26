@@ -166,6 +166,17 @@ service cloud.firestore {
               && exists(/databases/$(database)/documents/pedidos/$(request.resource.data.p))));
     }
 
+    // Clientes registrados en la bienvenida (nombre y WhatsApp). Cualquiera se registra; solo tú ves la lista
+    match /registros/{tel} {
+      allow get, list, delete: if esAdmin();
+      allow create, update: if tel.matches('^[0-9]{10}$')
+        && request.resource.data.keys().hasOnly(['n', 'tel', 'i', 'f'])
+        && request.resource.data.tel == tel
+        && request.resource.data.n is string && request.resource.data.n.size() > 0 && request.resource.data.n.size() <= 80
+        && request.resource.data.i in ['es', 'en']
+        && request.resource.data.f is number;
+    }
+
     // Todo lo demás cerrado
     match /{document=**} {
       allow read, write: if false;

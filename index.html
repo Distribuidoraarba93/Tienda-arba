@@ -2988,14 +2988,14 @@ window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));s
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="cli">👥 Clientes</button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='aj'||k==='nuevo'||k==='ocultos')return;
    if(k==='lock'){abrir=false;window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();cierraPanel();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':k==='pat'?'patAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':k==='pat'?'patAdm':k==='cli'?'cliAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
  /* Cada botón de la barra muestra SOLO su sección del panel */
  function soloQuita(){document.querySelectorAll('.dsolo-x').forEach(function(e){e.classList.remove('dsolo-x')});document.querySelectorAll('#duBar .duon').forEach(function(e){e.classList.remove('duon')});var p=document.getElementById('panel');if(p)p.classList.remove('solo','conTit')}
  window.ARBA_SOLO=function(el,btn){soloQuita();var tx=document.querySelector('#panel .tx'),p=document.getElementById('panel');if(!el||!tx||!tx.contains(el))return;
@@ -3089,6 +3089,27 @@ body.fzon{overflow:hidden}
 #fz .fok p{font-size:21px}
 #fz .fayu{background:var(--fc);border:2px solid var(--fl);border-radius:18px;padding:6px 14px 12px;margin-top:20px}
 #fz .fayu p{margin:10px 0 0;font-size:18px;color:var(--fm)}
+#bw{position:fixed;inset:0;z-index:68;background:#0b1525;color:#fff;display:flex;flex-direction:column;font:19px/1.4 Poppins,system-ui,sans-serif;--fc:#15233a;--fi:#fff;--fm:#c5d0de;--fl:#2a3b55}
+html.claro #bw{background:#f4f6f1;color:#111;--fc:#fff;--fi:#111;--fm:#3d4a3f;--fl:#cfd8cb}
+#bw *{box-sizing:border-box}
+#bw .bwh{display:flex;justify-content:flex-end;padding:max(10px,env(safe-area-inset-top)) 12px 0;min-height:54px;flex:none}
+#bw .bwsk{background:transparent;border:2px solid var(--fl);color:var(--fi);border-radius:999px;padding:6px 16px;font-size:16px;font-weight:700;min-height:44px}
+#bw .bwb{flex:1;overflow-y:auto;padding:4px 18px max(24px,env(safe-area-inset-bottom));max-width:560px;width:100%;margin:0 auto}
+#bw .bwlogo{display:block;width:96px;height:96px;border-radius:50%;background:#fff;margin:0 auto 8px}
+#bw h2{font-size:27px;line-height:1.2;font-weight:800;margin:6px 0;text-align:center}
+#bw .fsub{color:var(--fm);font-size:17px;margin:0 0 14px;text-align:center}
+#bw .bwv{width:100%;max-height:52vh;border-radius:16px;background:#000;display:block;margin:0 auto 14px}
+#bw .bwp{display:grid;gap:10px;margin-bottom:8px}
+#bw .bwp div{display:flex;gap:12px;align-items:center;background:var(--fc);border:2px solid var(--fl);border-radius:16px;padding:12px 14px}
+#bw .bwp i{font-style:normal;font-size:36px;line-height:1;flex:none}
+#bw .bwp span{font-size:16px;color:var(--fm)}#bw .bwp b{display:block;font-size:19px;color:var(--fi)}
+#bw .fb{display:flex;align-items:center;justify-content:center;width:100%;min-height:64px;border-radius:16px;border:0;font-size:22px;font-weight:800;margin:14px 0 6px;background:#25a244;color:#fff}
+#bw .bwl{display:block;width:100%;background:none;border:0;color:var(--fm);font-size:17px;font-weight:600;text-decoration:underline;padding:12px;min-height:48px}
+#bw label.fl{display:block;font-size:19px;font-weight:800;margin:14px 0 6px}
+#bw .fin{width:100%;min-height:60px;border-radius:14px;border:2px solid var(--fl);background:var(--fc);color:var(--fi);font-size:21px;padding:10px 14px}
+#bw .fin:focus{outline:3px solid #f4b400;border-color:#f4b400}
+#bw .fchk{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:700;margin-top:16px}#bw .fchk input{width:30px;height:30px;flex:none;margin:0;accent-color:#25a244}
+#bw .bwpriv{font-size:14px;color:var(--fm);text-align:center;margin:6px 0 0}
 /* Botón para entrar al modo fácil (solo en la tienda de clientes) */
 .fzent{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);max-width:1216px;margin:12px auto 0;border:2px solid #f4b400;background:#f4b40018;color:var(--ink);border-radius:16px;padding:12px 14px;text-align:left;font:600 15px/1.3 Poppins,system-ui,sans-serif}
 .fzent i{font-style:normal;font-size:34px;line-height:1}.fzent b{display:block;font-size:18px}.fzent em{margin-left:auto;font-style:normal;background:#f4b400;color:#152016;font-weight:800;border-radius:999px;padding:8px 14px;white-space:nowrap}
@@ -3123,7 +3144,7 @@ function qtyHTML(k,c){return c>0?`<div class="fq"><button type="button" class="m
 function prodHTML(r,c){const t=T();return `<div class="fp${c?' en':''}"><div class="ft">${t.pic(r.p,r.vi)}</div><div><h3>${esc(r.n)}</h3>${r.u?`<span class="fu">${esc(r.u)}</span>`:''}<span class="fpr">${t.fmt(r.pr)}</span>${r.my?`<span class="fn">${L('Llevando','Buying')} <b>${r.my[0]} ${L('o más','or more')}</b>: ${t.fmt(r.my[1])} ${L('cada uno','each')}</span>`:''}${antic(r.p)?`<span class="fn">📅 ${L('Se pide <b>un día antes</b>','Order <b>one day ahead</b>')}</span>`:''}</div><div class="fac">${qtyHTML(r.k,c)}</div></div>`}
 function barra(sig){const r=resumen();if(!r.n)return '';const t=T();
   return `<div class="fbar"><button type="button" class="fb" data-fgo="${sig||'carrito'}"><span>🛒 ${L('Tu pedido','Your order')}: ${r.n} ${r.n===1?L('cosa','item'):L('cosas','items')}<b>${t.fmt(r.tot)}${r.cot?L(' + precio por confirmar',' + price to confirm'):''}</b></span>${L('Siguiente','Next')} ➜</button></div>`}
-const ayuda=()=>`<div class="fayu"><p>${L('¿Necesitas ayuda? Con gusto te atendemos:','Need help? We are happy to help you:')}</p><a class="fb s" href="tel:${TEL}">📞 ${L('Llamar a la tienda','Call the store')}</a><button type="button" class="fb s" data-fgo="llamar" style="margin:0">🙋 ${L('Mejor que me llamen','Please call me')}</button></div>`;
+const ayuda=()=>`<div class="fayu"><p>${L('¿Necesitas ayuda? Con gusto te atendemos:','Need help? We are happy to help you:')}</p><button type="button" class="fb s" data-como>▶️ ${L('Ver cómo se usa','See how it works')}</button><a class="fb s" href="tel:${TEL}">📞 ${L('Llamar a la tienda','Call the store')}</a><button type="button" class="fb s" data-fgo="llamar" style="margin:0">🙋 ${L('Mejor que me llamen','Please call me')}</button></div>`;
 function pinta(){if(!fz)return;const t=T(),m=fz.querySelector('.fm'),r=resumen();let h='',bar='';
   if(pant==='home'){
     h=`<span class="fpaso">${L('Paso 1 de 3','Step 1 of 3')}</span><h2>${L('¿Qué quieres pedir?','What would you like?')}</h2><p class="fsub">${L('Toca lo que buscas.','Tap what you are looking for.')}</p><div class="fcats">${cats().map((c,i)=>`<button type="button" class="fcat${i===0&&c==='Tortillas'?' big':''}" data-fcat="${esc(c)}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':`<i>${IC[c]||'🛍️'}</i>`}${esc(cN(c))}</button>`).join('')}</div>${ayuda()}`;bar=barra()}
@@ -3193,6 +3214,46 @@ function clic(e){const g=s=>e.target.closest(s),t=T();let b;
   if(g('[data-fmanda]'))return manda();
   if(g('[data-fllama]'))return llama();
   if(g('[data-festado]')){const p=D.pedK;cierra();LSet('arba-facil','1');t.estAbrir(p);return}}
+/* ===== BIENVENIDA: la primera vez que abren la app. Cómo se usa + registro con nombre y WhatsApp (opcional) ===== */
+let bw=null,VID=null;
+const vidSrc=()=>EN?'clips/como-se-usa-en.mp4':'clips/como-se-usa.mp4';
+function hayVideo(){if(VID!==null)return Promise.resolve(VID);return fetch(vidSrc(),{method:'HEAD',cache:'no-store'}).then(r=>VID=r.ok&&/video/.test(r.headers.get('content-type')||''),()=>VID=false)}
+const PASOS=()=>[['🛍️',L('Escoge','Choose'),L('Toca los productos que quieres y dale Agregar.','Tap the products you want and press Add.')],['🛒',L('Revisa','Check'),L('Abre tu carrito y revisa cuántos llevas.','Open your cart and check how many you are taking.')],['💬',L('Manda por WhatsApp','Send on WhatsApp'),L('Pon tu nombre y dirección. Se abre WhatsApp con tu pedido listo: solo dale Enviar.','Add your name and address. WhatsApp opens with your order ready: just tap Send.')]];
+function bPinta(paso,solo){if(!bw)return;const b=bw.querySelector('.bwb');
+  if(paso===1){b.innerHTML=`<img class="bwlogo" src="img/logo.webp" alt=""><h2>${L('¡Bienvenido a Distribuidora ARBA!','Welcome to Distribuidora ARBA!')}</h2><p class="fsub">${L('Tortillería Los 2 Carnales, desechables y abarrotes. Así de fácil se pide:','Los 2 Carnales tortillas, disposables and groceries. Ordering is this easy:')}</p>
+    ${VID?`<video class="bwv" src="${vidSrc()}" autoplay muted playsinline controls preload="auto"></video>`:''}
+    <div class="bwp">${PASOS().map((x,i)=>`<div><i>${x[0]}</i><span><b>${i+1}. ${x[1]}</b>${x[2]}</span></div>`).join('')}</div>
+    ${solo?`<button type="button" class="fb v" data-bx>${L('Entendido','Got it')}</button>`:`<button type="button" class="fb v" data-bs>${L('Siguiente','Next')} ➜</button><button type="button" class="bwl" data-blang>${EN?'🇲🇽 Ver en español':'🇺🇸 View in English'}</button>`}`}
+  else{let m={};try{m=JSON.parse(LS('arba-mis')||'{}')}catch(e){}
+    b.innerHTML=`<h2>${L('¿Cómo te llamas?','What is your name?')}</h2><p class="fsub">${L('Así ya no los escribes en cada pedido y te avisamos de ofertas por WhatsApp.','So you do not have to type them on every order, and we can tell you about deals on WhatsApp.')}</p>
+    <label class="fl" for="bwN">${L('Tu nombre','Your name')}</label><input class="fin" id="bwN" autocomplete="name" value="${esc(m.n||'')}">
+    <label class="fl" for="bwT">${L('Tu WhatsApp','Your WhatsApp')}</label><input class="fin" id="bwT" type="tel" inputmode="numeric" autocomplete="tel" placeholder="614 123 4567" value="${esc(m.tel||'')}">
+    <label class="fchk"><input type="checkbox" id="bwF"> ${L('Quiero letras grandes (modo fácil)','I want big letters (easy mode)')}</label>
+    <button type="button" class="fb v" data-bok>✅ ${L('Listo','Done')}</button><button type="button" class="bwl" data-bdesp>${L('Después','Later')}</button>
+    <p class="bwpriv">🔒 ${L('Tus datos solo los ve Distribuidora ARBA. No los compartimos con nadie.','Only Distribuidora ARBA sees your details. We never share them.')}</p>`}
+  b.scrollTop=0}
+function bAbre(solo){hayVideo().then(()=>{if(bw)bw.remove();bw=document.createElement('div');bw.id='bw';bw.className='fzlike';bw.setAttribute('role','dialog');bw.setAttribute('aria-label',L('Bienvenida','Welcome'));
+  bw.innerHTML=`<div class="bwh">${solo?'':`<button type="button" class="bwsk" data-bdesp>${L('Saltar','Skip')} ✕</button>`}${solo?`<button type="button" class="bwsk" data-bx>✕</button>`:''}</div><div class="bwb"></div>`;
+  document.body.appendChild(bw);document.body.classList.add('fzon');bw.addEventListener('click',bClic);bPinta(1,solo)})}
+function bCierra(facil){if(bw){const v=bw.querySelector('video');if(v)v.pause();bw.remove();bw=null}LSet('arba-bienv','1');if(!fz)document.body.classList.remove('fzon');if(facil)abre()}
+function regSube(){let r=null;try{r=JSON.parse(LS('arba-reg')||'null')}catch(e){}if(!r||r.ok)return;
+  const go=()=>{const F=window.ARBA_FB;if(!F||!F.docSet)return;F.docSet('registros',r.tel,{n:r.n,tel:r.tel,i:r.i,f:r.f}).then(()=>{r.ok=1;LSet('arba-reg',JSON.stringify(r))},e=>console.warn('registro',e))};
+  if(window.ARBA_FB)go();else window.addEventListener('arba-fb',go,{once:true})}
+function bClic(e){const g=s=>e.target.closest(s);
+  if(g('[data-bs]'))return bPinta(2);
+  if(g('[data-bx]'))return bCierra(false);
+  if(g('[data-blang]')){let A={};try{A=JSON.parse(LS('arba-aj')||'{}')}catch(er){}A.i=EN?'es':'en';LSet('arba-aj',JSON.stringify(A));location.reload();return}
+  const fac=()=>{const c=bw.querySelector('#bwF');return !!(c&&c.checked)};
+  if(g('[data-bdesp]'))return bCierra(bw.querySelector('#bwF')?fac():false);
+  if(g('[data-bok]')){const n=bw.querySelector('#bwN').value.trim(),tl=bw.querySelector('#bwT').value,dig=tl.replace(/\D/g,'').slice(-10);
+    if(!n){T().toast(L('Escribe tu nombre','Write your name'));bw.querySelector('#bwN').focus();return}
+    if(dig.length<10){T().toast(L('Escribe tu WhatsApp de 10 dígitos','Write your 10-digit WhatsApp'));bw.querySelector('#bwT').focus();return}
+    let m={};try{m=JSON.parse(LS('arba-mis')||'{}')}catch(er){}m.n=n.slice(0,80);m.tel=dig;LSet('arba-mis',JSON.stringify(m));D.n=m.n;D.t=dig;
+    LSet('arba-reg',JSON.stringify({n:m.n,tel:dig,i:EN?'en':'es',f:Date.now()}));regSube();
+    T().toast(L('¡Gracias, ','Thanks, ')+n.split(' ')[0]+'! 💛');bCierra(fac())}}
+window.ARBA_COMO=()=>bAbre(true);
+document.addEventListener('click',e=>{if(e.target.closest('[data-como]')){const w=document.getElementById('ajW');if(w)w.remove();bAbre(true)}
+  if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-como]')||!esCliente())return;const z=w.querySelector('[data-fzaj]')||w.querySelector('h3');if(z)z.insertAdjacentHTML('afterend',`<button type="button" class="ajb" data-como data-noen style="width:100%;margin:0 0 8px;font-size:16px;font-weight:700">▶️ ${L('¿Cómo se usa la app?','How to use the app')}</button>`)},5)});
 window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.facil;pant=p||'home';pinta()});
 window.ARBA_FACIL=abre;
 /* Entradas: botón grande en la tienda y opción en Ajustes */
@@ -3201,8 +3262,32 @@ function boton(){if(document.querySelector('.fzent'))return;const h=document.que
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
   if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
-function inicio(){boton();const h=location.hash;if(LS('arba-facil')==='1'&&esCliente()&&!/^#(panel|estatus)/.test(h))abre()}
+function inicio(){boton();regSube();const h=location.hash;if(!esCliente()||/^#(panel|estatus)/.test(h))return;if(LS('arba-bienv')!=='1'){bAbre(false);return}if(LS('arba-facil')==='1')abre()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inicio,300));else setTimeout(inicio,300);
+})();
+</script>
+<script>
+/* ===== CLIENTES REGISTRADOS (app de dueño): los que dejaron su nombre y WhatsApp en la bienvenida ===== */
+(function(){
+const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let L=null,un=null,qq='';
+function caja(){let c=document.getElementById('cliAdm');if(c)return c;const pv=document.getElementById('pPriv');if(!pv)return null;
+  c=document.createElement('div');c.id='cliAdm';c.innerHTML=`<h4 style="margin:18px 0 6px">👥 Clientes registrados</h4><p class="note">Los que dejaron su nombre y WhatsApp al abrir la app por primera vez. Úsalos para avisar de ofertas y temporadas.</p><div id="cliTop"></div><div id="cliL"><p class="note">Cargando…</p></div>`;pv.appendChild(c);return c}
+function pinta(){const box=document.getElementById('cliL'),top=document.getElementById('cliTop');if(!box)return;
+  if(L===null){box.innerHTML='<p class="note">No se pudieron cargar. ¿Ya publicaste las reglas nuevas de Firebase?</p>';top.innerHTML='';return}
+  const hoy=new Date();hoy.setHours(0,0,0,0);const sem=Date.now()-7*864e5;
+  const n7=L.filter(x=>x.f>=sem).length,nh=L.filter(x=>x.f>=hoy.getTime()).length;
+  if(!top.dataset.ok){top.dataset.ok=1;top.innerHTML=`<div class="note" id="cliRes" style="font-weight:600;color:var(--ink);margin:6px 0"></div><label>Buscar<input id="cliQ" placeholder="Nombre o número"></label><button type="button" class="sec" data-clicopia style="margin:6px 0 10px;width:100%">📋 Copiar todos los números</button>`}
+  document.getElementById('cliRes').textContent=`${L.length} registrados · ${nh} hoy · ${n7} esta semana`;
+  const q=qq.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''),V=L.filter(x=>!q||(x.n||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').includes(q)||(x.tel||'').includes(q.replace(/\D/g,'')||'@'));
+  box.innerHTML=V.length?V.map(x=>`<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><div style="flex:1"><b>${esc(x.n)}</b>${x.i==='en'?' <small>🇺🇸</small>':''}<br><span class="note">${esc((x.tel||'').replace(/(\d{3})(\d{3})(\d{4})/,'$1 $2 $3'))} · ${x.f?new Date(x.f).toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'}):''}</span></div><a class="sec" style="display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;text-decoration:none;white-space:nowrap" href="https://wa.me/52${esc(x.tel)}" target="_blank" rel="noopener">💬 WhatsApp</a></div>`).join(''):'<p class="note">Todavía no hay clientes registrados.</p>'}
+function escucha(){const F=window.ARBA_FB;if(un||!F||!F.admin||!F.admin()||!F.negVer)return;caja();
+  un=F.negVer('registros',r=>{L=r?r.map(x=>({...x,f:+x.f||0})).sort((a,b)=>b.f-a.f):null;pinta()})}
+document.addEventListener('input',e=>{if(e.target.id==='cliQ'){qq=e.target.value;pinta()}});
+document.addEventListener('click',e=>{if(e.target.closest('[data-clicopia]')&&L){const t=L.map(x=>x.tel).join('\n');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>window.ARBA_T.toast(L.length+' números copiados'),()=>window.ARBA_T.toast('No se pudo copiar'))}
+  if(e.target.closest('#duBar [data-du="cli"]')){caja();escucha()}});
+window.addEventListener('arba-auth',()=>setTimeout(escucha,300));window.addEventListener('arba-fb',()=>setTimeout(escucha,300));
+if(document.readyState!=='loading')caja();else document.addEventListener('DOMContentLoaded',caja);
 })();
 </script>
 </body>
