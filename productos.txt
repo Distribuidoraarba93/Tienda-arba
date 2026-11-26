@@ -315,14 +315,14 @@ opción: 1414-B · 500 piezas | 1514.07 pesos
 opción: Empaque 14x14 cm · 500 piezas | 1438.85 pesos
 opción: RB-180 14x14 para hamburguesa · 250 piezas | 595.59 pesos
 
-Domo para ensalada 17x6 con tapa
+Bisagra para ensalada 17x6 base negra
 id: dp8
 foto: domo-ensalada
 fotos: domo-ensalada-abierto, domo-ensalada-fresas
-precio: 1149.89 pesos
+precio: 1124.68 pesos
 presentación: Caja con 150 piezas
 dibujo: contenedorN
-descripción: Domo de plástico transparente para ensalada, 17 x 6 cm, con tapa.
+descripción: Contenedor de bisagra para ensalada de 17 x 6 cm, con tapa de plástico transparente y base negra.
 
 Charola botanera transparente
 id: dp9
