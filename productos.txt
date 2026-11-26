@@ -495,7 +495,7 @@ opción: Vaso 6J6 · 40/25 piezas | 482.92 pesos
 opción: Vaso 10J10 · 40/25 piezas | 668.7 pesos | foto vaso-dart
 opción: Vaso 16J16 · 25/20 piezas | 566.79 pesos
 opción: Envase 16MJ32 · 20/25 piezas | 549.31 pesos
-opción: Envase 32J32 · 20/15 piezas | 642.16 pesos
+opción: Envase 32J32 · 20/15 piezas | 642.16 pesos | foto envase-unicel-1l
 opción: Envase 60 oz · 30/10 piezas | 940.39 pesos | foto envase-dart-60
 
 Tapas Dart
@@ -582,7 +582,7 @@ foto: envase-reyma
 dibujo: envase
 descripción: Envase térmico Reyma para sopas, caldos, menudo y bebidas calientes. Escoge el tamaño: 1/2 litro o 1 litro. Pídelo y te confirmamos disponibilidad por WhatsApp.
 opción: 1/2 litro · caja 20/25 | 550.17 pesos
-opción: 1 litro · caja 20/15 | 597.22 pesos
+opción: 1 litro · caja 20/15 | 597.22 pesos | foto envase-unicel-1l
 opción: 60 oz · caja 30/10 | 760.56 pesos
 
 Tapa térmica Reyma
