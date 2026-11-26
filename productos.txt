@@ -317,7 +317,7 @@ opción: RB-180 14x14 para hamburguesa · 250 piezas | 595.59 pesos
 
 Bisagra para ensalada 17x6 base negra
 id: dp8
-foto: domo-ensalada
+foto: bisagra-ensalada-negra
 fotos: domo-ensalada-abierto, domo-ensalada-fresas
 precio: 1124.68 pesos
 presentación: Caja con 150 piezas
