@@ -598,6 +598,28 @@ html.f-chicas .plus.ver{width:auto!important;padding:0 10px!important;font-size:
 .dirnew{border:0;background:none;color:#7ed957;font:700 13px Poppins,sans-serif;text-align:left;padding:2px 2px;justify-self:start}
 .dirnew[data-dirolv]{color:var(--mute);font-weight:500;font-size:12px}
 html.claro .dirnew{color:#0b6b35}html.claro .dirnew[data-dirolv]{color:#5d6b7a}
+
+/* Conoce más sobre nosotros */
+.mas{max-width:820px;margin:26px auto 10px;padding:0 max(3vw,12px)}
+.mas>details{border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden}
+.mas>details>summary{list-style:none;cursor:pointer;display:grid;gap:2px;padding:16px 46px 16px 18px;position:relative}
+.mas summary::-webkit-details-marker{display:none}
+.mas>details>summary span{font:800 17px Poppins,sans-serif}
+.mas>details>summary small{color:var(--mute);font-size:12.5px}
+.mas summary::after{content:"›";position:absolute;right:18px;top:50%;transform:translateY(-50%) rotate(90deg);font-size:24px;font-weight:700;transition:transform .2s;color:var(--mute)}
+.mas details[open]>summary::after{transform:translateY(-50%) rotate(-90deg)}
+.masb{padding:0 12px 12px;display:grid;gap:8px}
+.masd{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.masd>summary{list-style:none;cursor:pointer;padding:13px 40px 13px 14px;font:700 15px Poppins,sans-serif;position:relative}
+.masd>div{padding:0 14px 12px;font-size:14px;line-height:1.5}
+.masd p{margin:0 0 8px}
+.gracias2{text-align:center}.gracias2 img{width:80px;height:80px;border-radius:50%;background:#fff;margin:4px auto 6px;display:block}
+.gracias2 h2{font-size:20px;margin:4px 0 8px}.gracias2 .redes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+footer{font-size:12px!important;opacity:.8}
+
+body.home main{padding-bottom:0!important;min-height:0!important}
+html.claro footer{color:#3a475a!important;background:#f3f5f8!important}
+html.claro [data-negcod]{color:#8a5a00!important;border-color:#d9a400!important}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -834,29 +856,21 @@ header .bar{position:relative}
   <figure class="cban" id="banner" hidden><img src="img/tortillas-tamanos.webp" alt="Tamaños de las tortillas Los 2 Carnales, del montado jumbo al taco chico"><figcaption>Así son los tamaños de nuestras tortillas: del montado jumbo al taco chico.</figcaption></figure>
   <div class="grid" id="grid"></div>
 </main>
-<section class="pol" id="condiciones"><div>
-  <h2>Atención y envío</h2>
-  <p><b>Te atendemos las 24 horas</b> por la tienda o por WhatsApp.</p>
-  <p><b>Envío:</b> mándanos tu ubicación por WhatsApp. Tenemos varias rutas por la ciudad; si te queda en alguna, el envío no es problema. Si pasas a recoger, te mandamos la ubicación por WhatsApp al confirmar tu pedido.</p>
-  <h2>Tiempos de entrega</h2>
-  <p><b>Desechables, abarrotes, botanas y tortillas de tienda (paquete de 10 y de 6):</b> pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.</p>
-  <p><b>Tortillas especiales (burrito, burro jumbo, mantequilla, integral, quesibirria, gordita, buñuelo, taco y montado), pays, arreglos y combos:</b> se piden con un día de anticipación. Recibimos pedidos hasta las 8 pm, de domingo a viernes, y entregamos al día siguiente de 6 am a 3 pm, de lunes a sábado.</p>
-  <h2>Anticipo y cancelaciones</h2>
-  <p><b>Pedidos de 500 pesos o más:</b> pedimos el 35% de anticipo por transferencia o link de pago para empezar a preparar tu pedido. El resto lo pagas al recibir.</p>
+<section class="mas" id="condiciones"><details id="masD"><summary><span>💛 Conoce más sobre nosotros</span><small>Horarios, entregas, anticipos y nuestra historia</small></summary><div class="masb">
+<details class="masd"><summary>🚚 Atención y envío</summary><div><p><b>Te atendemos las 24 horas</b> por la tienda o por WhatsApp.</p>
+  <p><b>Envío:</b> mándanos tu ubicación por WhatsApp. Tenemos varias rutas por la ciudad; si te queda en alguna, el envío no es problema. Si pasas a recoger, te mandamos la ubicación por WhatsApp al confirmar tu pedido.</p></div></details><details class="masd"><summary>🕒 Tiempos de entrega</summary><div><p><b>Desechables, abarrotes, botanas y tortillas de tienda (paquete de 10 y de 6):</b> pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.</p>
+  <p><b>Tortillas especiales (burrito, burro jumbo, mantequilla, integral, quesibirria, gordita, buñuelo, taco y montado), pays, arreglos y combos:</b> se piden con un día de anticipación. Recibimos pedidos hasta las 8 pm, de domingo a viernes, y entregamos al día siguiente de 6 am a 3 pm, de lunes a sábado.</p></div></details><details class="masd"><summary>💳 Anticipo y cancelaciones</summary><div><p><b>Pedidos de 500 pesos o más:</b> pedimos el 35% de anticipo por transferencia o link de pago para empezar a preparar tu pedido. El resto lo pagas al recibir.</p>
   <p><b>Si cancelas antes de que preparemos tu pedido,</b> te devolvemos todo tu anticipo.</p>
   <p><b>Si cancelas cuando tu pedido ya está preparado o al momento de la entrega,</b> el anticipo no se devuelve.</p>
-  <p class="note">Pedidos menores a 500 pesos no necesitan anticipo.</p>
-</div></section>
-
-<section class="gracias"><div>
+  <p class="note">Pedidos menores a 500 pesos no necesitan anticipo.</p></div></details><details class="masd"><summary>🌾 Nuestra historia</summary><div class="gracias2">
   <img src="img/logo-2c.webp" alt="Los 2 Carnales">
   <h2>Gracias, de corazón 💛</h2>
   <p>Esto empezó como un sueño, y lo hemos sostenido a puro esfuerzo: deudas, noches sin dormir, días con el estómago vacío para poder invertir en lo que necesitábamos.</p>
   <p>Ha dolido, pero nunca nos rendimos. Y seguimos aquí, con el mismo amor del primer día.</p>
   <p class="fin">Cada pedido tuyo es la razón para seguir. Gracias por ser parte de este sueño. 🌾</p>
   <div class="redes"><a class="igbtn" href="https://instagram.com/2car_nales" target="_blank" rel="noopener"><span>📸</span> Instagram <b>@2car_nales</b></a><a class="igbtn fbbtn" href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener"><span>👍</span> Facebook <b>Los 2 Carnales</b></a></div>
-</div></section>
-
+</div></details>
+</div></details></section>
 <footer>Distribuidora ARBA · Tortillería Los 2 Carnales · Chihuahua, Chihuahua · Precios en pesos mexicanos, IVA incluido<br><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener" style="color:#f4b400;font-weight:700">📸 Instagram @2car_nales</a> · <a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener" style="color:#60a5fa;font-weight:700">👍 Facebook</a></footer>
 
 <div class="veil" id="veil"></div>
@@ -1341,6 +1355,7 @@ function misGuarda(n,tel,dir,pm){const m=misLee();m.n=n;m.tel=tel;if(dir){m.dirs
 document.addEventListener('click',e=>{const b=e.target.closest('[data-dirg]');if(b){const m=misLee();$('#dir').value=(m.dirs||[])[+b.dataset.dirg]||'';document.querySelectorAll('[data-dirg]').forEach(x=>x.classList.toggle('on',x===b));return}
   if(e.target.closest('[data-dirnew]')){$('#dir').value='';document.querySelectorAll('[data-dirg]').forEach(x=>x.classList.remove('on'));$('#dir').focus();return}
   if(e.target.closest('[data-dirolv]')){if(!confirm('¿Borrar tu nombre, WhatsApp y direcciones guardadas en este celular?'))return;try{localStorage.removeItem('arba-mis')}catch(er){}$('#nom').value='';$('#tel').value='';$('#dir').value='';$('#pm').value='';misLlena();toast('Listo, borramos tus datos de este celular')}});
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#condiciones"]');if(a){e.preventDefault();const d=document.getElementById('masD');if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}});
 $('#back').onclick=()=>{$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true};
 $('#fac').addEventListener('change',e=>{$('#facBox').hidden=!e.target.checked;['rfc','rs','cp','reg','uso','mail'].forEach(id=>$('#'+id).required=e.target.checked)});
 const digits=s=>s.replace(/\D/g,'').slice(-10);
@@ -2609,7 +2624,7 @@ aplica(ld());
 /* Inglés: traduce lo que ve el cliente. Los datos (y el mensaje de WhatsApp para el dueño) siguen en español. */
 if(ld().i==='en'){
   document.documentElement.lang='en';
-  const sc=document.createElement('script');sc.src='i18n-en.js?v=9';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
+  const sc=document.createElement('script');sc.src='i18n-en.js?v=10';sc.onload=()=>{const T=()=>window.ARBA_T;const go=()=>{if(!T()){setTimeout(go,100);return}ingles()};go()};document.head.appendChild(sc);
 }
 function ingles(){const E=window.ARBA_EN,P=window.ARBA_T.P,NM=Object.assign({},E.D,E.CAT),ENX={};
   const ES=/[A-Za-zÁÉÍÓÚáéíóúñÑüÜ]+/g;
