@@ -62,7 +62,7 @@ Tortillas de harina para burrito
 id: t6
 precio: 23 pesos
 presentación: Paquete de 10 piezas · 25 a 26 cm aprox. · todas del mismo tamaño
-foto: burrito.webp?v=2
+foto: burrito
 dibujo: tortilla
 descripción: Tortillas de harina parejitas, todas del mismo tamaño, de 25 a 26 cm aprox., ideales para burritos. Tortillería Los 2 Carnales.
 
