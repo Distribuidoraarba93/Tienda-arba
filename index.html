@@ -3232,7 +3232,7 @@ function abre(){if(!T()){setTimeout(abre,150);return}LSet('arba-facil','1');dato
     fz.innerHTML=`<div class="fh"><img src="img/logo.webp" alt=""><b>Distribuidora ARBA<small>${L('Modo fácil','Easy mode')}</small></b><button type="button" class="fsal" data-fsal>${L('Salir del<br>modo fácil','Exit<br>easy mode')}</button></div><div class="fm"></div><div class="fbw"></div>`;
     document.body.appendChild(fz);fz.addEventListener('click',clic)}
   document.body.classList.add('fzon');pant='home';pinta()}
-function cierra(){LSet('arba-facil','0');if(fz){fz.remove();fz=null}document.body.classList.remove('fzon');try{T().renderCart();T().toast(resumen().n?L('Regresaste a la tienda normal. Tu pedido sigue en el carrito 🛒','Back to the regular store. Your order is still in the cart 🛒'):L('Regresaste a la tienda normal','Back to the regular store'))}catch(e){}}
+function cierra(){LSet('arba-facil','0');if(fz){fz.remove();fz=null}boton();document.body.classList.remove('fzon');try{T().renderCart();T().toast(resumen().n?L('Regresaste a la tienda normal. Tu pedido sigue en el carrito 🛒','Back to the regular store. Your order is still in the cart 🛒'):L('Regresaste a la tienda normal','Back to the regular store'))}catch(e){}}
 function clic(e){const g=s=>e.target.closest(s),t=T();let b;
   if(g('[data-fsal]'))return cierra();
   if(b=g('[data-fcat]'))return ve('cat:'+b.dataset.fcat);
@@ -3362,8 +3362,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ofe]');if(
   r.o=!r.o;r.ok=0;LSet('arba-reg',JSON.stringify(r));regSube();b.outerHTML=ofeBtn(r);T().toast(r.o?L('📣 Listo, te mandaremos ofertas por WhatsApp','📣 Done, we will send you deals on WhatsApp'):L('🔕 Listo, ya no te mandaremos ofertas','🔕 Done, we will not send you deals'))});
 window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.facil;pant=p||'home';pinta()});
 window.ARBA_FACIL=abre;
-/* Entradas: botón grande en la tienda y opción en Ajustes */
-function boton(){if(document.querySelector('.fzent'))return;const h=document.querySelector('section.hero');if(!h)return;
+/* Entradas: opción en Ajustes siempre; botón grande en la tienda solo si el cliente ya eligió el modo fácil */
+function boton(){if(document.querySelector('.fzent'))return;if(LS('arba-facil')===null)return;/* solo sale en la pantalla principal si el cliente ya pidió usar el modo fácil; si no, queda solo en Ajustes */const h=document.querySelector('section.hero');if(!h)return;
   h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>🔍</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`)}
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
   if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
