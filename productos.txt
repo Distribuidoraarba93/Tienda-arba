@@ -221,13 +221,14 @@ descripción: Pavera de aluminio chica, ideal para hornear pavo, pierna, pollo o
 Contenedor biodegradable
 id: dp1
 presentación: Caja con 200 piezas (4/50)
-foto: ham-beige
+foto: contenedor-bio-liso
 dibujo: contenedor
 descripción: Contenedores de unicel biodegradable, color beige. Escoge medida; liso o con división.
+opción: 7x7 liso | 480.91 pesos | foto contenedor-bio-liso
 opción: 7x7 con división | 480.91 pesos
-opción: 8x8 liso | 608.98 pesos
+opción: 8x8 liso | 608.98 pesos | foto contenedor-bio-liso
 opción: 8x8 con división | 608.98 pesos
-opción: 9x9 liso | 674.31 pesos
+opción: 9x9 liso | 674.31 pesos | foto contenedor-bio-liso
 opción: 9x9 con división | 674.31 pesos
 
 Contenedor para hot dog y sándwich
