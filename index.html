@@ -3630,10 +3630,11 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-ofe]');if(
   r.o=!r.o;r.ok=0;LSet('arba-reg',JSON.stringify(r));regSube();b.outerHTML=ofeBtn(r);T().toast(r.o?L('📣 Listo, te mandaremos ofertas por WhatsApp','📣 Done, we will send you deals on WhatsApp'):L('🔕 Listo, ya no te mandaremos ofertas','🔕 Done, we will not send you deals'))});
 window.addEventListener('popstate',e=>{if(!fz)return;const p=e.state&&e.state.facil;pant=p||'home';pinta()});
 window.ARBA_FACIL=abre;
-/* Entrada al modo fácil: solo en Ajustes */
-/* El dueño pidió que el modo fácil quede SOLO en Ajustes: ya no sale el botón grande arriba */
-function boton(){document.querySelectorAll('.fzent').forEach(e=>e.remove());return;if(LS('arba-facil')===null)return;/* solo sale en la pantalla principal si el cliente ya pidió usar el modo fácil; si no, queda solo en Ajustes */const h=document.querySelector('section.hero');if(!h)return;
-  h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>🔍</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`)}
+/* Entradas: opción en Ajustes siempre; botón grande arriba 7 segundos si el cliente ya eligió el modo fácil */
+/* Botón grande arriba solo si el cliente ya eligió el modo fácil antes; cada vez que abre la app sale 7 segundos y se quita solo */
+let fzVisto=false;
+function boton(){if(fzVisto||document.querySelector('.fzent'))return;if(LS('arba-facil')===null)return;/* solo sale en la pantalla principal si el cliente ya pidió usar el modo fácil; si no, queda solo en Ajustes */const h=document.querySelector('section.hero');if(!h)return;
+  h.insertAdjacentHTML('beforebegin',`<button type="button" class="fzent" data-fzon data-noen><i>🔍</i><span><b>${L('Modo fácil','Easy mode')}</b>${L('Letras grandes y pides en 3 pasos','Big letters, order in 3 steps')}</span><em>${L('Usar','Use')}</em></button>`);fzVisto=true;setTimeout(()=>{const b=document.querySelector('.fzent');if(!b)return;b.style.transition='opacity .5s,max-height .5s,margin .5s,padding .5s';b.style.overflow='hidden';b.style.maxHeight=b.offsetHeight+'px';requestAnimationFrame(()=>{b.style.opacity='0';b.style.maxHeight='0';b.style.marginTop=b.style.marginBottom='0';b.style.paddingTop=b.style.paddingBottom='0'});setTimeout(()=>b.remove(),600)},7000)}
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
   if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
