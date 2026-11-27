@@ -172,6 +172,13 @@ header{background:#0b1525;border-bottom:3px solid #7ed957}
 .pol>div{border-left-color:#f4b400}
 footer{background:#0b1525;border-top:3px solid #7ed957}
 
+/* ===== Corregir pedido (antes de que el dueño lo acepte) ===== */
+.corrbox{margin:14px 0 4px;padding:12px;border:1px dashed #f4b400;border-radius:12px;background:#f4b40014;display:grid;gap:6px}.corrbox .go{width:100%}.corrbox small{opacity:.8;text-align:center}
+.corrnota{margin:12px 0;padding:12px;border-radius:12px;background:#f4b4001f;border:1px solid #f4b40066;font-weight:600}
+.corrav{margin:8px 14px 0;padding:10px 12px;border-radius:12px;background:#f4b4001f;border:1px solid #f4b400;font-size:14px;font-weight:600;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.corrav button{border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;padding:5px 12px;font:600 12.5px Poppins,system-ui;cursor:pointer}
+.pcorr{margin:6px 0;padding:8px 10px;border-radius:10px;background:#f4b40022;border:1px solid #f4b400;font-weight:700;font-size:13.5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pcorr button{border:0;background:#ef4444;color:#fff;border-radius:999px;padding:6px 12px;font:700 12.5px Poppins,system-ui;cursor:pointer}
 /* ===== DISEÑO NUEVO (estilo app): banner deslizable, categorías con íconos, tarjetas con botón +, barra de abajo ===== */
 header{border-bottom:2px solid #7ed957}
 .bar{padding:8px max(3vw,12px);gap:10px}
@@ -986,6 +993,7 @@ header .bar{position:relative}
 
 <aside class="drawer" id="drawer" aria-label="Carrito">
   <div class="dh"><h2>Tu pedido</h2><button class="x" data-close aria-label="Cerrar">×</button></div>
+  <div class="corrav" id="corrAv" hidden></div>
   <div class="db" id="items"></div>
   <div class="df" id="foot">
     <div class="tot"><span>Total</span><span id="total">0 pesos</span></div>
@@ -1587,16 +1595,18 @@ $('#form').addEventListener('submit',e=>{
   if(cuando==='prog'&&(!pg||pg<$('#pgD').min)){toast('Elige un día para tu pedido programado');$('#pgD').focus();return}
   const kk=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');const d=new Date();
   const ped=typeof FOLIO==='number'?'ARBA-'+FOLIO:`ARBA-${String(d.getDate()).padStart(2,'0')}${String(d.getMonth()+1).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;FOLIO=null;
+  const co=CORRIGE&&(estTodos()[CORRIGE]||{}).s==='recibido'?CORRIGE:'';
   const tel=digits($('#tel').value),nom=$('#nom').value.trim(),dir=$('#dir').value.trim(),pmv=$('#pm').value.trim(),nota=$('#nota').value.trim();
   misGuarda(nom,$('#tel').value.trim(),entrega==='Entrega a domicilio'?dir:'',entrega==='Punto medio'?pmv:'');
   const fa=$('#fac').checked?`RFC ${$('#rfc').value.trim().toUpperCase()} · ${$('#rs').value.trim()} · CP ${$('#cp').value.trim()} · ${$('#reg').value} · ${$('#uso').value} · ${$('#mail').value.trim()}`:'';
   const ent=entrega==='Paso a recoger'?'🏠 Paso a recoger':entrega==='Punto medio'?'📍 Punto medio: '+pmv:'🚚 Domicilio: '+dir;
   const lines=ks.map(k=>{const it=item(k),c=cart[k];if(it.pr==null)quote=true;else tot+=upI(it,c)*c;return `• ${c} x ${it.name}`});
-  const msg=[pg?`📅 Pedido programado ${pedN(ped)}`:`🛒 Nuevo pedido ${pedN(ped)}`,pg?`🗓️ Para el ${pgBonito(pg)}, de ${franja}`:'',...lines,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)}`:'',ent,`👤 ${nom}`,fa?(()=>{const x=ivaCalc();return '🧾 Pide factura · IVA: '+fmt(x.iva)+(x.mix?' + combos':'')})():''].filter(Boolean).join('\n');
-  const sinRed=!RED||!navigator.onLine;const notaF=sinRed?('📶 Hecho sin señal '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})+(nota?' · '+nota:'')):nota;
+  const msg=[pg?`📅 Pedido programado ${pedN(ped)}`:`🛒 Nuevo pedido ${pedN(ped)}`,co?`✏️ Corrige al pedido ${pedN(co)} (ese ya no va)`:'',pg?`🗓️ Para el ${pgBonito(pg)}, de ${franja}`:'',...lines,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)}`:'',ent,`👤 ${nom}`,fa?(()=>{const x=ivaCalc();return '🧾 Pide factura · IVA: '+fmt(x.iva)+(x.mix?' + combos':'')})():''].filter(Boolean).join('\n');
+  const sinRed=!RED||!navigator.onLine;const nota0=sinRed?('📶 Hecho sin señal '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})+(nota?' · '+nota:'')):nota;
+  const notaF=co?('✏️ Reemplaza al pedido '+pedN(co)+(nota0?' · '+nota0:'')):nota0;
   try{const U={c:Object.fromEntries(ks.map(k=>[k,cart[k]])),f:Date.now(),p:ped};localStorage.setItem('arba-ultimo',JSON.stringify(U));
-    const H=repHist().map(({ks,...x})=>x).filter(x=>JSON.stringify(x.c)!==JSON.stringify(U.c));localStorage.setItem('arba-hist',JSON.stringify([U,...H].slice(0,6)))}catch(e){}
-  if(!sinRed)openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);if(pg){try{const A=estTodos();if(A[ped]){A[ped].pg=pg;A[ped].pf=franja;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}}
+    const H=repHist().map(({ks,...x})=>x).filter(x=>JSON.stringify(x.c)!==JSON.stringify(U.c)&&(!co||x.p!==co));localStorage.setItem('arba-hist',JSON.stringify([U,...H].slice(0,6)))}catch(e){}
+  if(!sinRed)openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);if(co){try{const A=estTodos();if(A[co]){A[co].rp=ped;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}corrSet('')}if(pg){try{const A=estTodos();if(A[ped]){A[ped].pg=pg;A[ped].pf=franja;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}}
   const lug=entrega==='Entrega a domicilio'?dir:entrega==='Punto medio'?'Punto medio: '+pmv:'';
   obAgrega(ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(notaF?{no:notaF.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...(pg?{pg,pf:franja}:{}),...refDe()},sinRed);
   if(!sinRed)toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
@@ -1693,6 +1703,22 @@ function estGuarda(p,s,e,t,f,k){if(!/^ARBA-[\d-]+$/.test(p||'')||!EST_ORDEN[s])r
   if(e)o.e=e;if(!o.c)o.c=Date.now();all[p]=o;
   const ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));ks.slice(15).forEach(k=>delete all[k]);
   try{localStorage.setItem('arba-pedidos',JSON.stringify(all))}catch(err){}estBoton()}
+/* ===== CORREGIR PEDIDO: el cliente lo cambia mientras sigue en "Recibido"; sale como pedido nuevo que reemplaza al anterior ===== */
+function corrU(p){try{return (JSON.parse(localStorage.getItem('arba-hist')||'[]')).find(u=>u&&u.p===p&&u.c)||null}catch(e){return null}}
+let CORRIGE='';try{CORRIGE=localStorage.getItem('arba-corrige')||''}catch(e){}
+function corrSet(p){CORRIGE=p||'';try{if(CORRIGE)localStorage.setItem('arba-corrige',CORRIGE);else localStorage.removeItem('arba-corrige')}catch(e){}corrPinta()}
+function corrPinta(){const b=document.getElementById('corrAv');if(!b)return;if(CORRIGE&&(estTodos()[CORRIGE]||{}).s!=='recibido')CORRIGE='';
+  b.hidden=!CORRIGE;b.innerHTML=CORRIGE?`<span>✏️ <span>Estás corrigiendo tu pedido</span> <b>${pedN(CORRIGE)}</b></span><button type="button" data-corrno>Ya no corregir</button>`:''}
+document.addEventListener('click',e=>{
+  const no=e.target.closest('[data-corrno]');if(no){const v=CORRIGE;corrSet('');toast('Listo, tu pedido '+pedN(v)+' se queda como estaba');return}
+  const b=e.target.closest('[data-corrige]');if(!b)return;const p=b.dataset.corrige,o=estTodos()[p],u=corrU(p);
+  if(!o||o.s!=='recibido'){toast('Ese pedido ya lo aceptamos. Para cambiarlo escríbenos por WhatsApp.');return}
+  if(!u){toast('No encontramos ese pedido en este celular. Escríbenos por WhatsApp.');return}
+  const ks=Object.keys(u.c).filter(k=>item(k)),ag=ks.filter(k=>agot(k));
+  cart={};ks.filter(k=>!agot(k)).forEach(k=>{cart[k]=u.c[k]});save();corrSet(p);estCerrar();renderCart();
+  $('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;openDrawer();
+  toast(ag.length?'😔 Se agotó: '+ag.map(k=>item(k).name).join(', ')+'. Lo demás ya está en tu carrito para que lo cambies':'✏️ Cambia lo que quieras y vuelve a mandar tu pedido')});
+document.addEventListener('DOMContentLoaded',corrPinta);setTimeout(corrPinta,0);
 function estBoton(){const b=$('#misPed');if(b)b.hidden=!Object.keys(estTodos()).length}
 function etaMin(t){if(!t)return null;t=norm(String(t));let m=null,r;
   if(r=t.match(/(\d+(?:[.,]\d+)?)\s*(h|hr|hora)/))m=parseFloat(r[1].replace(',','.'))*60;
@@ -1717,6 +1743,7 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
     rec?['listo','Listo para recoger','Ya puedes pasar por él.']:['camino','Va en camino','Tu pedido ya va para allá. 🚚'],['entregado',rec?'Recogido':'Entregado','¡Gracias por tu compra!']];
   const fec=new Date(o.f||Date.now()).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
   let h=`<h3>Tu pedido ${pedN(p)}</h3><p class="note" style="margin:0">Actualizado: ${fec}</p>`;
+  if(o.rp&&(o.s==='cancelado'||o.s==='recibido'))return h+`<div class="corrnota">✏️ <span>Este pedido lo cambiaste por tu pedido corregido</span> <b>${pedN(o.rp)}</b></div><button class="sec" style="padding:0 14px" data-estver="${esc(o.rp)}">Ver mi pedido corregido</button>`;
   if(o.s==='cancelado')return h+`<div class="estcan">❌ Este pedido fue cancelado</div><p>Si tienes dudas, escríbenos y te ayudamos con otra opción.</p><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, tengo una duda sobre mi pedido '+pedN(p))}" target="_blank" rel="noopener">Escribir por WhatsApp</a>`;
   if(o.pg&&n<3)h+=`<div class="progbox" style="margin:10px 0"><b>📅 Pedido programado</b><span>Para el ${pgBonito(o.pg)}, de ${esc(o.pf||'')}. Te escribimos antes de prepararlo para confirmarlo.</span></div>`;
   h+=estHero(o,n,rec);
@@ -1725,11 +1752,12 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
     return `<li class="${cls}"><span class="dot">${cls==='hecho'?'✓':lv}</span><div><b>${t}</b>${cls?`<small>${d}${extra}</small>`:''}</div></li>`}).join('')+'</ol>';
   if(n===2&&!o.t)h+='<p class="note">Te avisamos por WhatsApp en cuanto cambie.</p>';
   const nb=n<5?campana():'';
+  if(o.s==='recibido'&&corrU(p))h+=`<div class="corrbox"><button type="button" class="go" data-corrige="${esc(p)}">✏️ Corregir mi pedido</button><small>Puedes cambiarlo mientras todavía no lo aceptamos.</small></div>`;
   return h+nb+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
 /* Avisos en el celular cuando cambia el estatus */
 const NOTI={aceptado:['✅ Pedido aceptado','Ya estamos preparando tu pedido.'],pagado:['💰 Pago recibido','Gracias, ya quedó registrado tu pago.'],camino:['🚚 Tu pedido va en camino','Ya va para allá. ¡Prepárate!'],listo:['📦 Listo para recoger','Tu pedido ya está listo, puedes pasar por él.'],entregado:['🎉 Pedido entregado','¡Gracias por tu compra! Cada pedido tuyo hace crecer a una familia chihuahuense 💛'],cancelado:['❌ Pedido cancelado','Escríbenos si tienes dudas.']};
 const notiVisto=()=>{try{return JSON.parse(localStorage.getItem('arba-notif')||'{}')}catch(e){return {}}};
-function avisar(p,st){const m=NOTI[st];if(!m)return;const v=notiVisto();if((v[p]||'recibido')===st)return;v[p]=st;try{localStorage.setItem('arba-notif',JSON.stringify(v))}catch(e){}
+function avisar(p,st){const m=NOTI[st];if(!m)return;if(st==='cancelado'&&(estTodos()[p]||{}).rp)return;const v=notiVisto();if((v[p]||'recibido')===st)return;v[p]=st;try{localStorage.setItem('arba-notif',JSON.stringify(v))}catch(e){}
   const o=estTodos()[p]||{};const tt=m[0]+(o.t&&(st==='camino'||st==='aceptado'||st==='listo')?' · '+o.t:'');
   if(!document.hidden)toast(tt);
   if('Notification' in window&&Notification.permission==='granted'&&navigator.serviceWorker)navigator.serviceWorker.ready.then(r=>r.showNotification(tt,{body:'Pedido '+p+' · '+m[1],icon:'icon-192.png',badge:'badge-96.png?v=2',tag:'arba-'+p,renotify:true,data:{url:location.origin+location.pathname+'#estatus?p='+encodeURIComponent(p)}})).catch(()=>{})}
@@ -1746,7 +1774,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-notif]');i
 function estAbrir(p){if(p==='*')p='';closeAll();const all=estTodos(),ks=Object.keys(all).sort((a,b)=>(all[b].c||0)-(all[a].c||0));
   if(!p&&ks.length===1)p=ks[0];
   $('#estBox').innerHTML=p?estHtml(p)+(ks.length>1?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')
-    :'<h3>Mis pedidos</h3><div class="estlist">'+ks.map(k=>{const o=all[k];const nm={recibido:'Recibido',aceptado:'Aceptado',pagado:'Pagado',camino:'En camino',listo:'Listo para recoger',entregado:'Entregado',cancelado:'Cancelado'}[o.s]||'';return `<button data-estver="${k}">Pedido ${pedN(k)} · ${nm}</button>`}).join('')+'</div>';
+    :'<h3>Mis pedidos</h3><div class="estlist">'+ks.map(k=>{const o=all[k];const nm={recibido:'Recibido',aceptado:'Aceptado',pagado:'Pagado',camino:'En camino',listo:'Listo para recoger',entregado:'Entregado',cancelado:'Cancelado'}[o.s]||'';return `<button data-estver="${k}">Pedido ${pedN(k)} · ${o.rp&&(o.s==='cancelado'||o.s==='recibido')?'Corregido → '+pedN(o.rp):nm}</button>`}).join('')+'</div>';
   $('#estado').classList.add('on');$('#veil').classList.add('on');estVivo(p)}
 function estCerrar(){estVivo('');$('#estado').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#estatus')===0)history.replaceState(null,'',location.pathname+location.search)}
 function estRuta(){if(location.hash.indexOf('#estatus')!==0)return;const q=new URLSearchParams(location.hash.split('?')[1]||'');const p=q.get('p')||'';
@@ -1786,8 +1814,12 @@ function pedCard(r){const ms=r.c&&r.c.toMillis?r.c.toMillis():0,[cl,nom]=ESTC[r.
   const ent=r.e==='Paso a recoger'?'🏠 Pasa a recoger':r.e==='Punto medio'?'📍 Punto medio':'🚚 A domicilio';
   const prog=r.pg?(r.pg===hoy?'<span class="pchipx hoy">📅 Es para HOY'+(r.pf?' · '+esc(r.pf):'')+'</span>':r.pg>hoy?'<span class="pchipx prg">📅 '+esc(new Date(r.pg+'T12:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}))+(r.pf?' · '+esc(r.pf):'')+'</span>':''):'';
   const tarde=r.s==='recibido'&&ms&&Date.now()-ms>30*60000&&!(r.pg&&r.pg>hoy);
+  const RW=window._fbRows||[],coM=/Reemplaza al pedido (?:#(\d+)|(ARBA-[\d-]+))/.exec(r.no||''),coP=coM?(coM[1]?'ARBA-'+coM[1]:coM[2]):'',coR=coP&&RW.find(x=>x.p===coP);
+  const nvT='Reemplaza al pedido '+pedN(r.p),nvR=RW.find(x=>{if(x.p===r.p)return false;const t=String(x.no||''),k=t.indexOf(nvT);return k>=0&&!/[\d-]/.test(t.charAt(k+nvT.length))});
+  const corr=(coP?`<div class="pcorr">✏️ Corrige al pedido ${esc(pedN(coP))}${coR&&coR.s!=='cancelado'?` <button type="button" data-pcan="${esc(coR.id)}">❌ Cancelar el ${esc(pedN(coP))}</button>`:coR?' · ya cancelado ✅':''}</div>`:'')
+    +(nvR?`<div class="pcorr">✏️ El cliente lo corrigió: ahora es el ${esc(pedN(nvR.p))}</div>`:'');
   return `<div class="pcd ${cl}${tarde?' tarde':''}"><div class="pct"><b>${esc(pedN(r.p||''))}</b><span class="pst ${cl}">${nom}</span></div>
-  <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>${regBadge(r)}
+  <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>${regBadge(r)}${corr}
   ${prog}<div class="pci">🛒 ${esc(resu(r.i))||'—'}</div>
   <div class="pcm"><b>${esc(r.T||'')}</b> · ${esc(r.g||'')} · ${ent}${r.fa?' · 🧾 Factura':''}</div>
   ${r.d?`<div class="pcm">📍 ${esc(r.d)}</div>`:''}${r.no?`<div class="pcm">📝 ${esc(r.no)}</div>`:''}
@@ -1826,6 +1858,8 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fbin],[dat
   else if('fbout' in t.dataset)F.salir();
   else{const r=(window._fbRows||[]).find(x=>x.id===t.dataset.fbabre);if(!r)return;
     location.hash='#panel-arba?'+new URLSearchParams(Object.fromEntries(Object.entries({p:r.p,n:r.n,t:r.tel,g:r.g,T:r.T,a:r.a,e:r.e,i:r.i,k:r.k}).filter(([k,v])=>v))).toString();$('#panel .tx').scrollTop=0;$('#panel .box').scrollTop=0}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pcan]');if(!b)return;const F=window.ARBA_FB;if(!F)return;b.disabled=true;
+  F.cambiar(b.dataset.pcan,{s:'cancelado'}).then(()=>toast('Pedido anterior cancelado ✅ (al cliente no le llega aviso de cancelado)'),()=>{b.disabled=false;toast('No se pudo cancelar')})});
 document.addEventListener('change',e=>{const t=e.target.closest('[data-fbst]');if(!t)return;const F=window.ARBA_FB;if(!F)return;
   F.cambiar(t.dataset.fbst,{s:t.value}).then(()=>toast('Estatus cambiado a: '+EST_NOM[t.value]),()=>toast('No se pudo cambiar el estatus'))});
 window.addEventListener('arba-fb',()=>{fbPanel();vigilar();const q=window._fbQ||[];window._fbQ=[];q.forEach(([fn,a])=>{try{window.ARBA_FB[fn](...a)}catch(e){}});if(estAbierto)estVivo(estAbierto)});
