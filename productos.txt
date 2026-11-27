@@ -1449,6 +1449,7 @@ descripción: Salsa de soya Sazonando en galón, para cocina oriental, marinados
 
 Jugo sazonador 1 litro
 id: lb34
+oculto: sí
 precio: 1355.79 pesos
 presentación: 1 litro
 dibujo: botella
@@ -1456,6 +1457,7 @@ descripción: Jugo sazonador de 1 litro, para carnes, sopas, cócteles y botanas
 
 Salsa de soya 1 litro
 id: lb35
+oculto: sí
 precio: 624.09 pesos
 presentación: 1 litro
 dibujo: botella
@@ -1463,6 +1465,7 @@ descripción: Salsa de soya de 1 litro, para cocina, marinados y botanas.
 
 Concentrado de limón 1 litro
 id: lb36
+oculto: sí
 iva: 16
 precio: 710.17 pesos
 presentación: 1 litro

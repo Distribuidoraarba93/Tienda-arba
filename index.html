@@ -1255,11 +1255,12 @@ function leerProductos(txt){const N=s=>{if(s==null)return null;const m=String(s)
    if(!kv){p.d+=(p.d?' ':'')+l;return}
    const k=key(kv[1]),v=kv[2].trim();
    if(k==='id')p.id=v;else if(k==='precio')p.pr=/cotiz/i.test(v)?null:N(v);else if(k==='presentacion')p.u=v;
-   else if(k==='mayoreo'){const r=MY(v);if(r){p.my=r.m;if(r.u)p.myu=r.u}}else if(k==='etiqueta')p.tag=v;else if(k==='minimo'){const m=N(v);if(m>1)p.min=m}else if(k==='iva'){const m=N(v);if([0,8,16].includes(m))p.iva=m}else if(k==='foto')p.img=v;else if(k==='fotos')p.gal=v.split(',').map(x=>x.trim()).filter(Boolean);else if(k==='dibujo')p.art=v;else if(k==='antes'){const m=N(v);if(m)p.an=m}else if(k==='oferta hasta'&&/^\d{4}-\d{2}-\d{2}$/.test(v))p.oh=v;
+   else if(k==='mayoreo'){const r=MY(v);if(r){p.my=r.m;if(r.u)p.myu=r.u}}else if(k==='etiqueta')p.tag=v;else if(k==='minimo'){const m=N(v);if(m>1)p.min=m}else if(k==='iva'){const m=N(v);if([0,8,16].includes(m))p.iva=m}else if(k==='foto')p.img=v;else if(k==='fotos')p.gal=v.split(',').map(x=>x.trim()).filter(Boolean);else if(k==='dibujo')p.art=v;else if(k==='oculto')p.oculto=/^(s|y|1|true)/i.test(v);else if(k==='antes'){const m=N(v);if(m)p.an=m}else if(k==='oferta hasta'&&/^\d{4}-\d{2}-\d{2}$/.test(v))p.oh=v;
    else if(k==='descripcion')p.d=v;
    else if(k==='opcion'){const a=v.split('|').map(s=>s.trim());const o={n:a[0],pr:/cotiz/i.test(a[1]||'')?null:N(a[1]),img:null,my:null};a.slice(2).forEach(s=>{if(/^mayoreo/i.test(s)){const r=MY(s);if(r)o.my=r.m}else if(/^foto/i.test(s))o.img=s.replace(/^foto\s*:?\s*/i,'')});(p.v=p.v||[]).push(o)}});
   if(p&&p.n){if(!p.id)p.id='p'+(++n)+'-'+p.n.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,20);if(!p.art)p.art='caja';if(!p.v&&p.pr===undefined)p.pr=null;if(!p.d)p.d='Pídelo y te confirmamos precio y disponibilidad por WhatsApp.';out.push(p)}});
- return out}})();
+ /* "oculto: sí" en productos.txt: no sale en la tienda; el dueño lo ve en "Ocultos" y lo publica cuando quiera */
+ window.ARBA_OCB=out.filter(p=>p.oculto);return out.filter(p=>!p.oculto)}})();
 
 const S='stroke="#c9d3c4" stroke-width="2"';
 const ART = {
@@ -2118,7 +2119,7 @@ let ed=document.createElement('div');ed.id='edProd';ed.hidden=true;document.body
 let foto=null,cur=null;
 const opRow=(o={})=>`<div class="edop"><input placeholder="Opción (ej. Paquete de 10)" value="${esc(o.n)}" data-on><input type="number" step="0.01" placeholder="Precio" value="${o.pr==null?'':o.pr}" data-op><input type="number" placeholder="Mayoreo desde" value="${o.my?o.my[0]:''}" data-omn><input type="number" step="0.01" placeholder="Precio mayoreo" value="${o.my?o.my[1]:''}" data-omp><input type="number" step="0.01" placeholder="🔒 Costo" value="${o._c==null?'':o._c}" data-oc><button type="button" data-oq>✕</button></div>`;
 function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero 🔐');return}
-  const {P,CATS}=T();const p=id?(P.find(x=>x.id===id)||(OV[id]&&{id,...OV[id]})):null;cur=id||('n'+Date.now().toString(36));foto=null;
+  const {P,CATS}=T();const p=id?(P.find(x=>x.id===id)||(OV[id]&&{id,...OV[id]})||(window.ARBA_OCB||[]).find(x=>x.id===id)):null;cur=id||('n'+Date.now().toString(36));foto=null;
   const CC=window.ARBA_COST&&window.ARBA_COST[cur]||{};const v=(p&&p.v||[]).map((o,i)=>({...o,_c:CC.v&&CC.v[i]!=null?CC.v[i]:null}));const cats=[...new Set([...CATS.filter(c=>c!=='Todos'),p&&p.cat].filter(Boolean))];
   ed.innerHTML=`<div class="edin"><div class="edh"><b>${id?'✏️ Editar producto':'➕ Producto nuevo'}</b><button type="button" data-edx>✕</button></div>
   <div class="edimg">${p&&p.img?`<img src="${esc(/^data:|^https?:/.test(p.img)?p.img:'img/'+(/\.(webp|jpe?g|png)$/i.test(p.img)?p.img:p.img+'.webp'))}" id="edPrev">`:'<div id="edPrev" class="edph">Sin foto</div>'}
@@ -2178,8 +2179,8 @@ ed.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)r
    catch(err){console.warn(err);msg('No se pudo guardar. ¿Ya publicaste las reglas de Firebase?');b.disabled=false;b.textContent='💾 Guardar y publicar'}}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-edit]');if(b){e.preventDefault();abrir(b.dataset.edit)}
   const a=e.target.closest('[data-du="nuevo"]');if(a)abrir(null)
-  const o=e.target.closest('[data-du="ocultos"]');if(o){const ids=Object.keys(OV).filter(k=>OV[k].oculto);if(!ids.length){T().toast('No tienes productos ocultos');return}
-    const nm=prompt('Productos ocultos:\n'+ids.map((k,i)=>(i+1)+'. '+OV[k].n).join('\n')+'\n\nEscribe el número para editarlo:');const i=parseInt(nm)-1;if(ids[i])abrir(ids[i])}});
+  const o=e.target.closest('[data-du="ocultos"]');if(o){const OB={};(window.ARBA_OCB||[]).forEach(p=>{if(!OV[p.id])OB[p.id]=p});const ids=[...Object.keys(OV).filter(k=>OV[k].oculto),...Object.keys(OB)];if(!ids.length){T().toast('No tienes productos ocultos');return}
+    const nm=prompt('Productos ocultos:\n'+ids.map((k,i)=>(i+1)+'. '+(OV[k]||OB[k]).n).join('\n')+'\n\nEscribe el número para editarlo:');const i=parseInt(nm)-1;if(ids[i])abrir(ids[i])}});
 })();
 </script>
 <script>
