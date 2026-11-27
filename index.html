@@ -392,6 +392,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .thead span{display:block;font-size:14px;color:#e6eef8}
 .thead .tg{margin-top:6px;font-size:12.5px;font-weight:600;color:#7ed957}
 
+body.neg #cliHola{display:none}
 #negBar{position:sticky;top:0;z-index:60;background:#f4b400;color:#152016;font:600 14px Poppins,system-ui,sans-serif;padding:8px 12px;text-align:center}
 #negBar button{margin-left:8px;border:0;border-radius:999px;background:#152016;color:#fff;padding:4px 10px;font:600 12px Poppins,system-ui}
 .negp{display:inline-block;margin-top:2px;padding:2px 8px;border-radius:999px;background:#f4b400;color:#152016;font:700 10px Poppins,system-ui}
@@ -1930,7 +1931,7 @@ window.ARBA_FB={ADMIN,
   async entrar(){const p=new au.GoogleAuthProvider();p.setCustomParameters({login_hint:ADMIN,prompt:'select_account'});
     try{await au.signInWithPopup(auth,p)}catch(e){if(/popup-blocked|operation-not-supported|web-storage-unsupported/.test(e.code||''))return au.signInWithRedirect(auth,p);throw e}},
   salir(){return au.signOut(auth)},
-  async negocio(code){const c=await fs.getDoc(fs.doc(db,'clientes',code));if(!c.exists())return null;const x=c.data();const l=await fs.getDoc(fs.doc(db,'listas',x.l));return l.exists()?{c:code,n:x.n,l:x.l,...l.data(),ln:l.data().n}:null},
+  async negocio(code){const c=await fs.getDoc(fs.doc(db,'clientes',code));if(!c.exists())return null;const x=c.data();const l=await fs.getDoc(fs.doc(db,'listas',x.l));return l.exists()?{...l.data(),c:code,n:x.n,l:x.l,ln:l.data().n,nt:x.nt||''}:null},
   async docGet(col,id){const d=await fs.getDoc(fs.doc(db,col,id));return d.exists()?d.data():null},
   docSet(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   async ventas(desde,hasta){const T0=fs.Timestamp.fromMillis(desde),q=[fs.where('c','>=',T0)];if(hasta!==Infinity)q.push(fs.where('c','<',fs.Timestamp.fromMillis(hasta)));
@@ -2432,7 +2433,7 @@ function barra(c){let b=document.getElementById('negBar');
   if(!c){if(b)b.remove();document.body.classList.remove('neg');return}
   if(!b){b=document.createElement('div');b.id='negBar';document.body.prepend(b)}
   document.body.classList.add('neg');
-  b.innerHTML=`🏪 <b>${c.n.replace(/</g,'&lt;')}</b> · Precios de negocio <button type="button" data-negsalir>Salir</button>`}
+  const e=t=>String(t||'').replace(/[&<>"]/g,'');b.innerHTML=`🏪 Hola, <b>${e(c.n)}</b> · Estos son tus precios${c.nt?` · <span class="negnt">📌 ${e(c.nt)}</span>`:''} <button type="button" data-negsalir>Salir</button>`}
 async function entrar(code,silencio){code=(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(!code)return;
   const go=async()=>{try{const c=await FB().negocio(code);
       if(!c){if(!silencio)T().toast('Ese código no existe. Revísalo con Distribuidora ARBA 🙏');try{if(silencio)localStorage.removeItem('arba-cli')}catch(e){}return}
@@ -2461,13 +2462,13 @@ const sec=document.createElement('div');sec.id='negAdm';sec.innerHTML=`
 <div id="negEd" hidden></div>
 <h4 style="margin:10px 0 6px">Clientes de negocio</h4>
 <div id="negCli"></div>
-<div class="negnew"><input id="ncNom" placeholder="Nombre del negocio (ej. Super Pacheco)"><select id="ncLis"></select><button type="button" class="go" data-nc-add>+ Agregar cliente</button></div>`;
+<div class="negnew"><input id="ncNom" placeholder="Nombre del cliente (ej. Super Pacheco o Pepito)"><select id="ncLis"></select><input id="ncNt" maxlength="120" placeholder="Condiciones que verá (opcional, ej. Sin devoluciones)"><button type="button" class="go" data-nc-add>+ Agregar cliente</button></div>`;
 box.appendChild(sec);
 let LS=[],CS=[],unsub=[];const $$=s=>sec.querySelector(s);const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rid=n=>Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b%31]).join('');
 function pintaL(){$$('#negListas').innerHTML=LS.length?LS.map(l=>`<div class="negrow"><div><b>${esc(l.n)}</b><span>${l.d?l.d+'% de descuento':'Sin descuento general'} · ${Object.keys(l.p||{}).length} precios especiales · ${CS.filter(c=>c.l===l.id).length} clientes</span></div><button type="button" class="sec" data-nl-ed="${l.id}">Editar</button></div>`).join(''):'<p class="note">Todavía no tienes listas.</p>';
-  $$('#ncLis').innerHTML=LS.map(l=>`<option value="${l.id}">${esc(l.n)}</option>`).join('')||'<option value="">Primero crea una lista</option>'}
-function pintaC(){const U=location.origin+location.pathname;$$('#negCli').innerHTML=CS.length?CS.map(c=>{const l=LS.find(x=>x.id===c.l);return `<div class="negrow"><div><b>${esc(c.n)}</b><span>Código <b>${c.id}</b> · ${l?esc(l.n):'sin lista'}</span></div><button type="button" class="sec" data-nc-wa="${c.id}">📤 Mandar liga</button><button type="button" class="sec" data-nc-del="${c.id}">Borrar</button></div>`}).join(''):'<p class="note">Todavía no tienes clientes de negocio.</p>';pintaL()}
+  $$('#ncLis').innerHTML='<option value="__propia">⭐ Precios solo para este cliente</option>'+LS.map(l=>`<option value="${l.id}">Usar lista: ${esc(l.n)}</option>`).join('')}
+function pintaC(){const U=location.origin+location.pathname;$$('#negCli').innerHTML=CS.length?CS.map(c=>{const l=LS.find(x=>x.id===c.l);return `<div class="negrow"><div><b>${esc(c.n)}</b><span>Código <b>${c.id}</b> · ${l?esc(l.n):'sin lista'}${c.nt?' · 📌 '+esc(c.nt):''}</span></div><button type="button" class="sec" data-nl-ed="${c.l}">💲 Precios</button><button type="button" class="sec" data-nc-nt="${c.id}">📌 Condiciones</button><button type="button" class="sec" data-nc-wa="${c.id}">📤 Mandar liga</button><button type="button" class="sec" data-nc-del="${c.id}">Borrar</button></div>`}).join(''):'<p class="note">Todavía no tienes clientes de negocio.</p>';pintaL()}
 function editor(l){const {P,fmt}=T();const ed=$$('#negEd');ed.hidden=false;
   const rows=[];P.forEach(p=>{if(p.v)p.v.forEach((o,i)=>rows.push([p.id+':'+i,p.n+' · '+o.n,(o._o||o).pr]));else rows.push([p.id,p.n+(p.u?' · '+p.u:''),(p._o||p).pr])});
   ed.innerHTML=`<div class="neged"><label>Nombre de la lista<input id="nlN" value="${esc(l.n)}"></label>
@@ -2488,9 +2489,13 @@ sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)
     await F.negGuardar('listas',b.dataset.nlSave,{n,d:Math.max(0,Math.min(50,parseFloat($$('#nlD').value)||0)),p});$$('#negEd').hidden=true;T().toast('Lista guardada ✅')}
   else if(b.dataset.nlDel){if(CS.some(c=>c.l===b.dataset.nlDel)){T().toast('Esa lista tiene clientes. Cámbialos de lista primero.');return}
     if(confirm('¿Borrar esta lista?')){await F.negBorrar('listas',b.dataset.nlDel);$$('#negEd').hidden=true}}
-  else if('ncAdd' in b.dataset){const n=$$('#ncNom').value.trim(),l=$$('#ncLis').value;if(!n||!l){T().toast('Escribe el nombre y escoge una lista');return}
-    const code=(n.normalize('NFD').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,10)||'NEG')+rid(4);
-    await F.negGuardar('clientes',code,{n:n.slice(0,60),l});$$('#ncNom').value='';T().toast('Cliente agregado: '+code)}
+  else if('ncAdd' in b.dataset){const n=$$('#ncNom').value.trim();let l=$$('#ncLis').value;const nt=($$('#ncNt').value||'').trim().slice(0,120);if(!n){T().toast('Escribe el nombre del cliente');return}
+    const code=(n.normalize('NFD').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,10)||'NEG')+rid(4);let nueva=null;
+    if(!l||l==='__propia'){nueva={id:'L'+rid(12),n:'Precios de '+n.slice(0,50),d:0,p:{}};await F.negGuardar('listas',nueva.id,{n:nueva.n,d:0,p:{}});l=nueva.id}
+    await F.negGuardar('clientes',code,{n:n.slice(0,60),l,...(nt?{nt}:{})});$$('#ncNom').value='';$$('#ncNt').value='';
+    if(nueva){T().toast('Cliente agregado. Ahora pon sus precios 👇');editor(nueva)}else T().toast('Cliente agregado: '+code)}
+  else if(b.dataset.ncNt){const c=CS.find(x=>x.id===b.dataset.ncNt);const v=prompt('Condiciones que verá '+c.n+' (ej. Sin devoluciones). Déjalo vacío para quitarlas:',c.nt||'');if(v==null)return;
+    const {id,...d}=c;await F.negGuardar('clientes',c.id,{...d,nt:v.trim().slice(0,120)});T().toast('Condiciones guardadas ✅')}
   else if(b.dataset.ncWa){const c=CS.find(x=>x.id===b.dataset.ncWa);const url=location.origin+location.pathname+'?c='+c.id;
     const msg=`Hola ${c.n} 👋 Esta es tu liga de Distribuidora ARBA con tus precios de negocio:\n${url}\n\nSi la abres desde la app, toca "¿Eres tienda o restaurante?" hasta abajo y pon tu código: ${c.id}`;
     const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
