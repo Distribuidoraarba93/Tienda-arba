@@ -33,6 +33,7 @@
 
 Combo Burrero
 id: k1
+antes: 684.95
 precio: 639 pesos
 presentación: 10 paquetes de tortilla para burrito + polipapel 30x30 (caja de 5 kg) + bolsa camiseta mediana (1 kg)
 etiqueta: Ahorras 45 pesos
