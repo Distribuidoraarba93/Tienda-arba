@@ -1,7 +1,7 @@
 {
  "id": "arba-dueno",
- "name": "ARBA Dueño",
- "short_name": "ARBA Dueño",
+ "name": "ARBA Máster",
+ "short_name": "ARBA Máster",
  "start_url": "./panel.html?app=dueno",
  "scope": "./",
  "display": "standalone",

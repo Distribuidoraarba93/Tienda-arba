@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<script>/* Cuenta Máster: puede ver la app como Cliente o como Repartidor para probar cambios. Dura solo mientras la app está abierta (sessionStorage). */
+(function(){try{var v=sessionStorage.getItem('arba-ver')||'';if(v&&localStorage.getItem('arba-modo')!=='dueno'){sessionStorage.removeItem('arba-ver');v=''}window.ARBA_VER=v;if(v)document.documentElement.classList.add('vprev')}catch(e){window.ARBA_VER=''}})();</script>
 <script>/* App de dueño: nunca abrir el panel solo al arrancar; se abre con el botón "Panel" */
 (function(){try{var q=new URLSearchParams(location.search),d=q.get('dueno')==='1'||q.get('app')==='dueno'||localStorage.getItem('arba-modo')==='dueno';if(d&&location.hash.indexOf('#panel-arba')===0)history.replaceState(null,'',location.pathname+location.search)}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -419,7 +421,7 @@ body.dlock>header,body.dlock>section,body.dlock>.hist,body.dlock>nav,body.dlock>
 body.dlock #panel{display:block!important;position:fixed;inset:0;background:#0b1220}
 body.dlock #panel .box{max-width:640px;width:100%;height:100%;max-height:none;margin:0 auto;border-radius:0;border:0;box-shadow:none}
 body.dlock #panel [data-closep],body.dlock #veil{display:none!important}
-body.dueno #panel h3:first-of-type::before{content:"🔐 ARBA Dueño · ";color:#f4b400}
+body.dueno #panel h3:first-of-type::before{content:"👑 ARBA Máster · ";color:#f4b400}
 body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display:none}
 #duBar{position:sticky;top:0;z-index:61;background:linear-gradient(90deg,#0b1220,#1a2540);border-bottom:2px solid #f4b400;padding:8px 10px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 #duBar::-webkit-scrollbar{display:none}
@@ -741,6 +743,19 @@ body.encat .amigos,body.dueno .amigos .x{display:none!important}
 /* En tu panel y en la app de reparto, los botones de confirmar (aceptar, entregado) siguen en verde */
 .pcd .go,#pQuick .go,#repaW .go{background:#25a244!important;color:#fff!important}
 .hist button:not(.hv) .hring{background:conic-gradient(#7ed957,#f4b400,#7ed957)}
+/* ===== CUENTA MÁSTER: cambiar a vista de Cliente o Repartidor ===== */
+#mstW{position:fixed;inset:0;z-index:9998;background:#000b;display:flex;align-items:flex-end;justify-content:center}
+#mstW>div{background:#101b2e;color:#eef2f8;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));border-top:3px solid #f4b400;font-family:Poppins,system-ui,sans-serif}
+#mstW h3{margin:0 0 4px;font-size:19px;display:flex;justify-content:space-between;align-items:center}#mstW h3 button{border:0;background:none;color:#f4b400;font-size:26px;line-height:1}
+#mstW p{margin:0 0 12px;font-size:13.5px;opacity:.8}
+#mstW .mop{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:1px solid #ffffff22;background:#152036;color:inherit;border-radius:14px;padding:12px 14px;margin-bottom:8px;font:inherit}
+#mstW .mop i{font-style:normal;font-size:26px}#mstW .mop b{display:block;font-size:15.5px}#mstW .mop small{opacity:.75;font-size:12.5px}
+#mstW .mop.on{border-color:#f4b400;background:#f4b40018}#mstW .mop:disabled{opacity:.5}
+#mstW .mrep{display:grid;gap:6px;margin:-2px 0 10px 12px}#mstW .mrep button{border:1px solid #ffffff22;background:#0b1525;color:inherit;border-radius:10px;padding:10px 12px;text-align:left;font:600 14.5px Poppins,system-ui}
+#verBar{position:fixed;left:0;right:0;top:0;z-index:9997;height:34px;display:flex;align-items:center;justify-content:center;gap:10px;background:#f4b400;color:#152016;font:700 13px Poppins,system-ui,sans-serif;padding:0 10px}
+#verBar span,#verBar button{white-space:nowrap}#verBar button{border:0;background:#152016;color:#f4b400;border-radius:999px;padding:5px 12px;font:700 12.5px Poppins,system-ui}
+html.vprev body{padding-top:34px}html.vprev header,html.vprev #repaW .rh{top:34px!important}
+html.vprev #bw,html.vprev .fzlike{display:none!important}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.v==='lista')c.add('v-lista');if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -2182,13 +2197,13 @@ window.addEventListener('arba-auth',()=>setTimeout(rellena,4000));
 if(FB())escuchar();window.addEventListener('arba-fb',escuchar);
 
 /* ---------- Editor (solo dueño desbloqueado) ---------- */
-const libre=()=>{const F=FB(),L=window.ARBA_LOCK;return !!(F&&F.admin&&F.admin()&&L&&L.ok())};
+const libre=()=>{const F=FB(),L=window.ARBA_LOCK;return !window.ARBA_VER&&!!(F&&F.admin&&F.admin()&&L&&L.ok())};
 setInterval(()=>{window.ARBA_EDIT=libre()},1000);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let ed=document.createElement('div');ed.id='edProd';ed.hidden=true;document.body.appendChild(ed);
 let foto=null,cur=null;
 const opRow=(o={})=>`<div class="edop"><input placeholder="Opción (ej. Paquete de 10)" value="${esc(o.n)}" data-on><input type="number" step="0.01" placeholder="Precio" value="${o.pr==null?'':o.pr}" data-op><input type="number" placeholder="Mayoreo desde" value="${o.my?o.my[0]:''}" data-omn><input type="number" step="0.01" placeholder="Precio mayoreo" value="${o.my?o.my[1]:''}" data-omp><input type="number" step="0.01" placeholder="🔒 Costo" value="${o._c==null?'':o._c}" data-oc><button type="button" data-oq>✕</button></div>`;
-function abrir(id){if(!libre()){T().toast('Desbloquea tu app de dueño primero 🔐');return}
+function abrir(id){if(!libre()){T().toast('Desbloquea tu app Máster primero 🔐');return}
   const {P,CATS}=T();const p=id?(P.find(x=>x.id===id)||(OV[id]&&{id,...OV[id]})||(window.ARBA_OCB||[]).find(x=>x.id===id)):null;cur=id||('n'+Date.now().toString(36));foto=null;
   const CC=window.ARBA_COST&&window.ARBA_COST[cur]||{};const v=(p&&p.v||[]).map((o,i)=>({...o,_c:CC.v&&CC.v[i]!=null?CC.v[i]:null}));const cats=[...new Set([...CATS.filter(c=>c!=='Todos'),p&&p.cat].filter(Boolean))];
   ed.innerHTML=`<div class="edin"><div class="edh"><b>${id?'✏️ Editar producto':'➕ Producto nuevo'}</b><button type="button" data-edx>✕</button></div>
@@ -2317,7 +2332,7 @@ const itemsTxt=i=>(i||'').split(',').filter(Boolean).map(s=>{const [k,q]=s.split
    La liga que manda el dueño (?ri=CÓDIGO) sirve UNA sola vez, en un solo celular, y vence en 7 días.
    Ya activado, el código queda guardado en ese celular. Si cambia de celular, el dueño manda otra liga. */
 const qs0=new URLSearchParams(location.search),qi=(qs0.get('ri')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,20);
-let RC='';try{RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){}
+let RC='';try{RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){}if(window.ARBA_VER==='cliente')RC='';else if(/^repa:/.test(window.ARBA_VER||''))RC=window.ARBA_VER.slice(5).toUpperCase();
 const esIOS=/iphone|ipad|ipod/i.test(navigator.userAgent),yaApp=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
 function pantalla(h){document.title='Distribuidora ARBA';document.body.classList.add('repa');{const m=document.querySelector('link[rel=manifest]');if(m&&!/reparto/.test(m.href))m.href='manifest-reparto.json'}let w=document.getElementById('repaA');if(!w){w=document.createElement('div');w.id='repaA';document.body.appendChild(w)}w.innerHTML='<div class="ra"><img src="icon-reparto-192.png" alt="" width="96" height="96"><h2>Distribuidora ARBA</h2>'+h+'</div>';return w}
 function instalar(){const d=window._arbaDP;if(d){d.prompt();d.userChoice.then(()=>{window._arbaDP=null});return}
@@ -2416,7 +2431,7 @@ if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
         const L=misSol();L.push({id,t:tipo,pn,q,f:Date.now()});try{localStorage.setItem(SKEY,JSON.stringify(L.slice(-40)))}catch(er){}
         f.hidden=true;T().toast(tipo==='aviso'?'Aviso enviado ✅ Gracias':'Solicitud enviada ✅ Te avisan cuando esté lista');if(!document.getElementById('rSol').hidden)solPinta()}
       catch(er){console.warn(er);T().toast('No se pudo enviar. Revisa tu internet.');b.disabled=false}return}
-    if('rsal' in b.dataset){try{localStorage.removeItem('arba-repa')}catch(er){}location.href=location.pathname;return}
+    if('rsal' in b.dataset){if(window.ARBA_VER){window.ARBA_VERSET('');return}try{localStorage.removeItem('arba-repa')}catch(er){}location.href=location.pathname;return}
     if(b.dataset.rs==='camino'&&!('rt' in b.dataset)){const cont=b.parentElement,ya=cont.nextElementSibling;if(ya&&ya.classList.contains('rtq')){ya.remove();return}
       const d=document.createElement('div');d.className='rtq'+(esFacil()?' fac':'');const id=b.dataset.id;
       d.innerHTML='<p>¿En cuánto llegas más o menos?</p><div>'+['10 min','20 min','30 min','45 min','1 hora'].map(x=>`<button type="button" class="go" data-rs="camino" data-id="${id}" data-rt="${x}">${x}</button>`).join('')+`<button type="button" class="sec" data-rs="camino" data-id="${id}" data-rt="">No sé</button></div>`;
@@ -2973,7 +2988,7 @@ function abre(){const A=Object.assign({i:'es',l:'normal',f:'normales',v:'cuadric
     w.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle('on',x===b))})}
 /* Notificaciones dentro de Ajustes (tienda, dueño o reparto) */
 function rolPush(){const b=document.body.classList;if(b.contains('dueno'))return {rol:'dueno',n:/iPhone/.test(navigator.userAgent)?'iPhone':'Android'};
-  let r=null;try{r=localStorage.getItem('arba-repa')}catch(e){}if(b.contains('repa')&&r)return {rol:'repa',r};return {rol:'cliente'}}
+  let r=null;try{r=localStorage.getItem('arba-repa')}catch(e){}if(window.ARBA_VER)return {rol:'cliente'};if(b.contains('repa')&&r)return {rol:'repa',r};return {rol:'cliente'}}
 function notifRow(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),app=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
   let h;if(!('Notification' in window)||!navigator.serviceWorker)h=ios&&!app?'<p class="ajn">En iPhone primero agrega la app a tu inicio (Compartir ⬆️ → Agregar a inicio) y ábrela desde ahí.</p>':'<p class="ajn">Este navegador no permite notificaciones.</p>';
   else if(Notification.permission==='granted')h='<p class="ajn ok">✅ Activadas en este celular</p><button type="button" class="ajb" data-ajpush>🔄 Volver a registrar este celular</button>';
@@ -3034,8 +3049,8 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const FK=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');
 const rnd=n=>Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>'abcdefghjkmnpqrstuvwxyz23456789'[b%31]).join('');
 const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-const esDueno=()=>document.body.classList.contains('dueno')||LS.g('arba-modo')==='dueno';
-const esRepa=()=>document.body.classList.contains('repa')||!!LS.g('arba-repa');
+const esDueno=()=>!window.ARBA_VER&&(document.body.classList.contains('dueno')||LS.g('arba-modo')==='dueno');
+const esRepa=()=>document.body.classList.contains('repa')||!!LS.g('arba-repa')||/^repa:/.test(window.ARBA_VER||'');
 
 /* ---------- 1) Agotados: lo ven todos ---------- */
 let AGO_PUB=null;
@@ -3253,11 +3268,11 @@ window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));s
 <script>
 /* App ARBA Dueño: toda la tienda + barra de herramientas del dueño. Nada se ve hasta pasar Google + PIN/huella + celular aprobado. */
 (function(){var q=new URLSearchParams(location.search),d=q.get('dueno')==='1';try{if(d)sessionStorage.setItem('arba-modo','dueno');d=d||sessionStorage.getItem('arba-modo')==='dueno';if(d)localStorage.setItem('arba-modo','dueno');d=d||localStorage.getItem('arba-modo')==='dueno'}catch(e){}
- if(!d)return;document.title='ARBA Dueño';
+ if(!d||window.ARBA_VER)return;document.title='ARBA Máster';
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b>🔐 Dueño</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="cli">👥 Clientes</button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b data-master role="button" style="cursor:pointer">👑 Máster ▾</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="cli">👥 Clientes</button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
   document.body.prepend(b);
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
@@ -3412,7 +3427,7 @@ const T=()=>window.ARBA_T;
 const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cartLee=()=>{try{return JSON.parse(LS('arba-cart')||'{}')}catch(e){return {}}};
 const antic=p=>['Repostería','Combos'].includes(p.cat)||(p.cat==='Tortillas'&&p.id!=='t1');
-const esCliente=()=>{const b=document.body.classList,q=new URLSearchParams(location.search);return !b.contains('dueno')&&!b.contains('repa')&&!LS('arba-repa')&&LS('arba-modo')!=='dueno'&&!q.get('r')&&!q.get('ri')&&!q.get('dueno')&&!q.get('app')};
+const esCliente=()=>{const b=document.body.classList,q=new URLSearchParams(location.search);if(window.ARBA_VER==='cliente')return true;return !b.contains('dueno')&&!b.contains('repa')&&!LS('arba-repa')&&LS('arba-modo')!=='dueno'&&!q.get('r')&&!q.get('ri')&&!q.get('dueno')&&!q.get('app')};
 /* Todos los renglones que se pueden pedir: cada opción de un producto es su propio renglón (más fácil de entender) */
 function renglones(cat){const t=T(),out=[];t.P.forEach(p=>{if(p.cat!==cat)return;
   if(p.v&&p.v.length)p.v.forEach((o,i)=>{const k=p.id+':'+i;if(o.pr!=null&&!t.agot(k))out.push({k,p,vi:i,n:p.n+' · '+o.n,u:p.v.length>1?'':p.u,pr:o.pr,my:o.my})});
@@ -3677,6 +3692,42 @@ window.addEventListener('popstate',e=>{
 const mo=new MutationObserver(revisa);
 function arranca(){els().forEach(e=>mo.observe(e,{attributes:true,attributeFilter:['class']}))}
 if(document.readyState!=='loading')arranca();else document.addEventListener('DOMContentLoaded',arranca);
+})();
+</script>
+<script>
+/* ===== CUENTA MÁSTER: toca tu logo y cambia a Cliente o Repartidor para probar, sin otro celular =====
+   Solo aparece en el celular del Máster. La vista de prueba dura mientras la app está abierta; al cerrarla regresas a Máster. */
+(function(){
+const LSg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const esMaster=()=>LSg('arba-modo')==='dueno';
+if(!esMaster())return;
+const T=()=>window.ARBA_T||{toast:t=>alert(t)};
+window.ARBA_VERSET=function(v){try{if(v)sessionStorage.setItem('arba-ver',v);else sessionStorage.removeItem('arba-ver')}catch(e){}
+  location.replace(location.pathname+(v?'':'?dueno=1'))};
+const NOM=v=>v==='cliente'?'Cliente':/^repa:/.test(v)?'Repartidor':'Máster';
+function abre(){let w=document.getElementById('mstW');if(w)w.remove();w=document.createElement('div');w.id='mstW';const v=window.ARBA_VER||'';
+  w.innerHTML=`<div role="dialog" aria-label="Cambiar de cuenta"><h3>👑 Cuenta Máster<button type="button" data-mx aria-label="Cerrar">×</button></h3><p>Ve la app como la ven tus clientes y tus repartidores para revisar los cambios.</p>
+   <button type="button" class="mop${v?'':' on'}" data-mv=""><i>👑</i><span><b>Máster</b><small>Tu panel, pedidos, inventario y ventas</small></span></button>
+   <button type="button" class="mop${v==='cliente'?' on':''}" data-mv="cliente"><i>🛒</i><span><b>Cliente</b><small>La tienda tal cual la ve tu cliente</small></span></button>
+   <button type="button" class="mop${/^repa:/.test(v)?' on':''}" data-mrep><i>🚚</i><span><b>Repartidor</b><small>La app de reparto de uno de tus repartidores</small></span></button>
+   <div class="mrep" id="mRep" hidden></div></div>`;
+  document.body.appendChild(w);
+  w.addEventListener('click',e=>{if(e.target===w||e.target.closest('[data-mx]')){w.remove();return}
+    const b=e.target.closest('[data-mv]');if(b){if(b.dataset.mv===(window.ARBA_VER||'')){w.remove();return}window.ARBA_VERSET(b.dataset.mv);return}
+    if(e.target.closest('[data-mrep]'))reps()})}
+function reps(){const box=document.getElementById('mRep');box.hidden=false;const F=window.ARBA_FB;
+  if(!F||!F.admin||!F.admin()||!F.negVer){box.innerHTML='<p>Para ver la de repartidor, primero entra a tu panel Máster (Google + PIN) y vuelve a intentar.</p>';return}
+  box.innerHTML='<p>Cargando tus repartidores…</p>';let un=null;
+  un=F.negVer('rutas',L=>{try{un&&un()}catch(e){}if(!L){box.innerHTML='<p>No se pudieron cargar. Revisa tu internet.</p>';return}
+    if(!L.length){box.innerHTML='<p>Todavía no tienes repartidores. Agrégalos en 🚚 Entregas.</p>';return}
+    box.innerHTML='<p>⚠️ Lo que hagas ahí sí cuenta (por ejemplo marcar "entregado"). Para probar sin miedo, crea en 🚚 Entregas un repartidor llamado "Prueba".</p>'+
+      L.sort((a,b)=>String(a.n).localeCompare(b.n)).map(r=>`<button type="button" data-mv="repa:${String(r.id).replace(/[^A-Za-z0-9]/g,'')}">🚚 ${String(r.n||r.id).replace(/[<>&"]/g,'')}</button>`).join('')})}
+window.ARBA_MASTER=abre;
+document.addEventListener('click',e=>{if(e.target.closest('[data-master],[data-mver]')||(e.target.closest('header .logo')&&!e.target.closest('#repaW'))){e.preventDefault();e.stopPropagation();abre()}},true);
+function barra(){const v=window.ARBA_VER;if(!v||document.getElementById('verBar'))return;const b=document.createElement('div');b.id='verBar';
+  b.innerHTML=`<span>👁️ Vista de ${NOM(v)}</span><button type="button" data-mver>Cambiar</button><button type="button" data-mv0>↩ Máster</button>`;
+  b.querySelector('[data-mv0]').onclick=()=>window.ARBA_VERSET('');document.body.appendChild(b)}
+if(document.body)barra();else document.addEventListener('DOMContentLoaded',barra);
 })();
 </script>
 </body>
