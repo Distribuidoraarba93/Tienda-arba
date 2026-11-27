@@ -42,6 +42,7 @@ descripción: Todo lo que necesita tu burrería o lonchera: 10 paquetes de torti
 
 Combo Navideño 🎄
 id: k2
+antes: 106
 presentación: 2 paquetes de tortilla para buñuelo grande + 1 frijol cocido 800 g + 1 paquete de tortillas de harina (normales o sabor mantequilla)
 etiqueta: Ahorras hasta 17 pesos
 foto: tortilla-bunuelo-paquetes

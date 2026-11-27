@@ -70,7 +70,7 @@ exports.pedidoEstatus = onDocumentUpdated('pedidos/{id}', async e => {
   if (a.s === b.s || !EST[b.s]) return;
   const [t, m] = EST[b.s];
   await enviar(await tokens({rol: 'cliente', p: e.params.id}), {
-    title: t + ' · ' + num(b.p), body: m + (b.t ? ' Tiempo: ' + b.t : ''),
+    title: t + ' · ' + num(b.p), body: m + (b.t ? (b.s === 'camino' && /^\d+\s*min|hora/i.test(b.t) ? ' Llega en aprox. ' + b.t + '.' : ' Tiempo: ' + b.t) : ''),
     url: TIENDA + '#estatus?p=' + encodeURIComponent(b.p || ''), tag: 'arba-' + b.p,
   });
 });
