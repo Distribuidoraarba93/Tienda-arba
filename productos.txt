@@ -797,12 +797,14 @@ opción: 8 a la 10 · caja 10 kg | 865.69 pesos
 opción: 10 a la 12 · caja 10 kg | 839.32 pesos
 opción: 14 a la 90 · caja 10 kg | 799.77 pesos
 
-Bolsa pana natural kileada 35x35
+Bolsa pana natural kileada
 id: dp32
-precio: 1868.63 pesos
-presentación: Bulto de 25 kg
+presentación: Bulto de 25 kg · escoge la medida
 dibujo: bolsa
-descripción: Bolsa pana natural kileada de 35 x 35 cm, ideal para empacar tortillas por kilo, pan y comida. Bulto de 25 kg.
+descripción: Bolsa pana natural kileada, ideal para empacar tortillas, pan y comida. Bulto de 25 kg. Escoge la medida.
+opción: 10x20 · bulto 25 kg | 1900.32 pesos
+opción: 25x35 · bulto 25 kg | 1868.63 pesos
+opción: 90x1.20 · bulto 25 kg | 1868.63 pesos
 
 Bolsa para basura
 id: dp26
