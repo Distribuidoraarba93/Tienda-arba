@@ -1380,6 +1380,8 @@ const SELLO_2C=["Tortillas","Combos","Repostería"];
 const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁','Ofertas':'🔥'};
 /* Etiquetas: rojo solo si es oferta o descuento; lo demás (Nuevo, Combo, Mayoreo) va en verde */
 const chipC=t=>/%|ahorr|oferta|descuento|rebaj|baj[oó]|🔥|save|deal/i.test(String(t||''))?'':' nof';
+/* Conteo redondeado hacia abajo: 210 → "200+ productos", 64 → "60+ productos"; menos de 10 se dice exacto */
+const cuantos=n=>n<10?n+(n===1?' producto':' productos'):(n<100?Math.floor(n/10)*10:Math.floor(n/100)*100)+'+ productos';
 const CTAG=c=>{if(c==='Ofertas')return '';if(c==='Combos')return 'Ahorra';if(c==='Todos')return '';const t=P.find(p=>p.cat===c&&p.tag&&!agot(p.id));return t?t.tag:''};
 function renderCats(){$('#cats').innerHTML=(P.some(esOfe)?['Todos','Ofertas',...CATS.slice(1)]:CATS).map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}">${CTAG(c)?`<span class="ctag${chipC(CTAG(c))}">${CTAG(c)}</span>`:''}<span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
 /* Historial: los últimos 6 pedidos del cliente en este celular, para repetir cualquiera en un toque */
@@ -1414,8 +1416,8 @@ function renderCatHome(){const g=document.getElementById('cgrid');if(!g)return;
   const fotos=c=>[...new Set(P.filter(p=>p.cat===c&&p.img&&!agot(p.id)).map(p=>SRC(p.img)))];
   window._catFotos={};
   g.innerHTML=CATS.filter(c=>c!=='Todos'&&n(c)).map(c=>{const F=fotos(c);window._catFotos[c]=F;const f0=F.length?F[Math.floor(Math.random()*F.length)]:'';
-   return `<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag${chipC(CTAG(c))}">${CTAG(c)}</span>`:''}<span class="cti${F.length?' fot':c==='Tortillas'?' ic2c':''}">${F.length?`<img class="cf on" src="${f0}" alt="" loading="lazy"><img class="cf" alt=""><i class="cem">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</i>`:c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${n(c)} productos</small></button>`}).join('')+
-  `<button type="button" class="ctile todo" data-cat="Todos"><span class="cti">🛍️</span><b>Ver todo</b><small>${P.length} productos</small></button>`}
+   return `<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag${chipC(CTAG(c))}">${CTAG(c)}</span>`:''}<span class="cti${F.length?' fot':c==='Tortillas'?' ic2c':''}">${F.length?`<img class="cf on" src="${f0}" alt="" loading="lazy"><img class="cf" alt=""><i class="cem">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</i>`:c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${cuantos(n(c))}</small></button>`}).join('')+
+  `<button type="button" class="ctile todo" data-cat="Todos"><span class="cti">🛍️</span><b>Ver todo</b><small>${cuantos(P.length)}</small></button>`}
 /* Fotos de productos que van cambiando al azar en los cuadros de categorías */
 setInterval(()=>{if(!document.body.classList.contains('home')||document.hidden)return;const T=[...document.querySelectorAll('#cgrid .cti.fot')].filter(t=>{const r=t.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight});if(!T.length)return;
   for(let k=0;k<2;k++){const t=T[Math.floor(Math.random()*T.length)],c=t.closest('[data-cat]').dataset.cat,F=(window._catFotos||{})[c]||[];if(F.length<2)continue;
@@ -1429,7 +1431,7 @@ function renderGrid(){
   const list=[...P].sort((a,b)=>{const r=x=>{const i=["Tortillas","Repostería","Combos"].indexOf(x.cat);return i<0?9:i};return r(a)-r(b)}).filter(p=>(cat==="Todos"||p.cat===cat||(cat==="Ofertas"&&esOfe(p)))&&(!q||norm(p.n+' '+p.u+' '+p.cat+' '+(p.v||[]).map(x=>x.n).join(' ')+' '+((window.ARBA_ENX||{})[p.id]||'')).includes(norm(q))));
   $('#title').textContent=q?`Resultados para “${q}”`:(cat==="Todos"?"Todos los productos":cat);
   $('#banner').hidden=!(cat==="Tortillas"&&!q);repPinta(inicio&&!q);$('#tortHead').hidden=!(cat==="Tortillas"&&!q);
-  $('#n').textContent=list.length+(list.length===1?' producto':' productos');
+  $('#n').textContent=q?list.length+(list.length===1?' producto':' productos'):cuantos(list.length);
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p${agot(p.id)?' ago':''}">
     <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${agot(p.id)?'<span class="tag tago">Agotado</span>':tagDe(p)?`<span class="tag${chipC(tagDe(p))}">${tagDe(p)}</span>`:''}${pic(p)}</button>
     <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito"${agot(p.id)?' disabled':''}>+</button>`}${priceHTML(p)}<h3>${p.n}</h3></div></article>`).join('')

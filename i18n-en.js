@@ -269,6 +269,7 @@ R:[
 [/^Ver (.+)$/,"View {$1}"],
 [/^Mayoreo: (.+) desde (\d+) (\S+)$/,"Wholesale: $1 from $2 {$3}"],
 [/^(\d+) productos?$/,"$1 products"],
+[/^(\d+)\+ productos$/,"$1+ products"],
 [/^(\d+) pendientes$/,"$1 pending"],
 [/^Código (\S+)$/,"Code $1"],
 [/^Hay (\d+) más\. Escribe en el buscador para encontrarlos\.$/,"$1 more. Type in the search box to find them."],
