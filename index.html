@@ -711,6 +711,8 @@ body.encat .amigos,body.dueno .amigos .x{display:none!important}
 .patc>img{width:80px;height:80px;object-fit:cover;border-radius:10px;background:#fff}.patc>div{display:grid;gap:3px;min-width:0}.patc small{opacity:.8;font-size:12px}
 .pst2{font-size:12px;font-weight:800}.pnum{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin:2px 0}
 .pbt{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}.pbt button{padding:8px 6px;font-size:12.5px;border-radius:10px;min-height:0}
+#redBar{position:fixed;top:0;left:0;right:0;z-index:9998;background:#f4b400;color:#152016;font:600 14px/1.3 system-ui,sans-serif;text-align:center;padding:calc(6px + env(safe-area-inset-top)) 12px 6px}#redBar small{display:block;font-weight:500}
+.sinred{padding:30px 10px}.sinred .sb{display:block;max-width:340px;margin:12px auto 0;padding:13px 16px;border-radius:999px;font-weight:700;text-decoration:none}.sinred .sms{background:#0b1220;color:#eef2f8;border:2px solid #f4b400}.sinred small{display:block;opacity:.8;font-size:13px;margin-top:4px}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -1516,6 +1518,31 @@ function campana(){const ios=/iPhone|iPad|iPod/.test(navigator.userAgent),app=ma
   if(Notification.permission==='denied')return '<p class="note" style="margin-top:10px">🔕 Tienes los avisos bloqueados para esta página. Actívalos en los ajustes del navegador si quieres que te avisemos.</p>';
   return '<button class="go" data-notif style="width:100%;margin-top:12px;background:#f4b400;color:#152016">🔔 Avísame en mi celular cuando cambie</button>'}
 const openWA=(num,msg)=>{const a=document.createElement('a');a.href=`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()};
+/* ===== Sin señal: la tienda abre con lo guardado, el pedido se guarda en el celular y llega solo a la tienda al regresar el internet ===== */
+let RED=navigator.onLine;
+const OBK='arba-por-enviar',obVuela=new Set();
+const obTodos=()=>{try{return JSON.parse(localStorage.getItem(OBK)||'[]')}catch(e){return []}};
+const obPon=a=>{try{localStorage.setItem(OBK,JSON.stringify(a.slice(-20)))}catch(e){}};
+function obAgrega(id,pub,priv,sr){const a=obTodos().filter(x=>x.id!==id);a.push({id,pub,priv,sr});obPon(a);obMandar()}
+function obMandar(){const F=window.ARBA_FB;if(!F||!F.crearPend)return;obTodos().forEach(x=>{if(obVuela.has(x.id))return;obVuela.add(x.id);
+  F.crearPend(x.id,x.pub,x.priv).then(()=>{obPon(obTodos().filter(y=>y.id!==x.id));if(x.sr)toast('✅ Ya hay señal: tu pedido guardado llegó a la tienda');redAviso()},
+   e=>{console.warn('pendiente',e);if(e==='id'||/invalid-argument/.test(e&&e.code||''))obPon(obTodos().filter(y=>y.id!==x.id))}).finally(()=>obVuela.delete(x.id))})}
+function redAviso(){let b=document.getElementById('redBar');if(RED){if(b)b.remove();document.body.style.paddingTop='';return}
+  if(!b){b=document.createElement('div');b.id='redBar';document.body.appendChild(b)}
+  const n=obTodos().length;b.innerHTML='<span>📶 Sin internet · ves los precios de tu última visita</span>'+(n?'<small>Tu pedido guardado se manda solo cuando regrese la señal</small>':'<small>Puedes armar tu pedido igual</small>');
+  document.body.style.paddingTop=b.offsetHeight+'px'}
+function pruebaRed(){if(!navigator.onLine){RED=false;redAviso();return}
+  Promise.race([fetch('https://firestore.googleapis.com/?ping='+Date.now(),{mode:'no-cors',cache:'no-store'}).then(()=>true,()=>false),new Promise(r=>setTimeout(()=>r(false),5000))])
+   .then(v=>{RED=v;redAviso();if(v){obMandar();fotosWifi()}})}
+/* Con wifi (Android), guarda de una vez todas las fotos para verlas sin internet. Con datos solo guarda las que el cliente ve. */
+function fotosWifi(){try{const c=navigator.connection,sw=navigator.serviceWorker&&navigator.serviceWorker.controller;if(!c||c.type!=='wifi'||c.saveData||!sw)return;
+  if(Date.now()-(+localStorage.getItem('arba-fotos-f')||0)<864e5)return;const f=new Set(),ad=x=>{if(x&&!/^data:|^https?:/.test(x))f.add(SRC(x))};
+  P.forEach(p=>{ad(p.img);(p.v||[]).forEach(o=>ad(o.img))});sw.postMessage({t:'fotos',l:[...f]});localStorage.setItem('arba-fotos-f',String(Date.now()))}catch(e){}}
+addEventListener('online',pruebaRed);addEventListener('offline',()=>{RED=false;redAviso()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)pruebaRed()});
+setInterval(()=>{if(!document.hidden)pruebaRed()},40000);setTimeout(pruebaRed,1200);
+window.addEventListener('arba-fb',obMandar);
+const smsLiga=t=>'sms:+'+WHATS+(/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)&&'ontouchend' in document?'&':'?')+'body='+encodeURIComponent(t.replace(/\p{Extended_Pictographic}️?/gu,'').replace(/^ +/gm,''));
 $('#form').addEventListener('submit',e=>{
   e.preventDefault();
   const ks=Object.keys(cart).filter(k=>cart[k]>0&&item(k));let tot=0,quote=false;
@@ -1531,12 +1558,17 @@ $('#form').addEventListener('submit',e=>{
   const ent=entrega==='Paso a recoger'?'🏠 Paso a recoger':entrega==='Punto medio'?'📍 Punto medio: '+pmv:'🚚 Domicilio: '+dir;
   const lines=ks.map(k=>{const it=item(k),c=cart[k];if(it.pr==null)quote=true;else tot+=upI(it,c)*c;return `• ${c} x ${it.name}`});
   const msg=[pg?`📅 Pedido programado ${pedN(ped)}`:`🛒 Nuevo pedido ${pedN(ped)}`,pg?`🗓️ Para el ${pgBonito(pg)}, de ${franja}`:'',...lines,`Total: ${fmt(Math.round(tot*100)/100)}${quote?' + por cotizar':''}`,`Pago: ${pago==='Tarjeta'?'Tarjeta ('+tar+')':pago}`,tot>=500?`Anticipo 35%: ${fmt(Math.round(tot*0.35*100)/100)}`:'',ent,`👤 ${nom}`,fa?(()=>{const x=ivaCalc();return '🧾 Pide factura · IVA: '+fmt(x.iva)+(x.mix?' + combos':'')})():''].filter(Boolean).join('\n');
+  const sinRed=!RED||!navigator.onLine;const notaF=sinRed?('📶 Hecho sin señal '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})+(nota?' · '+nota:'')):nota;
   try{localStorage.setItem('arba-ultimo',JSON.stringify({c:Object.fromEntries(ks.map(k=>[k,cart[k]])),f:Date.now(),p:ped}))}catch(e){}
-  openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);if(pg){try{const A=estTodos();if(A[ped]){A[ped].pg=pg;A[ped].pf=franja;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}}
+  if(!sinRed)openWA(WHATS,msg);const eT=entrega==='Paso a recoger'?'r':entrega?'d':'';estGuarda(ped,'recibido',eT,'',0,kk);if(pg){try{const A=estTodos();if(A[ped]){A[ped].pg=pg;A[ped].pf=franja;localStorage.setItem('arba-pedidos',JSON.stringify(A))}}catch(e){}}
   const lug=entrega==='Entrega a domicilio'?dir:entrega==='Punto medio'?'Punto medio: '+pmv:'';
-  fbCall('crear',ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(nota?{no:nota.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...(pg?{pg,pf:franja}:{}),...refDe()});
-  toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
+  obAgrega(ped+'_'+kk,{p:ped,s:'recibido',e:eT},{p:ped,n:nom.slice(0,80),tel:tel.slice(0,15),g:(pago==='Tarjeta'?'Tarjeta ('+tar+')':pago).slice(0,60),T:fmt(Math.round(tot*100)/100),a:tot>=500?fmt(Math.round(tot*0.35*100)/100):'',e:entrega.slice(0,40),i:ks.map(k=>k+'*'+cart[k]).join(',').slice(0,1500),k:kk,...($('#vend').value.trim()?{v:$('#vend').value.trim().slice(0,40)}:{}),...(window.ARBA_NEG?{cn:(window.ARBA_NEG.n+' · '+window.ARBA_NEG.c).slice(0,80)}:{}),...(lug?{d:lug.slice(0,200)}:{}),...(notaF?{no:notaF.slice(0,300)}:{}),...(fa?{fa:fa.slice(0,400)}:{}),...(pg?{pg,pf:franja}:{}),...refDe()},sinRed);
+  if(!sinRed)toast('Abriendo WhatsApp… te confirmamos tu pedido por ahí');
   cart={};save();renderCart();$('#foot').hidden=false;$('#items').hidden=false;$('#form').hidden=true;{const y=document.querySelector('[data-cu="ya"]');if(y)y.click()}
+  if(sinRed){$('#items').innerHTML=`<div class="empty sinred"><b>📶 Estás sin internet</b><br><span>Tu pedido quedó guardado en tu celular:</span> <b>${pedN(ped)}</b><br><span>Llega solo a la tienda en cuanto tengas señal. Si lo quieres mandar ya, elige cómo:</span>
+<a class="wa sb" href="whatsapp://send?phone=${WHATS}&text=${encodeURIComponent(msg)}">💬 Mandar por WhatsApp</a><small>Funciona si tu plan trae WhatsApp sin datos</small>
+<a class="sb sms" href="${smsLiga(msg)}">✉️ Mandar por mensaje de texto (SMS)</a><small>No usa datos, solo saldo o mensajes de tu plan</small>
+<button class="sec" style="margin-top:14px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button></div>`;redAviso();return}
   $('#items').innerHTML=`<div class="empty">✅ Se abrió WhatsApp con tu pedido <b>${pedN(ped)}</b>.<br>${pg?`📅 Programado para el <b>${pgBonito(pg)}</b>, de ${franja}. Te escribimos antes para confirmarlo.<br>`:''}Solo dale <b>Enviar</b> y te lo confirmamos por ahí.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">¿No se abrió? Toca aquí</a><br><button class="sec" style="margin-top:12px;padding:0 16px" data-estver="${ped}">📍 Ver estatus de mi pedido</button>${campana()}</div>`;
 });
 const banco=()=>{try{return (localStorage.getItem('arba-banco')||'').trim()}catch(e){return ''}};
@@ -1941,6 +1973,11 @@ const FK=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');
 window.ARBA_FB={ADMIN,
   crear(id,pub,priv){if(!ok.test(id))return Promise.reject('id');const t=fs.serverTimestamp();
     return fs.setDoc(fs.doc(db,'pedidos',id),{...pub,f:t,c:t}).then(()=>fs.setDoc(fs.doc(db,'pedidos_priv',id),{...priv,c:fs.serverTimestamp()}).catch(e=>{if(!priv.rt&&!priv.pg)throw e;const {rt,pg,pf,...r}=priv;if(pg)r.no=('📅 Programado '+pg+' '+(pf||'')+(r.no?' · '+r.no:'')).slice(0,300);return fs.setDoc(fs.doc(db,'pedidos_priv',id),{...r,c:fs.serverTimestamp()})}))},
+  /* Pedido guardado en el celular: se puede reintentar sin duplicar (si ya existe, Firestore lo rechaza y se toma como enviado) */
+  async crearPend(id,pub,priv){if(!ok.test(id))throw 'id';const den=e=>/permission/.test(e&&e.code||''),t=fs.serverTimestamp();
+    try{await fs.setDoc(fs.doc(db,'pedidos',id),{...pub,f:t,c:t})}catch(e){if(!den(e))throw e}
+    const P=x=>fs.setDoc(fs.doc(db,'pedidos_priv',id),{...x,c:fs.serverTimestamp()});
+    try{await P(priv)}catch(e){if(!den(e))throw e;const {rt,pg,pf,...r}=priv;if(!rt&&!pg)return;if(pg)r.no=('📅 Programado '+pg+' '+(pf||'')+(r.no?' · '+r.no:'')).slice(0,300);try{await P(r)}catch(e2){if(!den(e2))throw e2}}},
   prgVer(desde,cb){return fs.onSnapshot(fs.query(fs.collection(db,'pedidos_priv'),fs.where('pg','>=',desde),fs.orderBy('pg'),fs.limit(150)),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),e=>{console.warn('prg',e);cb(null)})},
   escuchar(id,cb){return fs.onSnapshot(fs.doc(db,'pedidos',id),s=>cb(s.exists()?s.data():null),()=>{})},
   cambiar(id,d){return fs.updateDoc(fs.doc(db,'pedidos',id),{...d,f:fs.serverTimestamp()})},
