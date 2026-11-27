@@ -1,4 +1,4 @@
-const C='arba-v56',FC='arba-fotos';/* las fotos van en su propia caja y no se borran al actualizar */
+const C='arba-v57',FC='arba-fotos';/* las fotos van en su propia caja y no se borran al actualizar */
 const caja=u=>/\/img\//.test(u)?FC:C;
 const PRE=['./','./index.html','./panel.html','./productos.txt','./i18n-en.js','./manifest.json','./manifest-panel.json?v=2','./icon-192.png','./icon-512.png','./icon-dueno-192.png'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>Promise.all(PRE.map(u=>c.add(u).catch(()=>{})))))});

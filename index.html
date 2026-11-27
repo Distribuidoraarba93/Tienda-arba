@@ -727,6 +727,20 @@ body.encat .amigos,body.dueno .amigos .x{display:none!important}
 .pbt{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}.pbt button{padding:8px 6px;font-size:12.5px;border-radius:10px;min-height:0}
 #redBar{position:fixed;top:0;left:0;right:0;z-index:9998;background:#f4b400;color:#152016;font:600 14px/1.3 system-ui,sans-serif;text-align:center;padding:calc(6px + env(safe-area-inset-top)) 12px 6px}#redBar small{display:block;font-weight:500}
 .sinred{padding:30px 10px}.sinred .sb{display:block;max-width:340px;margin:12px auto 0;padding:13px 16px;border-radius:999px;font-weight:700;text-decoration:none}.sinred .sms{background:#0b1220;color:#eef2f8;border:2px solid #f4b400}.sinred small{display:block;opacity:.8;font-size:13px;margin-top:4px}
+/* ===== COLORES CON UN SOLO TRABAJO (nov 2026) =====
+   Amarillo = precios y botones para comprar / avanzar el pedido
+   Verde = la marca Los 2 Carnales / ARBA y lo que confirma (aceptado, listo, WhatsApp)
+   Rojo = SOLO ofertas y descuentos */
+.go{background:#f4b400!important;background-image:none!important;color:#152016!important}
+.plus.ver,.rel-b,.cbar{background:#f4b400!important;background-image:none!important;color:#152016!important}
+.cbar .ci b{background:#0b1525!important;color:#f4b400!important}
+.bnav b{background:#f4b400!important;color:#152016!important;font-weight:800}
+.rm{color:var(--mute)!important}
+.price s,.pprice s,.rel-p s,s{color:var(--mute)!important;opacity:.85}
+.ctag.nof,.tag.nof,.pchip.nof{background:#25a244!important;background-image:none!important;color:#fff!important}
+/* En tu panel y en la app de reparto, los botones de confirmar (aceptar, entregado) siguen en verde */
+.pcd .go,#pQuick .go,#repaW .go{background:#25a244!important;color:#fff!important}
+.hist button:not(.hv) .hring{background:conic-gradient(#7ed957,#f4b400,#7ed957)}
 </style>
 <script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
@@ -1346,8 +1360,10 @@ const T_ANT='Se prepara al momento para ti, no hay en existencia. Pídelo con un
 const T_HOY='Pedidos antes de las 2 pm se entregan el mismo día si hay disponibilidad. Si no, te avisamos el tiempo de entrega antes de confirmar.';
 const SELLO_2C=["Tortillas","Combos","Repostería"];
 const CAT_IC={'Todos':'🛍️','Combos':'🎁','Tortillas':'🫓','Contenedores':'🍱','Vasos':'🥤','Bowls y envases':'🥣','Servilletas y empaque':'🧻','Higiene y varios':'🧤','Abarrotes':'🛒','Bebidas':'🧃','Limpieza':'🧽','Botanas':'🍿','Dulces':'🍭','Repostería':'🧁','Ofertas':'🔥'};
+/* Etiquetas: rojo solo si es oferta o descuento; lo demás (Nuevo, Combo, Mayoreo) va en verde */
+const chipC=t=>/%|ahorr|oferta|descuento|rebaj|baj[oó]|🔥|save|deal/i.test(String(t||''))?'':' nof';
 const CTAG=c=>{if(c==='Ofertas')return '';if(c==='Combos')return 'Ahorra';if(c==='Todos')return '';const t=P.find(p=>p.cat===c&&p.tag&&!agot(p.id));return t?t.tag:''};
-function renderCats(){$('#cats').innerHTML=(P.some(esOfe)?['Todos','Ofertas',...CATS.slice(1)]:CATS).map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}">${CTAG(c)?`<span class="ctag">${CTAG(c)}</span>`:''}<span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
+function renderCats(){$('#cats').innerHTML=(P.some(esOfe)?['Todos','Ofertas',...CATS.slice(1)]:CATS).map(c=>`<button class="${c===cat?'on':''}" data-cat="${c}">${CTAG(c)?`<span class="ctag${chipC(CTAG(c))}">${CTAG(c)}</span>`:''}<span class="ic${c==='Tortillas'?' ic2c':''}">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span>${c}</button>`).join('')}
 /* Historial: los últimos 6 pedidos del cliente en este celular, para repetir cualquiera en un toque */
 function repHist(){let H=[];try{H=JSON.parse(localStorage.getItem('arba-hist')||'[]');if(!H.length){const u=JSON.parse(localStorage.getItem('arba-ultimo')||'null');if(u&&u.c)H=[u]}}catch(e){}
   return H.filter(u=>u&&u.c).map(u=>({...u,ks:Object.keys(u.c).filter(k=>item(k))})).filter(u=>u.ks.length)}
@@ -1370,7 +1386,7 @@ function renderPromos(){renderOfes();const box=$('#promos');if(!box)return;const
   const L=P.filter(p=>p.img&&!agot(p.id)&&minPr(p)!=null&&pri(p)<3&&!esOfe(p)).sort((a,b)=>pri(a)-pri(b)).slice(0,8);
   if(!L.length){box.hidden=true;return}
   $('#prow').innerHTML=L.map(p=>{const m=minPr(p),ch=p.tag||(p.cat==='Combos'?'🎁 Combo':'💰 Mayoreo');
-    return `<button class="pcard" data-open="${p.id}"><div class="pim">${pic(p)}<span class="pchip">${ch}</span><span class="pprice">${p.v?'<small>desde </small>':''}${fmt(m)}</span></div><b>${p.n}</b><span class="pu">${p.v?p.v.length+' opciones · ':''}${p.u}</span></button>`}).join('')}
+    return `<button class="pcard" data-open="${p.id}"><div class="pim">${pic(p)}<span class="pchip${chipC(ch)}">${ch}</span><span class="pprice">${p.v?'<small>desde </small>':''}${fmt(m)}</span></div><b>${p.n}</b><span class="pu">${p.v?p.v.length+' opciones · ':''}${p.u}</span></button>`}).join('')}
 let inicio=true;
 function altoHead(){const h=document.querySelector('header');if(h)document.documentElement.style.setProperty('--hh',Math.max(0,h.getBoundingClientRect().bottom)+'px')}
 addEventListener('resize',altoHead);addEventListener('scroll',()=>{if(document.body.classList.contains('encat'))altoHead()},{passive:true});
@@ -1380,7 +1396,7 @@ function renderCatHome(){const g=document.getElementById('cgrid');if(!g)return;
   const fotos=c=>[...new Set(P.filter(p=>p.cat===c&&p.img&&!agot(p.id)).map(p=>SRC(p.img)))];
   window._catFotos={};
   g.innerHTML=CATS.filter(c=>c!=='Todos'&&n(c)).map(c=>{const F=fotos(c);window._catFotos[c]=F;const f0=F.length?F[Math.floor(Math.random()*F.length)]:'';
-   return `<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag">${CTAG(c)}</span>`:''}<span class="cti${F.length?' fot':c==='Tortillas'?' ic2c':''}">${F.length?`<img class="cf on" src="${f0}" alt="" loading="lazy"><img class="cf" alt=""><i class="cem">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</i>`:c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${n(c)} productos</small></button>`}).join('')+
+   return `<button type="button" class="ctile" data-cat="${c}">${CTAG(c)?`<span class="ctag${chipC(CTAG(c))}">${CTAG(c)}</span>`:''}<span class="cti${F.length?' fot':c==='Tortillas'?' ic2c':''}">${F.length?`<img class="cf on" src="${f0}" alt="" loading="lazy"><img class="cf" alt=""><i class="cem">${c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</i>`:c==='Tortillas'?'<img src="img/logo-2c.webp" alt="">':(CAT_IC[c]||'📦')}</span><b>${c}</b><small>${n(c)} productos</small></button>`}).join('')+
   `<button type="button" class="ctile todo" data-cat="Todos"><span class="cti">🛍️</span><b>Ver todo</b><small>${P.length} productos</small></button>`}
 /* Fotos de productos que van cambiando al azar en los cuadros de categorías */
 setInterval(()=>{if(!document.body.classList.contains('home')||document.hidden)return;const T=[...document.querySelectorAll('#cgrid .cti.fot')].filter(t=>{const r=t.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight});if(!T.length)return;
@@ -1397,7 +1413,7 @@ function renderGrid(){
   $('#banner').hidden=!(cat==="Tortillas"&&!q);repPinta(inicio&&!q);$('#tortHead').hidden=!(cat==="Tortillas"&&!q);
   $('#n').textContent=list.length+(list.length===1?' producto':' productos');
   $('#grid').innerHTML=list.length?list.map(p=>`<article class="p${agot(p.id)?' ago':''}">
-    <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${agot(p.id)?'<span class="tag tago">Agotado</span>':tagDe(p)?`<span class="tag">${tagDe(p)}</span>`:''}${pic(p)}</button>
+    <button class="img" data-open="${p.id}" aria-label="Ver ${p.n}">${agot(p.id)?'<span class="tag tago">Agotado</span>':tagDe(p)?`<span class="tag${chipC(tagDe(p))}">${tagDe(p)}</span>`:''}${pic(p)}</button>
     <div class="info">${p.v?`<button class="plus ver" data-open="${p.id}" aria-label="Ver opciones de ${p.n}">Ver</button>`:`<button class="plus" data-add="${p.id}" aria-label="Agregar ${p.n} al carrito"${agot(p.id)?' disabled':''}>+</button>`}${priceHTML(p)}<h3>${p.n}</h3></div></article>`).join('')
     :`<div class="empty" style="grid-column:1/-1">No lo ves en el catálogo? Pregunta por él y te lo conseguimos.<br><a class="wa" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, busco: '+q)}" target="_blank" rel="noopener">Preguntar por “${q}” en WhatsApp</a></div>`;
 }
