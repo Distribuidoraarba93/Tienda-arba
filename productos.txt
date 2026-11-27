@@ -1218,6 +1218,13 @@ foto: margarina-country-crock
 dibujo: caja
 descripción: Margarina Country Crock en bote de 1.91 kg, para untar, cocinar y hornear.
 
+Margarina Iberia con sal 1.3 kg
+id: a62
+precio: 136.07 pesos
+presentación: Bote de 1.3 kg
+dibujo: caja
+descripción: Margarina Iberia con sal en bote de 1.3 kg, para untar, cocinar y hornear.
+
 Mayonesa Heinz en sobre
 id: a35
 precio: 157.5 pesos
