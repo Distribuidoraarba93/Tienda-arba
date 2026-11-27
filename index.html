@@ -1302,11 +1302,16 @@ const esOfe=p=>!agot(p.id)&&(ofeOn(p)||(!ofeVence(p)&&/oferta/i.test(p.tag||''))
    Por categoría, PROVISIONAL hasta que lo confirme el contador. En productos.txt se puede poner "iva: 0" o "iva: 16" a un producto. Combos: mixto, no se desglosa. */
 const IVA_CAT={'Tortillas':0,'Repostería':0,'Abarrotes':0,'Botanas':0,'Dulces':0,'Bebidas':16,'Contenedores':16,'Vasos':16,'Bowls y envases':16,'Servilletas y empaque':16,'Higiene y varios':16,'Limpieza':16};
 const ivaDe=p=>p.iva!=null?p.iva:(p.cat in IVA_CAT?IVA_CAT[p.cat]:null);
-const sinIvaHTML=p=>{if(!window.ARBA_NEG)return '';const r=ivaDe(p),m=minPr(p);if(m==null||r==null)return '';return r?`<span class="sniva">Sin IVA: ${fmt(Math.round(m/(1+r/100)*100)/100)} + IVA ${r}%</span>`:'<span class="sniva">IVA 0% (alimento)</span>'};
+/* El precio grande es el TOTAL con IVA (lo que se paga, como pide PROFECO art. 7 Bis). Abajo, chiquito, el desglose: sin IVA + IVA. */
+const r2=n=>Math.round(n*100)/100;
+const sinI=(p,pr)=>{const r=ivaDe(p);return r?r2(pr/(1+r/100)):pr};
+const ivaLinea=(p,pr)=>{if(pr==null)return '';const r=ivaDe(p);if(r==null)return '<span class="ivat">IVA incluido</span>';if(!r)return '<span class="ivat">IVA 0% (alimento)</span>';
+  return '<span class="ivat">Sin IVA '+fmt(sinI(p,pr))+' + IVA '+fmt(r2(pr-sinI(p,pr)))+'</span>'};
+const sinIvaHTML=p=>ivaLinea(p,minPr(p));
 function ivaCalc(){const ks=Object.keys(cart).filter(k=>cart[k]>0&&item(k));let base=0,iva=0,mix=false;
   ks.forEach(k=>{const it=item(k);if(it.pr==null)return;const t=upI(it,cart[k])*cart[k],r=ivaDe(it.p);if(r==null){mix=true;base+=t;return}const b=t/(1+r/100);base+=b;iva+=t-b});
   return {base:Math.round(base*100)/100,iva:Math.round(iva*100)/100,mix}}
-function ivaPinta(){const ver=!!window.ARBA_NEG||$('#fac').checked;let b=$('#ivaBox');if(!b){$('#foot .tot').insertAdjacentHTML('afterend','<p class="note sniva2" id="ivaBox"></p>');b=$('#ivaBox')}
+function ivaPinta(){const ver=true;let b=$('#ivaBox');if(!b){$('#foot .tot').insertAdjacentHTML('afterend','<p class="note sniva2" id="ivaBox"></p>');b=$('#ivaBox')}
   let f=$('#ivaFac');if(!f){$('#facBox').insertAdjacentHTML('afterbegin','<p class="note sniva2" id="ivaFac"></p>');f=$('#ivaFac')}
   if(!ver||!cTot){b.hidden=true;f.hidden=true;return}const x=ivaCalc();
   const t=`🧾 Desglose: subtotal sin IVA ${fmt(x.base)} + IVA ${fmt(x.iva)} = total ${fmt(cTot)}${x.mix?' (los combos llevan productos con y sin IVA; su IVA va dentro del subtotal y se desglosa en la factura)':''}. Los alimentos llevan IVA 0%.`;
@@ -1452,7 +1457,7 @@ function openModal(id){
   const G=GAL(p);
   $('#box').innerHTML=`<button class="x" data-close aria-label="Cerrar">×</button><div class="img">${G.length>1?`<div class="gal" id="gal">${G.map(im=>`<img class="foto" draggable="false" src="${SRC(im)}" alt="${p.n}">`).join('')}</div><div class="gdots">${G.map((_,i)=>`<i data-gi="${i}"></i>`).join('')}</div>`:pic(p,p.v?vi:null)}</div>
   <div class="tx">${p.tag?`<span class="tag" style="position:static;justify-self:start">${p.tag}</span>`:''}<h3>${p.n}</h3><span class="unit">${p.u} · ${p.cat}</span>
-  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${ofeOn(p)&&pr<p.an?`<s>${fmt(p.an)}</s>`:''}${fmt(pr).replace(' pesos','')} <small>pesos</small>${ofeOn(p)&&pr<p.an?`<span class="ofp">-${Math.round((1-pr/p.an)*100)}%</span>`:''}</div>${ofeOn(p)&&p.oh?`<p class="note" style="margin:2px 0 6px">🔥 Oferta válida hasta el ${new Date(p.oh+'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'long'})}</p>`:''}`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>${p.min?'<p class="entr ant">🛒 <b>Compra mínima: '+p.min+' piezas.</b></p>':''}<p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
+  ${pr==null?'<div class="quote">Pide tu precio</div>':`<div class="price">${ofeOn(p)&&pr<p.an?`<s>${fmt(p.an)}</s>`:''}${fmt(pr).replace(' pesos','')} <small>pesos</small>${ofeOn(p)&&pr<p.an?`<span class="ofp">-${Math.round((1-pr/p.an)*100)}%</span>`:''}</div>${ivaLinea(p,pr)}${ofeOn(p)&&p.oh?`<p class="note" style="margin:2px 0 6px">🔥 Oferta válida hasta el ${new Date(p.oh+'T12:00').toLocaleDateString('es-MX',{day:'numeric',month:'long'})}</p>`:''}`}${myTxt(p,p.v?vi:null)}<p style="margin:0">${p.d}</p>${p.min?'<p class="entr ant">🛒 <b>Compra mínima: '+p.min+' piezas.</b></p>':''}<p class="entr${ANTIC(p)?' ant':''}">${ANTIC(p)?'📅 <b>Sobre pedido.</b> '+T_ANT:'🚚 '+T_HOY}</p>
   ${p.v?`<div class="opts" role="group" aria-label="Opciones">${p.v.map((o,i)=>`<button class="${i===vi?'on':''}${agot(id+':'+i)?' ago':''}" data-vi="${i}">${o.n}<small>${agot(id+':'+i)?'Agotado':fmt(o.pr)}</small></button>`).join('')}</div>`:''}
   ${window.ARBA_EDIT?`<button type="button" class="go" data-edit="${p.id}" style="width:100%;margin:6px 0">✏️ Editar este producto</button>`:''}<div class="share"><button type="button" data-share="${p.id}">📤 Compartir</button><a href="https://wa.me/?text=${encodeURIComponent('Mira esto en Distribuidora ARBA 👉 '+p.n+' '+TIENDA_URL+'?p='+p.id)}" target="_blank" rel="noopener">💬 WhatsApp</a><a href="https://instagram.com/2car_nales" target="_blank" rel="noopener">📸 Instagram</a><a href="https://www.facebook.com/share/1EWD4bP4aJ/" target="_blank" rel="noopener">👍 Facebook</a></div>
   ${relHTML([p.id],'🛒 Clientes también llevan')}
@@ -3311,6 +3316,7 @@ html.claro #avp{background:#f4f6f1;color:#152016}
 #avp h3{font-size:19px;margin:18px 0 4px;color:#f4b400}html.claro #avp h3{color:#0b6b35}
 #avp ul{margin:4px 0;padding-left:22px}#avp p{margin:6px 0}#avp .avf{opacity:.7;font-size:14px}
 #avp .avbtn{width:100%;min-height:54px;border-radius:14px;border:2px solid #d62828;background:#d6282822;color:inherit;font:700 17px Poppins,system-ui,sans-serif;margin-top:8px}
+.ivat{display:block;font-size:11.5px;font-weight:600;color:var(--mute);margin-top:1px;line-height:1.25}.ivat b{color:var(--ink)}
 .sniva{display:block;font-size:12px;font-weight:600;color:var(--mute);margin-top:2px}.sniva2{margin:4px 0 8px;padding:8px 10px;border-radius:8px;background:#7ed95714;border:1px solid #7ed95744}
 /* Botón para entrar al modo fácil (solo en la tienda de clientes) */
 .fzent{display:flex;align-items:center;gap:12px;width:calc(100% - 24px);max-width:1216px;margin:12px auto 0;border:2px solid #f4b400;background:#f4b40018;color:var(--ink);border-radius:16px;padding:12px 14px;text-align:left;font:600 15px/1.3 Poppins,system-ui,sans-serif}
