@@ -111,6 +111,18 @@ service cloud.firestore {
       allow write: if esAdmin();
     }
 
+    // Invitaciones para instalar la app de entregas: el dueño la crea; sirve una sola vez, en un solo celular, y vence en 7 días
+    match /invitaciones/{t} {
+      allow get: if esAdmin()
+        || (!('u' in resource.data) && request.time < resource.data.c + duration.value(7, 'd'));
+      allow list, create, delete: if esAdmin();
+      allow update: if !('u' in resource.data)
+        && request.time < resource.data.c + duration.value(7, 'd')
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['u', 'uf'])
+        && request.resource.data.u is string && request.resource.data.u.size() < 40
+        && request.resource.data.uf == request.time;
+    }
+
     // Ligas de repartidor: él la crea; solo cuenta para el primer celular que la abre
     match /ligas/{t} {
       allow get, list, delete: if esAdmin();

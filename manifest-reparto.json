@@ -1,7 +1,7 @@
 {
  "id": "arba-reparto",
- "name": "ARBA Reparto",
- "short_name": "ARBA Reparto",
+ "name": "ARBA Entregas",
+ "short_name": "ARBA Entregas",
  "start_url": "./?repa=1",
  "scope": "./",
  "display": "standalone",

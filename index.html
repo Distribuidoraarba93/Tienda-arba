@@ -450,6 +450,8 @@ body.edon{overflow:hidden}
 body.repa>header,body.repa>section,body.repa>.hist,body.repa>nav,body.repa>.trust,body.repa>main,body.repa>footer,body.repa>.bnav,body.repa>.cbar,body.repa #abBtn,body.repa #ab,body.repa #negBar,body.repa #temaStrip{display:none!important}
 body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px 40px;color:#eef2f8}
 #repaW .rh{position:sticky;top:0;background:#0b1220;display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:2px solid #f4b400;z-index:5}#repaW .rh b{color:#f4b400;font:800 18px Poppins,system-ui}#repaW .rh span{flex:1;font-weight:600}
+#cliHola{max-width:1180px;margin:10px auto 0;padding:0 16px;font:600 18px Poppins,system-ui;color:inherit}#cliHola b{color:#f4b400}
+.ra{max-width:420px;margin:0 auto;padding:40px 18px;text-align:center;color:#eef2f8;font-size:18px}.ra img{border-radius:22px}.ra h2{font:800 26px Poppins,system-ui;color:#f4b400;margin:12px 0}.ra ol{text-align:left;line-height:1.5;padding-left:22px}.racod{font:800 34px ui-monospace,monospace;letter-spacing:4px;background:#ffffff14;border:2px dashed #f4b400;border-radius:14px;padding:12px;margin:10px 0}.ra input{width:100%;box-sizing:border-box;font:700 26px ui-monospace,monospace;text-align:center;letter-spacing:3px;padding:14px;border-radius:14px;border:2px solid #f4b400;background:#0b1220;color:#fff;text-transform:uppercase}.raok{font-size:22px;font-weight:700;color:#7ed957}.rabad{font-size:22px;font-weight:700;color:#ffb4a8}
 .rmap{display:block;margin:6px 0;padding:10px 12px;border-radius:12px;background:#1a73e8;color:#fff!important;font-weight:700;text-align:center;text-decoration:none}.rmap small{font-weight:500;opacity:.85}
 body.rfacil #repaW .rshare,body.rfacil #repaW .rtabs,body.rfacil #rInst{display:none!important}
 .rfz{margin:10px 0;padding:18px;border-radius:18px;background:#0b1220;border:2px solid #f4b400;color:#fff;font-size:20px}.rfz h2{margin:4px 0 8px;font:800 30px Poppins,system-ui;color:#f4b400}
@@ -873,6 +875,7 @@ header .bar{position:relative}
 </header>
 
 <div class="avisob" id="avisoBar" hidden></div>
+<div id="cliHola" hidden></div>
 <section class="hero"><div>
   <div class="htx">
     <p class="kick">Distribuidora ARBA · Chihuahua</p>
@@ -1882,7 +1885,7 @@ let yaRec=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventL
  var pedido=/[?&]app\b/.test(location.search);
  function show(){bar.style.display='block'}
  document.getElementById('instX').onclick=function(){bar.style.display='none'};
- addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;show()});
+ addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;window._arbaDP=e;if(!document.body.classList.contains('repa'))show()});
  btn.onclick=function(){
   if(dp){dp.prompt();dp.userChoice.then(function(){bar.style.display='none';dp=null});}
   else if(ios){iosPasos();}
@@ -1954,6 +1957,9 @@ window.ARBA_FB={ADMIN,
     await fs.setDoc(fs.doc(db,'push',id),{t,rol:o.rol,...(o.p?{p:o.p}:{}),...(o.r?{r:o.r}:{}),...(o.n?{n:String(o.n).slice(0,40)}:{}),f:fs.serverTimestamp()});return true},
   pushListo(){return VAPID&&'Notification' in window&&Notification.permission==='granted'},
   folio(){const r=fs.doc(db,'contador','pedidos');return fs.runTransaction(db,async tx=>{const d=await tx.get(r);let n=d.exists()?d.data().n+1:777;while(String(n).includes('666'))n++;if(d.exists())tx.update(r,{n});else tx.set(r,{n});return n})},
+  invNueva(t,r){return fs.setDoc(fs.doc(db,'invitaciones',t),{r,c:fs.serverTimestamp()})},
+  invLee(t){return fs.getDoc(fs.doc(db,'invitaciones',t)).then(d=>d.exists()?d.data():null,()=>null)},
+  invReclama(t,u){return fs.updateDoc(fs.doc(db,'invitaciones',t),{u,uf:fs.serverTimestamp()}).then(()=>true,()=>false)},
   ligaNueva(t,r){return fs.setDoc(fs.doc(db,'ligas',t),{r,c:fs.serverTimestamp()})},
   ligaReclama(t,u){return fs.updateDoc(fs.doc(db,'ligas',t),{u,uf:fs.serverTimestamp()}).then(()=>true,()=>false)},
   solNueva(d){return fs.addDoc(fs.collection(db,'solicitudes'),{...d,s:'pendiente',f:fs.serverTimestamp()}).then(r=>r.id)},
@@ -2133,8 +2139,30 @@ const ESTN={recibido:'🆕 Nuevo',aceptado:'👩‍🍳 Preparando',pagado:'💵
 const nomLimpio=n=>String(n||'').trim().replace(/^(repartidor(a)?|chofer|reparto)\b[\s:.\-]*/i,'').trim()||String(n||'').trim();
 const itemsTxt=i=>(i||'').split(',').filter(Boolean).map(s=>{const [k,q]=s.split('*'),it=T().item(k);return (q||1)+' x '+(it?it.name:k)}).join('\n');
 
-/* ---------- MODO REPARTIDOR (?r=CODIGO) ---------- */
-const qr=new URLSearchParams(location.search).get("r");let RC='';try{if(qr)localStorage.setItem('arba-repa',qr.toUpperCase());RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){RC=(qr||'').toUpperCase()}
+/* ---------- MODO REPARTIDOR ----------
+   La liga que manda el dueño (?ri=CÓDIGO) sirve UNA sola vez, en un solo celular, y vence en 7 días.
+   Ya activado, el código queda guardado en ese celular. Si cambia de celular, el dueño manda otra liga. */
+const qs0=new URLSearchParams(location.search),qi=(qs0.get('ri')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,20);
+let RC='';try{RC=(localStorage.getItem('arba-repa')||'').toUpperCase()}catch(e){}
+const esIOS=/iphone|ipad|ipod/i.test(navigator.userAgent),yaApp=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+function pantalla(h){document.title='Distribuidora ARBA';document.body.classList.add('repa');{const m=document.querySelector('link[rel=manifest]');if(m&&!/reparto/.test(m.href))m.href='manifest-reparto.json'}let w=document.getElementById('repaA');if(!w){w=document.createElement('div');w.id='repaA';document.body.appendChild(w)}w.innerHTML='<div class="ra"><img src="icon-reparto-192.png" alt="" width="96" height="96"><h2>Distribuidora ARBA</h2>'+h+'</div>';return w}
+function instalar(){const d=window._arbaDP;if(d){d.prompt();d.userChoice.then(()=>{window._arbaDP=null});return}
+  const t=document.getElementById('raPasos');if(t)t.hidden=false}
+const pasosHTML=()=>esIOS?'<ol><li>Toca <b>Compartir</b> (el cuadrito con flecha ⬆️) abajo o arriba.</li><li>Toca <b>“Agregar a inicio”</b>.</li><li>Toca <b>“Agregar”</b>.</li><li>Abre la app desde tu pantalla y escribe tu código.</li></ol>':'<ol><li>Toca los <b>tres puntitos ⋮</b> de Chrome, arriba a la derecha.</li><li>Toca <b>“Instalar app”</b> o <b>“Agregar a pantalla principal”</b>.</li></ol>';
+async function activa(code){const w=pantalla('<p>Activando tu app…</p>');
+  const F=(await new Promise(r=>{if(window.ARBA_FB&&window.ARBA_FB.invLee)r([window.ARBA_FB]);else window.addEventListener('arba-fb',()=>r([window.ARBA_FB]),{once:true})}))[0];
+  const inv=await F.invLee(code);
+  let dev='';try{dev=localStorage.getItem('arba-dev')||''}catch(e){}if(!dev){dev=Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[b%31]).join('');try{localStorage.setItem('arba-dev',dev)}catch(e){}}
+  if(!inv||!inv.r||!(await F.invReclama(code,dev.slice(0,39)))){pantalla('<p class="rabad">😕 Esta liga ya se usó o ya venció.</p><p>Cada liga funciona una sola vez y en un solo celular. Pídele una nueva a Distribuidora ARBA.</p>');return false}
+  try{localStorage.setItem('arba-repa',inv.r)}catch(e){}return true}
+if(qi&&!qs0.get('dueno')){
+  if(esIOS&&!yaApp){pantalla(`<p>Para usar tu app, primero agrégala a tu pantalla de inicio:</p>${pasosHTML()}<p>Tu código es:</p><div class="racod">${qi}</div><p class="note">Funciona una sola vez y vence en 7 días.</p>`);return}
+  activa(qi).then(ok=>{if(!ok)return;if(yaApp){location.replace(location.pathname+'?repa=1');return}
+    pantalla(`<p class="raok">✅ ¡Listo! Tu app ya quedó activada en este celular.</p><button type="button" class="rbig rok" id="raIns">📲 Instalar app</button><div id="raPasos" hidden>${pasosHTML()}</div><button type="button" class="rbig rmapb" id="raAbre">Abrir mis entregas</button>`);
+    document.getElementById('raIns').onclick=instalar;document.getElementById('raAbre').onclick=()=>location.replace(location.pathname+'?repa=1')});
+  return}
+if(!RC&&esIOS&&yaApp&&qs0.get('repa')){const w=pantalla('<p>Escribe el código que te mandó Distribuidora ARBA:</p><input id="raCod" autocomplete="off" autocapitalize="characters" maxlength="20"><button type="button" class="rbig rok" id="raOk">Activar</button>');
+  document.getElementById('raOk').onclick=async()=>{const c=(document.getElementById('raCod').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(c.length<6)return;if(await activa(c))location.replace(location.pathname+'?repa=1')};return}
 if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
   document.title='ARBA Reparto';document.body.classList.add('repa');
   {const m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-reparto.json';const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220'}
@@ -2237,7 +2265,7 @@ function pinta(){const box=sec.querySelector('#entLst'),res=sec.querySelector('#
   box.innerHTML=act.length?act.map(r=>`<div class="entc"><div><b>${esc(T().pedN(r.p))}</b> · ${esc(r.n)}<br><small>${ESTN[r.s]||r.s}${r.T?' · '+esc(r.T):''}${r.d?' · 📍 '+esc(r.d):''}</small></div>
     ${(()=>{const ra=RUT.find(x=>x.id===asignado(r.id)),u=ra&&ra.e&&ra.e[r.id]&&ra.e[r.id].u;return ra?`<button type="button" class="sec" data-ubi="${r.id}">${u?'✅ Ubicación':'📍 Mandar ubicación'}</button>`:''})()}
     <select data-asig="${r.id}"><option value="">— Sin repartidor —</option>${RUT.map(x=>`<option value="${x.id}" ${asignado(r.id)===x.id?'selected':''}>${esc(x.n)}</option>`).join('')}</select></div>`).join(''):'<p class="note">🎉 No hay pedidos a domicilio pendientes.</p>';
-  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-fac="${r.id}">🔠 Modo fácil: ${r.f?'Sí':'No'}</button><button type="button" class="sec" data-rep-msg="${r.id}">💬 Aviso</button><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar liga</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
+  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-fac="${r.id}">🔠 Modo fácil: ${r.f?'Sí':'No'}</button><button type="button" class="sec" data-rep-msg="${r.id}">💬 Aviso</button><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar app</button><button type="button" class="sec" data-rep-quita="${r.id}">🔒 Quitar celular</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
 sec.addEventListener('change',async e=>{const s=e.target.closest('[data-asig]');if(!s)return;const F=FB(),id=s.dataset.asig,nv=s.value,old=asignado(id),r=PED.find(x=>x.id===id);
   const uAnt=(()=>{const o=RUT.find(x=>x.id===old);return o&&o.e&&o.e[id]&&o.e[id].u||''})();
   try{if(old&&old!==nv){const o=RUT.find(x=>x.id===old);const e2={...(o.e||{})};delete e2[id];await F.docSet('rutas',old,{n:o.n,m:o.m||[],f:!!o.f,ik:window.ARBA_IKV||o.ik||'',ids:(o.ids||[]).filter(x=>x!==id),e:e2})}
@@ -2249,8 +2277,10 @@ sec.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)
   try{
    if('repAdd' in b.dataset){const n=sec.querySelector('#repNom').value.trim();if(!n){T().toast('Escribe el nombre');return}
      const code='R'+(n.normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,6))+rnd(5);await F.docSet('rutas',code,{n:n.slice(0,40),ik:window.ARBA_IKV||'',ids:[],e:{}});sec.querySelector('#repNom').value='';T().toast('Repartidor agregado')}
-   else if(b.dataset.repWa){const r=RUT.find(x=>x.id===b.dataset.repWa);const url=location.origin+location.pathname+'?r='+r.id;
-     const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(`Hola ${nomLimpio(r.n)} 👋 Esta es tu liga de Distribuidora ARBA. Ahí te salen tus entregas y las marcas como entregadas:\n${url}\n\nÁbrela en Chrome y agrégala a tu pantalla de inicio.`);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+   else if(b.dataset.repWa){const r=RUT.find(x=>x.id===b.dataset.repWa);const t=rnd(8);await F.invNueva(t,r.id);const url=location.origin+location.pathname+'?ri='+t;
+     const a=document.createElement('a');a.href='https://wa.me/?text='+encodeURIComponent(`Hola ${nomLimpio(r.n)} 👋 Esta es tu app de Distribuidora ARBA. Ahí te salen tus entregas:\n${url}\n\nÁbrela en tu celular y toca "Instalar app". En iPhone tu código es: ${t}\nEsta liga funciona una sola vez y vence en 7 días.`);a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
+   else if(b.dataset.repQuita){const r=RUT.find(x=>x.id===b.dataset.repQuita);if(!confirm('¿Quitarle la app a '+r.n+' en el celular donde la tiene? Para que la vuelva a usar le mandas una liga nueva.'))return;
+     const code='R'+(r.n.normalize('NFD').replace(/[^A-Za-z]/g,'').toUpperCase().slice(0,6))+rnd(5);const {id,...d}=r;await F.docSet('rutas',code,d);await F.negBorrar('rutas',r.id);T().toast('🔒 Listo, '+r.n+' ya no puede entrar con ese celular')}
    else if(b.dataset.repMsg){const r=RUT.find(x=>x.id===b.dataset.repMsg);const t=(prompt('Aviso para '+r.n+' (le llega como notificación):')||'').trim().slice(0,300);if(!t)return;
      await F.docMerge('rutas',r.id,{m:[...(r.m||[]).slice(-9),{t,f:Date.now()}]});T().toast('💬 Aviso enviado a '+r.n)}
    else if(b.dataset.repFac){const r=RUT.find(x=>x.id===b.dataset.repFac);await F.docMerge('rutas',r.id,{f:!r.f});T().toast('Modo fácil '+(r.f?'apagado':'prendido')+' para '+r.n)}
@@ -3196,7 +3226,7 @@ const T=()=>window.ARBA_T;
 const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cartLee=()=>{try{return JSON.parse(LS('arba-cart')||'{}')}catch(e){return {}}};
 const antic=p=>['Repostería','Combos'].includes(p.cat)||(p.cat==='Tortillas'&&p.id!=='t1');
-const esCliente=()=>{const b=document.body.classList,q=new URLSearchParams(location.search);return !b.contains('dueno')&&!b.contains('repa')&&!LS('arba-repa')&&LS('arba-modo')!=='dueno'&&!q.get('r')&&!q.get('dueno')&&!q.get('app')};
+const esCliente=()=>{const b=document.body.classList,q=new URLSearchParams(location.search);return !b.contains('dueno')&&!b.contains('repa')&&!LS('arba-repa')&&LS('arba-modo')!=='dueno'&&!q.get('r')&&!q.get('ri')&&!q.get('dueno')&&!q.get('app')};
 /* Todos los renglones que se pueden pedir: cada opción de un producto es su propio renglón (más fácil de entender) */
 function renglones(cat){const t=T(),out=[];t.P.forEach(p=>{if(p.cat!==cat)return;
   if(p.v&&p.v.length)p.v.forEach((o,i)=>{const k=p.id+':'+i;if(o.pr!=null&&!t.agot(k))out.push({k,p,vi:i,n:p.n+' · '+o.n,u:p.v.length>1?'':p.u,pr:o.pr,my:o.my})});
@@ -3340,7 +3370,9 @@ function bPinta(paso,solo){if(!bw)return;const b=bw.querySelector('.bwb');
 function bAbre(solo,p0){hayVideo().then(()=>{if(bw)bw.remove();bw=document.createElement('div');bw.id='bw';bw.className='fzlike';bw.setAttribute('role','dialog');bw.setAttribute('aria-label',L('Bienvenida','Welcome'));
   bw.innerHTML=`<div class="bwh">${solo?'':`<button type="button" class="bwsk" data-bdesp>${L('Saltar','Skip')} ✕</button>`}${solo?`<button type="button" class="bwsk" data-bx>✕</button>`:''}</div><div class="bwb"></div>`;
   document.body.appendChild(bw);document.body.classList.add('fzon');bw.addEventListener('click',bClic);bw.addEventListener('change',e=>{if(e.target.id==='bwTC'){const k=bw.querySelector('[data-btc]');if(k)k.disabled=!e.target.checked}});bPinta(p0||1,solo)})}
-function bCierra(facil){if(bw){const v=bw.querySelector('video');if(v)v.pause();bw.remove();bw=null}LSet('arba-bienv','1');if(!fz)document.body.classList.remove('fzon');if(facil)abre()}
+function holaCli(){const h=document.getElementById('cliHola');if(!h)return;let r=null;try{r=JSON.parse(LS('arba-reg')||'null')}catch(e){}const n=r&&String(r.n||'').trim().split(/\s+/)[0];if(!n||!esCliente()){h.hidden=true;return}h.hidden=false;h.innerHTML='👋 '+L('Hola','Hi')+', <b>'+String(n).replace(/[&<>"]/g,'')+'</b>'}
+window.ARBA_HOLA=holaCli;
+function bCierra(facil){setTimeout(holaCli,50);if(bw){const v=bw.querySelector('video');if(v)v.pause();bw.remove();bw=null}LSet('arba-bienv','1');if(!fz)document.body.classList.remove('fzon');if(facil)abre()}
 function regSube(){let r=null;try{r=JSON.parse(LS('arba-reg')||'null')}catch(e){}if(!r||r.ok)return;
   const go=()=>{const F=window.ARBA_FB;if(!F||!F.docSet)return;F.docSet('registros',r.tel,{n:r.n,tel:r.tel,i:r.i,f:r.f,o:!!r.o,...(r.tc?{tc:r.tc,tf:+r.tf||r.f}:{})}).then(()=>{r.ok=1;LSet('arba-reg',JSON.stringify(r))},e=>console.warn('registro',e))};
   if(window.ARBA_FB)go();else window.addEventListener('arba-fb',go,{once:true})}
@@ -3403,7 +3435,7 @@ function boton(){if(document.querySelector('.fzent'))return;if(LS('arba-facil')=
 document.addEventListener('click',e=>{if(e.target.closest('[data-fzon]')){const w=document.getElementById('ajW');if(w)w.remove();abre();return}
   if(e.target.closest('#ajBtn,[data-raj]'))setTimeout(()=>{const w=document.querySelector('#ajW [role=dialog]');if(!w||w.querySelector('[data-fzaj]'))return;const h=w.querySelector('h3');if(h)h.insertAdjacentHTML('afterend',`<button type="button" class="ajb on" data-fzaj data-fzon data-noen style="width:100%;margin:4px 0 8px;font-size:17px;font-weight:700">🔍 ${L('Usar modo fácil (letras grandes)','Use easy mode (big letters)')}</button>`)},0);
 });
-function inicio(){boton();regSube();avpLinks();const h=location.hash;if(!esCliente()||/^#(panel|estatus)/.test(h))return;if(LS('arba-bienv')!=='1'){bAbre(false);return}if(!tcOk()){bAbre(false,'tc');return}if(LS('arba-facil')==='1')abre()}
+function inicio(){holaCli();boton();regSube();avpLinks();const h=location.hash;if(!esCliente()||/^#(panel|estatus)/.test(h))return;if(LS('arba-bienv')!=='1'){bAbre(false);return}if(!tcOk()){bAbre(false,'tc');return}if(LS('arba-facil')==='1')abre()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(inicio,300));else setTimeout(inicio,300);
 })();
 </script>
