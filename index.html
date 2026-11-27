@@ -1803,6 +1803,7 @@ function estHtml(p){const o=estTodos()[p];if(!o)return '<h3>Estatus de tu pedido
   if(n===2&&!o.t)h+='<p class="note">Te avisamos por WhatsApp en cuanto cambie.</p>';
   const nb=n<5?campana():'';
   if(o.s==='recibido'&&corrU(p))h+=`<div class="corrbox"><button type="button" class="go" data-corrige="${esc(p)}">✏️ Corregir mi pedido</button><small>Puedes cambiarlo mientras todavía no lo aceptamos.</small></div>`;
+  if(o.fx)h+=`<div class="factbox"><b>🧾 Tu factura ya está lista</b><div><button type="button" class="go" data-factdl="${esc(p)}" data-ft="pdf">Descargar PDF</button><button type="button" class="sec" data-factdl="${esc(p)}" data-ft="xml">Descargar XML</button></div></div>`;
   return h+nb+`<a class="wa" style="display:inline-block;margin-top:10px" href="https://wa.me/${WHATS}?text=${encodeURIComponent('Hola, pregunto por mi pedido '+p)}" target="_blank" rel="noopener">Preguntar por WhatsApp</a>`}
 /* Avisos en el celular cuando cambia el estatus */
 const NOTI={aceptado:['✅ Pedido aceptado','Ya estamos preparando tu pedido.'],pagado:['💰 Pago recibido','Gracias, ya quedó registrado tu pago.'],camino:['🚚 Tu pedido va en camino','Ya va para allá. ¡Prepárate!'],listo:['📦 Listo para recoger','Tu pedido ya está listo, puedes pasar por él.'],entregado:['🎉 Pedido entregado','¡Gracias por tu compra! Cada pedido tuyo hace crecer a una familia chihuahuense 💛'],cancelado:['❌ Pedido cancelado','Escríbenos si tienes dudas.']};
@@ -1825,6 +1826,7 @@ function estAbrir(p){if(p==='*')p='';closeAll();const all=estTodos(),ks=Object.k
   if(!p&&ks.length===1)p=ks[0];
   $('#estBox').innerHTML=p?estHtml(p)+(ks.length>1?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')
     :'<h3>Mis pedidos</h3><div class="estlist">'+ks.map(k=>{const o=all[k];const nm={recibido:'Recibido',aceptado:'Aceptado',pagado:'Pagado',camino:'En camino',listo:'Listo para recoger',entregado:'Entregado',cancelado:'Cancelado'}[o.s]||'';return `<button data-estver="${k}">Pedido ${pedN(k)} · ${o.rp&&(o.s==='cancelado'||o.s==='recibido')?'Corregido → '+pedN(o.rp):nm}</button>`}).join('')+'</div>';
+  $('#estBox').insertAdjacentHTML('beforeend','<p style="margin-top:14px"><button type="button" class="sec" style="padding:0 14px" data-misfact>🧾 Mis facturas</button></p>');
   $('#estado').classList.add('on');$('#veil').classList.add('on');estVivo(p)}
 function estCerrar(){estVivo('');$('#estado').classList.remove('on');$('#veil').classList.remove('on');if(location.hash.indexOf('#estatus')===0)history.replaceState(null,'',location.pathname+location.search)}
 function estRuta(){if(location.hash.indexOf('#estatus')!==0)return;const q=new URLSearchParams(location.hash.split('?')[1]||'');const p=q.get('p')||'';
@@ -1841,9 +1843,9 @@ let estUnsub=null,estAbierto='';
 function estVivo(p){estAbierto=p||'';if(estUnsub){try{estUnsub()}catch(e){}estUnsub=null}
   const o=p&&estTodos()[p];if(!o||!o.k)return;const F=window.ARBA_FB;if(!F){window.addEventListener('arba-fb',()=>{if(estAbierto===p)estVivo(p)},{once:true});return}
   estUnsub=F.escuchar(p+'_'+o.k,d=>{if(!d||!EST_ORDEN[d.s])return;const al=estTodos(),x=al[p]||{};
-    x.s=d.s;if(d.e)x.e=d.e;if(d.t)x.t=d.t;else delete x.t;x.f=d.f&&d.f.toMillis?d.f.toMillis():Date.now();al[p]=x;
+    x.s=d.s;if(d.e)x.e=d.e;if(d.fx)x.fx=1;if(d.t)x.t=d.t;else delete x.t;x.f=d.f&&d.f.toMillis?d.f.toMillis():Date.now();al[p]=x;
     try{localStorage.setItem('arba-pedidos',JSON.stringify(al))}catch(e){}
-    if(estAbierto===p&&$('#estado').classList.contains('on')){const otros=Object.keys(al).length>1;$('#estBox').innerHTML=estHtml(p)+(otros?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')}})}
+    if(estAbierto===p&&$('#estado').classList.contains('on')){const otros=Object.keys(al).length>1;$('#estBox').innerHTML=estHtml(p)+(otros?'<p style="margin-top:14px"><button class="sec" style="padding:0 14px" data-estver="*">Ver mis otros pedidos</button></p>':'')+'<p style="margin-top:14px"><button type="button" class="sec" style="padding:0 14px" data-misfact>🧾 Mis facturas</button></p>'}})}
 function estFbCambia(p,st){const s=EST_DE[st];if(!s||!pK||!/^ARBA-[\d-]+$/.test(p||''))return;const F=window.ARBA_FB;if(!F||!F.admin())return;
   const d={s};if(pe==='Paso a recoger')d.e='r';else if(pe)d.e='d';const tm=$('#pTiempo').value.trim();d.t=(tm&&(s==='aceptado'||s==='camino'||s==='listo'))?tm.slice(0,60):'';
   F.cambiar(p+'_'+pK,d).then(()=>toast('Estatus actualizado en línea ✅'),()=>toast('No se pudo actualizar el estatus en línea'))}
@@ -1875,7 +1877,7 @@ function pedCard(r){const ms=r.c&&r.c.toMillis?r.c.toMillis():0,[cl,nom]=ESTC[r.
   return `<div class="pcd ${cl}${tarde?' tarde':''}"><div class="pct"><b>${esc(pedN(r.p||''))}</b><span class="pst ${cl}">${nom}</span></div>
   <div class="pcn">${esc(r.n||'')}${r.cn?' · <small>🏪 '+esc(r.cn)+'</small>':''}</div>${regBadge(r)}${corr}
   ${prog}<div class="pci">🛒 ${esc(resu(r.i))||'—'}</div>
-  <div class="pcm"><b>${esc(r.T||'')}</b> · ${esc(r.g||'')} · ${ent}${r.fa?' · 🧾 Factura':''}</div>
+  <div class="pcm"><b>${esc(r.T||'')}</b> · ${esc(r.g||'')} · ${ent}${r.fa?(r.fe?' · 🧾 Factura subida ✅':' · 🧾 Pide factura'):''}</div>
   ${r.d?`<div class="pcm">📍 ${esc(r.d)}</div>`:''}${r.no?`<div class="pcm">📝 ${esc(r.no)}</div>`:''}
   ${r.v?`<div class="pcm" style="color:#7ed957;font-weight:700">🤝 Vendedor: ${esc(r.v)}</div>`:''}${r.rf?`<div class="pcm" style="color:#7ed957;font-weight:700">🚚 Liga de ${esc((window.ARBA_RN||{})[r.rf]||r.rf)}</div>`:''}
   <div class="pcw">${tarde?'⏰ ':'🕒 '}${ms?hace(ms):''}</div>
@@ -5145,7 +5147,7 @@ function texto(){const r=R,f=fiscal(r.fa),t=calc(LIN);
 async function abrir(id){const r=(window._fbRows||[]).find(x=>x.id===id);if(r)abrirR(r)}
 async function abrirR(r){R=r;const fin=['entregado','cancelado'].includes(r.s);
   let w=document.getElementById('ocW');if(!w){w=document.createElement('div');w.id='ocW';document.body.appendChild(w)}
-  w.innerHTML=`<div class="ocBar"><button type="button" class="ocPdf" data-ocpdf>🖨️ Guardar PDF / Imprimir</button><button type="button" class="ocCp" data-occp>📋 Copiar para CONTPAQi</button><button type="button" data-ocsv>💾 Guardar precios</button><button type="button" data-ocx>✕ Cerrar</button>${fin?'':'<button type="button" class="ocEnt" data-ocent>✅ Marcar como entregado</button>'}</div><div class="ocHoja" id="ocHoja"><p>Cargando la orden…</p></div>`;
+  w.innerHTML=`<div class="ocBar"><button type="button" class="ocPdf" data-ocpdf>🖨️ Guardar PDF / Imprimir</button><button type="button" class="ocCp" data-occp>📋 Copiar para CONTPAQi</button><button type="button" data-ocsv>💾 Guardar precios</button><button type="button" data-ocfac>📎 ${r.fe?'Cambiar factura':'Subir factura'}</button><input type="file" id="ocFile" accept=".pdf,.xml,application/pdf,text/xml,application/xml" multiple hidden><button type="button" data-ocx>✕ Cerrar</button>${fin?'':'<button type="button" class="ocEnt" data-ocent>✅ Marcar como entregado</button>'}</div><div class="ocHoja" id="ocHoja"><p>Cargando la orden…</p></div>`;
   w.hidden=false;document.documentElement.style.overflow='hidden';
   LIN=await renglones(r);pinta()}
 function cerrar(){const w=document.getElementById('ocW');if(w){w.hidden=true;w.innerHTML=''}document.documentElement.style.overflow=''}
@@ -5161,6 +5163,49 @@ document.addEventListener('click',async ev=>{
     catch(er){en.disabled=false;T().toast('No se pudo marcar. Revisa tu internet.')}return}
   const sv=ev.target.closest('[data-ocsv]');if(sv){const oc={};LIN.forEach(l=>{if(l.pr!=null)oc[l.k]=l.pr});sv.disabled=true;
     try{await FB().docMerge('pedidos_priv',R.id,{oc});R.oc=oc;T().toast('💾 Precios guardados en esta orden')}catch(er){T().toast('No se pudieron guardar. Revisa tu internet.')}sv.disabled=false;return}});
+/* ===== FACTURAS: tú subes el PDF y XML timbrados (CONTPAQi) a cada pedido; el cliente los descarga en "🧾 Mis facturas".
+   Firestore: facturas/{pedido_clave} = {p, f, pdf (base64), xml}; el pedido público lleva fx:true para que el cliente sepa que ya está. */
+const b64=buf=>{let s='';const a=new Uint8Array(buf);for(let i=0;i<a.length;i+=0x8000)s+=String.fromCharCode.apply(null,a.subarray(i,i+0x8000));return btoa(s)};
+async function subirFactura(files){const L=[...files];const pdf=L.find(f=>/\.pdf$/i.test(f.name)||f.type==='application/pdf'),xml=L.find(f=>/\.xml$/i.test(f.name)||/xml/.test(f.type));
+  if(!pdf&&!xml){T().toast('Escoge el PDF y el XML de la factura');return}
+  if((pdf?pdf.size:0)+(xml?xml.size:0)>700*1024){T().toast('La factura pesa mucho (máximo 700 KB entre PDF y XML)');return}
+  const d={p:R.p||'',f:Date.now()};if(pdf)d.pdf=b64(await pdf.arrayBuffer());if(xml)d.xml=await xml.text();
+  T().toast('Subiendo factura…');
+  try{const old=R.fe?await FB().docGet('facturas',R.id).catch(()=>null):null;if(old){if(!d.pdf&&old.pdf)d.pdf=old.pdf;if(!d.xml&&old.xml)d.xml=old.xml}
+    await FB().docSet('facturas',R.id,d);await FB().docMerge('pedidos',R.id,{fx:true});const fe=Date.now();await FB().docMerge('pedidos_priv',R.id,{fe}).catch(()=>{});R.fe=fe;
+    const falta=!d.pdf?' (falta el PDF)':!d.xml?' (falta el XML)':'';T().toast('🧾 Factura subida'+falta+'. Tu cliente ya la puede descargar');
+    const b=document.querySelector('[data-ocfac]');if(b)b.textContent='📎 Cambiar factura';
+    const tel=String(R.tel||'').replace(/\D/g,'').slice(-10);
+    if(tel.length===10&&confirm('¿Avisarle por WhatsApp a '+(R.n||'tu cliente')+' que su factura ya está en la app?')){
+      const [pp,kk]=String(R.id).split('_');const liga=T().TIENDA_URL+'#estatus?'+new URLSearchParams({p:R.p||pp,s:R.s||'entregado',e:R.e==='Paso a recoger'?'r':'d',k:R.k||kk}).toString();
+      window.open('https://wa.me/52'+tel+'?text='+encodeURIComponent('Hola'+(R.n?' '+String(R.n).split(' ')[0]:'')+', tu factura del pedido '+T().pedN(R.p||'')+' ya está lista 🧾. La puedes descargar (PDF y XML) en la app, en "Mis facturas":\n'+liga),'_blank')}}
+  catch(er){console.warn(er);T().toast('No se pudo subir la factura. Revisa tu internet.')}}
+document.addEventListener('change',async ev=>{if(ev.target.id!=='ocFile')return;const f=ev.target.files;if(f&&f.length)await subirFactura(f);ev.target.value=''});
+
+/* Lado del cliente */
+const misPeds=()=>{try{return JSON.parse(localStorage.getItem('arba-pedidos')||'{}')}catch(er){return {}}};
+async function bajar(p,tipo){const o=misPeds()[p];if(!o||!o.k){T().toast('No encontramos ese pedido en este celular');return}
+  const esp=()=>new Promise(r=>{if(FB())return r();window.addEventListener('arba-fb',r,{once:true})});await esp();
+  try{const d=await FB().docGet('facturas',p+'_'+o.k);if(!d||!d[tipo]){T().toast(tipo==='xml'?'Esta factura todavía no tiene XML':'Esta factura todavía no tiene PDF');return}
+    let blob;if(tipo==='pdf'){const bin=atob(d.pdf),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);blob=new Blob([a],{type:'application/pdf'})}
+    else blob=new Blob([d.xml],{type:'application/xml'});
+    const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='Factura_ARBA_'+T().pedN(p).replace('#','')+'.'+tipo;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)}
+  catch(er){console.warn(er);T().toast('No se pudo descargar. Revisa tu internet.')}}
+async function misFacturas(){const box=document.getElementById('estBox');if(!box)return;
+  const al=misPeds(),ks=Object.keys(al).filter(p=>al[p]&&al[p].k).sort((a,b)=>(al[b].c||al[b].f||0)-(al[a].c||al[a].f||0)).slice(0,40);
+  box.innerHTML='<h3>🧾 Mis facturas</h3><p class="note">Buscando tus facturas…</p>';
+  const esp=()=>new Promise(r=>{if(FB())return r();window.addEventListener('arba-fb',r,{once:true});setTimeout(r,8000)});await esp();
+  if(FB())await Promise.all(ks.filter(p=>!al[p].fx).map(async p=>{try{const d=await FB().docGet('pedidos',p+'_'+al[p].k);if(d&&d.fx)al[p].fx=1}catch(er){}}));
+  try{localStorage.setItem('arba-pedidos',JSON.stringify(al))}catch(er){}
+  const L=ks.filter(p=>al[p].fx);
+  box.innerHTML='<h3>🧾 Mis facturas</h3>'+(L.length?'<div class="factlist">'+L.map(p=>`<div class="factbox"><b>Pedido ${e(T().pedN(p))}</b><div><button type="button" class="go" data-factdl="${e(p)}" data-ft="pdf">Descargar PDF</button><button type="button" class="sec" data-factdl="${e(p)}" data-ft="xml">Descargar XML</button></div></div>`).join('')+'</div>'
+    :'<p>Todavía no tienes facturas aquí.</p><p class="note">Si pediste factura en tu pedido, aquí te aparece en cuanto la tengamos lista y te avisamos por WhatsApp. Solo se ven las facturas de los pedidos hechos desde este celular.</p>')
+    +'<p style="margin-top:14px"><button type="button" class="sec" style="padding:0 14px" data-estver="*">Ver mis pedidos</button></p>'}
+document.addEventListener('click',ev=>{const f=ev.target.closest('[data-factdl]');if(f){bajar(f.dataset.factdl,f.dataset.ft);return}
+  if(ev.target.closest('[data-misfact]'))misFacturas();
+  if(ev.target.closest('[data-ocfac]')){const i=document.getElementById('ocFile');if(i)i.click()}});
+const fst=document.createElement('style');fst.textContent='.factbox{margin:12px 0;padding:12px 14px;border-radius:14px;background:#3f9b2f22;border:1px solid #3f9b2f66}.factbox b{display:block;margin-bottom:8px}.factbox div{display:flex;gap:8px;flex-wrap:wrap}.factbox button{flex:1 1 130px;padding:10px 12px;border-radius:999px;font-weight:700}';document.head.appendChild(fst);
+
 /* QR escaneado: Máster abre la orden lista para marcar entregado; el repartidor marca su entrega */
 let qrCorre=false;
 window.ARBA_QRGO=async function(){const Q=window.ARBA_QRPEND;if(!Q||qrCorre)return;qrCorre=true;const id=Q.p+'_'+Q.k;

@@ -32,6 +32,12 @@ service cloud.firestore {
         && id in get(/databases/$(database)/documents/rutas/$(request.resource.data.r)).data.ids);
     }
 
+    // Facturas (PDF y XML): el cliente solo la ve con el link de su pedido (número + clave); solo tú las subes
+    match /facturas/{id} {
+      allow get: if true;
+      allow list, write: if esAdmin();
+    }
+
     // Datos privados del pedido (nombre, WhatsApp, productos): solo los ves tú
     match /pedidos_priv/{id} {
       allow create: if exists(/databases/$(database)/documents/pedidos/$(id))
