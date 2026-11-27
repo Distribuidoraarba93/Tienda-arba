@@ -644,22 +644,22 @@ fotos: bolsa-rollo-reyma
 presentación: Por kilo · escoge la medida
 dibujo: rollo
 descripción: Bolsas de plástico en rollo, se venden por kilo. Escoge la medida que necesitas.
-opción: 15x25 alta densidad | 76.73 pesos
-opción: 18x26 alta densidad | 76.73 pesos
-opción: 20x30 alta densidad | 76.73 pesos
-opción: 25x35 alta densidad | 76.73 pesos
-opción: 30x40 alta densidad | 76.73 pesos
-opción: 15x25 baja densidad | 78.88 pesos
-opción: 18x26 baja densidad | 78.88 pesos
-opción: 20x30 baja densidad | 78.88 pesos
-opción: 25x35 baja densidad | 78.88 pesos
-opción: 30x40 baja densidad | 78.88 pesos
-opción: 40x60 baja densidad | 78.88 pesos
-opción: 50x70 baja densidad | 78.88 pesos
-opción: 15x25 poliseda | 83.84 pesos
-opción: 20x30 poliseda | 83.84 pesos
-opción: 25x35 poliseda | 83.84 pesos
-opción: 30x40 poliseda | 83.84 pesos
+opción: 15x25 alta densidad | 66.82 pesos
+opción: 18x26 alta densidad | 66.82 pesos
+opción: 20x30 alta densidad | 66.82 pesos
+opción: 25x35 alta densidad | 66.82 pesos
+opción: 30x40 alta densidad | 66.82 pesos
+opción: 15x25 baja densidad | 69 pesos
+opción: 18x26 baja densidad | 69 pesos
+opción: 20x30 baja densidad | 69 pesos
+opción: 25x35 baja densidad | 69 pesos
+opción: 30x40 baja densidad | 69 pesos
+opción: 40x60 baja densidad | 69 pesos
+opción: 50x70 baja densidad | 69 pesos
+opción: 15x25 poliseda | 74.07 pesos
+opción: 20x30 poliseda | 74.07 pesos
+opción: 25x35 poliseda | 74.07 pesos
+opción: 30x40 poliseda | 74.07 pesos
 opción: 15x25 poliseda biodegradable | 87.76 pesos
 opción: 20x30 poliseda biodegradable | 87.76 pesos
 opción: 25x35 poliseda biodegradable | 87.76 pesos
