@@ -742,12 +742,30 @@ body.encat .amigos,body.dueno .amigos .x{display:none!important}
 .pcd .go,#pQuick .go,#repaW .go{background:#25a244!important;color:#fff!important}
 .hist button:not(.hv) .hring{background:conic-gradient(#7ed957,#f4b400,#7ed957)}
 </style>
-<script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
+<script>try{var A=JSON.parse(localStorage.getItem('arba-aj')||'{}');var c=document.documentElement.classList;if(A.l)c.add('l-'+A.l);if(A.f)c.add('f-'+A.f);if(A.v==='lista')c.add('v-lista');if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro')}catch(e){}</script>
 <style>
 /* Que al tocar no salga 'Tocar para buscar' de Google ni se seleccione texto (menos en campos para escribir) */
 body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,textarea,select,[contenteditable],.sel{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
 #duBar,#duBar *,.dun,nav,nav *,button,.seg,.opts,.ajbtn,#repaW .rh,#repaW .rtabs,.cats,.chips{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-html.l-chica{zoom:.9}html.l-grande{zoom:1.12}
+html{zoom:.94}html.l-chica{zoom:.86}html.l-grande{zoom:1.06}
+/* ===== VISTA EN LISTA: foto chica a la izquierda, nombre y precio en medio, botón a la derecha ===== */
+.vtog{display:inline-flex;gap:2px;padding:3px;border-radius:10px;background:#ffffff12;border:1px solid #ffffff1f}
+.vtog button{border:0;background:transparent;color:inherit;width:34px;height:30px;border-radius:8px;display:grid;place-items:center;padding:0;opacity:.65}
+.vtog button.on{background:#f4b400;color:#152016;opacity:1}
+.vtog svg{width:17px;height:17px}
+html.claro .vtog{background:#0b15250d;border-color:#0b15251f}
+html.v-lista .grid{grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+@media(min-width:900px){html.v-lista .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+html.v-lista .grid .p{display:grid!important;grid-template-columns:88px minmax(0,1fr);align-items:center;min-height:0}
+html.v-lista .grid .p .img{aspect-ratio:1!important;width:88px!important;height:88px;border-radius:12px;overflow:hidden;margin:6px 0 6px 6px}
+html.v-lista .grid .p .img .tag{font-size:9.5px!important;line-height:1.15;padding:3px 4px!important;top:auto!important;bottom:4px!important;left:4px!important;right:4px!important;white-space:normal;text-align:center}
+html.v-lista .grid .p .info{display:flex!important;flex-direction:column;justify-content:center;padding:8px 64px 8px 12px!important;gap:2px!important;position:relative}
+html.v-lista .grid .p h3{order:-1;font-size:14px!important;line-height:1.25;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.v-lista .grid .p .price{font-size:17px!important;white-space:normal;line-height:1.15}
+html.v-lista .grid .p .price small{font-size:10.5px!important}
+html.v-lista .grid .p .plus{top:50%!important;right:10px!important;transform:translateY(-50%);width:42px!important;height:42px!important;font-size:24px!important;border-width:2px!important}
+html.v-lista .grid .p .plus.ver{width:auto!important;height:34px!important;padding:0 12px!important;font-size:13px!important}
+
 html.f-chicas .grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}html.f-chicas .grid .p h3,html.f-chicas .grid .p .nm{font-size:12px}
 html.f-grandes .grid{grid-template-columns:minmax(0,1fr)!important;gap:14px!important}
 @media(min-width:900px){html.f-chicas .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important}html.f-grandes .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))!important}}
@@ -979,7 +997,7 @@ header .bar{position:relative}
   <section class="amigos" id="amigos" hidden><h2>🤝 Negocios amigos</h2><div class="arow" id="aRow"></div></section>
   <div class="ctips htips" id="hTips"><button type="button" class="hduen" data-hduen><i>📅</i><span><b>Pedidos programados pendientes</b><span id="hProgN">Revisa y confirma con tus clientes</span></span><em>Ver</em></button><button type="button" data-hprog><i>📅</i><span><b>¿Pedido para otro día?</b>Prográmalo y nosotros te lo recordamos. Un pendiente menos.</span><em>Programar</em></button><a href="https://wa.me/526141077999?text=Hola%2C%20busco%3A%20" target="_blank" rel="noopener"><i>🔎</i><span><b>¿No lo ves?</b>Pregúntanos y te lo conseguimos.</span><em>Preguntar</em></a></div>
   <div class="rep" id="rep" hidden></div>
-  <div class="head"><button type="button" class="back" data-back aria-label="Regresar">←</button><h2 id="title">Todos los productos</h2><span class="hr"><span id="n"></span></span></div>
+  <div class="head"><button type="button" class="back" data-back aria-label="Regresar">←</button><h2 id="title">Todos los productos</h2><span class="hr"><span id="n"></span><span class="vtog" role="group" aria-label="Cómo ver los productos"><button type="button" data-vista="cuadricula" aria-label="Ver en cuadrícula"><svg viewBox="0 0 20 20" fill="currentColor"><rect x="2" y="2" width="7" height="7" rx="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg></button><button type="button" data-vista="lista" aria-label="Ver en lista"><svg viewBox="0 0 20 20" fill="currentColor"><rect x="2" y="3" width="5" height="5" rx="1.2"/><rect x="9" y="4.5" width="9" height="2" rx="1"/><rect x="2" y="12" width="5" height="5" rx="1.2"/><rect x="9" y="13.5" width="9" height="2" rx="1"/></svg></button></span></span></div>
   <div class="thead" id="tortHead" hidden><img src="img/logo-2c.webp" alt="Tortillería Los 2 Carnales"><div><b>Tortillería Los 2 Carnales</b><span>Tortillas de harina recién hechas aquí en Chihuahua, normales y sabor mantequilla.</span><span class="tg">🔥 Recién hechas · 💰 Mayoreo desde 5 paquetes</span><button class="calcbtn" data-calc>🧮 ¿Haces fiesta? Calcula tus tortillas</button></div></div>
   <figure class="cban" id="banner" hidden><img src="img/tortillas-tamanos.webp" alt="Tamaños de las tortillas Los 2 Carnales, del montado jumbo al taco chico"><figcaption>Así son los tamaños de nuestras tortillas: del montado jumbo al taco chico.</figcaption></figure>
   <div class="grid" id="grid"></div>
@@ -2940,13 +2958,14 @@ window.ARBA_TRAD=async function(t){t=String(t||'').trim();if(!t)return '';const 
 /* ===== AJUSTES: tamaño de letra, tamaño de fotos y modo oscuro/claro (se guarda en el celular) ===== */
 (function(){
 const K='arba-aj',ld=()=>{try{return JSON.parse(localStorage.getItem(K)||'{}')}catch(e){return {}}};
-const OPS={i:[['es','🇲🇽 Español',''],['en','🇺🇸 English','']],l:[['chica','Chica','Aa'],['normal','Normal','Aa'],['grande','Grande','Aa']],f:[['chicas','Chicas','3 por fila'],['normales','Normales','2 por fila'],['grandes','Grandes','1 por fila']],t:[['oscuro','🌙 Oscuro',''],['claro','☀️ Claro',''],['auto','📱 Auto','como tu celular']]};
-function aplica(A){const c=document.documentElement.classList;['l-chica','l-grande','f-chicas','f-grandes','claro'].forEach(x=>c.remove(x));
+const OPS={i:[['es','🇲🇽 Español',''],['en','🇺🇸 English','']],l:[['chica','Chica','Aa'],['normal','Normal','Aa'],['grande','Grande','Aa']],f:[['chicas','Chicas','3 por fila'],['normales','Normales','2 por fila'],['grandes','Grandes','1 por fila']],v:[['cuadricula','Cuadrícula','fotos grandes'],['lista','Lista','uno abajo del otro']],t:[['oscuro','🌙 Oscuro',''],['claro','☀️ Claro',''],['auto','📱 Auto','como tu celular']]};
+function aplica(A){const c=document.documentElement.classList;['l-chica','l-grande','f-chicas','f-grandes','claro','v-lista'].forEach(x=>c.remove(x));if(A.v==='lista')c.add('v-lista');
+  document.querySelectorAll('[data-vista]').forEach(b=>b.classList.toggle('on',b.dataset.vista===(A.v==='lista'?'lista':'cuadricula')));
   if(A.l&&A.l!=='normal')c.add('l-'+A.l);if(A.f&&A.f!=='normales')c.add('f-'+A.f);if(A.t==='claro'||(A.t==='auto'&&matchMedia('(prefers-color-scheme: light)').matches))c.add('claro');
   const m=document.querySelector('meta[name=theme-color]');if(m&&!document.body.classList.contains('dueno'))m.content=c.contains('claro')?'#f4f4f4':'#0b1525'}
-function abre(){const A=Object.assign({i:'es',l:'normal',f:'normales',t:'oscuro'},ld());let w=document.getElementById('ajW');if(w)w.remove();w=document.createElement('div');w.id='ajW';
+function abre(){const A=Object.assign({i:'es',l:'normal',f:'normales',v:'cuadricula',t:'oscuro'},ld());let w=document.getElementById('ajW');if(w)w.remove();w=document.createElement('div');w.id='ajW';
   const g=(k,t)=>`<span class="lbl">${t}</span><div class="ops">${OPS[k].map(([v,n,s])=>`<button type="button" data-k="${k}" data-v="${v}" class="${A[k]===v?'on':''}"${k==='l'?` style="font-size:${v==='chica'?12.5:v==='grande'?17:14.5}px"`:''}>${n}${s&&k!=='l'?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
-  w.innerHTML=`<div role="dialog" aria-label="Ajustes"><h3>⚙️ Ajustes<button type="button" data-x aria-label="Cerrar">×</button></h3><button type="button" class="ajshare" data-shapp>${document.body.classList.contains('repa')?'📤 Compartir mi liga':'📤 Compartir la app'}</button>${g('i','Idioma').replace('class="ops"','class="ops ops2"')}${notifRow()}${g('l','Tamaño de letra')}${g('f','Tamaño de fotos')}${g('t','Modo')}<p style="margin:4px 0 0;font-size:12px;opacity:.7">Se guarda en este celular.</p></div>`;
+  w.innerHTML=`<div role="dialog" aria-label="Ajustes"><h3>⚙️ Ajustes<button type="button" data-x aria-label="Cerrar">×</button></h3><button type="button" class="ajshare" data-shapp>${document.body.classList.contains('repa')?'📤 Compartir mi liga':'📤 Compartir la app'}</button>${g('i','Idioma').replace('class="ops"','class="ops ops2"')}${notifRow()}${g('l','Tamaño de letra')}${g('v','Ver productos en').replace('class="ops"','class="ops ops2"')}${g('f','Tamaño de fotos')}${g('t','Modo')}<p style="margin:4px 0 0;font-size:12px;opacity:.7">Se guarda en este celular.</p></div>`;
   document.body.appendChild(w);
   w.addEventListener('click',e=>{if(e.target===w||e.target.closest('[data-x]')){w.remove();return}const b=e.target.closest('[data-k]');if(!b)return;const A2=ld();const cambiaIdioma=b.dataset.k==='i'&&(A2.i||'es')!==b.dataset.v;A2[b.dataset.k]=b.dataset.v;try{localStorage.setItem(K,JSON.stringify(A2))}catch(er){}if(cambiaIdioma){location.reload();return}aplica(A2);
     w.querySelectorAll(`[data-k="${b.dataset.k}"]`).forEach(x=>x.classList.toggle('on',x===b))})}
@@ -2970,6 +2989,7 @@ function activaPush(btn){const o=rolPush();
     window.ARBA_T.toast('🔔 Listo, te avisamos cuando cambien tus pedidos');abre()})}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-ajpush]');if(b)activaPush(b)});
 window.ARBA_AJ=abre;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-vista]');if(!b)return;const A=ld();A.v=b.dataset.vista;try{localStorage.setItem(K,JSON.stringify(A))}catch(er){}aplica(A)});
 document.addEventListener('click',e=>{if(e.target.closest('#ajBtn,[data-du="aj"],[data-raj]'))abre()});
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>aplica(ld()))}catch(e){}
 aplica(ld());
