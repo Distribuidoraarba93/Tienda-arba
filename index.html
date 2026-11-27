@@ -3567,9 +3567,23 @@ function bPinta(paso,solo){if(!bw)return;const b=bw.querySelector('.bwb');
     <button type="button" class="fb v" data-bok>✅ ${L('Listo','Done')}</button><button type="button" class="bwl" data-bdesp>${L('Después','Later')}</button>
     <p class="bwpriv">🔒 ${L('Tus datos son privados: solo los ves tú y Distribuidora ARBA, para confirmar tus pedidos y cuidarte de pedidos falsos. No los compartimos con nadie.','Your details are private: only you and Distribuidora ARBA see them, to confirm your orders and protect you from fake orders. We never share them.')} <a href="#" data-avp style="color:inherit;text-decoration:underline">${L('Aviso de privacidad','Privacy notice')}</a></p>`}
   {const h=bw.querySelector('.bwh');if(h)h.style.visibility=paso==='tc'?'hidden':''}b.scrollTop=0}
+/* Fuegos artificiales de bienvenida: solo la PRIMERA vez que el cliente abre la app (verde, amarillo y blanco de la marca, ~3.5 s, sin sonido) */
+function fuegos(){try{if(LS('arba-fuegos')==='1')return;LSet('arba-fuegos','1');if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){return}
+  const c=document.createElement('canvas');c.setAttribute('aria-hidden','true');c.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:69;pointer-events:none';document.body.appendChild(c);
+  const x=c.getContext('2d'),dpr=Math.min(2,devicePixelRatio||1);let W,H;const tam=()=>{W=c.width=innerWidth*dpr;H=c.height=innerHeight*dpr};tam();
+  const COL=['#7ed957','#f4b400','#ffffff','#25a244','#ffd54a'],P=[],R=[];const t0=performance.now();
+  const lanza=()=>R.push({x:W*(.2+Math.random()*.6),y:H,vx:(Math.random()-.5)*2*dpr,vy:-(H/62+Math.random()*H/150),c:COL[(Math.random()*COL.length)|0],h:H*(.18+Math.random()*.3)});
+  const truena=r=>{const n=55+(Math.random()*30|0);for(let i=0;i<n;i++){const a=Math.PI*2*i/n,v=(2+Math.random()*3.2)*dpr;P.push({x:r.x,y:r.y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:1,c:Math.random()<.25?'#fff':r.c})}};
+  let k=0;const sal=[0,350,700,1100,1500,1900];
+  (function paso(t){const e=t-t0;while(k<sal.length&&e>=sal[k]){lanza();if(k%2)lanza();k++}
+    x.globalCompositeOperation='destination-out';x.fillStyle='rgba(0,0,0,.22)';x.fillRect(0,0,W,H);x.globalCompositeOperation='lighter';
+    for(let i=R.length-1;i>=0;i--){const r=R[i];r.x+=r.vx;r.y+=r.vy;r.vy+=.12*dpr;x.fillStyle=r.c;x.beginPath();x.arc(r.x,r.y,2.4*dpr,0,7);x.fill();if(r.y<=r.h||r.vy>=0){truena(r);R.splice(i,1)}}
+    for(let i=P.length-1;i>=0;i--){const p=P[i];p.x+=p.vx;p.y+=p.vy;p.vx*=.975;p.vy=p.vy*.975+.06*dpr;p.l-=.013;if(p.l<=0){P.splice(i,1);continue}x.globalAlpha=p.l;x.fillStyle=p.c;x.beginPath();x.arc(p.x,p.y,2*dpr,0,7);x.fill()}
+    x.globalAlpha=1;if(e<3600||P.length||R.length)requestAnimationFrame(paso);else c.remove()})(t0);
+  addEventListener('resize',tam,{once:true})}
 function bAbre(solo,p0){hayVideo().then(()=>{if(bw)bw.remove();bw=document.createElement('div');bw.id='bw';bw.className='fzlike';bw.setAttribute('role','dialog');bw.setAttribute('aria-label',L('Bienvenida','Welcome'));
   bw.innerHTML=`<div class="bwh">${solo?'':`<button type="button" class="bwsk" data-bdesp>${L('Saltar','Skip')} ✕</button>`}${solo?`<button type="button" class="bwsk" data-bx>✕</button>`:''}</div><div class="bwb"></div>`;
-  document.body.appendChild(bw);document.body.classList.add('fzon');bw.addEventListener('click',bClic);bw.addEventListener('change',e=>{if(e.target.id==='bwTC'){const k=bw.querySelector('[data-btc]');if(k)k.disabled=!e.target.checked}});bPinta(p0||1,solo)})}
+  document.body.appendChild(bw);document.body.classList.add('fzon');bw.addEventListener('click',bClic);bw.addEventListener('change',e=>{if(e.target.id==='bwTC'){const k=bw.querySelector('[data-btc]');if(k)k.disabled=!e.target.checked}});bPinta(p0||1,solo);if(!solo)fuegos()})}
 function holaCli(){const h=document.getElementById('cliHola');if(!h)return;let r=null;try{r=JSON.parse(LS('arba-reg')||'null')}catch(e){}const n=r&&String(r.n||'').trim().split(/\s+/)[0];if(!n||!esCliente()){h.hidden=true;return}h.hidden=false;h.innerHTML='👋 '+L('Hola','Hi')+', <b>'+String(n).replace(/[&<>"]/g,'')+'</b>'}
 window.ARBA_HOLA=holaCli;
 function bCierra(facil){setTimeout(holaCli,50);if(bw){const v=bw.querySelector('video');if(v)v.pause();bw.remove();bw=null}LSet('arba-bienv','1');if(!fz)document.body.classList.remove('fzon');if(facil)abre()}
