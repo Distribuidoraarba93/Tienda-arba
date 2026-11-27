@@ -42,6 +42,7 @@ descripción: Todo lo que necesita tu burrería o lonchera: 10 paquetes de torti
 
 Combo Navideño 🎄
 id: k2
+iva: 0
 antes: 106
 presentación: 2 paquetes de tortilla para buñuelo grande + 1 frijol cocido 800 g + 1 paquete de tortillas de harina (normales o sabor mantequilla)
 etiqueta: Ahorras hasta 17 pesos
@@ -1462,6 +1463,7 @@ descripción: Salsa de soya de 1 litro, para cocina, marinados y botanas.
 
 Concentrado de limón 1 litro
 id: lb36
+iva: 16
 precio: 710.17 pesos
 presentación: 1 litro
 dibujo: botella
