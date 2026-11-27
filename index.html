@@ -451,6 +451,11 @@ body.edon{overflow:hidden}
 body.repa>header,body.repa>section,body.repa>.hist,body.repa>nav,body.repa>.trust,body.repa>main,body.repa>footer,body.repa>.bnav,body.repa>.cbar,body.repa #abBtn,body.repa #ab,body.repa #negBar,body.repa #temaStrip{display:none!important}
 body.repa{background:#0b1220}#repaW{max-width:600px;margin:0 auto;padding:0 14px 40px;color:#eef2f8}
 #repaW .rh{position:sticky;top:0;background:#0b1220;display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:2px solid #f4b400;z-index:5}#repaW .rh b{color:#f4b400;font:800 18px Poppins,system-ui}#repaW .rh span{flex:1;font-weight:600}
+.reprow{padding:14px;margin:10px 0;border:1px solid #ffffff22;border-radius:16px;background:#ffffff08}
+.reph{display:flex;align-items:center;gap:10px;margin-bottom:12px}.reph b{flex:1;font-size:19px}
+.repfac{display:flex;align-items:center;gap:8px;font-size:14px;opacity:.95;margin:0}
+.sw{position:relative;width:52px;height:30px;border-radius:999px;border:0;background:#ffffff33;padding:0;cursor:pointer;flex:none}.sw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:left .2s}.sw.on{background:#2fb35a}.sw.on i{left:25px}
+.repbtns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.repbtns button{width:100%;margin:0;padding:10px 4px;font-size:14px;line-height:1.2;border-radius:12px}.repbtns .go{grid-column:1/-1}.repbtns .repdel{color:#ff9b8f}
 #cliHola{max-width:1180px;margin:10px auto 0;padding:0 16px;font:600 18px Poppins,system-ui;color:inherit}#cliHola b{color:#f4b400}
 .ra{max-width:420px;margin:0 auto;padding:40px 18px;text-align:center;color:#eef2f8;font-size:18px}.ra img{border-radius:22px}.ra h2{font:800 26px Poppins,system-ui;color:#f4b400;margin:12px 0}.ra ol{text-align:left;line-height:1.5;padding-left:22px}.racod{font:800 34px ui-monospace,monospace;letter-spacing:4px;background:#ffffff14;border:2px dashed #f4b400;border-radius:14px;padding:12px;margin:10px 0}.ra input{width:100%;box-sizing:border-box;font:700 26px ui-monospace,monospace;text-align:center;letter-spacing:3px;padding:14px;border-radius:14px;border:2px solid #f4b400;background:#0b1220;color:#fff;text-transform:uppercase}.raok{font-size:22px;font-weight:700;color:#7ed957}.rabad{font-size:22px;font-weight:700;color:#ffb4a8}
 .rmap{display:block;margin:6px 0;padding:10px 12px;border-radius:12px;background:#1a73e8;color:#fff!important;font-weight:700;text-align:center;text-decoration:none}.rmap small{font-weight:500;opacity:.85}
@@ -806,6 +811,7 @@ html.claro #venAdm .vrow{border-bottom:1px solid #0b152512}
 html.claro body.repa{background:#ffffff}
 html.claro #repaW{color:#1b2433}
 html.claro #repaW .rh{background:#ffffff}
+html.claro .reprow{border-color:#0b152522;background:#0b152506}html.claro .sw{background:#0b152533}html.claro .sw.on{background:#2fb35a}
 html.claro #rHola{background:#fff8e1;color:#152016;border-color:#f4b400}html.claro #rHola b{color:#9a6b00}
 html.claro #repaW .rh b{color:#9a6b00}
 html.claro #repaW .rh button{border:1px solid #0b152540}
@@ -2266,7 +2272,8 @@ function pinta(){const box=sec.querySelector('#entLst'),res=sec.querySelector('#
   box.innerHTML=act.length?act.map(r=>`<div class="entc"><div><b>${esc(T().pedN(r.p))}</b> · ${esc(r.n)}<br><small>${ESTN[r.s]||r.s}${r.T?' · '+esc(r.T):''}${r.d?' · 📍 '+esc(r.d):''}</small></div>
     ${(()=>{const ra=RUT.find(x=>x.id===asignado(r.id)),u=ra&&ra.e&&ra.e[r.id]&&ra.e[r.id].u;return ra?`<button type="button" class="sec" data-ubi="${r.id}">${u?'✅ Ubicación':'📍 Mandar ubicación'}</button>`:''})()}
     <select data-asig="${r.id}"><option value="">— Sin repartidor —</option>${RUT.map(x=>`<option value="${x.id}" ${asignado(r.id)===x.id?'selected':''}>${esc(x.n)}</option>`).join('')}</select></div>`).join(''):'<p class="note">🎉 No hay pedidos a domicilio pendientes.</p>';
-  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="negrow"><div><b>${esc(r.n)}</b><span>Código ${r.id}</span></div><button type="button" class="sec" data-rep-fac="${r.id}">🔠 Modo fácil: ${r.f?'Sí':'No'}</button><button type="button" class="sec" data-rep-msg="${r.id}">💬 Aviso</button><button type="button" class="sec" data-rep-wa="${r.id}">📤 Mandar app</button><button type="button" class="sec" data-rep-quita="${r.id}">🔒 Quitar celular</button><button type="button" class="sec" data-rep-del="${r.id}">Borrar</button></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
+  sec.querySelector('#repLst').innerHTML=RUT.length?RUT.map(r=>`<div class="reprow"><div class="reph"><b>🚚 ${esc(r.n)}</b><label class="repfac"><span>Modo fácil</span><button type="button" class="sw${r.f?' on':''}" data-rep-fac="${r.id}" aria-label="Modo fácil ${r.f?'prendido':'apagado'}"><i></i></button></label></div>
+  <div class="repbtns"><button type="button" class="go" data-rep-wa="${r.id}">📤 Mandar app</button><button type="button" class="sec" data-rep-msg="${r.id}">💬 Aviso</button><button type="button" class="sec" data-rep-quita="${r.id}">🔒 Quitar celular</button><button type="button" class="sec repdel" data-rep-del="${r.id}">🗑️ Borrar</button></div></div>`).join(''):'<p class="note">Agrega a tus repartidores para asignarles pedidos.</p>'}
 sec.addEventListener('change',async e=>{const s=e.target.closest('[data-asig]');if(!s)return;const F=FB(),id=s.dataset.asig,nv=s.value,old=asignado(id),r=PED.find(x=>x.id===id);
   const uAnt=(()=>{const o=RUT.find(x=>x.id===old);return o&&o.e&&o.e[id]&&o.e[id].u||''})();
   try{if(old&&old!==nv){const o=RUT.find(x=>x.id===old);const e2={...(o.e||{})};delete e2[id];await F.docSet('rutas',old,{n:o.n,m:o.m||[],f:!!o.f,ik:window.ARBA_IKV||o.ik||'',ids:(o.ids||[]).filter(x=>x!==id),e:e2})}
