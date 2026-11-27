@@ -1,4 +1,4 @@
-const C='arba-v68',FC='arba-fotos';/* las fotos van en su propia caja y no se borran al actualizar */
+const C='arba-v69',FC='arba-fotos';/* las fotos van en su propia caja y no se borran al actualizar */
 const caja=u=>/\/img\//.test(u)?FC:C;
 const PRE=['./','./index.html','./panel.html','./productos.txt','./i18n-en.js','./manifest.json','./manifest-panel.json?v=2','./icon-192.png','./icon-512.png','./icon-dueno-192.png'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>Promise.all(PRE.map(u=>c.add(u).catch(()=>{})))))});
@@ -6,7 +6,7 @@ self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ks=>Promise.a
 /* Si el internet está lento, no se queda trabada: después de unos segundos abre la copia guardada y la actualiza por detrás */
 const guardado=q=>caches.match(q).then(r=>r||caches.match(q,{ignoreSearch:true})).then(r=>r||(q.mode==='navigate'?caches.match('./index.html'):undefined));
 self.addEventListener('fetch',e=>{const q=e.request;if(q.method!=='GET')return;const u=new URL(q.url);if(/\.(mp4|webm)$/i.test(u.pathname))return;
-  const propio=u.origin===location.origin;if(!propio&&!/(^|\.)(gstatic\.com|googleapis\.com)$/.test(u.hostname)||/firestore|identitytoolkit|securetoken|fcm/.test(u.hostname))return;
+  const propio=u.origin===location.origin;if(!propio&&!/(^|\.)(gstatic\.com|googleapis\.com)$/.test(u.hostname)||/firestore|identitytoolkit|securetoken|fcm|firebasestorage/.test(u.hostname))return;
   const fresco=q.mode==='navigate'||(propio&&/\.(html|txt|json|js)$|\/$/.test(u.pathname));
   const red=fetch(fresco?new Request(q,{cache:'no-cache'}):q).then(r=>{if(r.ok){const cp=r.clone();caches.open(caja(u.pathname)).then(c=>c.put(q,cp))}return r});
   if(!fresco&&!propio){e.respondWith(caches.match(q).then(c=>c||red.catch(()=>Response.error())));return}

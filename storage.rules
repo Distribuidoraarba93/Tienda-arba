@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Videos de patrocinios: todos los ven; solo la cuenta del negocio los sube o borra (máximo 40 MB, solo video)
+    match /patrocinios/{archivo} {
+      allow read: if true;
+      allow delete: if request.auth != null
+        && request.auth.token.email == 'arturo.arba93@gmail.com'
+        && request.auth.token.email_verified == true;
+      allow create, update: if request.auth != null
+        && request.auth.token.email == 'arturo.arba93@gmail.com'
+        && request.auth.token.email_verified == true
+        && request.resource.size < 40 * 1024 * 1024
+        && request.resource.contentType.matches('video/.*');
+    }
+    // Todo lo demás cerrado
+    match /{todo=**} {
+      allow read, write: if false;
+    }
+  }
+}

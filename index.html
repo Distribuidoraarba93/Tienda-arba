@@ -717,7 +717,10 @@ body.dueno #rep{display:none!important}
 .arow{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}.arow::-webkit-scrollbar{display:none}
 .acard{flex:none;width:150px;display:grid;justify-items:center;gap:4px;padding:12px 8px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:inherit;text-align:center;font-family:Poppins,sans-serif;position:relative}
 .acard::after{content:"Patrocinado";position:absolute;top:6px;right:8px;font-size:9px;opacity:.6}
-.acard img{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#fff}.acard b{font-size:13.5px;line-height:1.2}.acard span{font-size:11.5px;opacity:.8;line-height:1.3}
+.acard img{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#fff}
+.acard video.pvid{width:120px;height:68px;border-radius:10px;object-fit:cover;background:#000}
+.slide.pvd{background-size:cover;background-position:center}.slide.pvd video.pvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}.slide.pvd .pvsh{position:absolute;inset:0;background:linear-gradient(90deg,#000d 0%,#0009 45%,#0000 80%);z-index:1}.slide.pvd>div{position:relative;z-index:2}
+.slide .psnd{position:absolute;top:10px;right:10px;z-index:3;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:#0009;font-size:20px;cursor:pointer}.acard b{font-size:13.5px;line-height:1.2}.acard span{font-size:11.5px;opacity:.8;line-height:1.3}
 .acard em{font-style:normal;font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px;background:#f4b400;color:#152016;margin-top:2px}
 body.encat .amigos,body.dueno .amigos .x{display:none!important}
 .patnew{border:1px dashed #f4b40088;border-radius:14px;padding:10px 12px;margin:8px 0 12px}.patnew summary{cursor:pointer;font-weight:800;color:#f4b400}
@@ -2161,6 +2164,11 @@ window.ARBA_FB={ADMIN,
   negVer(col,cb){return fs.onSnapshot(fs.collection(db,col),q=>cb(q.docs.map(d=>({id:d.id,...d.data()}))),()=>cb(null))},
   negGuardar(col,id,d){return fs.setDoc(fs.doc(db,col,id),d)},
   negBorrar(col,id){return fs.deleteDoc(fs.doc(db,col,id))},
+  /* Videos de patrocinios en Firebase Storage (solo el dueño sube; todos los ven) */
+  async subeArchivo(ruta,file,prog){const st=await import(BASE+'firebase-storage.js');const r=st.ref(st.getStorage(app),ruta);
+    await new Promise((ok,no)=>{const t=st.uploadBytesResumable(r,file,{contentType:file.type||'video/mp4',cacheControl:'public,max-age=31536000'});t.on('state_changed',x=>{if(prog&&x.totalBytes)prog(x.bytesTransferred/x.totalBytes)},no,ok)});
+    return st.getDownloadURL(r)},
+  async borraArchivo(ruta){const st=await import(BASE+'firebase-storage.js');await st.deleteObject(st.ref(st.getStorage(app),ruta))},
   patSuma(id,k){return fs.updateDoc(fs.doc(db,'pstats',id),{[k]:fs.increment(1)})},
   lista(cb){let pub={},priv=[];const pinta=()=>cb(priv.map(r=>({...r,...(pub[r.id]||{}),id:r.id,c:r.c})));
     const a=fs.onSnapshot(fs.query(fs.collection(db,'pedidos_priv'),fs.orderBy('c','desc'),fs.limit(40)),q=>{priv=q.docs.map(d=>({id:d.id,...d.data()}));pinta()},()=>cb([]));
@@ -3215,20 +3223,28 @@ function pinta(){const sl=$('#slides'),ds=$('#dots');if(!sl)return;
   sl.querySelectorAll('.slide.spon').forEach(e=>e.remove());
   const B=PAT.filter(p=>vivo(p)&&p.tipo!=='amigo'),vis=[...sl.querySelectorAll('.slide:not([hidden])')];
   B.forEach((p,k)=>{const b=document.createElement('button');b.className='slide spon';b.dataset.pat=p.id;b.type='button';
-    b.style.backgroundImage='linear-gradient(90deg,#000d 0%,#0009 45%,#0000 80%),url("'+p.img+'")';
-    b.innerHTML='<div><span class="chip pspon">Patrocinado</span><h2>'+esc(p.t)+'</h2>'+(p.d?'<p>'+esc(p.d)+'</p>':'')+'<span class="pill">'+esc(p.b||'Ver más')+' →</span></div>';
+    const vd=/^https:\/\/firebasestorage\.googleapis\.com\//.test(p.vid||'');
+    b.style.backgroundImage=vd?'url("'+p.img+'")':'linear-gradient(90deg,#000d 0%,#0009 45%,#0000 80%),url("'+p.img+'")';if(vd)b.classList.add('pvd');
+    b.innerHTML=(vd?'<video class="pvid" src="'+esc(p.vid)+'" poster="'+p.img+'" muted loop playsinline preload="metadata"></video><i class="pvsh"></i><span class="psnd" data-psnd role="button" aria-label="Activar sonido">🔇</span>':'')+'<div><span class="chip pspon">Patrocinado</span><h2>'+esc(p.t)+'</h2>'+(p.d?'<p>'+esc(p.d)+'</p>':'')+'<span class="pill">'+esc(p.b||'Ver más')+' →</span></div>';
     const ref=vis[Math.min(1+k*2,vis.length)]||null;sl.insertBefore(b,ref&&ref.parentNode===sl?ref:null)});
   if(ds){const n=sl.querySelectorAll('.slide:not([hidden])').length;if(ds.children.length!==n)ds.innerHTML='<i class="on"></i>'+'<i></i>'.repeat(Math.max(0,n-1))}
   const A=PAT.filter(p=>vivo(p)&&p.tipo==='amigo'),sec=$('#amigos');
-  if(sec){sec.hidden=!A.length;$('#aRow').innerHTML=A.map(p=>'<button type="button" class="acard" data-pat="'+esc(p.id)+'"><img src="'+p.img+'" alt="" loading="lazy"><b>'+esc(p.t)+'</b>'+(p.d?'<span>'+esc(p.d)+'</span>':'')+'<em>'+esc(p.b||'Ver')+'</em></button>').join('')}
-  if(io)io.disconnect();if('IntersectionObserver' in window){io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>=.6)suma(e.target.dataset.pat,'v')}),{threshold:[.6]});
+  if(sec){sec.hidden=!A.length;$('#aRow').innerHTML=A.map(p=>'<button type="button" class="acard" data-pat="'+esc(p.id)+'">'+(/^https:\/\/firebasestorage\.googleapis\.com\//.test(p.vid||'')?'<video class="pvid" src="'+esc(p.vid)+'" poster="'+p.img+'" muted loop playsinline preload="metadata"></video>':'<img src="'+p.img+'" alt="" loading="lazy">')+'<b>'+esc(p.t)+'</b>'+(p.d?'<span>'+esc(p.d)+'</span>':'')+'<em>'+esc(p.b||'Ver')+'</em></button>').join('')}
+  if(io)io.disconnect();if('IntersectionObserver' in window){io=new IntersectionObserver(es=>es.forEach(e=>{const vv=e.target.querySelector('video.pvid');if(vv){if(e.isIntersecting&&e.intersectionRatio>=.6){const pr=vv.play();if(pr&&pr.catch)pr.catch(()=>{})}else vv.pause()}
+      if(e.isIntersecting&&e.intersectionRatio>=.6)suma(e.target.dataset.pat,'v')}),{threshold:[0,.6]});
     document.querySelectorAll('.spon[data-pat],.acard[data-pat]').forEach(e=>io.observe(e))}}
-document.addEventListener('click',e=>{const b=e.target.closest('.spon[data-pat],.acard[data-pat]');if(!b)return;e.preventDefault();e.stopPropagation();const p=PAT.find(x=>x.id===b.dataset.pat);if(!p)return;suma(p.id,'c');const u=liga(p.url);if(u)window.open(u,'_blank','noopener')},true);
+document.addEventListener('click',e=>{const sn=e.target.closest('[data-psnd]');if(sn){e.preventDefault();e.stopPropagation();const vv=sn.parentElement.querySelector('video.pvid');if(vv){vv.muted=!vv.muted;sn.textContent=vv.muted?'🔇':'🔊';if(!vv.muted){const pr=vv.play();if(pr&&pr.catch)pr.catch(()=>{})}}return}
+  const b=e.target.closest('.spon[data-pat],.acard[data-pat]');if(!b)return;e.preventDefault();e.stopPropagation();const p=PAT.find(x=>x.id===b.dataset.pat);if(!p)return;suma(p.id,'c');const u=liga(p.url);if(u)window.open(u,'_blank','noopener')},true);
 let on=false;function arranca(){const F=FB();if(on||!F||!F.negVer)return;on=true;F.negVer('patrocinios',L=>{PAT=(L||[]);pinta();try{adm()}catch(e){}});}
 const t0=setInterval(()=>{if(FB()&&FB().negVer){clearInterval(t0);arranca()}},400);
 
 /* ---- App de dueño: sección Patrocinios ---- */
-let ST={},stOn=false,tipo='banner',foto='';
+let ST={},stOn=false,tipo='banner',foto='',vid=null;const VMAX=40*1024*1024;
+/* Portada del video: una imagen del segundo 1 (se usa mientras carga y en tu lista) */
+function portada(f){return new Promise((ok,no)=>{const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';const u=URL.createObjectURL(f);let hecho=false;
+  const fin=()=>{if(hecho)return;hecho=true;try{const W=Math.min(1000,v.videoWidth||1000),k=W/(v.videoWidth||W),c=document.createElement('canvas');c.width=W;c.height=Math.round((v.videoHeight||562)*k);c.getContext('2d').drawImage(v,0,0,c.width,c.height);
+    let q=.75,img=c.toDataURL('image/webp',q);while(img.length>250000&&q>.35){q-=.1;img=c.toDataURL('image/webp',q)}if(!/^data:image\/webp/.test(img))img=c.toDataURL('image/jpeg',.7);URL.revokeObjectURL(u);ok({img,dur:v.duration||0})}catch(er){no(er)}};
+  v.onloadedmetadata=()=>{try{v.currentTime=Math.min(1,(v.duration||2)/2)}catch(er){}};v.onseeked=fin;v.onerror=()=>no(new Error('video'));setTimeout(()=>{if(!hecho&&v.readyState>=2)fin();else if(!hecho)no(new Error('tiempo'))},15000);v.src=u})}
 function crea(){if($('#patAdm'))return $('#patAdm');const pv=$('#pPriv');if(!pv)return null;const d=document.createElement('div');d.id='patAdm';
   d.innerHTML=`<h4 style="margin:18px 0 6px">📣 Patrocinios</h4><p class="note">Anuncios de otros negocios dentro de tu tienda. Siempre salen con la etiqueta <b>Patrocinado</b>, se quitan solos al vencer y aquí ves cuántas veces se vieron y cuántos les picaron, para que tengas con qué cobrar.</p>
   <details class="patnew"><summary>➕ Nuevo patrocinio</summary><div class="avf">
@@ -3237,34 +3253,46 @@ function crea(){if($('#patAdm'))return $('#patAdm');const pv=$('#pPriv');if(!pv)
   <label>Título que se ve<input id="paT" maxlength="50" placeholder="Ej. Los mejores tacos de Chihuahua"></label>
   <label>Texto corto (opcional)<input id="paD" maxlength="90" placeholder="Ej. Hechos con tortillas Los 2 Carnales 🌮"></label>
   <div class="ed2"><label>Texto del botón<input id="paB" maxlength="20" placeholder="Ver más"></label><label>WhatsApp o página<input id="paU" maxlength="200" placeholder="614 123 4567"></label></div>
-  <label>Foto o logo<input id="paF" type="file" accept="image/*"></label><img id="paPv" alt="" hidden>
+  <label>Foto, logo o video<input id="paF" type="file" accept="image/*,video/*"></label><img id="paPv" alt="" hidden><video id="paVv" muted playsinline loop controls hidden style="max-width:100%;border-radius:12px"></video>
+  <p class="note" id="paVn" hidden></p>
   <div class="ed2"><label>Desde<input id="paDe" type="date"></label><label>Hasta<input id="paHa" type="date"></label></div>
   <button type="button" class="go" data-ppub>📣 Publicar patrocinio</button></div></details><div id="patL"></div>`;
   pv.insertBefore(d,pv.firstChild);
   d.addEventListener('click',async e=>{const t=e.target.closest('[data-ptipo]');if(t){tipo=t.dataset.ptipo;d.querySelectorAll('[data-ptipo]').forEach(x=>x.classList.toggle('on',x===t));return}
     if(e.target.closest('[data-ppub]'))return publica(e.target.closest('[data-ppub]'));
     const a=e.target.closest('[data-pact]');if(a){const p=PAT.find(x=>x.id===a.dataset.pact);if(!p)return;a.disabled=true;try{const {id,...r}=p;await FB().docSet('patrocinios',id,{...r,on:p.on===false})}catch(er){toast('No se pudo cambiar')}return}
-    const x=e.target.closest('[data-pdel]');if(x){if(!confirm('¿Borrar este patrocinio?'))return;try{await FB().negBorrar('patrocinios',x.dataset.pdel);await FB().negBorrar('pstats',x.dataset.pdel)}catch(er){}toast('Patrocinio borrado');return}
+    const x=e.target.closest('[data-pdel]');if(x){if(!confirm('¿Borrar este patrocinio?'))return;const pp=PAT.find(q=>q.id===x.dataset.pdel);try{await FB().negBorrar('patrocinios',x.dataset.pdel);await FB().negBorrar('pstats',x.dataset.pdel);if(pp&&pp.vpath)await FB().borraArchivo(pp.vpath).catch(()=>{})}catch(er){}toast('Patrocinio borrado');return}
     const r=e.target.closest('[data-prep]');if(r){const p=PAT.find(q=>q.id===r.dataset.prep),s=ST[r.dataset.prep]||{};if(!p)return;const pc=s.v?Math.round((s.c||0)*1000/s.v)/10:0;
       const m='📣 Reporte de tu anuncio en Distribuidora ARBA\n'+p.t+'\n'+(p.desde?'Del '+p.desde:'')+(p.hasta?' al '+p.hasta:'')+'\n👁️ Lo vieron: '+(s.v||0)+' veces\n👆 Le picaron: '+(s.c||0)+' veces ('+pc+'%)\n¡Gracias por anunciarte con nosotros! 🙌';
       window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank')}});
-  d.querySelector('#paF').onchange=async e=>{const f=e.target.files[0];if(!f)return;foto=await chica(f);const i=d.querySelector('#paPv');i.src=foto;i.hidden=false};
+  d.querySelector('#paF').onchange=async e=>{const f=e.target.files[0];if(!f)return;const i=d.querySelector('#paPv'),vv=d.querySelector('#paVv'),vn=d.querySelector('#paVn');
+    vid=null;vv.hidden=true;vn.hidden=true;if(vv.src){URL.revokeObjectURL(vv.src);vv.removeAttribute('src')}
+    if(/^video\//.test(f.type)||/\.(mp4|mov|m4v|webm|3gp)$/i.test(f.name)){
+      if(f.size>VMAX){toast('El video pesa '+Math.round(f.size/1048576)+' MB. El máximo es '+Math.round(VMAX/1048576)+' MB: pídele uno más corto o mándalo por WhatsApp para que se haga más ligero');e.target.value='';return}
+      try{const r=await portada(f);vid=f;foto=r.img;vv.src=URL.createObjectURL(f);vv.hidden=false;i.hidden=true;vn.hidden=false;
+        vn.textContent='🎬 Video de '+Math.round(r.dur)+' segundos · '+(Math.round(f.size/104857.6)/10)+' MB. En la tienda se ve sin sonido y el cliente le puede subir el volumen.'+(r.dur>60?' Es algo largo: los anuncios de 15 a 30 segundos funcionan mejor.':'')}
+      catch(er){console.warn(er);toast('Este video no se pudo abrir en tu celular. Prueba con otro (MP4).');e.target.value=''}return}
+    foto=await chica(f);i.src=foto;i.hidden=false};
   const h=hoy();d.querySelector('#paDe').value=h;const x=new Date();x.setDate(x.getDate()+30);d.querySelector('#paHa').value=x.toISOString().slice(0,10);
   return d}
 function chica(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const W=Math.min(1000,im.width),k=W/im.width,c=document.createElement('canvas');c.width=W;c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
   let q=.8,u=c.toDataURL('image/webp',q);while(u.length>300000&&q>.35){q-=.1;u=c.toDataURL('image/webp',q)}if(!/^data:image\/webp/.test(u))u=c.toDataURL('image/jpeg',.75);ok(u)};im.onerror=no;im.src=URL.createObjectURL(f)})}
 async function publica(b){const d=$('#patAdm'),v=s=>d.querySelector(s).value.trim();
   if(!v('#paT')){toast('Ponle un título');return}if(!foto){toast('Sube la foto o el logo');return}if(v('#paHa')&&v('#paDe')&&v('#paHa')<v('#paDe')){toast('"Hasta" debe ser después de "Desde"');return}
-  const id='p'+Date.now().toString(36);b.disabled=true;b.textContent='Publicando…';
-  try{await FB().docSet('pstats',id,{v:0,c:0});await FB().docSet('patrocinios',id,{tipo,n:v('#paN'),t:v('#paT'),d:v('#paD'),b:v('#paB'),url:v('#paU'),img:foto,desde:v('#paDe'),hasta:v('#paHa'),on:true,f:Date.now()});
-    ['#paN','#paT','#paD','#paB','#paU'].forEach(s=>d.querySelector(s).value='');foto='';d.querySelector('#paPv').hidden=true;d.querySelector('#paF').value='';d.querySelector('.patnew').open=false;toast('📣 Patrocinio publicado')}
+  const id='p'+Date.now().toString(36);b.disabled=true;b.textContent='Publicando…';let ex={};
+  try{if(vid){const ext=((/\.([a-z0-9]{2,4})$/i.exec(vid.name)||[])[1]||'mp4').toLowerCase(),ruta='patrocinios/'+id+'.'+ext;
+      try{ex={vid:await FB().subeArchivo(ruta,vid,x=>{b.textContent='Subiendo video… '+Math.round(x*100)+'%'}),vpath:ruta}}
+      catch(er){console.warn(er);toast(/unauthorized|permission/i.test(String(er&&er.code||er))?'No se pudo subir el video: falta publicar las reglas de Storage':'No se pudo subir el video. Revisa que ya activaste Storage en Firebase y tu internet.');b.disabled=false;b.textContent='📣 Publicar patrocinio';return}
+      b.textContent='Publicando…'}
+    await FB().docSet('pstats',id,{v:0,c:0});await FB().docSet('patrocinios',id,{tipo,n:v('#paN'),t:v('#paT'),d:v('#paD'),b:v('#paB'),url:v('#paU'),img:foto,...ex,desde:v('#paDe'),hasta:v('#paHa'),on:true,f:Date.now()});
+    ['#paN','#paT','#paD','#paB','#paU'].forEach(s=>d.querySelector(s).value='');foto='';vid=null;d.querySelector('#paPv').hidden=true;{const vv=d.querySelector('#paVv');vv.pause();vv.hidden=true;d.querySelector('#paVn').hidden=true}d.querySelector('#paF').value='';d.querySelector('.patnew').open=false;toast('📣 Patrocinio publicado')}
   catch(er){console.warn(er);toast('No se pudo publicar. ¿Ya subiste las reglas nuevas?')}b.disabled=false;b.textContent='📣 Publicar patrocinio'}
 function adm(){const F=FB();if(!F||!F.admin||!F.admin()||!document.body.classList.contains('dueno'))return;const d=crea();if(!d)return;
   if(!stOn){stOn=true;F.negVer('pstats',L=>{ST={};(L||[]).forEach(x=>ST[x.id]=x);adm()})}
   const L=[...PAT].sort((a,b)=>(b.f||0)-(a.f||0)),h=hoy();
   d.querySelector('#patL').innerHTML=L.length?L.map(p=>{const s=ST[p.id]||{},pc=s.v?Math.round((s.c||0)*1000/s.v)/10:0,venc=p.hasta&&p.hasta<h,fal=p.hasta?Math.round((new Date(p.hasta+'T12:00')-new Date(h+'T12:00'))/864e5):null;
     const est=p.on===false?['pau','⏸️ Pausado']:venc?['ven','⏱️ Vencido']:p.desde&&p.desde>h?['pro','🕒 Empieza '+p.desde]:['act','✅ Activo'+(fal!=null?' · quedan '+fal+(fal===1?' día':' días'):'')];
-    return `<div class="patc ${est[0]}"><img src="${p.img}" alt=""><div><b>${esc(p.t)}</b><small>${p.tipo==='amigo'?'🤝 Negocio amigo':'🖼️ Banner'}${p.n?' · '+esc(p.n):''}</small><small>${p.desde?esc(p.desde):''}${p.hasta?' → '+esc(p.hasta):''}</small><span class="pst2">${est[1]}</span>
+    return `<div class="patc ${est[0]}"><img src="${p.img}" alt=""><div><b>${esc(p.t)}</b><small>${p.tipo==='amigo'?'🤝 Negocio amigo':'🖼️ Banner'}${p.vid?' · 🎬 Video':''}${p.n?' · '+esc(p.n):''}</small><small>${p.desde?esc(p.desde):''}${p.hasta?' → '+esc(p.hasta):''}</small><span class="pst2">${est[1]}</span>
     <div class="pnum"><span>👁️ <b>${s.v||0}</b> vistas</span><span>👆 <b>${s.c||0}</b> clics</span><span><b>${pc}%</b></span></div>
     <div class="pbt"><button type="button" class="sec" data-prep="${p.id}">📤 Reporte</button><button type="button" class="sec" data-pact="${p.id}">${p.on===false?'▶️ Activar':'⏸️ Pausar'}</button><button type="button" class="sec" data-pdel="${p.id}">🗑️</button></div></div></div>`}).join(''):'<p class="note">Todavía no tienes patrocinios.</p>'}
 window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));setInterval(()=>{if(!$('#patAdm'))adm()},2500);
