@@ -8,13 +8,6 @@ presentación: Pieza
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
 
-Galletas Canelitas
-id: b7
-precio: cotizar
-presentación: Pieza
-dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
 Galletas Polvorones
 id: b8
 precio: cotizar

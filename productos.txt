@@ -1815,6 +1815,14 @@ foto: paketines
 dibujo: caja
 descripción: Galletas surtidas Paketines, caja con 14 paquetitos.
 
+Galletas Canelitas
+id: b7
+foto: canelitas-caja
+precio: 164.67 pesos
+presentación: Caja con 19 paquetes de 60 g · 1.14 kg
+dibujo: caja
+descripción: Galletas Canelitas Marinela con canela, caja con 19 paquetes individuales de 60 g.
+
 Fritura de harina 800 g
 id: lb1
 presentación: Bolsa de 800 g
