@@ -1839,6 +1839,14 @@ presentación: Caja con 40 barras de 24 g · 960 g
 dibujo: caja
 descripción: Barra suave de granola Green Mountain Soft & Chewy con chispas de chocolate, caja con 40 barras individuales de 24 g.
 
+Galletas Saladitas Gamesa
+id: b15
+foto: saladitas-gamesa
+precio: 325.74 pesos
+presentación: Caja de 2.6 kg en paquetitos
+dibujo: caja
+descripción: Galleta salada Saladitas Gamesa, caja de 2.6 kg con paquetitos individuales. Para acompañar sopas, botanas y ceviches.
+
 Fritura de harina 800 g
 id: lb1
 presentación: Bolsa de 800 g
