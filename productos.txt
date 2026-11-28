@@ -1507,7 +1507,8 @@ descripción: Concentrado de limón de 1 litro, práctico para aguas, cócteles 
 
 Aceite para freír 20 litros
 id: lb37
-precio: 860.82 pesos
+foto: aceite-cristal-20l
+precio: 885.5 pesos
 presentación: Bote de 20 litros
 dibujo: botella
 descripción: Aceite para freír en bote de 20 litros, rendidor para negocio de frituras y comida.
