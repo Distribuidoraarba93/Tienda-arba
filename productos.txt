@@ -1081,7 +1081,7 @@ descripción: Café de Chiapas molido, de sabor intenso y aroma rico, para cafet
 
 Caldo de pollo Knorr
 id: a13
-precio: 211 pesos
+precio: 270.76 pesos
 presentación: Bote de 1.5 kg
 foto: caldo-knorr
 dibujo: caja
