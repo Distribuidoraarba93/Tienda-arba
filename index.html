@@ -3779,29 +3779,48 @@ if(document.readyState!=='loading')caja();else document.addEventListener('DOMCon
 })();
 </script>
 <script>
-/* Botón "atrás" del celular: si hay una ventana abierta (producto, carrito, estatus, asistente, calculadora, videos), la cierra en lugar de salirse de la tienda */
+/* Botón "atrás" del celular: si hay algo abierto (producto, carrito, estatus, videos, menú del Máster, secciones del panel,
+   orden de compra, anuncios, tienda de entregas…) lo cierra en lugar de salirse. Si no hay nada abierto, la primera vez
+   avisa "Toca atrás otra vez para salir". */
 (function(){
-const SEL=['#modal','#drawer','#estado','#ab','#calc','#clv'];
-const els=()=>SEL.map(s=>document.querySelector(s)).filter(Boolean);
-const abiertos=()=>els().filter(e=>e.classList.contains('on'));
-let empujado=false,saltar=0;
-function veil(){const v=document.getElementById('veil'),p=document.getElementById('panel');if(!v)return;const usa=['modal','drawer','estado'].some(i=>{const e=document.getElementById(i);return e&&e.classList.contains('on')})||(p&&p.classList.contains('on'));if(!usa)v.classList.remove('on')}
-function cierra(el){const id=el.id;
-  if(id==='modal'||id==='drawer'){el.classList.remove('on')}
-  else if(id==='estado'){const b=el.querySelector('[data-closee]');if(b)b.click();else el.classList.remove('on')}
-  else if(id==='ab'){const b=document.getElementById('abX');if(b)b.click();else el.classList.remove('on')}
-  else if(id==='clv'){const b=document.getElementById('clvX');if(b)b.click();else el.classList.remove('on')}
-  else{el.classList.remove('on');el.setAttribute('aria-hidden','true')}
-  veil()}
-function revisa(){const n=abiertos().length;
+const $=s=>document.querySelector(s),on=s=>{const e=$(s);return !!(e&&e.classList.contains('on'))},vis=s=>{const e=$(s);return !!(e&&!e.hidden)},clk=s=>{const b=$(s);if(b){b.click();return true}return false};
+function veil(){const v=$('#veil'),p=$('#panel');if(!v)return;const usa=['#modal','#drawer','#estado'].some(on)||(p&&p.classList.contains('on'));if(!usa)v.classList.remove('on')}
+/* De arriba (lo último que se abre) hacia abajo */
+const CAPAS=[
+  {a:()=>!!$('#qrRepa'),c:()=>$('#qrRepa').remove()},
+  {a:()=>!!$('#patVer'),c:()=>clk('#patVer [data-pvx]')||$('#patVer').remove()},
+  {a:()=>!!$('#repaW .rfb'),c:()=>{const f=$('#repaW .rfb');const x=f.querySelector('[data-rfx],[data-x],.sec');if(x)x.click();else f.remove()}},
+  {a:()=>vis('#ocW'),c:()=>clk('#ocW [data-ocx]')},
+  {a:()=>vis('#duMenu'),c:()=>clk('#duMenuB')},
+  {a:()=>on('#clv'),c:()=>{clk('#clvX')||$('#clv').classList.remove('on')}},
+  {a:()=>on('#calc'),c:()=>{const e=$('#calc');e.classList.remove('on');e.setAttribute('aria-hidden','true')}},
+  {a:()=>on('#ab'),c:()=>{clk('#abX')||$('#ab').classList.remove('on')}},
+  {a:()=>on('#modal'),c:()=>{$('#modal').classList.remove('on');veil()}},
+  {a:()=>on('#drawer'),c:()=>{$('#drawer').classList.remove('on');veil()}},
+  {a:()=>on('#estado'),c:()=>{clk('#estado [data-closee]')||$('#estado').classList.remove('on');veil()}},
+  {a:()=>on('#panel'),c:()=>{clk('#panel [data-closep]')||$('#panel').classList.remove('on');veil()}},
+  {a:()=>document.body.classList.contains('rtienda'),c:()=>{clk('#rVolver')||document.body.classList.remove('rtienda')}}
+];
+const abierta=()=>CAPAS.find(k=>{try{return k.a()}catch(e){return false}});
+let empujado=false,saltar=0,salir=0;
+function revisa(){const n=!!abierta();
   if(n&&!empujado){empujado=true;try{history.pushState({arbaOv:1},'')}catch(e){}}
   else if(!n&&empujado){empujado=false;if(history.state&&history.state.arbaOv){saltar=1;history.back()}}}
 window.addEventListener('popstate',e=>{
   if(saltar){saltar=0;e.stopImmediatePropagation();return}
-  const a=abiertos();if(!a.length)return;
-  e.stopImmediatePropagation();empujado=false;a.forEach(cierra)},true);
-const mo=new MutationObserver(revisa);
-function arranca(){els().forEach(e=>mo.observe(e,{attributes:true,attributeFilter:['class']}))}
+  const k=abierta();
+  if(k){e.stopImmediatePropagation();empujado=false;try{k.c()}catch(er){}setTimeout(revisa,60);return}
+  /* Nada abierto y ya es la pantalla principal de la app: pide confirmar antes de salir */
+  const app=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(app&&!e.state&&!location.hash&&Date.now()-salir>2500){
+    salir=Date.now();try{window.ARBA_T.toast('Toca atrás otra vez para salir')}catch(er){}
+    /* si no vuelve a tocar atrás, se pone otra vez el escalón */
+    setTimeout(()=>{if(!history.state)try{history.pushState({arbaRaiz:1},'')}catch(er){}},2500)}
+},true);
+/* Deja un escalón al abrir la app para poder avisar antes de salir */
+function raiz(){const app=matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(app&&!(history.state&&history.state.arbaRaiz))try{history.pushState({arbaRaiz:1},'')}catch(e){}}
+let t=0;const mo=new MutationObserver(()=>{if(t)return;t=setTimeout(()=>{t=0;revisa()},40)});
+function arranca(){mo.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});raiz()}
 if(document.readyState!=='loading')arranca();else document.addEventListener('DOMContentLoaded',arranca);
 })();
 </script>
