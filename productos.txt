@@ -1312,6 +1312,7 @@ descripción: Queso amarillo para nachos Economy de 3 kg, listo para calentar y 
 
 Sal con ajo
 id: a45
+foto: sal-con-ajo
 precio: 54.5 pesos
 presentación: 1 kg
 dibujo: caja
