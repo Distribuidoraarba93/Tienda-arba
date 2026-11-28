@@ -1267,7 +1267,7 @@ Pasta codo mediano
 id: a39
 foto: pasta-codo-menu
 precio: 97 pesos
-presentación: Pieza
+presentación: Bolsa de 2.8 kg
 dibujo: caja
 descripción: Pasta codo mediano, para sopas y ensaladas de coditos.
 
