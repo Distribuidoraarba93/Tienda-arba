@@ -1249,6 +1249,7 @@ descripción: Mayonesa Heinz en sobres individuales, prácticos para comida para
 
 Mole almendrado
 id: a36
+foto: mole-almendrado
 precio: 114 pesos
 presentación: 1/2 litro
 dibujo: botella
