@@ -144,6 +144,7 @@ lb33:["Sazonando soy sauce","Sazonando soy sauce by the gallon, for Asian cookin
 lb34:["Seasoning sauce 1 liter","Seasoning sauce, 1 liter, for meats, soups, cocktails and snacks."],
 lb35:["Soy sauce 1 liter","Soy sauce, 1 liter, for cooking, marinades and snacks."],
 lb36:["Lime concentrate 1 liter","Lime concentrate, 1 liter, handy for aguas frescas, cocktails and cooking."],
+lb49:["Ave vegetable oil 10 liters","Ave Action Fry vegetable cooking oil, 10 liter jug. Withstands high temperatures, ideal for deep frying in food businesses."],
 lb37:["Frying oil 20 liters","Frying oil, 20 liter container, long-lasting for fried snacks and food businesses."],
 lb38:["Popcorn kernels 20 kg","Popcorn kernels, 20 kg sack, pops evenly. Ideal for theaters and stands."],
 lb39:["Chiligrin snack chile powder 25 kg","Chiligrin snack chile powder, 25 kg sack, for snacks and fried treats."],

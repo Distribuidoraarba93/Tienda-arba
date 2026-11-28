@@ -1513,6 +1513,14 @@ presentación: Bote de 20 litros
 dibujo: botella
 descripción: Aceite para freír en bote de 20 litros, rendidor para negocio de frituras y comida.
 
+Aceite vegetal Ave 10 litros
+id: lb49
+foto: aceite-ave-10l
+precio: 469 pesos
+presentación: Garrafa de 10 litros
+dibujo: botella
+descripción: Aceite vegetal comestible Ave Action Fry en garrafa de 10 litros. Resiste altas temperaturas, ideal para freído profundo en negocios de comida.
+
 Maíz palomero 20 kg
 id: lb38
 precio: 504.39 pesos
