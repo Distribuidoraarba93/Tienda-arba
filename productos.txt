@@ -2147,6 +2147,7 @@ descripción: Churro Loko de La Orquídea, bolsa de 400 g.
 
 Serpentina de tamarindo La Orquídea Mega
 id: b14
+foto: serpentina-tamarindo
 precio: 41.88 pesos
 presentación: Bolsa con 20 piezas
 dibujo: caja
