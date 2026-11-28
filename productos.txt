@@ -1295,6 +1295,14 @@ foto: pasta-tomate-menu
 dibujo: caja
 descripción: Pasta de tomate lista para servir, en bolsa de 3 kg. Ideal para spaghetti, guisos, salsas y cocinas de alto volumen.
 
+Puré de tomate Menú Solutions
+id: a64
+foto: pure-tomate-menu
+precio: 99.81 pesos
+presentación: Bolsa de 2.95 kg
+dibujo: caja
+descripción: Puré de tomate Menú Solutions listo para servir, bolsa de 2.95 kg. Para pastas, sopas, guisos y salsas en cocinas de alto volumen.
+
 Pasta para lasaña La Moderna
 id: a42
 precio: 457.5 pesos
