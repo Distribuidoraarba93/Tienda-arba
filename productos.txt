@@ -185,10 +185,10 @@ opción: Blanco (500 piezas) | 501.81 pesos | foto ham-blanco
 Charola #066
 id: c4
 presentación: 500 piezas
-foto: charola-bio-beige
+foto: charola-beige
 dibujo: charola
 descripción: Charola para comida en color bio beige o blanca.
-opción: Bio beige | 194.72 pesos | foto charola-bio-beige
+opción: Bio beige | 194.72 pesos | foto charola-beige
 opción: Blanca | 155.51 pesos | foto charola-blanca
 
 Charola León 835
@@ -298,7 +298,7 @@ opción: #8 hondo biodegradable | 616.81 pesos | foto plato-bio-8
 Domos y bases de plástico transparente
 id: dp6
 presentación: Caja
-foto: domo-pastel-base-negra
+foto: domo-pastel
 dibujo: contenedorN
 descripción: Domos de plástico transparente Reyma para pasteles, postres, ensaladas y comida para llevar. Escoge el modelo.
 opción: RB-100 · 250 piezas | 537.11 pesos
@@ -316,7 +316,7 @@ opción: R-550 · 50 piezas | 1051.99 pesos
 Bisagras de plástico transparente
 id: dp7
 presentación: Caja
-foto: bisagra-azul
+foto: bisagra
 dibujo: contenedorN
 descripción: Contenedores de plástico transparente con tapa (bisagra) para comida, postres y fruta.
 opción: 1110-41 tapa baja · 250 piezas | 514.13 pesos
@@ -466,7 +466,7 @@ opción: #7 Solo Cup · 20/50 piezas | 2500.43 pesos
 Vasitos de plástico para salsa (soufflé)
 id: dp13
 presentación: Caja
-foto: souffle-tapas-gris
+foto: souffle
 dibujo: vaso
 descripción: Vasitos chicos para salsa, aderezos y muestras.
 opción: #0 · 2,000 piezas (20/100) | 477.78 pesos
@@ -478,7 +478,7 @@ opción: 2 oz negro · 1,200 piezas (12/100) | 463.11 pesos | foto vasito-2oz-ne
 Tapa para vasito de salsa
 id: dp14
 presentación: Caja
-foto: tapa-souffle-azul
+foto: souffle
 dibujo: tapa
 descripción: Tapas para vasitos de salsa.
 opción: Para vasito #0 · 2,000 piezas (40/50) | 330.35 pesos
