@@ -131,7 +131,8 @@ Tortillas para quesibirrias
 id: t9
 precio: 20 pesos
 presentación: Paquete de 10 piezas · 15 a 16 cm aprox.
-dibujo: tortilla
+foto: tortilla-quesibirria
+fotos: tortilla-quesibirria-2
 descripción: Tortillas de harina de 15 a 16 cm aprox., del tamaño ideal para quesibirrias. Tortillería Los 2 Carnales.
 
 Tortillas para gorditas
