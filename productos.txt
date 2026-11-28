@@ -1272,6 +1272,7 @@ descripción: Pasta codo mediano, para sopas y ensaladas de coditos.
 
 Pasta para spaghetti Menú
 id: a40
+foto: spaghetti-menu
 precio: 103.5 pesos
 presentación: Pieza
 dibujo: caja
