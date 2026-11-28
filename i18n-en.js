@@ -121,7 +121,7 @@ a40:["Menú spaghetti pasta","Menú spaghetti pasta, for kitchens and cafeterias
 a41:["Menú Solutions tomato paste","Ready-to-serve tomato paste, 3 kg bag. Ideal for spaghetti, stews, sauces and high-volume kitchens."],
 a42:["La Moderna lasagna pasta","La Moderna lasagna pasta, box of 12 packs of 500 g."],
 a43:["McCormick ground black pepper","McCormick ground black pepper, 510 g jar for business kitchens."],
-a44:["Economy nacho cheese","Economy yellow nacho cheese, 3 kg, ready to heat and serve."],
+a44:["Menú nacho cheese sauce","Menú Solutions cheese-flavored nacho sauce, 2 kg bag with dispensing cap. Ready to heat and serve."],
 a45:["Garlic salt","Garlic salt by the kilo, for seasoning meats, potatoes and vegetables."],
 a46:["Individual sea salt packets","Individual sea salt packets, handy for takeout."],
 a47:["La Fina salt","La Fina refined salt, 25 kg sack in 1 kg bags."],

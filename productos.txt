@@ -1303,12 +1303,13 @@ foto: pimienta-mccormick
 dibujo: caja
 descripción: Pimienta negra molida McCormick, bote de 510 g para cocina de negocio.
 
-Queso para nachos Economy
+Aderezo para nachos Menú
 id: a44
-precio: 224 pesos
-presentación: 3 kg
+foto: aderezo-nachos-menu
+precio: 120.75 pesos
+presentación: Bolsa de 2 kg
 dibujo: caja
-descripción: Queso amarillo para nachos Economy de 3 kg, listo para calentar y servir.
+descripción: Aderezo sabor queso para nachos Menú Solutions, bolsa de 2 kg con tapa dosificadora. Listo para calentar y servir.
 
 Sal con ajo
 id: a45
