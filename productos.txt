@@ -1233,6 +1233,7 @@ descripción: Margarina Country Crock en bote de 1.91 kg, para untar, cocinar y 
 
 Margarina Iberia con sal 1.3 kg
 id: a62
+foto: margarina-iberia
 precio: 136.07 pesos
 presentación: Bote de 1.3 kg
 dibujo: caja
