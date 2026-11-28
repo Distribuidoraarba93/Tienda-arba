@@ -479,7 +479,7 @@ body.rfacil #repaW .rtabs,body.rfacil #rInst{display:none!important}
 .rfz-i{margin:12px 0;padding:12px;border-radius:12px;background:#ffffff14}.rfz-i pre{white-space:pre-wrap;font:600 20px system-ui;margin:6px 0}.rfz-i p{margin:6px 0}
 .rfz-nav{display:flex;gap:10px}.rfz-nav button{flex:1;padding:16px;border-radius:14px;border:1px solid #ffffff55;background:none;color:#fff;font:700 19px system-ui}.rfz-nav button:disabled{opacity:.3}
 #rHola{margin:12px 0 4px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#123a24,#0b1220);border:1px solid #f4b40066;font:600 20px Poppins,system-ui;color:#fff}#rHola b{color:#f4b400}#rHola small{display:block;font:500 14px system-ui;opacity:.8;margin-top:2px}
-#repaW .rh button{border:1px solid #ffffff40;background:none;color:#fff;border-radius:999px;padding:6px 12px}
+#repaW .rh button{border:1px solid #ffffff40;background:none;color:#fff;border-radius:999px;padding:6px 12px;white-space:nowrap}
 #repaW .rc{background:#152036;border:1px solid #ffffff20;border-radius:14px;padding:12px;margin:10px 0}#repaW .rc.camino{border-color:#f4b400}#repaW .rc.entregado{opacity:.6}
 #repaW .rt{display:flex;justify-content:space-between}#repaW .rc p{margin:6px 0}#repaW a{color:#7ed957;font-weight:700}#repaW pre{white-space:pre-wrap;font:14px Poppins,system-ui;background:#0b1220;border-radius:10px;padding:8px;margin:6px 0}
 #repaW .rb{display:grid;grid-template-columns:1fr 1fr;gap:8px}#repaW .rb button{padding:12px;border-radius:12px;font-weight:700}
@@ -488,7 +488,7 @@ body.rfacil #repaW .rtabs,body.rfacil #rInst{display:none!important}
 #entAdm .vrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #ffffff12;font-size:14px}
 #entAdm .negrow{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #ffffff15}#entAdm .negrow>div{flex:1}#entAdm .negrow span{display:block;font-size:12px;opacity:.75}#entAdm .negrow button{width:auto;padding:6px 10px;font-size:13px}#entAdm .negnew{display:grid;gap:6px;margin-top:8px}
 #repaW .rtabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}#repaW .rtabs button{padding:10px;border-radius:12px;border:1px solid #ffffff30;background:#152036;color:#fff;font:700 14px Poppins,system-ui}#repaW .rtabs button.on{background:#f4b400;color:#152016;border-color:#f4b400}
- body.rfacil #repaW .rshare{font-size:19px;padding:16px}#repaW .rshare{width:100%;margin:10px 0 0;padding:12px;border-radius:12px;font:800 15px Poppins,system-ui}#repaW .rshare small{font-weight:600;opacity:.8}
+ body.rfacil #repaW .rshare{font-size:19px;padding:16px}#repaW .rfprod{display:none}body.rfacil #repaW .rfprod{display:block;width:100%;margin:10px 0 0;padding:16px;border-radius:12px;border:2px solid #f4b400;background:#152036;color:#fff;font:800 19px Poppins,system-ui}#repaW .rshare{width:100%;margin:10px 0 0;padding:12px;border-radius:12px;font:800 15px Poppins,system-ui}#repaW .rshare small{font-weight:600;opacity:.8}
 #repaW .rst{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:2px 8px;margin-left:4px;vertical-align:middle}#repaW .rst.ok{background:#7ed95726;color:#7ed957}#repaW .rst.po{background:#f4b40030;color:#f4b400}#repaW .rst.ag{background:#ff6b6b30;color:#ff6b6b}
 #repaW .rsb{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 8px}#repaW .rsb button{padding:8px 6px;border-radius:10px;border:1px solid #ffffff30;background:#0b1220;color:#fff;font:700 12.5px Poppins,system-ui}
 #repaW .rfb{position:fixed;inset:0;background:#000a;z-index:80;display:flex;align-items:flex-end;justify-content:center}#repaW .rfc{background:#152036;width:100%;max-width:600px;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:10px}
@@ -888,6 +888,7 @@ html.claro #entAdm .vgrid div{background:#0b15250d}
 html.claro #entAdm .vgrid b{color:#9a6b00}
 html.claro #entAdm .vrow{border-bottom:1px solid #0b152512}
 html.claro #entAdm .negrow{border-bottom:1px solid #0b152515}
+html.claro #repaW .rfprod{background:#ffffff;color:#1b2433}
 html.claro #repaW .rtabs button{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
 html.claro #repaW .rsb button{background:#ffffff;border:1px solid #0b152530;color:#1b2433}
 html.claro #repaW .rfc{background:#ffffff}
@@ -2367,9 +2368,9 @@ if(qi&&!qs0.get('dueno')){
 if(!RC&&esIOS&&yaApp&&qs0.get('repa')){const w=pantalla('<p>Escribe el código que te mandó Distribuidora ARBA:</p><input id="raCod" autocomplete="off" autocapitalize="characters" maxlength="20"><button type="button" class="rbig rok" id="raOk">Activar</button>');
   document.getElementById('raOk').onclick=async()=>{const c=(document.getElementById('raCod').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(c.length<6)return;if(await activa(c))location.replace(location.pathname+'?repa=1')};return}
 if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
-  document.title='ARBA Reparto';document.body.classList.add('repa');
+  document.title='ARBA Entregas';document.body.classList.add('repa');
   {const m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-reparto.json';const t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220'}
-  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA</b><span id="rNom"></span><button type="button" data-rfac id="rFacB">🔠 Fácil</button><button type="button" data-raj>⚙️</button><button type="button" data-rsal>Salir</button></div><div id="rHola" hidden></div><button type="button" class="go rshare" data-rshare>📤 Compartir mi liga <small>(para tu comisión)</small></button><div id="rPush"></div><div id="rMsg"></div><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button><button type="button" data-rtienda>🛒 Tienda</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
+  const w=document.createElement('div');w.id='repaW';w.innerHTML='<div class="rh"><b>🚚 ARBA</b><span id="rNom"></span><button type="button" data-rfac id="rFacB" title="Cambiar entre modo fácil y normal">🔠 Fácil</button><button type="button" data-raj>⚙️</button><button type="button" data-rsal>Salir</button></div><div id="rHola" hidden></div><button type="button" class="go rshare" data-rshare>📤 Compartir mi liga <small>(para tu comisión)</small></button><div id="rPush"></div><div id="rMsg"></div><button type="button" class="rfprod" data-rtienda>🛒 Ver productos</button><div class="rtabs"><button type="button" data-rtab="e" class="on">📦 Entregas</button><button type="button" data-rtab="p">🔎 Precios</button><button type="button" data-rtab="s">🙋 Ocupo</button><button type="button" data-rtienda>🛒 Tienda</button></div><div id="rLst"><p class="note">Cargando tus entregas…</p></div><div id="rPre" hidden><input id="rQ" placeholder="🔎 Busca un producto (ej. vaso 12, tortilla, charola)" autocomplete="off"><div id="rPL"></div></div><div id="rSol" hidden></div><div id="rForm" hidden></div><div id="rInst" class="note" style="margin-top:18px;text-align:center">📲 Para tenerla como app: en Chrome toca ⋮ → <b>Instalar app</b>.</div>';document.body.appendChild(w);
   const FKr=k=>'k'+String(k).replace(/[^A-Za-z0-9]/g,'_');let INV=null,invSub=null;
   const hay=k=>{if(!INV||!INV.q)return null;const v=INV.q[FKr(k)];return v==null?null:+v};
   const minDe=k=>{const m=INV&&INV.m&&INV.m[FKr(k)];return m!=null?+m:5};
@@ -2381,13 +2382,13 @@ if(RC&&!(new URLSearchParams(location.search).get('dueno'))){
     if(m)return 'https://www.google.com/maps/dir/?api=1&destination='+m[1]+','+m[2];
     if(/^https:\/\/([a-z0-9-]+\.)*(google\.[a-z.]+|goo\.gl|apple\.com)\/\S*$/i.test(u))return u;
     const q=u||x.d;return q?'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(q+(/chihuahua/i.test(q)?'':' Chihuahua')):''};
-  function pinta(){const L=document.getElementById('rLst');if(!ruta){L.innerHTML='<p class="note">Este código de repartidor no existe. Pídele la liga a Distribuidora ARBA.</p>';return}
+  function pinta(){const L=document.getElementById('rLst');if(!ruta){L.innerHTML='<p class="note">Este código de entregas no existe. Pídele la liga a Distribuidora ARBA.</p>';return}
     {const M=(ruta.m||[]).slice(-3).reverse(),mb=document.getElementById('rMsg');if(mb)mb.innerHTML=M.length?'<div class="rmsg"><b>📢 Avisos del dueño</b>'+M.map(x=>`<div><span>${new Date(x.f).toLocaleString('es-MX',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}</span>${esc(x.t)}</div>`).join('')+'</div>':'';
      const pb=document.getElementById('rPush'),F=FB();if(pb){if(F&&F.pushListo&&F.pushListo()&&localStorage.getItem('arba-push-repa')){pb.innerHTML='';if(!pinta.pr){pinta.pr=1;F.pushActivar({rol:'repa',r:RC},Promise.resolve('granted')).catch(()=>{})}}
        else if(!pb.innerHTML)pb.innerHTML='<div class="pushc"><b>🔔 Que te lleguen tus entregas y avisos con la app cerrada</b><button type="button" class="go" data-rpush>🔔 Activar notificaciones</button></div>'}}
     document.getElementById('rNom').textContent='';
     {const h=document.getElementById('rHola'),nm=nomLimpio(ruta.n);if(h){h.hidden=!nm;h.innerHTML=nm?'👋 Hola, <b>'+esc(nm)+'</b><small>Aquí están tus entregas</small>':''}if(nm)document.title='ARBA · '+nm}
-    const facil=esFacil();document.body.classList.toggle('rfacil',facil);{const fb=document.getElementById('rFacB');if(fb)fb.textContent=facil?'📋 Ver todo':'🔠 Fácil'}
+    const facil=esFacil();document.body.classList.toggle('rfacil',facil);{const fb=document.getElementById('rFacB');if(fb)fb.textContent=facil?'📋 Normal':'🔠 Fácil'}
     const ids=(ruta.ids||[]).filter(id=>ruta.e&&ruta.e[id]);const pend=ids.filter(id=>!['entregado','cancelado'].includes(st[id]));const hech=ids.filter(id=>st[id]==='entregado');
     const card=id=>{const x=ruta.e[id],s=st[id]||'aceptado',tel=(x.tel||'').replace(/\D/g,''),mp=mapa(x);
       return `<div class="rc ${s}"><div class="rt"><b>${esc(T().pedN(x.p))}</b><span>${ESTN[s]||s}</span></div><p><b>${esc(x.n)}</b>${tel?` · <a href="tel:${tel}">📞 ${esc(x.tel)}</a> · <a href="https://wa.me/52${tel.slice(-10)}" target="_blank" rel="noopener">💬</a>`:''}</p>
