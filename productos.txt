@@ -66,8 +66,9 @@ opción: Paquete de 6 piezas | 15 pesos | mayoreo desde 5, 12 pesos
 
 Tortilla grande
 id: t11
-precio: 26 pesos
+precio: 30 pesos
 presentación: Paquete de tortillas
+mayoreo: desde 5, 26 pesos
 foto: tortilla-harina
 dibujo: tortilla
 descripción: Tortillas de harina grandes de la Tortillería Los 2 Carnales, hechas a diario en Chihuahua.
