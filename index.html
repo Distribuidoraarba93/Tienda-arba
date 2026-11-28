@@ -3353,7 +3353,7 @@ window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));s
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
   b.innerHTML='<b data-master role="button" style="cursor:pointer">👑 Máster ▾</b><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" id="duMenuB" aria-expanded="false">☰ Menú<i id="menuN" class="dun" hidden></i></button>'
    +'<div id="duMenu" hidden><div class="dmw">'
-   +'<h5>🛒 Ventas</h5><div class="dmg"><button type="button" data-du="tienda">🛒<span>Tienda</span></button><button type="button" data-du="prg">📅<span>Programados</span><i id="prgN" class="dun" hidden></i></button><button type="button" data-du="ent">🚚<span>Entregas</span></button><button type="button" data-du="ven">📊<span>Ventas</span></button><button type="button" data-du="cli">👥<span>Clientes</span></button><button type="button" data-du="neg">🏪<span>Precios negocio</span></button><a href="https://claude.ai/artifact/HX9ZT7EkyrgEDewkEGUJk2" target="_blank" rel="noopener">📝<span>Producción</span></a></div>'
+   +'<h5>🛒 Ventas</h5><div class="dmg"><button type="button" data-du="tienda">🛒<span>Tienda</span></button><button type="button" data-du="prg">📅<span>Programados</span><i id="prgN" class="dun" hidden></i></button><button type="button" data-du="ent">🚚<span>Entregas</span></button><button type="button" data-du="ven">📊<span>Ventas</span></button><button type="button" data-du="cli">👥<span>Clientes</span></button><button type="button" data-du="neg">🏪<span>Precios negocio</span></button><button type="button" data-du="prod">📝<span>Producción</span></button></div>'
    +'<h5>📦 Productos</h5><div class="dmg"><button type="button" data-du="nuevo">➕<span>Producto nuevo</span></button><button type="button" data-du="ocultos">🙈<span>Ocultos</span></button><button type="button" data-du="sol">🙋<span>Solicitudes</span><i id="solN" class="dun" hidden></i></button></div>'
    +'<h5>📣 Promoción</h5><div class="dmg"><button type="button" data-du="av">📢<span>Comunicado</span></button><button type="button" data-du="pat">📣<span>Patrocinios</span></button></div>'
    +'<h5>⚙️ Mi cuenta</h5><div class="dmg"><button type="button" data-du="seg">🛡️<span>Seguridad</span></button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️<span>Notion</span></a><button type="button" data-du="aj">⚙️<span>Ajustes</span></button><button type="button" data-du="lock">🔒<span>Bloquear</span></button></div>'
@@ -3374,7 +3374,7 @@ window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));s
    if(k==='aj'||k==='nuevo'||k==='ocultos')return;
    if(k==='lock'){abrir=false;window.ARBA_LOCK&&window.ARBA_LOCK.bloquear();cierraPanel();return}
    if(k==='tienda'){var c=document.querySelector('#panel [data-closep]');if(c&&document.getElementById('panel').classList.contains('on'))c.click();window.scrollTo({top:0,behavior:'smooth'});return}
-   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':k==='pat'?'patAdm':k==='cli'?'cliAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
+   location.hash='#panel-arba';setTimeout(function(){var el=document.getElementById(k==='neg'?'negAdm':k==='ven'?'venAdm':k==='ent'?'entAdm':k==='inv'?'invAdm':k==='sol'?'solAdm':k==='prg'?'prgAdm':k==='av'?'avAdm':k==='pat'?'patAdm':k==='cli'?'cliAdm':k==='prod'?'prodAdm':'segAdm');if(el&&window.ARBA_SOLO)window.ARBA_SOLO(el,x);else if(el)el.scrollIntoView({behavior:'smooth',block:'start'});if(k==='inv'&&e.target.closest('#invN')){var f=document.querySelector('#invAdm [data-if="po"]');if(f)f.click()}},450)})}
  /* Cada botón de la barra muestra SOLO su sección del panel */
  function soloQuita(){document.querySelectorAll('.dsolo-x').forEach(function(e){e.classList.remove('dsolo-x')});document.querySelectorAll('#duBar .duon').forEach(function(e){e.classList.remove('duon')});var p=document.getElementById('panel');if(p)p.classList.remove('solo','conTit')}
  window.ARBA_SOLO=function(el,btn){soloQuita();var tx=document.querySelector('#panel .tx'),p=document.getElementById('panel');if(!el||!tx||!tx.contains(el))return;
@@ -3775,6 +3775,90 @@ document.addEventListener('click',e=>{const fb=e.target.closest('[data-clif]');i
   if(e.target.closest('[data-clicopia]')&&L){const S=L.filter(x=>x.o);if(!S.length){window.ARBA_T.toast('Nadie ha aceptado ofertas todavía');return}const t=S.map(x=>x.tel).join('\n');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>window.ARBA_T.toast(S.length+' números copiados (solo los que aceptan ofertas)'),()=>window.ARBA_T.toast('No se pudo copiar'))}
   if(e.target.closest('#duBar [data-du="cli"]')){caja();escucha()}});
 window.addEventListener('arba-auth',()=>setTimeout(escucha,300));window.addEventListener('arba-fb',()=>setTimeout(escucha,300));
+if(document.readyState!=='loading')caja();else document.addEventListener('DOMContentLoaded',caja);
+})();
+</script>
+<script>
+/* ===== PRODUCCIÓN DEL DÍA (solo Máster): lo del pizarrón por día y por repartidor.
+   Los archivos de produccion/ van cifrados con tu llave pública; la llave privada vive solo en tu Firebase (dueno/prod),
+   así que nadie más puede leerlos aunque abra el archivo. ===== */
+(function(){
+const esc=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const ub=u=>{let s='';new Uint8Array(u).forEach(b=>s+=String.fromCharCode(b));return btoa(s)};
+const pe=n=>(Math.round((+n||0)*100)/100).toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2})+' pesos';
+const DIAS_S=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const fechaTxt=f=>{const d=new Date(f+'T12:00:00');return DIAS_S[d.getDay()]+' '+d.getDate()+' de '+['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][d.getMonth()]};
+const P='produccion/';
+let KEY=null,PUB='',LLAVE_REPO='',DIAS=null,DAT={},PREC=null,sel='',vista='dia',edo='cargando',cargando=false;
+const F=()=>window.ARBA_FB;
+const ok=()=>{const f=F();return !!(f&&f.admin&&f.admin())};
+function caja(){let c=document.getElementById('prodAdm');if(c)return c;const pv=document.getElementById('pPriv');if(!pv)return null;
+  c=document.createElement('div');c.id='prodAdm';c.innerHTML='<h4 style="margin:18px 0 6px">📝 Producción del día</h4><div id="prodC"><p class="note">Cargando…</p></div>';pv.appendChild(c);return c}
+const trae=u=>fetch(P+u+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+const trTxt=u=>fetch(P+u+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').catch(()=>'');
+async function abre(o){
+  const e=b64(o.e);
+  const epk=await crypto.subtle.importKey('raw',e,{name:'ECDH',namedCurve:'P-256'},false,[]);
+  const bits=await crypto.subtle.deriveBits({name:'ECDH',public:epk},KEY,256);
+  const hk=await crypto.subtle.importKey('raw',bits,'HKDF',false,['deriveKey']);
+  const k=await crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:e,info:new TextEncoder().encode('ARBA-produccion')},hk,{name:'AES-GCM',length:256},false,['decrypt']);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(o.i)},k,b64(o.d));
+  return JSON.parse(new TextDecoder().decode(pt))}
+async function carga(){if(cargando||!ok())return;cargando=true;edo='cargando';pinta();
+  try{
+    let d=null;try{d=await F().docGet('dueno','prod')}catch(e){edo='sinfb';return}
+    if(!d||!d.priv){edo='sinllave';return}
+    PUB=d.pub||'';KEY=await crypto.subtle.importKey('jwk',d.priv,{name:'ECDH',namedCurve:'P-256'},false,['deriveBits']);
+    LLAVE_REPO=(await trTxt('llave.txt')).trim();
+    if(LLAVE_REPO!==PUB){edo='mandar';return}
+    const L=await trae('dias.json');DIAS=Array.isArray(L)?L.slice().sort().reverse():[];
+    if(!DIAS.length){edo='vacio';return}
+    if(!sel||DIAS.indexOf(sel)<0)sel=DIAS[0];
+    await dia(sel);edo='listo'}
+  catch(e){console.warn('prod',e);edo='error'}
+  finally{cargando=false;pinta()}}
+async function dia(f){if(DAT[f])return DAT[f];const o=await trae(f+'.json');if(!o)throw 'sin archivo '+f;DAT[f]=await abre(o);return DAT[f]}
+async function precios(){if(PREC)return PREC;const o=await trae('precios.json');PREC=o?await abre(o):[];return PREC}
+async function crear(btn){if(!ok())return;if(!confirm('¿Crear tu llave de Producción? Solo se hace una vez.'))return;
+  btn.disabled=true;btn.textContent='Creando…';
+  try{const kp=await crypto.subtle.generateKey({name:'ECDH',namedCurve:'P-256'},true,['deriveBits']);
+    const priv=await crypto.subtle.exportKey('jwk',kp.privateKey),pub=ub(await crypto.subtle.exportKey('raw',kp.publicKey));
+    const ya=await F().docGet('dueno','prod');if(ya&&ya.priv){alert('Ya tenías una llave. No la cambié.');}else await F().docSet('dueno','prod',{priv,pub,f:Date.now()});
+    carga()}catch(e){console.warn(e);btn.disabled=false;btn.textContent='🔑 Crear mi llave';alert('No se pudo crear. Revisa tu internet e intenta otra vez.')}}
+function suma(R){return R.reduce((t,r)=>t+(+r[3]||0)*(+r[4]||0),0)}
+function pinta(){const box=document.getElementById('prodC');if(!box)return;
+  if(edo==='cargando'){box.innerHTML='<p class="note">Cargando…</p>';return}
+  if(edo==='sinfb'){box.innerHTML='<p class="note">No se pudo leer tu llave. Revisa tu internet o que las reglas de Firebase estén publicadas.</p>';return}
+  if(edo==='sinllave'){box.innerHTML='<p class="note">Tu producción se guarda con candado: solo esta app la puede abrir. Primero crea tu llave (una sola vez).</p><button type="button" class="sec" data-prodcrea style="margin:6px 0">🔑 Crear mi llave</button>';return}
+  if(edo==='mandar'){box.innerHTML='<p class="note">Copia este código y mándamelo por el chat de Claude para conectar tu producción. Solo se hace una vez.</p><div style="word-break:break-all;font:13px/1.4 monospace;background:var(--card,#15233a);border:1px solid var(--line);border-radius:10px;padding:10px;margin:6px 0" id="prodPub">'+esc(PUB)+'</div><button type="button" class="sec" data-prodcopia>📋 Copiar código</button>';return}
+  if(edo==='vacio'){box.innerHTML='<p class="note">✅ Todo conectado. Todavía no hay días cargados: mándame la foto del pizarrón y aquí aparece.</p>';return}
+  if(edo==='error'){box.innerHTML='<p class="note">No se pudo abrir tu producción. Revisa tu internet e intenta de nuevo.</p><button type="button" class="sec" data-prodre>🔄 Reintentar</button>';return}
+  const D=DAT[sel];if(!D){box.innerHTML='<p class="note">Cargando…</p>';return}
+  const tabs='<div class="opts" role="group" style="margin:6px 0"><button type="button" data-prodv="dia" class="'+(vista==='dia'?'on':'')+'">📅 Por día</button><button type="button" data-prodv="pre" class="'+(vista==='pre'?'on':'')+'">💲 Precios por cliente</button></div>';
+  if(vista==='pre'){if(!PREC){box.innerHTML=tabs+'<p class="note">Cargando…</p>';precios().then(pinta,()=>{PREC=[];pinta()});return}
+    const G={};PREC.forEach(r=>{(G[r[0]]=G[r[0]]||[]).push(r)});
+    box.innerHTML=tabs+(PREC.length?Object.keys(G).map(c=>'<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b>'+esc(c)+'</b>'+G[c].map(r=>'<div style="display:flex;gap:8px;justify-content:space-between;margin-top:4px"><span>'+esc(r[1])+(r[3]?'<br><small class="note">'+esc(r[3])+'</small>':'')+'</span><b style="white-space:nowrap">'+(r[2]==null||r[2]===''?'—':pe(r[2]))+'</b></div>').join('')+'</div>').join(''):'<p class="note">Sin precios guardados.</p>');return}
+  const R=D.filas||[],tot=suma(R),rep={};R.forEach(r=>{(rep[r[0]]=rep[r[0]]||[]).push(r)});
+  const bat=D.bat&&D.bat[0]?(+D.bat[0])*(+D.bat[1]||0):0;
+  const hoyI=DIAS.indexOf(sel),sem=DIAS.filter(f=>{const a=new Date(sel+'T12:00:00'),b=new Date(f+'T12:00:00');return b<=a&&(a-b)<7*864e5});
+  let html=tabs+'<label>Día<select id="prodSel">'+DIAS.map(f=>'<option value="'+f+'"'+(f===sel?' selected':'')+'>'+esc(fechaTxt(f))+'</option>').join('')+'</select></label>';
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0">'
+    +'<div style="border:1px solid var(--line);border-radius:12px;padding:10px"><small class="note">Venta del día</small><div style="font-weight:700;font-size:1.15em">'+pe(tot)+'</div></div>'
+    +(bat?'<div style="border:1px solid var(--line);border-radius:12px;padding:10px"><small class="note">Venta menos batidas</small><div style="font-weight:700;font-size:1.15em">'+pe(tot-bat)+'</div><small class="note">'+esc(D.bat[0])+' batidas × '+pe(D.bat[1])+'</small></div>':'')
+    +Object.keys(rep).map(k=>'<div style="border:1px solid var(--line);border-radius:12px;padding:10px"><small class="note">'+esc(k)+'</small><div style="font-weight:700">'+pe(suma(rep[k]))+'</div></div>').join('')
+    +'</div>';
+  if(sem.length>1){let st=0;sem.forEach(f=>{if(DAT[f])st+=suma(DAT[f].filas||[])});html+='<p class="note" id="prodSem">Últimos 7 días ('+sem.length+' días): '+(sem.every(f=>DAT[f])?pe(st):'calculando…')+'</p>';if(!sem.every(f=>DAT[f]))Promise.all(sem.map(dia)).then(pinta,()=>{})}
+  html+=Object.keys(rep).map(k=>'<h5 style="margin:14px 0 4px">🚚 '+esc(k)+' · '+rep[k].length+(rep[k].length===1?' pedido':' pedidos')+'</h5>'+rep[k].map(r=>'<div style="display:flex;gap:10px;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><div><b>'+esc(r[1])+'</b><br>'+esc(r[2])+'<br><small class="note">'+esc(r[3])+' × '+pe(r[4])+(r[5]?' · '+esc(r[5]):'')+'</small></div><b style="white-space:nowrap">'+pe((+r[3]||0)*(+r[4]||0))+'</b></div>').join('')).join('');
+  box.innerHTML=html}
+document.addEventListener('change',e=>{if(e.target.id==='prodSel'){sel=e.target.value;if(DAT[sel])pinta();else{edo='cargando';pinta();dia(sel).then(()=>{edo='listo';pinta()},()=>{edo='error';pinta()})}}});
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-prodcrea]');if(c){crear(c);return}
+  if(e.target.closest('[data-prodre]')){carga();return}
+  const v=e.target.closest('[data-prodv]');if(v){vista=v.dataset.prodv;pinta();return}
+  if(e.target.closest('[data-prodcopia]')){(navigator.clipboard?navigator.clipboard.writeText(PUB):Promise.reject()).then(()=>window.ARBA_T&&window.ARBA_T.toast('Código copiado. Pégalo en el chat de Claude'),()=>{const p=document.getElementById('prodPub');if(p){const r=document.createRange();r.selectNodeContents(p);const s=getSelection();s.removeAllRanges();s.addRange(r)}alert('Mantén presionado el código para copiarlo')});return}
+  if(e.target.closest('#duBar [data-du="prod"]')){caja();if(edo!=='listo'||!DIAS)carga();else{DIAS=null;DAT={};PREC=null;carga()}}});
+window.addEventListener('arba-auth',()=>setTimeout(()=>{if(ok()){caja()}},300));
 if(document.readyState!=='loading')caja();else document.addEventListener('DOMContentLoaded',caja);
 })();
 </script>
