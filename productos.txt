@@ -571,7 +571,7 @@ opción: 44 oz · 300 piezas | 968.13 pesos
 
 Bowl para ensalada Inix 24 oz
 id: lb48
-foto: bowl-ensalada-inix
+foto: bowl-ensalada-inix-caja
 presentación: Caja con 200 piezas
 dibujo: bowl
 descripción: Bowl de plástico para ensaladas de 24 oz. La tapa se vende aparte, también en caja de 200.
