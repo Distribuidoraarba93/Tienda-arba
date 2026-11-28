@@ -425,6 +425,14 @@ body.dueno #panel h3:first-of-type::before{content:"👑 ARBA Máster · ";color
 body.dueno .modal{top:var(--duh,60px)}body.dlock #duBar [data-du=tienda]{display:none}
 #duBar{position:sticky;top:0;z-index:61;background:linear-gradient(90deg,#0b1220,#1a2540);border-bottom:2px solid #f4b400;padding:8px 10px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 #duBar::-webkit-scrollbar{display:none}
+#duMenu{position:fixed;left:0;right:0;top:var(--duh,60px);bottom:0;z-index:62;background:#060b15e8;overflow:auto;-webkit-overflow-scrolling:touch;padding:10px 12px 30px}
+#duMenu .dmw{max-width:640px;margin:0 auto;background:#121c30;border:1px solid #f4b40055;border-radius:18px;padding:6px 14px 16px}
+#duMenu h5{margin:14px 0 8px;color:#f4b400;font:800 14px Poppins,system-ui;letter-spacing:.3px}
+#duMenu .dmg{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+#duBar #duMenu .dmg>button,#duBar #duMenu .dmg>a{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:78px;padding:10px 6px;border-radius:14px;border:1px solid #ffffff22;background:#1b2740;color:#fff;font:26px/1 system-ui;white-space:normal;text-align:center}
+#duMenu .dmg span{font:700 12.5px/1.15 Poppins,system-ui}
+#duMenu .dmg .dun{position:absolute;top:6px;right:6px;margin:0}
+html.claro #duMenu .dmw{background:#ffffff;border-color:#e3e8ee}html.claro #duBar #duMenu .dmg>button,html.claro #duBar #duMenu .dmg>a{background:#f3f6f9;color:#1b2433;border-color:#dde3ea}html.claro #duMenu h5{color:#9a6b00}
 .invq{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:inherit;margin:8px 0}
 .invr{display:grid;grid-template-columns:1fr 70px 70px;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:6px 0}
 .invr div{display:grid;gap:1px;min-width:0}.invr div span{font-size:12px;opacity:.75}.invr em{font-style:normal;font-size:12px;font-weight:800}
@@ -3343,8 +3351,24 @@ window.addEventListener('arba-auth',()=>setTimeout(()=>{arranca();adm()},400));s
  var m=document.querySelector('link[rel=manifest]');if(m)m.href='manifest-panel.json?v=2';
  var t=document.querySelector('meta[name=theme-color]');if(t)t.content='#0b1220';
  function barra(){if(document.getElementById('duBar'))return;var b=document.createElement('div');b.id='duBar';
-  b.innerHTML='<b data-master role="button" style="cursor:pointer">👑 Máster ▾</b><button type="button" data-du="tienda">🛒 Tienda</button><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" data-du="prg">📅 Programados<i id="prgN" class="dun" hidden></i></button><button type="button" data-du="av">📢 Comunicado</button><button type="button" data-du="pat">📣 Patrocinios</button><button type="button" data-du="sol">🙋 Solicitudes<i id="solN" class="dun" hidden></i></button><button type="button" data-du="cli">👥 Clientes</button><button type="button" data-du="ven">📊 Ventas</button><button type="button" data-du="ent">🚚 Entregas</button><button type="button" data-du="nuevo">➕ Producto</button><button type="button" data-du="ocultos">🙈 Ocultos</button><button type="button" data-du="neg">🏪 Precios negocio</button><button type="button" data-du="seg">🛡️ Seguridad</button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️ Notion</a><button type="button" data-du="aj">⚙️ Ajustes</button><button type="button" data-du="lock">🔒 Bloquear</button>';
+  b.innerHTML='<b data-master role="button" style="cursor:pointer">👑 Máster ▾</b><a href="#panel-arba" data-dped>📋 Pedidos<i id="pedN" class="dun" hidden></i></a><button type="button" data-du="inv">📦 Inventario<i id="invN" class="dun" hidden></i></button><button type="button" id="duMenuB" aria-expanded="false">☰ Menú<i id="menuN" class="dun" hidden></i></button>'
+   +'<div id="duMenu" hidden><div class="dmw">'
+   +'<h5>🛒 Ventas</h5><div class="dmg"><button type="button" data-du="tienda">🛒<span>Tienda</span></button><button type="button" data-du="prg">📅<span>Programados</span><i id="prgN" class="dun" hidden></i></button><button type="button" data-du="ent">🚚<span>Entregas</span></button><button type="button" data-du="ven">📊<span>Ventas</span></button><button type="button" data-du="cli">👥<span>Clientes</span></button><button type="button" data-du="neg">🏪<span>Precios negocio</span></button></div>'
+   +'<h5>📦 Productos</h5><div class="dmg"><button type="button" data-du="nuevo">➕<span>Producto nuevo</span></button><button type="button" data-du="ocultos">🙈<span>Ocultos</span></button><button type="button" data-du="sol">🙋<span>Solicitudes</span><i id="solN" class="dun" hidden></i></button></div>'
+   +'<h5>📣 Promoción</h5><div class="dmg"><button type="button" data-du="av">📢<span>Comunicado</span></button><button type="button" data-du="pat">📣<span>Patrocinios</span></button></div>'
+   +'<h5>⚙️ Mi cuenta</h5><div class="dmg"><button type="button" data-du="seg">🛡️<span>Seguridad</span></button><a href="https://app.notion.com/p/422faa6e112f817bab99d3f245360198" target="_blank" rel="noopener">🗂️<span>Notion</span></a><button type="button" data-du="aj">⚙️<span>Ajustes</span></button><button type="button" data-du="lock">🔒<span>Bloquear</span></button></div>'
+   +'</div></div>';
   document.body.prepend(b);
+  /* Menú: todo lo del Máster en un solo botón, acomodado por grupos */
+  (function(){var m=b.querySelector('#duMenu'),mb=b.querySelector('#duMenuB'),n=b.querySelector('#menuN');
+   var abre=function(si){m.hidden=!si;mb.setAttribute('aria-expanded',si?'true':'false');mb.classList.toggle('duon',si);document.documentElement.style.overflow=si?'hidden':''};
+   mb.addEventListener('click',function(e){e.stopPropagation();abre(m.hidden)});
+   m.addEventListener('click',function(e){if(e.target===m){abre(false);return}if(e.target.closest('button,a'))setTimeout(function(){abre(false)},0)});
+   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.hidden)abre(false)});
+   var cuenta=function(){var t=0,parpa=false;m.querySelectorAll('.dun').forEach(function(i){if(!i.hidden)t+=parseInt(i.textContent,10)||1});
+    m.querySelectorAll('[data-du]').forEach(function(x){if(/parpa/.test(x.className))parpa=true});
+    n.hidden=!t;n.textContent=t>99?'99+':String(t);mb.classList.toggle('parpa-az',parpa)};
+   new MutationObserver(cuenta).observe(m,{subtree:true,attributes:true,attributeFilter:['hidden','class'],childList:true,characterData:true});cuenta()})();
   var alto=function(){document.documentElement.style.setProperty('--duh',b.offsetHeight+'px')};alto();window.addEventListener('resize',alto);setTimeout(alto,500);
   b.addEventListener('click',function(e){var x=e.target.closest('[data-du]');if(!x)return;var k=x.dataset.du;
    if(k==='aj'||k==='nuevo'||k==='ocultos')return;
