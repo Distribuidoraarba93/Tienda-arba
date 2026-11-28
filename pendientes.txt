@@ -7,10 +7,3 @@ precio: cotizar
 presentación: Pieza
 dibujo: caja
 descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.
-
-Galletas Polvorones
-id: b8
-precio: cotizar
-presentación: Pieza
-dibujo: caja
-descripción: Pídelo y te confirmamos precio y disponibilidad por WhatsApp.

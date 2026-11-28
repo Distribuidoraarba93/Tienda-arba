@@ -1823,6 +1823,14 @@ presentación: Caja con 19 paquetes de 60 g · 1.14 kg
 dibujo: caja
 descripción: Galletas Canelitas Marinela con canela, caja con 19 paquetes individuales de 60 g.
 
+Galletas Polvorones
+id: b8
+foto: polvorones-caja
+precio: 183.89 pesos
+presentación: Caja con 19 paquetes de 74 g · 1.406 kg
+dibujo: caja
+descripción: Galletas Polvorones Marinela sabor naranja, caja con 19 paquetes individuales de 74 g.
+
 Fritura de harina 800 g
 id: lb1
 presentación: Bolsa de 800 g
