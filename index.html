@@ -2945,9 +2945,10 @@ const CLIPS=[
  {v:'clips/promo.mp4?v=2',img:'clips/promo.jpg?v=2',t:'Tortillas Los 2 Carnales 💛',d:'Recién hechas, para cada antojo y desde taco hasta montado jumbo. Hechas con amor por Los 2 Carnales 💛',p:'t1',n:'Tortillas'},
  {v:'clips/taco.mp4?v=2',img:'clips/taco.jpg?v=2',t:'Tortillas para taco 🌮',d:'Chiquitas, suavecitas y del tamaño perfecto para tus tacos. Hechas con amor por Los 2 Carnales 💛',p:'t4',n:'Taco'},
  {v:'clips/montado.mp4?v=3',img:'clips/montado.jpg?v=2',t:'Tortillas para montado',d:'Tres presentaciones: chico de 28 a 30 cm (4.50 pesos), jumbo de 35 a 38 cm (6 pesos) y jumbo chico de 28 a 30 cm, más gruesa (7 pesos). Hechas con amor por Los 2 Carnales 💛',p:'t5',n:'Montado'},
- {v:'clips/integrales.mp4?v=2',img:'clips/integrales.jpg?v=2',t:'Tortillas integrales',d:'De la masa a tu mesa. Hechas con amor por Los 2 Carnales 💛',p:'t7',n:'Integrales'}
+ {v:'clips/integrales.mp4?v=2',img:'clips/integrales.jpg?v=2',t:'Tortillas integrales',d:'De la masa a tu mesa. Hechas con amor por Los 2 Carnales 💛',p:'t7',n:'Integrales'},
+ {v:'clips/quesibirrias.mp4',img:'clips/quesibirrias.jpg',t:'Tortillas para quesibirrias 🧀',d:'De harina, recién hechas, de 15 a 16 cm. Paquete de 10 a 20 pesos. Para tu negocio o tu casa. Hechas con amor por Los 2 Carnales 💛',p:'t9',n:'Quesibirrias',sinNav:true}
 ];
-if(window.ARBA_TEMA==='navidad')CLIPS.forEach(c=>{c.v=c.v.replace('.mp4','-nav.mp4');c.img=c.img.replace('.jpg','-nav.jpg')});
+if(window.ARBA_TEMA==='navidad')CLIPS.forEach(c=>{if(c.sinNav)return;c.v=c.v.replace('.mp4','-nav.mp4');c.img=c.img.replace('.jpg','-nav.jpg')});
 const L=$('#clvL'),V=$('#clv');
 const prod=c=>P.find(x=>x.id===c.p);
 L.innerHTML=CLIPS.map((c,i)=>{const p=prod(c),m=p&&T.minPr(p);return `<article class="clv-it" data-ci="${i}">
