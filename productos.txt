@@ -1831,6 +1831,14 @@ presentación: Caja con 19 paquetes de 74 g · 1.406 kg
 dibujo: caja
 descripción: Galletas Polvorones Marinela sabor naranja, caja con 19 paquetes individuales de 74 g.
 
+Barra Soft & Chewy de granola
+id: b6
+foto: barra-soft-chewy
+precio: 199.97 pesos
+presentación: Caja con 40 barras de 24 g · 960 g
+dibujo: caja
+descripción: Barra suave de granola Green Mountain Soft & Chewy con chispas de chocolate, caja con 40 barras individuales de 24 g.
+
 Fritura de harina 800 g
 id: lb1
 presentación: Bolsa de 800 g
