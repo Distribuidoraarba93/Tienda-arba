@@ -151,6 +151,7 @@ lb40:["Sun Cereal bulk cereal","Sun Cereal bulk cereal: rings, Zucarines or Roda
 lb41:["La Moderna pasta by the box","La Moderna pasta by the box of 20 packs. Choose spaghetti, penne, fideo, elbow, alphabet and more."],
 lb42:["La Perla pasta by the box","La Perla pasta by the box of 20 packs of 200 g. Choose the type you need."],
 lb43:["Soup packets by the box","Soup packets by the box of 12: fideo, alphabet, little stars, elbows and with chile."],
+a63:["Wilsey mayonnaise 3.78 liters","Wilsey mayonnaise in a 1-gallon jar (3.78 liters), great for tortas, burgers, elotes and salads."],
 a61:["Dilox individual salt packets","1 g individual table salt packets, ideal for lunch stands, restaurants, taco shops and takeout. Box of 2,000."],
 d1:["Arizona drink can 460 ml, assorted flavors","Arizona drink, 460 ml can, assorted flavors, pack of 24."],
 d2:["Fuze Tea 600 ml (peach, lemon and berries)","Fuze Tea 600 ml in peach, lemon and berry flavors, pack of 12."],
